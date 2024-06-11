@@ -1,0 +1,25 @@
+/**
+ * @author: Nash Adam Muñoz
+ * @co-author:
+ * @filename: general_styles.css
+ * @version: Alpha 1
+ * @lastupdate: June 11, 2024
+ */
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Mallanna", sans-serif;
+    font-weight: 600;
+}
+
+nav, div, body, img{
+    border: red 0.5px solid;
+}
+
+
+
+

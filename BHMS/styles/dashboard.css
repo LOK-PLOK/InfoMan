@@ -1,0 +1,166 @@
+body {
+    background: #344799;
+}
+
+
+
+
+/*==================== SIDEBAR ====================*/
+
+nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    line-height: 30px;
+    height: 100vh;
+    width: 270px;
+    float: left;
+    padding:10px;
+    text-decoration:none;
+    color: #C6C6C6;
+}
+
+.bh-logo {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 35px;
+}
+
+.navigation-tabs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sign-out {
+    margin-top: auto;
+    padding-bottom: 30px;
+}
+
+.navigation-tabs span, .sign-out span{
+    vertical-align: middle;
+}
+
+.navigation-tabs img ,.sign-out img{
+    height: auto;
+    width: 30px;
+}
+
+.class-align-tabs{
+    display: flex;
+    padding-left: 25px;
+    margin: 10px 0;
+}
+
+.paddingleft{
+    padding-left: 15px;
+    font-size: 25px;
+}
+
+
+
+
+/*==================== CONTENT ====================*/
+
+section{
+    margin: 10px;
+    width: 81%;
+    float: right;
+    background-color: white;
+    height: 97vh;
+    border-radius: 13px;
+    padding: 5rem;
+}
+
+.page-header {
+    color: #344799;
+    font-size: 40px;
+    line-height: 20px;
+}
+
+/* Notification Bell */
+.notification {
+    position: fixed;
+    right: 0;
+    margin: 40px;
+}
+
+.notification img {
+    width: 30px;
+}
+
+
+
+/* Add Buttons */
+.dashboard-button{
+    display: flex;
+    justify-content: end;
+    gap: 13px;
+    height: 50px;
+    margin: 20px 0;
+}
+
+.dashboard-button button{
+    width: 130px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.dashboard-button button img{
+    height: 20px;
+}
+
+
+/* Overview */
+.dashboard-icons-cont{
+    display: flex;
+    gap: 35px;
+}
+
+.dashboard-icons{
+    height: 250px;
+    width: 250px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.dashboard-icons div{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 85%;
+    gap: 8px;
+    
+}
+
+.dashboard-icons div div{
+    font-size: 70px;
+}
+
+.dashboard-icons img{
+    height: 150px;
+}
+
+.dashboard-icons p{
+    font-size: 20px;
+    text-align: right;
+}
+
+.dashboard-icons-test{
+    display: flex;
+    flex-direction: row;
+    height: 250px;
+    width: 250px;
+}
+
+.dashboard-icons-test div {
+    width: 50%;
+}
+
