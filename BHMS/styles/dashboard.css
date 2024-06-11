@@ -1,9 +1,7 @@
 body {
-    background: #344799;
+    background-color: #344799 !important;
+    height: 100vh;
 }
-
-
-
 
 /*==================== SIDEBAR ====================*/
 
@@ -13,18 +11,24 @@ nav {
     position: fixed;
     line-height: 30px;
     height: 100vh;
-    width: 270px;
+    width: 17.5%;
     float: left;
-    padding:10px;
-    text-decoration:none;
+    text-decoration: none;
     color: #C6C6C6;
+    flex-shrink: 0;
+}
+
+@media only screen and (max-width: 1199px){
+    nav {
+        display: none;
+    }
 }
 
 .bh-logo {
     display: flex;
     justify-content: center;
     padding: 20px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 .navigation-tabs{
@@ -43,19 +47,19 @@ nav {
 }
 
 .navigation-tabs img ,.sign-out img{
-    height: auto;
-    width: 30px;
+    height: 20px;
+    width: 20px;
 }
 
 .class-align-tabs{
     display: flex;
     padding-left: 25px;
-    margin: 10px 0;
+    margin: clamp(0.5rem, 1vh, 6rem);
 }
 
 .paddingleft{
     padding-left: 15px;
-    font-size: 25px;
+    font-size: 18px;
 }
 
 
@@ -63,33 +67,77 @@ nav {
 
 /*==================== CONTENT ====================*/
 
-section{
-    margin: 10px;
-    width: 81%;
-    float: right;
+.container-xxl {
+    position: relative;
     background-color: white;
-    height: 97vh;
+    height: auto;
     border-radius: 13px;
-    padding: 5rem;
+    padding: 4rem;
+}
+
+.container-xxl > *, 
+.container-xxl .dashboard-button  {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+@media only screen and (min-width: 1200px){
+    .container-xxl {
+        position: absolute;
+        width: 82.5% !important;
+        height: 100%; /* Causes a responsiveness issue somewhere sa 1000px and above */
+        right: 0;
+    }
 }
 
 .page-header {
     color: #344799;
-    font-size: 40px;
+    font-size: clamp(2rem, 2.5vw, 6rem);
     line-height: 20px;
 }
 
 /* Notification Bell */
 .notification {
     position: fixed;
+    top: 0;
     right: 0;
-    margin: 40px;
+    margin: 20px;
+    padding: 0 5px;
 }
 
 .notification img {
     width: 30px;
 }
 
+.notification-num {
+    position: absolute;
+    right: 0;
+    background-color: #d53030;
+    border-radius: 50%; 
+    color: white;
+    font-size: 10px;
+    padding: 7px 2px; 
+    width: 16px; 
+    height: 16px; 
+    line-height: 1px; 
+}
+
+/* Burger */
+.hamburger-sidebar {
+    position: fixed;
+    top: 0;
+    margin: 20px;
+}
+
+@media only screen and (min-width: 1200px){
+    .hamburger-sidebar {
+        display: none;
+    }
+}
+
+.hamburger-sidebar i {
+    font-size: 30px;
+}
 
 
 /* Add Buttons */
@@ -121,14 +169,19 @@ section{
 /* Overview */
 .dashboard-icons-cont{
     display: flex;
+    justify-content: center;
+    height: auto;
     gap: 35px;
+    margin: 20px 0 !important;
 }
 
 .dashboard-icons{
     height: 250px;
     width: 250px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
+    color: #344799;
+    background: #edf6f7;
 }
 
 .dashboard-icons div{
@@ -137,7 +190,6 @@ section{
     align-items: center; 
     height: 85%;
     gap: 8px;
-    
 }
 
 .dashboard-icons div div{
