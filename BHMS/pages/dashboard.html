@@ -14,9 +14,9 @@
 </head>
 <body>
     <!-- Sidebar -->
-    <nav>
+    <nav class="off-screen-menu">
         <div class="bh-logo">
-            <img src="/images/MBH_logo.png" alt="" width="150px">
+            <img src="/images/MBH_logo.png" width="150px">
         </div>
         <div class="navigation-tabs">
             <div class="class-align-tabs">
@@ -57,15 +57,13 @@
             </div>
         </div>
     </nav>
-
-    
     
     <!-- Dashboard Portion -->
     <div class="container-xxl">
 
         <!-- Burger Sidebar -->
         <div class="hamburger-sidebar">
-            <i class="fa-solid fa-bars" style="color: #344799;"></i>
+            <i class="fa-solid fa-bars"></i>
         </div>
 
         <!-- Notification Bell -->
@@ -131,5 +129,16 @@
             
         </div>
     </div>
+
+    <script>
+        const hamMenu = document.querySelector('.hamburger-sidebar');
+        const offScreenMenu = document.querySelector('.off-screen-menu');
+
+        hamMenu.addEventListener('click', () => {
+            hamMenu.classList.toggle('active');
+            offScreenMenu.classList.toggle('active');
+        })
+    </script>
+
 </body>
 </html>

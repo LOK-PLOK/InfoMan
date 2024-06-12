@@ -8,19 +8,25 @@ body {
 nav {
     display: flex;
     flex-direction: column;
+    background-color: #344799;
     position: fixed;
     line-height: 30px;
     height: 100vh;
     width: 17.5%;
-    float: left;
     text-decoration: none;
     color: #C6C6C6;
     flex-shrink: 0;
+    z-index: 1;
+}
+
+.off-screen-menu.active {
+    left: 0;
 }
 
 @media only screen and (max-width: 1199px){
     nav {
-        display: none;
+        width: 100%;
+        left: -100%;
     }
 }
 
@@ -126,7 +132,12 @@ nav {
 .hamburger-sidebar {
     position: fixed;
     top: 0;
-    margin: 20px;
+    margin: 20px 0;
+    z-index: 2;
+}
+
+.hamburger-sidebar.active i{
+    color: white;
 }
 
 @media only screen and (min-width: 1200px){
@@ -136,6 +147,7 @@ nav {
 }
 
 .hamburger-sidebar i {
+    color: #344799;
     font-size: 30px;
 }
 
