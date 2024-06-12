@@ -53,6 +53,7 @@ nav {
 }
 
 .navigation-tabs img ,.sign-out img{
+    margin: auto 0;
     height: 20px;
     width: 20px;
 }
@@ -60,10 +61,18 @@ nav {
 .class-align-tabs{
     display: flex;
     padding-left: 25px;
-    margin: clamp(0.5rem, 1vh, 6rem);
+    padding: 5px 5px 5px 25px;
+    margin: clamp(0.5rem, 1vh, 6rem) 0;
+}
+
+.class-align-tabs-active {
+    background-color: #ff8500;
+    border-left: white solid 10px;
+    color: white;
 }
 
 .paddingleft{
+    margin: auto 0;
     padding-left: 15px;
     font-size: 18px;
 }
