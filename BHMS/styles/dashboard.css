@@ -75,18 +75,18 @@ nav {
     padding: 4rem;
 }
 
-.container-xxl > *, 
-.container-xxl .dashboard-button  {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-}
-
 @media only screen and (min-width: 1200px){
     .container-xxl {
         position: absolute;
         width: 82.5% !important;
         height: 100%; /* Causes a responsiveness issue somewhere sa 1000px and above */
         right: 0;
+    }
+
+    .container-xxl > *, 
+    .container-xxl .dashboard-button  {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
     }
 }
 
@@ -169,7 +169,7 @@ nav {
 /* Overview */
 .dashboard-icons-cont{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     height: auto;
     margin: 20px 0 !important;
 }
