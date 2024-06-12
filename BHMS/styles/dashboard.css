@@ -96,7 +96,7 @@ nav {
         width: 82.5% !important;
         height: 100%; /* Causes a responsiveness issue somewhere sa 1000px and above */
         right: 0;
-        overflow:scroll;
+        overflow: scroll;
     }
 
     .container-xxl > *, 
