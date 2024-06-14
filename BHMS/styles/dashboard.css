@@ -1,84 +1,15 @@
+/**
+ * @author: Nash Adam Muñoz
+ * @co-authors: 
+ * @filename: general_styles.css
+ * @version: Alpha 1
+ * @lastupdate: June 14, 2024
+ */
+
 body {
     background-color: #344799 !important;
     height: 100vh;
 }
-
-/*==================== SIDEBAR ====================*/
-
-nav {
-    display: flex;
-    flex-direction: column;
-    background-color: #344799;
-    position: fixed;
-    line-height: 30px;
-    height: 100vh;
-    width: 17.5%;
-    text-decoration: none;
-    color: #C6C6C6;
-    flex-shrink: 0;
-    z-index: 1;
-}
-
-.off-screen-menu.active {
-    left: 0;
-}
-
-@media only screen and (max-width: 1199px){
-    nav {
-        width: 100%;
-        left: -100%;
-    }
-}
-
-.bh-logo {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-.navigation-tabs{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.sign-out {
-    margin-top: auto;
-    padding-bottom: 30px;
-}
-
-.navigation-tabs span, .sign-out span{
-    vertical-align: middle;
-}
-
-.navigation-tabs img ,.sign-out img{
-    margin: auto 0;
-    height: 20px;
-    width: 20px;
-}
-
-.class-align-tabs{
-    display: flex;
-    padding-left: 25px;
-    padding: 5px 5px 5px 25px;
-    margin: clamp(0.5rem, 1vh, 6rem) 0;
-}
-
-.class-align-tabs-active {
-    background-color: #ff8500;
-    border-left: white solid 10px;
-    color: white;
-}
-
-.paddingleft{
-    margin: auto 0;
-    padding-left: 15px;
-    font-size: 18px;
-}
-
-
-
 
 /*==================== CONTENT ====================*/
 
@@ -105,10 +36,16 @@ nav {
     }
 }
 
-.page-header {
-    color: #344799;
-    font-size: clamp(2rem, 2.5vw, 6rem);
-    line-height: 20px;
+@media only screen and (min-width: 1130px) {
+    .container-xxl {
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .container-xxl {
+        height: 100%;
+    }
 }
 
 /* Notification Bell */
@@ -122,6 +59,7 @@ nav {
 
 .notification img {
     width: 30px;
+    cursor: pointer;
 }
 
 .notification-num {
@@ -135,29 +73,6 @@ nav {
     width: 16px; 
     height: 16px; 
     line-height: 1px; 
-}
-
-/* Burger */
-.hamburger-sidebar {
-    position: fixed;
-    top: 0;
-    margin: 20px 0;
-    z-index: 2;
-}
-
-.hamburger-sidebar.active i{
-    color: white;
-}
-
-@media only screen and (min-width: 1200px){
-    .hamburger-sidebar {
-        display: none;
-    }
-}
-
-.hamburger-sidebar i {
-    color: #344799;
-    font-size: 30px;
 }
 
 
@@ -254,17 +169,5 @@ nav {
 
     .dashboard-icons p {
         font-size: 20px;
-    }
-}
-
-@media only screen and (min-width: 1130px) {
-    .container-xxl {
-        height: 100%;
-    }
-}
-
-@media only screen and (max-width: 750px) {
-    .container-xxl {
-        height: 100%;
     }
 }

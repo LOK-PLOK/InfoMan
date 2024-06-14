@@ -1,12 +1,15 @@
 /**
  * @author: Nash Adam Muñoz
- * @co-author:
+ * @co-authors: 
  * @filename: general_styles.css
  * @version: Alpha 1
- * @lastupdate: June 11, 2024
+ * @lastupdate: June 14, 2024
  */
 
 
+ @import url('https://fonts.googleapis.com/css2?family=Mallanna&display=swap');  /* Importing Mallanna Font */
+
+/*==================== UNIVERSAL STYLES ====================*/
 
 * {
     margin: 0;
@@ -20,6 +23,122 @@ nav, div, img{
     border: red 0.5px solid;
 }
 
+.page-header { /* Style for page headers */
+    color: #344799;
+    font-size: clamp(2.2rem, 2.5vw, 6rem);
+    line-height: 60px;
+}
+
+/*==================== SIDEBAR STYLES ====================*/
+
+/*---------------General Sidebar Styles---------------*/
+nav {
+    display: flex;
+    flex-direction: column;
+    background-color: #344799;
+    position: fixed;
+    line-height: 30px;
+    height: 100vh;
+    width: 18.5%;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 1;
+}
+ 
+.off-screen-menu.active { /* Activates the Sidebar */
+    left: 0;
+}
+
+@media only screen and (max-width: 1199px) {
+    nav { /* Sidebar will go off screen if the screen is below 1200px */
+        width: 400px;
+        left: -100%;
+    }
+}
+
+/*---------------Sidebar Boarding House Logo---------------*/
+.bh-logo {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+/*---------------Sidebar Tabs Styles---------------*/
+.navigation-tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.navigation-tabs span, 
+.sign-out span {
+    vertical-align: middle; /* Aligns the contents of nav tabs */
+}
+
+.navigation-tabs img,
+.sign-out img { /* Styles for the icons of nav tabs */
+    margin: auto 0;
+    height: 20px;
+    width: 20px;
+}
+
+.class-align-tabs {
+    display: flex;
+    padding-left: 25px;
+    padding: 5px 5px 5px 25px;
+    margin: clamp(0.5rem, 1vh, 6rem) 0;
+}
+
+.class-align-tabs h3 {
+    margin: auto 0;
+    padding-left: 15px;
+    font-size: 18px;
+}
+
+.navigation-tabs a:active .class-align-tabs,
+.navigation-tabs a:hover .class-align-tabs,
+.class-align-tabs-active {
+    background-color: #ff8500;
+    border-left: white solid 10px;
+    color: white;
+}   
+
+.navigation-tabs a {
+    cursor: pointer;
+    color: #C6C6C6;
+    text-decoration: none;
+}
+
+/*---------------Sign-out Styles---------------*/
+.sign-out {
+    margin-top: auto;
+    padding-bottom: 30px;
+}
+
+/*---------------Hamburger Styles---------------*/
+.hamburger-sidebar {
+    position: fixed;
+    top: 0;
+    margin: 20px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.hamburger-sidebar.active i{
+    color: white;
+}
+
+.hamburger-sidebar i {
+    color: #344799;
+    font-size: 30px;
+}
+
+@media only screen and (min-width: 1200px) {
+    .hamburger-sidebar { 
+        display: none; /* Hides the hamburger icon when the screen size is >1200px */
+    }
+}
 
 
 
