@@ -1,0 +1,198 @@
+/**
+ * @author: Nash Adam Muñoz
+ * @co-authors: 
+ * @filename: room_logs.css
+ * @version: Alpha 1
+ * @lastupdate: June 14, 2024
+ */
+
+body {
+    background-color: #344799 !important;
+    height: 100vh;
+}
+
+/*====================Content Styles====================*/
+
+.container-xxl {
+    position: relative;
+    background-color: white;
+    height: 100%;
+    border-radius: 13px;
+    padding: 4rem;
+}
+
+@media only screen and (min-width: 1200px) { /* Content format changes when screen is >1200px */
+    .container-xxl {
+        position: absolute;
+        width: 82.5% !important;
+        right: 0;
+        overflow: scroll;
+    }
+
+    .container-xxl > *, 
+    .container-xxl .dashboard-button {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .container-xxl { /* Height of the content set to auto when screen is <750px */
+        height: auto;
+    }
+}
+
+/*---------------Room Card Styles---------------*/
+.rm-container {
+    padding: 20px;
+    justify-content: center;
+}
+
+.rm-container .col-auto {
+    margin-bottom: 20px;
+}
+
+.rm-info-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 170px;
+    width: 250px;
+    margin: auto;
+    padding: 16px;
+    background-color: #edf6f7;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); 
+}
+
+.rm-info-head span {
+    font-size: 34px;
+    color: #344799;
+}
+
+.rm-info-head .fa-ellipsis {
+    position: absolute;
+    right: 0;
+    font-size: 40px;
+    margin: 10px 20px;
+}
+
+.rm-info-head .fa-circle {
+    font-size: 20px;
+}
+
+.rm-info-code {
+    font-size: 30px;
+}
+
+.rm-info-avail {
+    font-size: 22px;
+    color: gray;
+}
+
+.rm-info-status {
+    font-size: 26px;   
+}
+
+.rm-info-avail,
+.rm-info-status {
+    line-height: 30px;
+}
+
+/*====================Buttons Styles====================*/
+
+.rm-log-button{
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    gap: 13px;
+    height: 45px;
+    margin: 20px 0;
+    top: 0;
+    right: 0;
+    padding: 0 20px;
+}
+
+.rm-log-button button{
+    width: auto;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+    padding: 20px;
+}
+
+/*====================Room Log Modal Styles====================*/
+
+.modal-content {
+    background-color: #edf6f7 !important;
+}
+
+/*---------------Close Button Styles---------------*/
+.btn-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    color: #344799;
+}
+
+/*---------------Room Information Modal Styles---------------*/
+.rm-occupants table,
+.rm-occupants th,
+.rm-occupants td {
+    padding: 5px;
+    border: 1px solid #344799;
+}
+
+.rm-occupants table {
+    width: 100%;
+    text-align: center;
+}
+
+.rm-occupants th {
+    color: white;
+    background-color: #344799;
+}
+
+.rm-modal-info {
+    color: rgba(2, 67, 154, 0.50); 
+    line-height: 14px;
+}
+
+.rm-modal-info span {
+    color: black;
+}
+
+.rm-modal-title {
+    color: #344799;
+    font-weight: 500;
+}
+
+/*---------------Add New Room Modal Styles---------------*/
+#add-new-rm input[type=text],
+#add-new-rm input[type=number] {
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#add-new-rm .btn {
+    width: 150px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}

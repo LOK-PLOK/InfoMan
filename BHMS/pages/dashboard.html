@@ -15,41 +15,56 @@
 <body>
     <!-- Sidebar -->
     <nav class="off-screen-menu">
+        <!-- Logo -->
         <div class="bh-logo">
             <img src="/images/MBH_logo.png" width="150px">
         </div>
+        <!-- Navigation Tabs -->
         <div class="navigation-tabs">
-            <div class="class-align-tabs class-align-tabs-active">
-                <img src="/images/icons/Dashboard/Navigation Bar/dashboard_light.png">
-                <h3 class="paddingleft">Dashboard</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/statistics_dark.png">
-                <h3 class="paddingleft">Statistics</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/testimg.png">
-                <h3 class="paddingleft">Residents</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/room_logs_dark.png">
-                <h3 class="paddingleft">Room Logs</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/billing_dark.png">
-                <h3 class="paddingleft">Billings</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/maintenance_dark.png">
-                <h3 class="paddingleft">Maintenance</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
-                <h3 class="paddingleft">Settings</h3>
-            </div>
-
+            <a href="dashboard.html">
+                <div class="class-align-tabs class-align-tabs-active">
+                    <img src="/images/icons/Dashboard/Navigation Bar/dashboard_light.png">
+                    <h3 class="paddingleft">Dashboard</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/statistics_dark.png">
+                    <h3 class="paddingleft">Statistics</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/testimg.png">
+                    <h3 class="paddingleft">Residents</h3>
+                </div>
+            </a>
+            <a href="room_logs.html">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/room_logs_dark.png">
+                    <h3 class="paddingleft">Room Logs</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/billing_dark.png">
+                    <h3 class="paddingleft">Billings</h3>
+                </div>
+             </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/maintenance_dark.png">
+                    <h3 class="paddingleft">Maintenance</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
+                    <h3 class="paddingleft">Settings</h3>
+                </div>
+            </a>
         </div>
-
+        <!-- Sign-out Button -->
         <div class="sign-out">
             <div class="class-align-tabs">
                 <img src="/images/icons/Dashboard/Navigation Bar/logout.png">
@@ -57,14 +72,14 @@
             </div>
         </div>
     </nav>
-    
-    <!-- Dashboard Portion -->
-    <div class="container-xxl">
 
-        <!-- Burger Sidebar -->
-        <div class="hamburger-sidebar">
-            <i class="fa-solid fa-bars"></i>
-        </div>
+    <!-- Burger Sidebar -->
+    <div class="hamburger-sidebar">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    
+    <!-- Dashboard Section -->
+    <div class="container-xxl">
 
         <!-- Notification Bell -->
         <div class="notification">
@@ -130,15 +145,7 @@
         </div>
     </div>
 
-    <script>
-        const hamMenu = document.querySelector('.hamburger-sidebar');
-        const offScreenMenu = document.querySelector('.off-screen-menu');
-
-        hamMenu.addEventListener('click', () => {
-            hamMenu.classList.toggle('active');
-            offScreenMenu.classList.toggle('active');
-        })
-    </script>
+    <script src="/js/general.js"></script>
 
 </body>
 </html>
