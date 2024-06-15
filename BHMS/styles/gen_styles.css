@@ -88,6 +88,7 @@ nav {
     padding-left: 25px;
     padding: 5px 5px 5px 25px;
     margin: clamp(0.5rem, 1vh, 6rem) 0;
+    cursor: pointer;
 }
 
 .class-align-tabs h3 {
