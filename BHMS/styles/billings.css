@@ -1,4 +1,5 @@
 
+/* ======== Billings header CSS ======== */
 .blue-button{
     width: 130px;
     background-color: #344799; 
@@ -13,37 +14,27 @@
 }
 
 .billings-content{
-    margin-top: 50px;
+    margin-top: 35px;
 }
 
-.display-flex-space-between{
+.billings-header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.billings-header button{
+    height: 45px;
 }
 
 .direction-column{
     flex-direction: column;
 }
 
-
-.sliding-bar{
-    margin-top: 5px;
-	height: 1px;
-	bottom: 0;
-	z-index: 0;
-	background: #a1a1a1;
-	border-radius: 8px;
-	transition: all .5s ease 0s;
-}
-
-.display-flex-space-between a{
-    text-decoration: none;
-    color: black;
-}
-
+/* ======== Table CSS ======== */
 .table-section{
     background-color: #EDF6F7;
-    margin-top: 40px;
+    margin-top: 20px;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
@@ -120,5 +111,50 @@ th{
 }
 
 
-  
+/* ======== Slider Tab CSS ======== */
+.tab-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(229,229,229);
+    position: relative;
+}
 
+.tab-box .tab-btn{
+    font-size: 18px;
+    font-weight: 600;
+    color: #919191;
+    background: none;
+    border: none;
+    padding: 18px;
+    cursor: pointer;
+}
+
+.tab-box .tab-btn.active{
+    color:#344799;
+}
+
+.content-box{
+    padding: 20px;
+}
+
+
+.content-box .content{
+    display: none;
+}
+
+.content-box .content.active{
+    display: block;
+}
+
+.line{
+    position: absolute;
+    top: 62px;
+    left: 0;
+    width: 90px;
+    height: 5px;
+    background-color:#344799;
+    border-radius: 10px;
+    transition: all .3s ease-in-out;
+}
