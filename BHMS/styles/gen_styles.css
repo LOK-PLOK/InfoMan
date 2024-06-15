@@ -9,7 +9,7 @@
 
  @import url('https://fonts.googleapis.com/css2?family=Mallanna&display=swap');  /* Importing Mallanna Font */
 
-/*==================== UNIVERSAL STYLES ====================*/
+/*====================UNIVERSAL STYLES====================*/
 
 * {
     margin: 0;
@@ -25,11 +25,11 @@ nav, div, img{
 
 .page-header { /* Style for page headers */
     color: #344799;
-    font-size: clamp(2.2rem, 2.5vw, 6rem);
+    font-size: clamp(2.2rem, 3vw, 6rem);
     line-height: 60px;
 }
 
-/*==================== SIDEBAR STYLES ====================*/
+/*====================SIDEBAR STYLES====================*/
 
 /*---------------General Sidebar Styles---------------*/
 nav {
