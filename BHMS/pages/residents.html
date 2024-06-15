@@ -18,41 +18,56 @@
 <body>
     <!-- Sidebar -->
     <nav class="off-screen-menu">
+        <!-- Logo -->
         <div class="bh-logo">
             <img src="/images/MBH_logo.png" width="150px">
         </div>
+        <!-- Navigation Tabs -->
         <div class="navigation-tabs">
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/dashboard_light.png">
-                <h3 class="paddingleft">Dashboard</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/statistics_dark.png">
-                <h3 class="paddingleft">Statistics</h3>
-            </div>
-            <div class="class-align-tabs class-align-tabs-active">
-                <img src="/images/icons/Dashboard/Navigation Bar/residents_dark.png">
-                <h3 class="paddingleft">Residents</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/room_logs_dark.png">
-                <h3 class="paddingleft">Room Logs</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/billing_dark.png">
-                <h3 class="paddingleft">Billings</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/maintenance_dark.png">
-                <h3 class="paddingleft">Maintenance</h3>
-            </div>
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
-                <h3 class="paddingleft">Settings</h3>
-            </div>
-
+            <a href="dashboard.html">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/dashboard_dark.png">
+                    <h3 class="paddingleft">Dashboard</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/statistics_dark.png">
+                    <h3 class="paddingleft">Statistics</h3>
+                </div>
+            </a>
+            <a href="residents.html">
+                <div class="class-align-tabs class-align-tabs-active">
+                    <img src="/images/icons/Dashboard/Navigation Bar/residents_light.png">
+                    <h3 class="paddingleft">Residents</h3>
+                </div>
+            </a>
+            <a href="room_logs.html">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/room_logs_dark.png">
+                    <h3 class="paddingleft">Room Logs</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/billing_dark.png">
+                    <h3 class="paddingleft">Billings</h3>
+                </div>
+             </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/maintenance_dark.png">
+                    <h3 class="paddingleft">Maintenance</h3>
+                </div>
+            </a>
+            <a href="">
+                <div class="class-align-tabs">
+                    <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
+                    <h3 class="paddingleft">Settings</h3>
+                </div>
+            </a>
         </div>
-
+        <!-- Sign-out Button -->
         <div class="sign-out">
             <div class="class-align-tabs">
                 <img src="/images/icons/Dashboard/Navigation Bar/logout.png">
@@ -60,16 +75,16 @@
             </div>
         </div>
     </nav>
+
+    <!-- Burger Sidebar -->
+    <div class="hamburger-sidebar">
+        <i class="fa-solid fa-bars"></i>
+    </div>
     
-    <!-- Dashboard Portion -->
+    <!-- Residents Contents -->
     <div class="container-xxl">
 
-        <!-- Burger Sidebar -->
-        <div class="hamburger-sidebar">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-
-<!------------------------------------------------------------------------------------Residents , Add new, Current number of residents---------------------------------------------------------->
+        <!-- Heading Section -->
         <div class="header-container">
             <div class="left-content">
                 <div>
@@ -81,21 +96,19 @@
             </div>
             <div class="right-content">
                 <div class="current-residents">
-                    <span style="color:#5f5f5f;">Current Number of Residents</span>
+                    <span>Current Number of Residents</span>
                 </div>
-                
                 <div class="right-child">
                     <img src="/images/icons/Residents/number_of_residents.png" alt="">
                     <div>30</div>
                 </div>
-                
-                
             </div>
         </div>
-        <!-- Header(Category dropdown,Search Bar),  Section(table), Footer(Pages, Previous Button ,Current ,Next Button) -->
+
+        <!-- Table Layout -->
         <div class="data-container">
-<!------------------------------------------------------------------------------------Header Area---------------------------------------------------------->
-            <!-- Sort by (Dropdown), Search Bar -->
+
+            <!-- Table Header -->
             <header class="upper">
                 <!-- Leftside Area header -->
                 <div class="leftside-content">
@@ -109,6 +122,7 @@
                         </ul>
                       </div>
                 </div>
+
                 <!-- Rightside Area header -->
                 <div class="rigthside-content">
                     <form>
@@ -120,7 +134,7 @@
                 </div>
             </header>
 
-<!------------------------------------------------------------------------------------Section Area---------------------------------------------------------->
+            <!-- Table Actual -->
             <section class="table-data">
                 <table class="table table-bordered styled-table rounded-top rounded-bottom">
                     <thead>
@@ -136,22 +150,21 @@
                     <tbody>
                         <tr>
                             <td>
-                            <div class="alignleft w-75">
-                                <span class="residenttile textstyle0 ">Maria P. Detablurs</span>
-                            </div>
-                            <div class="alignleft w-75">
-                                <span class="textstyle1">09123456789</span>
-                            </div>
-                            <div class="alignleft w-75">
-                                <span class="textstyle1">123 Mabini Street, Quezon City...</span>
-                            </div>
+                                <div class="alignleft w-75">
+                                    <span class="residenttile textstyle0 ">Maria P. Detablurs</span>
+                                </div>
+                                <div class="alignleft w-75">
+                                    <span class="textstyle1">09123456789</span>
+                                </div>
+                                <div class="alignleft w-75">
+                                    <span class="textstyle1">123 Mabini Street, Quezon City...</span>
+                                </div>
                             </td>
                             <td>
-                            <div class="resize">
-                                <img src="/images/icons/Residents/active.png">
-                                <span>Active</span>
-                            </div>
-                                
+                                <div class="resize">
+                                    <img src="/images/icons/Residents/active.png">
+                                    <span>Active</span>
+                                </div>
                             </td>
                             <td>Room</td>
                             <td>B10101</td>
@@ -218,7 +231,7 @@
                 </table>
             </section>
 
-<!------------------------------------------------------------------------------------Footer Area---------------------------------------------------------->
+            <!-- Pagination -->
             <footer>
                 <div class="Leftside-portion">
                     <Span class="text-color">Showing 1 page to 3 of 3 entries</Span>
@@ -231,21 +244,11 @@
                     </div>
                 </div>
             </footer>
-           
+            
         </div>
     </div>
 
-
-
-    <script>
-        const hamMenu = document.querySelector('.hamburger-sidebar');
-        const offScreenMenu = document.querySelector('.off-screen-menu');
-
-        hamMenu.addEventListener('click', () => {
-            hamMenu.classList.toggle('active');
-            offScreenMenu.classList.toggle('active');
-        })
-    </script>
+    <script src="/js/general.js"></script>
 
 </body>
 </html>
