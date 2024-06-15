@@ -1,0 +1,325 @@
+/**
+ * @author: Paul France Detablan
+ * @co-authors: 
+ * @filename: residents.css
+ * @version: Alpha 1
+ * @lastupdate: June 15, 2024
+ */
+
+body {
+    background-color: #344799 !important;
+    height: 100vh;
+}
+
+/*====================General Content====================*/
+
+.container-xxl {
+    position: relative;
+    background-color: white;
+    height: auto;
+    border-radius: 13px;
+    padding: 4rem;
+}
+
+@media only screen and (min-width: 1200px){
+    .container-xxl {
+        position: absolute;
+        width: 82.5% !important;
+        right: 0;
+        overflow: scroll;
+    }
+
+    .container-xxl > *, 
+    .container-xxl .dashboard-button  {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    .container-xxl {
+        height: 100%;
+    }
+}
+
+/*====================Heading Section====================*/
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 0px 20px 0px;
+}
+
+/*---------------Left Container---------------*/
+.left-content {
+    margin-top: 5px;
+}
+
+.current-residents {
+    margin-bottom: 5px;
+}
+
+.left-content-button{
+    display: flex;
+    justify-content: start;
+    gap: 13px;
+    height: 45px;
+    margin: 20px 0;
+    width: auto;
+}
+
+.left-content-button button{
+    width: 130px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 3px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+}
+
+.left-content-button img{
+    height: 35px;
+}
+
+/*---------------Right Container---------------*/
+.right-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.current-residents {
+    color:#5f5f5f;
+    margin-bottom: 5px; 
+}
+
+.right-child {
+    display: flex;
+    align-items: center;
+}
+
+.right-child img {
+    height: 80px; 
+    margin-right: 5px; 
+}
+
+.right-child div {
+    font-size: 30px; 
+    color: #344799; 
+}
+
+/*====================Table Section====================*/
+
+/* Table Container */
+.data-container{
+    background: #EDF6F7;
+    padding: 20px 20px;
+    border-radius: 5px;
+}
+
+/*---------------Table Header---------------*/
+
+/* Leftside Area header */
+.upper{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 0px 15px 0px;
+}
+
+.leftside-content{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.leftside-content button{
+    background: #344799;
+}
+
+.text-color{
+    color: rgba(2, 67, 154, 0.50);
+    margin: 0px 10px 0px 0px;
+}
+
+/* Rightside Area header */
+.rightside-content{ 
+    width: 50%;
+}
+
+/* Search Bar */
+.search-container { 
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+}
+
+#search { 
+    width: 100%;
+    padding: 5px 30px 5px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #344799;
+    color: white;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+    color: white;
+}
+
+#search:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/*---------------Table Actual---------------*/
+
+/* Table css */
+.styled-table {
+    width: 100%; 
+    border: 1px solid #344799; 
+    border-collapse: collapse; 
+}
+
+.styled-table th,
+.styled-table td {
+    border: 1px solid #344799;
+    padding: 10px;
+    text-align: center; 
+}
+
+.styled-table thead tr th {
+    background-color: #344799;
+    color: white;
+    border: 1px solid #344799;
+    padding: -2px;
+}
+
+.styled-table tbody:last-child {
+    background-color: #faf9f6;
+    border-left: 3px solid #344799;
+    border-right: 3px solid #344799;
+    border-bottom: 3px solid #344799;
+}
+
+.styled-table tbody tr td {
+    border: 2px solid #344799;
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+.styled-table {
+    border-radius: 30px; 
+    overflow: hidden;
+}
+.alignleft {
+    display: flex;
+}
+
+.alignleft .w-75 {
+    width: auto; 
+}
+
+/* Resident Info Css */
+.residenttile {
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+.textstyle0 {
+    font-size: 18px;
+}
+
+.textstyle1 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Status Css */
+.resize{
+    display:flex;
+    align-items: center ;
+    display: flex;
+    justify-content: center;
+}
+.resize img{
+    height: 20px;
+    margin-right: 5px;
+}
+
+/* Action Css */
+.action{
+    padding: 0%;
+    height: 37.5px;
+    
+}
+.table td button{
+    border: none;
+}
+
+
+/*---------------Pagination---------------*/
+footer {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.Leftside-portion, .Rightside-portion {
+    flex: 1; 
+    text-align: center; 
+}
+
+.Leftside-portion span, .Rightside-portion span {
+    font-weight: bold;
+}
+
+/* Leftside Area */
+.Leftside-portion {
+    text-align: left; 
+}
+
+/* Rightside Area */
+.Rightside-portion {
+    text-align: right; 
+    display: flex;
+    justify-content: end;
+}
+
+.Previous-Next{
+    display: flex;
+    border-radius: 2px;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+}
+
+.Previous{
+    color: #344799;
+    background-color: #fff;
+    padding: 5px 10px 5px 10px;
+    border: none;
+}
+
+.current{
+    padding: 5px 10px 5px 10px;
+    border: none;
+    background-color: #344799;
+    color: white;
+}
+
+.Next{
+    padding: 5px 10px  5px 10px;
+    border: 1px solid #344799;
+    border: none;
+    color: #344799;
+}
+

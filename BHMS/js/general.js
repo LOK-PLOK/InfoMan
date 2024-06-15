@@ -1,4 +1,4 @@
-/*---------------Sidebar Javascript---------------*/
+/*---------------Sidebar---------------*/
 const hamMenu = document.querySelector('.hamburger-sidebar');
 const offScreenMenu = document.querySelector('.off-screen-menu');
 const contentPage = document.querySelector('.container-xxl');
