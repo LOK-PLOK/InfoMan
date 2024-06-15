@@ -1,0 +1,432 @@
+body {
+    background-color: #344799 !important;
+    height: 100vh;
+}
+
+/*==================== SIDEBAR ====================*/
+
+nav {
+    display: flex;
+    flex-direction: column;
+    background-color: #344799;
+    position: fixed;
+    line-height: 30px;
+    height: 100vh;
+    width: 17.5%;
+    text-decoration: none;
+    color: #C6C6C6;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.off-screen-menu.active {
+    left: 0;
+}
+
+@media only screen and (max-width: 1199px){
+    nav {
+        width: 100%;
+        left: -100%;
+    }
+}
+
+.bh-logo {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.navigation-tabs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sign-out {
+    margin-top: auto;
+    padding-bottom: 30px;
+}
+
+.navigation-tabs span, .sign-out span{
+    vertical-align: middle;
+}
+
+.navigation-tabs img ,.sign-out img{
+    margin: auto 0;
+    height: 20px;
+    width: 20px;
+}
+
+.class-align-tabs{
+    display: flex;
+    padding-left: 25px;
+    padding: 5px 5px 5px 25px;
+    margin: clamp(0.5rem, 1vh, 6rem) 0;
+}
+
+.class-align-tabs-active {
+    background-color: #ff8500;
+    border-left: white solid 10px;
+    color: white;
+}
+
+.paddingleft{
+    margin: auto 0;
+    padding-left: 15px;
+    font-size: 18px;
+}
+
+
+
+
+/*==================== CONTENT ====================*/
+
+.container-xxl {
+    position: relative;
+    background-color: white;
+    height: auto;
+    border-radius: 13px;
+    padding: 4rem;
+}
+
+.page-header {
+    color: #344799;
+    font-size: clamp(2rem, 3vw, 6rem);
+    line-height: 20px;
+    font-weight: bold;
+}
+
+/* ----------------------------------------------------Residents , Add new, Current number of residents----------------------------------------------  */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 0px 20px 0px;
+}
+
+.left-content {
+    align-self: flex-start; 
+    margin-top: 5px;
+}
+.current-residents {
+    margin-bottom: 5px;
+}
+.left-content-button{
+    display: flex;
+    justify-content: start;
+    gap: 13px;
+    height: 45px;
+    margin: 20px 0;
+    width: 80%;
+}
+.left-content button{
+    width: 130px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 3px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+}
+.left-content img{
+    height: 35px;
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.current-residents {
+    margin-bottom: 5px; 
+}
+
+.right-child {
+    display: flex;
+    align-items: center;
+}
+
+.right-child img {
+    height: 80px; 
+    margin-right: 5px; 
+}
+
+.right-child div {
+    font-size: 30px; 
+    color: #344799; 
+}
+
+
+/** --Header(Category dropdown,Search Bar),  Section(table), Footer(Pages, Previous Button ,Current ,Next Button)-- */
+/*Table area css*/
+.data-container{
+    background: #EDF6F7;
+    padding: 20px 20px;
+    border-radius: 5px;
+}
+
+/* ----------------------------------------------------Header Area----------------------------------------------  */
+/* -----Leftside Area header  -------*/
+.upper{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 0px 15px 0px;
+}
+
+.leftside-content{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+.leftside-content button{
+    background: #344799;
+}
+.text-color{
+    color: rgba(2, 67, 154, 0.50);
+    margin: 0px 10px 0px 0px;
+}
+
+/* -----Rightside Area header  -------*/ 
+/* Search Bar  */
+.rightside-content{
+    width: 50%;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+#search {
+    width: 100%;
+    padding: 5px 30px 5px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #344799;
+}
+
+#search::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+    color: white;
+}
+
+#search:focus {
+    outline: none;
+    border-color: #007bff;
+}
+/* ----------------------------------------------------Section Area----------------------------------------------  */
+
+
+/* Table css */
+
+
+.styled-table {
+    width: 100%; 
+    border: 1px solid #344799; 
+    border-collapse: collapse; 
+}
+
+.styled-table th,
+.styled-table td {
+    border: 1px solid #344799;
+    padding: 10px;
+    text-align: center; 
+}
+
+.styled-table thead tr th {
+    background-color: #344799;
+    color: white;
+    border: 1px solid #344799;
+    padding: -2px;
+}
+
+.styled-table tbody:last-child {
+    background-color: #faf9f6;
+    border-left: 3px solid #344799;
+    border-right: 3px solid #344799;
+    border-bottom: 3px solid #344799;
+}
+
+.styled-table tbody tr td {
+    border: 2px solid #344799;
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+.styled-table {
+    border-radius: 30px; 
+    overflow: hidden;
+}
+.alignleft {
+    display: flex;
+}
+
+.alignleft .w-75 {
+    width: auto; 
+}
+
+/**Resident Info Css */
+.residenttile {
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+.textstyle0 {
+    font-size: 18px;
+}
+
+.textstyle1 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/** Status Css */
+.resize{
+    display:flex;
+    align-items: center ;
+    display: flex;
+    justify-content: center;
+}
+.resize img{
+    height: 20px;
+    margin-right: 5px;
+}
+
+/**Action Css */
+.action{
+    padding: 0%;
+    height: 37.5px;
+    
+}
+.table td button{
+    border: none;
+}
+
+
+/* ----------------------------------------------------Footer Area----------------------------------------------  */
+footer {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.Leftside-portion, .Rightside-portion {
+    flex: 1; 
+    text-align: center; 
+}
+
+.Leftside-portion span, .Rightside-portion span {
+    font-weight: bold;
+}
+
+/**Leftside Area */
+.Leftside-portion {
+    text-align: left; 
+}
+
+/**Rightside Area */
+.Rightside-portion {
+    text-align: right; 
+    display: flex;
+    justify-content: end;
+}
+
+.Previous-Next{
+    display: flex;
+    border-radius: 2px;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+}
+
+.Previous{
+    color: #344799;
+    background-color: #fff;
+    padding: 5px 10px 5px 10px;
+    border: none;
+}
+.current{
+    padding: 5px 10px 5px 10px;
+    border: none;
+    background-color: #344799;
+    color: white;
+}
+.Next{
+    padding: 5px 10px  5px 10px;
+    border: 1px solid #344799;
+    border: none;
+    color: #344799;
+}
+
+
+
+@media only screen and (min-width: 1200px){
+    .container-xxl {
+        position: absolute;
+        width: 82.5% !important;
+        right: 0;
+        overflow: scroll;
+    }
+
+    .container-xxl > *, 
+    .container-xxl .dashboard-button  {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+}
+
+
+
+
+/* Burger */
+.hamburger-sidebar {
+    position: fixed;
+    top: 0;
+    margin: 20px 0;
+    z-index: 2;
+}
+
+.hamburger-sidebar.active i{
+    color: white;
+}
+
+@media only screen and (min-width: 1200px){
+    .hamburger-sidebar {
+        display: none;
+    }
+}
+
+.hamburger-sidebar i {
+    color: #344799;
+    font-size: 30px;
+}
+
+
+
+
+
+/* Overview */
+@media only screen and (min-width: 1130px) {
+    .container-xxl {
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .container-xxl {
+        height: 100%;
+    }
+}
