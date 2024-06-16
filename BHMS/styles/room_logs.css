@@ -13,7 +13,7 @@ body {
 
 /*====================Content Styles====================*/
 
-.container-xxl {
+.container-fluid {
     position: relative;
     background-color: white;
     height: 100%;
@@ -22,22 +22,22 @@ body {
 }
 
 @media only screen and (min-width: 1200px) { /* Content format changes when screen is >1200px */
-    .container-xxl {
+    .container-fluid {
         position: absolute;
         width: 82.5% !important;
         right: 0;
         overflow: scroll;
     }
 
-    .container-xxl > *, 
-    .container-xxl .dashboard-button {
+    .container-fluid > *, 
+    .container-fluid .dashboard-button {
         margin-left: 1.5rem;
         margin-right: 1.5rem;
     }
 }
 
 @media only screen and (max-width: 750px) {
-    .container-xxl { /* Height of the content set to auto when screen is <750px */
+    .container-fluid { /* Height of the content set to auto when screen is <750px */
         height: auto;
     }
 }
