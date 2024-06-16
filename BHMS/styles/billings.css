@@ -1,3 +1,33 @@
+/*====================General Content====================*/
+
+.container-fluid {
+    position: relative;
+    background-color: white;
+    height: auto;
+    border-radius: 13px;
+    padding: 4rem;
+}
+
+@media only screen and (min-width: 1200px){
+    .container-fluid {
+        position: absolute;
+        width: 82.5% !important;
+        right: 0;
+        overflow: scroll;
+    }
+
+    .container-fluid > *, 
+    .container-fluid .dashboard-button  {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    .container-fluid {
+        height: 100%;
+    }
+}
 
 /* ======== Billings header CSS ======== */
 .blue-button{

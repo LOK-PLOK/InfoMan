@@ -19,9 +19,9 @@
     font-weight: 600;
 }
 
-/* nav, div, img{
+nav, div, img{
     border: red 0.5px solid;
-} */
+}
 
 .page-header { /* Style for page headers */
     color: #344799;
@@ -44,7 +44,7 @@ nav {
     flex-shrink: 0;
     z-index: 1;
 }
- 
+
 .off-screen-menu.active { /* Activates the Sidebar */
     left: 0;
 }
