@@ -58,7 +58,7 @@
                     <h3 class="paddingleft">Maintenance</h3>
                 </div>
             </a>
-            <a href="">
+            <a href="settings.html">
                 <div class="class-align-tabs">
                     <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
                     <h3 class="paddingleft">Settings</h3>
@@ -87,7 +87,7 @@
         <div class="billings-header" >
             <div>
                 <span class="page-header">Billings</span><br>
-                <span style="color:#5f5f5f;">See recent transactions and tenant's billing status.</span>
+                <span class="page-sub-header">See recent transactions and tenant's billing status.</span>
             </div>
             <button class="blue-button" >Add Payment</button>
         </div>
@@ -291,16 +291,8 @@
         
     </div>
 
-    <script>
-        const hamMenu = document.querySelector('.hamburger-sidebar');
-        const offScreenMenu = document.querySelector('.off-screen-menu');
-
-        hamMenu.addEventListener('click', () => {
-            hamMenu.classList.toggle('active');
-            offScreenMenu.classList.toggle('active');
-        })
-    </script>
+    <script src="/js/general.js"></script>
+    <script src="/js/sliding-tab.js"></script>
 
 </body>
-<script src="/js/sliding-tab.js"></script>
 </html>

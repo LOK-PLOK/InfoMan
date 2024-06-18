@@ -13,29 +13,6 @@ body {
 
 /*==================== CONTENT ====================*/
 
-.container-fluid {
-    position: relative;
-    background-color: white;
-    height: auto;
-    border-radius: 13px;
-    padding: 4rem;
-}
-
-@media only screen and (min-width: 1200px){
-    .container-fluid {
-        position: absolute;
-        width: 82.5% !important;
-        right: 0;
-        overflow: scroll;
-    }
-
-    .container-fluid > *, 
-    .container-fluid .dashboard-button  {
-        margin-left: 1.5rem;
-        margin-right: 1.5rem;
-    }
-}
-
 @media only screen and (min-width: 1130px) {
     .container-fluid {
         height: 100%;
@@ -83,23 +60,6 @@ body {
     gap: 13px;
     height: 45px;
     margin: 20px 0;
-}
-
-.dashboard-button button{
-    width: 140px;
-    background-color: #344799; 
-    color: white;
-    border-radius: 5px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3px;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
-}
-
-.dashboard-button button img{
-    height: 20px;
 }
 
 

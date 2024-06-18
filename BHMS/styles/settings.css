@@ -1,0 +1,104 @@
+body {
+    background-color: #344799 !important;
+    height: 100vh;
+}
+
+/*====================General Content====================*/
+
+/*====================Settings Content====================*/
+
+/*---------------User Profile / Rates and Pricing---------------*/
+/* Container Styles*/
+.user-profile,
+.rate-price-cont {
+    padding: 20px 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    background: #edf6f7;
+}
+
+.rate-price-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rate-price-cont div {
+    display: flex;
+    align-items: center;
+}
+
+.rate-price-cont img {
+    margin-right: 10px;
+    height: 25px;
+}
+
+/* Inner Item Styles */
+.user-name,
+.rate-price-cont span {
+    font-size: 18px;
+}
+
+.user-type {
+    font-size: 14px;
+    color:#5f5f5f;
+}
+
+.rate-price-cont i {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/*---------------Login Settings---------------*/
+
+.edit-acc-cont {
+    position: relative;
+    padding-top: 20px;
+}
+
+.edit-acc-cont .save-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 5px;
+}
+
+.edit-acc-cont label {
+    color: #344799;
+    padding: 10px 0;
+    font-size: 20px;
+}
+
+.edit-acc-cont input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #7d7d7d;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.04);
+}
+
+.edit-acc-cont .input-cont {
+    position: relative;
+}
+
+.edit-acc-cont .input-cont a {
+    color: #5f5f5f;
+    position: absolute;
+    top: 20%;
+    right: 3%;
+}
+
+.edit-acc-cont .sign-out-btn {
+    margin: 20px 0;
+}
+
+/*---------------Button---------------*/
+.btn-var-1 {
+    padding: 10px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+}

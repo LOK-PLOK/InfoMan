@@ -29,6 +29,53 @@ nav, div, img{
     line-height: 60px;
 }
 
+.page-sub-header {
+    color: #5f5f5f;
+}
+
+.shadow {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
+    border: 1px groove black;
+    border-radius: 5px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*---------------Content Container Styles---------------*/
+.container-fluid {
+    position: relative;
+    background-color: white;
+    height: auto;
+    border-radius: 13px;
+    padding: 4rem 1rem;
+}
+
+@media only screen and (min-width: 1200px){
+    .container-fluid {
+        position: absolute;
+        width: 82.5% !important;
+        right: 0;
+        overflow: scroll;
+    }
+
+    .container-fluid > *, 
+    .container-fluid .dashboard-button  {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    .container-fluid {
+        height: 100%;
+    }
+}
+
+
 /*====================SIDEBAR STYLES====================*/
 
 /*---------------General Sidebar Styles---------------*/
@@ -141,5 +188,247 @@ nav {
     }
 }
 
+/*---------------Button---------------*/
+.btn-var-1 {
+    padding: 10px 20px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+}
+
+.btn-var-2 {
+    padding: 10px 30px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+}
+
+.btn-var-3 {
+    width: 140px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+}
+
+.btn-var-3 img {
+    height: 20px;
+}
+
+.btn-var-4 {
+    padding: 5px 70px;
+    margin-top: 5px;
+    color: white;
+    background-color: #344799;
+    border: none;
+    border-radius: 2px;
+}
+
+.btn-var-5 {
+    padding: 5px 15px;
+    margin-top: 10px;
+    color: white;
+    background-color: #344799;
+    border: none;
+    border-radius: 2px;
+}
+
+/*---------------Modal Styles---------------*/
+.modal-content {
+    background-color: #edf6f7 !important;
+}
+
+/* Residents Modal */
+.modal-title{
+    color: #344799;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+/* Modal Body Area*/
+.label-position{
+    display: flex;
+}
+
+.label-under{
+    font-size: 9px;
+}
+
+.label-fn{
+    width: 25.3%;
+}
+
+.label-mi{
+    width: 7%;
+}
+
+.label-ln{
+    width: 25%;
+}
+
+.label-fn,.label-mi,.label-ln{
+    display: flex;
+    justify-content: center;
+}
+
+.modal-body input[type=text]{
+    padding: 3px 10px;
+}
+
+.modal-body input[type=date]{
+    padding: 1px 1px 1px 1px;
+}
+
+.modal-body select{
+    padding: 1px 3px 3px 3px;
+    width: 12%;
+}
+
+/* Name */
+.NameInput{
+    width: 60%;
+}
+
+.FNclass{
+    width:43%;
+}
+
+.MIclass{
+    width: 8%;
+}
+
+.LNclass{
+    width: 45%;
+}
+
+.positioning{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Address */
+.houseno{
+    width: 8%;
+}
+
+.street{
+    width: 25%;
+}
+
+.barangay{
+    width: 25%;
+}
+
+.city{
+    width: 24%;
+}
+
+.province{
+    width: 15%;
+}
+
+.label-houseno{
+    width: 8%;
+}
+
+.label-street{
+    width: 26%;
+}
+
+.label-barangay{
+    width: 25%;
+}
+
+.label-city{
+    width: 25%;
+}
+
+.label-province{
+    width: 15%;
+}
+
+.label-houseno,
+.label-street,
+.label-barangay,
+.label-city,
+.label-province{
+    display: flex;
+    justify-content: center;
+}
+
+/* Contact Number */
+.countrycode{
+    width: 8%;
+}
+
+/* Appliances */
+.deleteappliance{
+    height: 30px;
+    vertical-align: text-bottom;
+}
+
+.displayflex{
+    display: flex;
+    justify-content: center;
+}
+
+/* Delete modal */
+.btn-yes{
+    border: none;
+    background-color: #344799;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 30px;
+    font-size: 20px;
+    margin: 0px 30px;
+}
+
+.btn-no{
+    border: none;
+    background-color: #344799;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 35px;
+    font-size: 20px;
+    margin: 0px 30px;
+}
+
+.btn-yes:hover,
+.btn-no:hover{
+    background-color: rgba(0,0,0,0.10);
+    color: #344799;
+}
+
+.btn-yes:active,.btn-no:active{
+    background-color: #5161aa;
+    color: white;
+}
+
+/* Tenant Information Modal */
+.split-left{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.split-right{   
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-footer-custom{
+    padding: 0px 15px;
+    border-radius: 10px;
+}
 
 

@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Mallanna&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d13ff814c5.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <!-- Sidebar -->
@@ -57,7 +58,7 @@
                     <h3 class="paddingleft">Maintenance</h3>
                 </div>
             </a>
-            <a href="">
+            <a href="settings.html">
                 <div class="class-align-tabs">
                     <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
                     <h3 class="paddingleft">Settings</h3>
@@ -88,14 +89,18 @@
         </div> 
 
         <!-- Header -->
-        <span class="page-header">Welcome Back, Juan!</span><br>
-        <span style="color:#5f5f5f;">Here's what we have for you today!</span>
+        <div class="header-container">
+            <div>
+                <span class="page-header">Welcome Back, Juan!</span><br>
+                <span class="page-sub-header">Here's what we have for you today!</span>
+            </div>
+        </div>
         
         <!-- Modal Buttons -->
         <div class="dashboard-button">
-            <button><img src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
-            <button><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
-            <button><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
+            <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#myModal"><img src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
+            <button class="btn-var-3"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
+            <button class="btn-var-3"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
         </div>
 
         <!-- Overview -->
@@ -142,6 +147,108 @@
                 </div>
             </div>
             
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-custom">
+                <div class="modal-header bg-custom">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Tenant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-custom">
+                    <form action="/action_page.php">
+                        <!-- Name,Gender,Date -->
+                        <div class="label label-position">
+                            <div style="width: 65.9%;">Name:</div>
+                            <div style="width: 17%;">Gender:</div>
+                            <div>Birth Date:</div>
+                        </div>
+                        <div class="positioning">
+                            <div class="NameInput">
+                                <input type="text" id="fname" name="firstname" placeholder="Maria" class="FNclass shadow" required>
+                                <input type="text" id="mi" name="Middle Initial" placeholder="P" class="MIclass shadow" required>
+                                <input type="text" id="lname" name="lastname" placeholder="Detablurs" class="LNclass shadow" required>
+                            </div>
+                            <select id="country" name="country" class="shadow">
+                            <option value="">...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            </select>
+                            <input type="date" id="lname" name="lastname" class="Bday shadow">
+                        </div>
+                        <div class="label label-position label-under">
+                            <div class="label-fn">First Name</div>
+                            <div class="label-mi">Middle Inital</div>
+                            <div class="label-ln">Last Name</div>
+                        </div>
+                        <!-- Address -->
+                        <div class="label label-position">
+                            <div>Address:</div>
+                        </div>
+                        <div>
+                            <input type="text" id="houseno" name="houseno" placeholder="123" class="houseno shadow" required>
+                            <input type="text" id="street" name="street" placeholder="Mabini Street" class="street shadow" required>
+                            <input type="text" id="barangay" name="barangay" placeholder="" class="barangay shadow" required>
+                            <input type="text" id="city" name="city" placeholder="Quezon City" class="city shadow" required>
+                            <input type="text" id="province" name="province" placeholder="Quezon" class="province shadow" required>
+                        </div>
+                        <div class="label label-position label-under">
+                            <div class="label-houseno">House No.</div>
+                            <div class="label-street">Street</div>
+                            <div class="label-barangay">Barangay</div>
+                            <div class="label-city">City</div>
+                            <div class="label-province">Province</div>
+                        </div>
+                        <!-- Contact Number -->
+                        <div class="label label-position">
+                            <div>Contact Number:</div>
+                        </div>
+                        <div>
+                            <input type="text" id="countrycode" name="countrycode" placeholder="+63" class="countrycode shadow" required>
+                            <input type="text" id="number" name="number" placeholder="123456789" class="number shadow" required>
+                        </div>
+                        <!-- Emergenct Contact -->
+                        <div class="header label-position">
+                            <div>Emergency Contact</div>
+                        </div>
+                        <div class="label label-position">
+                            <div style="width: 60%;">Name:</div>
+                            <div>Contact Number:</div>
+                        </div>
+                        <div style="display: flex; justify-content:left;">
+                            <div class="NameInput">
+                                <input type="text" id="ECfname" name="ECfirstname" placeholder="Maria" class="FNclass shadow" required>
+                                <input type="text" id="ECmi" name="ECMiddle Initial" placeholder="P" class="MIclass shadow" required>
+                                <input type="text" id="EClname" name="EClastname" placeholder="Detablurs" class="LNclass shadow" required>
+                            </div>
+                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;">
+                            <input type="text" id="ECnumber" name="ECnumber" placeholder="123456789" class="number shadow" required>
+                        </div>
+                        <div class="label label-position label-under">
+                            <div class="label-fn">First Name</div>
+                            <div class="label-mi">Middle Inital</div>
+                            <div class="label-ln">Last Name</div>
+                        </div>
+                        <!-- Appliances -->
+                        <div class="header label-position">
+                            <div>Appliances</div>
+                        </div>
+                        <div>
+                            <input type="text" id="appliance" name="appliance" placeholder="Rice cooker" class="appliance shadow" required>
+                            <input type="image" id="deleteappliance" src="/images/icons/Residents/delete.png" alt="Submit" class="deleteappliance">
+                        </div>
+                        <div>
+                            <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
+                        </div>
+                        <div class="displayflex">
+                            <input type="submit" class="btn-var-4" value="Add">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
