@@ -1,0 +1,220 @@
+/*====================General Content====================*/
+.displayflex{
+    display: flex;
+    justify-content: center;
+}
+.displayflex2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.header{
+    color: #344799;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.label{
+    color: rgba(2, 67, 154, 0.50);
+}
+
+.bg-custom {
+    background-color: #EDF6F7; /* Set the custom background color */
+}
+/* ======== Billings header CSS ======== */
+.blue-button{
+    width: 130px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+}
+
+.billings-content{
+    margin-top: 35px;
+}
+
+.billings-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.billings-header button{
+    height: 45px;
+}
+
+.direction-column{
+    flex-direction: column;
+}
+
+/* ======== Table CSS ======== */
+.table-section{
+    background-color: #EDF6F7;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+}
+
+
+.table-cont-1{
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+}
+
+.table-cont-1-1{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center; 
+}
+
+.table-cont-1-1 button{
+    height: 100%;
+}
+
+.search{
+    width: 210px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+    text-align: left;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search img{
+    height: 20px;
+}
+
+table {
+    margin: 30px 0 0 0;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #F4F6FF;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+th{
+    background-color: #344799;
+    color: white;
+}
+
+.table-section-footer{
+    margin-top: 30px;
+    color: #344799;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-link{
+    color:#344799;
+}
+
+.pagination .page-item:nth-child(2)  .page-link{
+    background-color:#344799;
+    color: white;
+}
+
+
+/* ======== Slider Tab CSS ======== */
+.tab-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(229,229,229);
+    position: relative;
+}
+
+.tab-box .tab-btn{
+    font-size: 18px;
+    font-weight: 600;
+    color: #919191;
+    background: none;
+    border: none;
+    padding: 18px;
+    cursor: pointer;
+}
+
+.tab-box .tab-btn.active{
+    color:#344799;
+}
+
+.content-box{
+    padding: 20px;
+}
+
+
+.content-box .content{
+    display: none;
+}
+
+.content-box .content.active{
+    display: block;
+}
+
+.line{
+    position: absolute;
+    top: 62px;
+    left: 0;
+    width: 90px;
+    height: 5px;
+    background-color:#344799;
+    border-radius: 10px;
+    transition: all .3s ease-in-out;
+}
+
+.unpaid th{
+    background-color: #00BA00;
+}
+.canceled th{
+    background-color: #D53737;
+}
+
+/* MODALS AND BUTTONS */
+.bg-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+.bg-btn img{
+    height: 35px;
+}
+
+.modalcolumn input[type=text], input[type=date],select{
+    margin-bottom: 15px
+}
+
+.modalcolumn input[type=date]{
+    padding: 4px 10px;
+}
+
+.modal-body select{
+    width: 40%;
+}
+
+.action{
+    padding: 0%;
+    height: 37.5px;  
+    border: none;
+}
+
+label{
+    color: rgba(2, 67, 154, 0.50);
+}
