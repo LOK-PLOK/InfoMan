@@ -19,9 +19,9 @@
     font-weight: 600;
 }
 
-nav, div, img{
+/* nav, div, img{
     border: red 0.5px solid;
-}
+} */
 
 .page-header { /* Style for page headers */
     color: #344799;
@@ -285,7 +285,7 @@ nav {
 }
 
 .modal-body input[type=date]{
-    padding: 1px 1px 1px 1px;
+    padding: 5px;
 }
 
 .modal-body select{

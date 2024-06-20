@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d13ff814c5.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/styles/billings.css">
 </head>
 <body>
     <!-- Sidebar -->
@@ -99,7 +100,7 @@
         <!-- Modal Buttons -->
         <div class="dashboard-button">
             <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#myModal"><img src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
-            <button class="btn-var-3"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
+            <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
             <button class="btn-var-3"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
         </div>
 
@@ -246,6 +247,52 @@
                         <div class="displayflex">
                             <input type="submit" class="btn-var-4" value="Add">
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-custom">
+                <div class="modal-header bg-custom">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-custom">
+                    <form action="/action_page.php">
+                        <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
+                        <select name="tenantName" id="tenantName">
+                            <option value="Maria P. Detablurs">Maria P. Detablurs</option>
+                            <option value="Nash Marie Abangan">Nash Marie Abangan</option>
+                        </select>
+                        <p class="small-text">Name</p>
+
+                        <label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
+                        <input type="text" id="paymentAmount" name="paymentAmount">
+                        <p class="small-text">Amount</p>
+
+                        <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
+                        <div class="month-allocated-cont">
+                            <div>
+                                <input type="date" id="startDate" name="startDate">
+                                <p class="small-text">Start Date</p>
+                            </div>
+                            <div>
+                                <input type="date" id="endDate" name="endDate">
+                                <p class="small-text">End Date</p>
+                            </div>
+                            
+                        </div>
+   
+                        <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
+                        <span class="custom-checkbox"></span>
+                        Transaction made by a non-tenant payer
+                        <div class="add-cont">
+                            <button class="btn-var-3 add-button">Add</button>
+                        </div>
+                        
                     </form>
                 </div>
             </div>
