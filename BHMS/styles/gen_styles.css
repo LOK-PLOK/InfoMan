@@ -9,6 +9,9 @@
 
  @import url('https://fonts.googleapis.com/css2?family=Mallanna&display=swap');  /* Importing Mallanna Font */
 
+
+
+
 /*====================UNIVERSAL STYLES====================*/
 
 * {
@@ -19,9 +22,9 @@
     font-weight: 600;
 }
 
-/* nav, div, img{
+nav, div, img{
     border: red 0.5px solid;
-} */
+}
 
 .page-header { /* Style for page headers */
     color: #344799;
@@ -35,7 +38,6 @@
 
 .shadow {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
-    border: 1px groove black;
     border-radius: 5px;
 }
 
@@ -45,7 +47,8 @@
     align-items: center;
 }
 
-/*---------------Content Container Styles---------------*/
+
+/*====================Content Container Styles====================*/
 .container-fluid {
     position: relative;
     background-color: white;
@@ -76,7 +79,9 @@
 }
 
 
-/*====================SIDEBAR STYLES====================*/
+
+
+/*====================Sidebar Styles====================*/
 
 /*---------------General Sidebar Styles---------------*/
 nav {
@@ -152,7 +157,8 @@ nav {
     color: white;
 }   
 
-.navigation-tabs a {
+.navigation-tabs a, 
+.sign-out a {
     cursor: pointer;
     color: #C6C6C6;
     text-decoration: none;
@@ -162,9 +168,16 @@ nav {
 .sign-out {
     margin-top: auto;
     padding-bottom: 30px;
+    cursor: pointer;
 }
 
-/*---------------Hamburger Styles---------------*/
+.sign-out a:hover .class-align-tabs{
+    background-color: #ff0800;
+    border-left: white solid 10px;
+    color: white;
+}
+
+/*====================Hamburger Styles====================*/
 .hamburger-sidebar {
     position: fixed;
     top: 0;
@@ -188,7 +201,9 @@ nav {
     }
 }
 
-/*---------------Button---------------*/
+
+
+/*====================Button====================*/
 .btn-var-1 {
     padding: 10px 20px;
     background-color: #344799; 
@@ -242,147 +257,7 @@ nav {
     border-radius: 2px;
 }
 
-/*---------------Modal Styles---------------*/
-.modal-content {
-    background-color: #edf6f7 !important;
-}
-
-/* Residents Modal */
-.modal-title{
-    color: #344799;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-/* Modal Body Area*/
-.label-position{
-    display: flex;
-}
-
-.label-under{
-    font-size: 9px;
-}
-
-.label-fn{
-    width: 25.3%;
-}
-
-.label-mi{
-    width: 7%;
-}
-
-.label-ln{
-    width: 25%;
-}
-
-.label-fn,.label-mi,.label-ln{
-    display: flex;
-    justify-content: center;
-}
-
-.modal-body input[type=text]{
-    padding: 3px 10px;
-}
-
-.modal-body input[type=date]{
-    padding: 5px;
-}
-
-.modal-body select{
-    padding: 1px 3px 3px 3px;
-    width: 12%;
-}
-
-/* Name */
-.NameInput{
-    width: 60%;
-}
-
-.FNclass{
-    width:43%;
-}
-
-.MIclass{
-    width: 8%;
-}
-
-.LNclass{
-    width: 45%;
-}
-
-.positioning{
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Address */
-.houseno{
-    width: 8%;
-}
-
-.street{
-    width: 25%;
-}
-
-.barangay{
-    width: 25%;
-}
-
-.city{
-    width: 24%;
-}
-
-.province{
-    width: 15%;
-}
-
-.label-houseno{
-    width: 8%;
-}
-
-.label-street{
-    width: 26%;
-}
-
-.label-barangay{
-    width: 25%;
-}
-
-.label-city{
-    width: 25%;
-}
-
-.label-province{
-    width: 15%;
-}
-
-.label-houseno,
-.label-street,
-.label-barangay,
-.label-city,
-.label-province{
-    display: flex;
-    justify-content: center;
-}
-
-/* Contact Number */
-.countrycode{
-    width: 8%;
-}
-
-/* Appliances */
-.deleteappliance{
-    height: 30px;
-    vertical-align: text-bottom;
-}
-
-.displayflex{
-    display: flex;
-    justify-content: center;
-}
-
-/* Delete modal */
-.btn-yes{
+.btn-var-6 {
     border: none;
     background-color: #344799;
     border-radius: 5px;
@@ -392,41 +267,25 @@ nav {
     margin: 0px 30px;
 }
 
-.btn-no{
-    border: none;
-    background-color: #344799;
-    border-radius: 5px;
-    color: white;
-    padding: 10px 35px;
-    font-size: 20px;
-    margin: 0px 30px;
-}
-
-.btn-yes:hover,
-.btn-no:hover{
+.btn-var-6:hover {
     background-color: rgba(0,0,0,0.10);
     color: #344799;
 }
 
-.btn-yes:active,.btn-no:active{
-    background-color: #5161aa;
-    color: white;
+/*====================Table Styles====================*/
+.styled-table thead tr th:nth-child(n+4),
+.styled-table tbody tr td:nth-child(n+4) {
+    display: none;
 }
 
-/* Tenant Information Modal */
-.split-left{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
+@media only screen and (min-width: 750px){
+    .styled-table thead tr th:nth-child(3),
+    .styled-table tbody tr td:nth-child(3) {
+        display: none;
+    }
 
-.split-right{   
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-footer-custom{
-    padding: 0px 15px;
-    border-radius: 10px;
+    .styled-table thead tr th:nth-child(n+4),
+    .styled-table tbody tr td:nth-child(n+4) {
+        display: table-cell;
+    }
 }

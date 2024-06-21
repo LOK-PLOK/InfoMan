@@ -1,79 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/styles/gen_styles.css">
-    <link rel="stylesheet" href="/styles/dashboard.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mallanna&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/d13ff814c5.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/styles/billings.css">
-</head>
-<body>
+<?php
+    require '../php/templates.php';
+    html_start('dashboard.css');
+?>
+
+    <!-- <link rel="stylesheet" href="/styles/billings.css"> -->
+
     <!-- Sidebar -->
-    <nav class="off-screen-menu">
-        <!-- Logo -->
-        <div class="bh-logo">
-            <img src="/images/MBH_logo.png" width="150px">
-        </div>
-        <!-- Navigation Tabs -->
-        <div class="navigation-tabs">
-            <a href="dashboard.html">
-                <div class="class-align-tabs class-align-tabs-active">
-                    <img src="/images/icons/Dashboard/Navigation Bar/dashboard_light.png">
-                    <h3 class="paddingleft">Dashboard</h3>
-                </div>
-            </a>
-            <a href="">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/statistics_dark.png">
-                    <h3 class="paddingleft">Statistics</h3>
-                </div>
-            </a>
-            <a href="residents.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/residents_dark.png">
-                    <h3 class="paddingleft">Residents</h3>
-                </div>
-            </a>
-            <a href="room_logs.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/room_logs_dark.png">
-                    <h3 class="paddingleft">Room Logs</h3>
-                </div>
-            </a>
-            <a href="billings.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/billing_dark.png">
-                    <h3 class="paddingleft">Billings</h3>
-                </div>
-             </a>
-            <a href="">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/maintenance_dark.png">
-                    <h3 class="paddingleft">Maintenance</h3>
-                </div>
-            </a>
-            <a href="settings.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
-                    <h3 class="paddingleft">Settings</h3>
-                </div>
-            </a>
-        </div>
-        <!-- Sign-out Button -->
-        <div class="sign-out">
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/logout.png">
-                <h3 class="paddingleft" style="color: white">Sign out</h3>
-            </div>
-        </div>
-    </nav>
+    <?php require '../php/navbar.php'; ?>
 
     <!-- Burger Sidebar -->
     <div class="hamburger-sidebar">
@@ -99,9 +32,9 @@
         
         <!-- Modal Buttons -->
         <div class="dashboard-button">
-            <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#myModal"><img src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
-            <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
-            <button class="btn-var-3"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
+            <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#myModal"><img src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
+            <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
+            <button class="btn-var-3 shadow"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
         </div>
 
         <!-- Overview -->
@@ -109,7 +42,7 @@
         <div class="row dashboard-icons-cont">
 
             <div class="col-auto">
-                <div class="dashboard-icons" style="background-color: #344799; color: white;">
+                <div class="dashboard-icons shadow" style="background-color: #344799; color: white;">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/user_light.png" alt="">
                         <div>30</div>
@@ -119,7 +52,7 @@
             </div>
 
             <div class="col-auto">
-                <div class="dashboard-icons">
+                <div class="dashboard-icons shadow">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/occupied_beds_dark.png" alt="">
                         <div>30</div>
@@ -129,7 +62,7 @@
             </div>
 
             <div class="col-auto">
-                <div class="dashboard-icons">
+                <div class="dashboard-icons shadow">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/available_beds_dark.png" alt="">
                         <div>30</div>
@@ -139,7 +72,7 @@
             </div>
 
             <div class="col-auto">
-                <div class="dashboard-icons">
+                <div class="dashboard-icons shadow">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/available_rooms_dark.png" alt="">
                         <div>30</div>
@@ -245,7 +178,7 @@
                             <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
                         </div>
                         <div class="displayflex">
-                            <input type="submit" class="btn-var-4" value="Add">
+                            <input type="submit" class="btn-var-4 shadow" value="Add">
                         </div>
                     </form>
                 </div>
@@ -253,6 +186,7 @@
         </div>
     </div>
 
+    <!-- Add Payment Modal -->
     <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-custom">
@@ -264,6 +198,7 @@
                     <form action="/action_page.php">
                         <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
                         <select name="tenantName" id="tenantName">
+                            <option value="" disabled selected>Select a tenant...</option>
                             <option value="Maria P. Detablurs">Maria P. Detablurs</option>
                             <option value="Nash Marie Abangan">Nash Marie Abangan</option>
                         </select>
@@ -301,5 +236,5 @@
 
     <script src="/js/general.js"></script>
 
-</body>
-</html>
+<?php html_end(); ?>
+

@@ -1,276 +1,207 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Residents</title>
-    <link rel="stylesheet" href="/styles/gen_styles.css">
-    <link rel="stylesheet" href="/styles/residents.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mallanna&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/d13ff814c5.js" crossorigin="anonymous"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <!-- Sidebar -->
-    <nav class="off-screen-menu">
-        <!-- Logo -->
-        <div class="bh-logo">
-            <img src="/images/MBH_logo.png" width="150px">
-        </div>
-        <!-- Navigation Tabs -->
-        <div class="navigation-tabs">
-            <a href="dashboard.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/dashboard_dark.png">
-                    <h3 class="paddingleft">Dashboard</h3>
-                </div>
-            </a>
-            <a href="">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/statistics_dark.png">
-                    <h3 class="paddingleft">Statistics</h3>
-                </div>
-            </a>
-            <a href="residents.html">
-                <div class="class-align-tabs class-align-tabs-active">
-                    <img src="/images/icons/Dashboard/Navigation Bar/residents_light.png">
-                    <h3 class="paddingleft">Residents</h3>
-                </div>
-            </a>
-            <a href="room_logs.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/room_logs_dark.png">
-                    <h3 class="paddingleft">Room Logs</h3>
-                </div>
-            </a>
-            <a href="billings.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/billing_dark.png">
-                    <h3 class="paddingleft">Billings</h3>
-                </div>
-             </a>
-            <a href="">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/maintenance_dark.png">
-                    <h3 class="paddingleft">Maintenance</h3>
-                </div>
-            </a>
-            <a href="settings.html">
-                <div class="class-align-tabs">
-                    <img src="/images/icons/Dashboard/Navigation Bar/setting_dark.png">
-                    <h3 class="paddingleft">Settings</h3>
-                </div>
-            </a>
-        </div>
-        <!-- Sign-out Button -->
-        <div class="sign-out">
-            <div class="class-align-tabs">
-                <img src="/images/icons/Dashboard/Navigation Bar/logout.png">
-                <h3 class="paddingleft" style="color: white">Sign out</h3>
+<?php
+    require '../php/templates.php';
+    html_start('residents.css');
+?>
+
+<!-- Sidebar -->
+<?php require '../php/navbar.php'; ?>
+
+<!-- Burger Sidebar -->
+<div class="hamburger-sidebar">
+    <i class="fa-solid fa-bars"></i>
+</div>
+
+<!-- Residents Contents -->
+<div class="container-fluid">
+
+    <!-- Heading Section -->
+    <div class="header-container">
+        <div class="left-content">
+            <div>
+                <span class="page-header">Residents</span><br>
+            </div>
+            <div class="left-content-button">
+                <!-- Button to open Modal -->
+                <button class="btn-var-1" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <img src="/images/icons/Residents/add_new_light.png" alt=""> Add New
+                </button>
             </div>
         </div>
-    </nav>
-
-    <!-- Burger Sidebar -->
-    <div class="hamburger-sidebar">
-        <i class="fa-solid fa-bars"></i>
+        <div class="right-content">
+            <div class="current-residents">
+                <span>Current Number of Residents</span>
+            </div>
+            <div class="right-child">
+                <img src="/images/icons/Residents/number_of_residents.png" alt="">
+                <div>30</div>
+            </div>
+        </div>
     </div>
-    
-    <!-- Residents Contents -->
-    <div class="container-fluid">
+        
 
-        <!-- Heading Section -->
-        <div class="header-container">
-            <div class="left-content">
-                <div>
-                    <span class="page-header">Residents</span><br>
-                </div>
-                <div class="left-content-button">
-                    <!-- Button to open Modal -->
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#myModal">
-                        <img src="/images/icons/Residents/add_new_light.png" alt=""> Add New
+    <!-- Table Layout -->
+    <div class="data-container">
+
+        <!-- Table Header -->
+        <header class="upper">
+            <!-- Leftside Area header -->
+            <div class="leftside-content">
+                <span class="text-color">Sort by:</span>
+                <div class="btn-group " style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="pe-5 fs-6">Category...</span>
                     </button>
-                </div>
-            </div>
-            <div class="right-content">
-                <div class="current-residents">
-                    <span>Current Number of Residents</span>
-                </div>
-                <div class="right-child">
-                    <img src="/images/icons/Residents/number_of_residents.png" alt="">
-                    <div>30</div>
-                </div>
-            </div>
-        </div>
-         
-
-        <!-- Table Layout -->
-        <div class="data-container">
-
-            <!-- Table Header -->
-            <header class="upper">
-                <!-- Leftside Area header -->
-                <div class="leftside-content">
-                    <span class="text-color">Sort by:</span>
-                    <div class="btn-group " style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <span class="pe-5 fs-6">Category...</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                          I Love you wehhhh
-                        </ul>
-                      </div>
-                </div>
-
-                <!-- Rightside Area header -->
-                <div class="rigthside-content">
-                    <form>
-                        <div class="search-container" style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
-                            <input type="text" id="search" name="search" placeholder="Search">
-                            <span class="search-icon"><i class="fas fa-search"></i></span>
-                        </div>
-                    </form>
-                </div>
-            </header>
-
-            <!-- Table Actual -->
-            <section class="table-data">
-                <table class="table table-bordered styled-table rounded-top rounded-bottom">
-                    <thead>
-                        <tr>
-                            <th>Residents Info</th>
-                            <th>Status</th>
-                            <th>Occupancy</th>
-                            <th>Room Code</th>
-                            <th>End Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <button style="float: left; width: 100%;" id="tenantinfo"  data-bs-toggle="modal" data-bs-target="#TenantInfo">
-                                    <div class="alignleft">
-                                        <span class="residenttile textstyle0 ">Maria P. Detablurs</span>
-                                    </div>
-                                    <div class="alignleft">
-                                        <span class="textstyle1">09123456789</span>
-                                    </div>
-                                    <div class="alignleft">
-                                        <span class="textstyle1">123 Mabini Street, Quezon City...</span>
-                                    </div>
-                                </button>
-                            </td>
-                            <td>
-                                <div class="resize">
-                                    <img src="/images/icons/Residents/active.jpg">
-                                    <span>Active</span>
-                                </div>
-                            </td>
-                            <td>Room</td>
-                            <td>B10101</td>
-                            <td>December 9, 2024</td>
-                            <td>
-                                <button id="openEditModalBtn" style="margin-right: 10px;">
-                                    <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editmyModal">
-                                </button>
-                                <button id="openDeleteModalBtn" style="margin-right: 10px;">
-                                    <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button style="float: left;">
-                                    <div class="alignleft">
-                                        <span class="residenttile textstyle0 ">Paninas O. Mahuyar</span>
-                                    </div>
-                                    <div class="alignleft">
-                                        <span class="textstyle1">09123456781</span>
-                                    </div>
-                                    <div class="alignleft">
-                                        <span class="textstyle1">Sampaguita Street, Buena Vista...</span>
-                                    </div>
-                                </button>
-                            </td>
-                            <td>
-                                <div class="resize">
-                                    <img src="/images/icons/Residents/active.jpg">
-                                    <span>Active</span>
-                                </div>   
-                            </td>
-                            <td>Bed-spacer</td>
-                            <td>B10102</td>
-                            <td>August 3,2024</td>
-                            <td>
-                                <button id="openEditModalBtn" style="margin-right: 10px;">
-                                    <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editmyModal">
-                                </button>
-                                <button id="openDeleteModalBtn" style="margin-right: 10px;">
-                                    <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button style="float: left;">
-                                    <div class="alignleft">
-                                        <span class="residenttile textstyle0 ">Casey L. Albangurz</span>
-                                    </div>
-                                    <div class="alignleft">
-                                        <span class="textstyle1">09187654321</span>
-                                    </div>
-                                    <div class="alignleft">
-                                        <span class="textstyle1">Narra Avenue, San Antonio, Cebu...</span>
-                                    </div>
-                                </button>
-                                </td>
-                            <td>
-                                <div class="resize">
-                                    <img src="/images/icons/Residents/inactive.jpg">
-                                    <span>Inactive</span>
-                                </div>   
-                            </td>
-                            <td>Bed-spacer</td>
-                            <td>B20201</td>
-                            <td>July 4, 2024</td>
-                            <td>
-                                <button id="openEditModalBtn" style="margin-right: 10px;">
-                                    <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editmyModal">
-                                </button>
-                                <button id="openDeleteModalBtn" style="margin-right: 10px;">
-                                    <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Additional rows can be added here -->
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- Pagination -->
-            <footer>
-                <div class="Leftside-portion">
-                    <Span class="text-color">Showing 1 page to 3 of 3 entries</Span>
-                </div>
-                <div class="Rightside-portion">
-                    <div class="Previous-Next">
-                    <button class="Previous">Previous</button>
-                    <Span class="current">1</Span>
-                    <button class="Next">Next</button>
+                    <ul class="dropdown-menu">
+                        I Love you wehhhh
+                    </ul>
                     </div>
+            </div>
+
+            <!-- Rightside Area header -->
+            <div class="rigthside-content">
+                <form>
+                    <div class="search-container" style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
+                        <input type="text" id="search" name="search" placeholder="Search">
+                        <span class="search-icon"><i class="fas fa-search"></i></span>
+                    </div>
+                </form>
+            </div>
+        </header>
+
+        <!-- Table Actual -->
+        <section class="table-data">
+            <table class="table table-bordered styled-table rounded-top rounded-bottom">
+                <thead>
+                    <tr>
+                        <th>Residents Info</th>
+                        <th>Status</th>
+                        <th>More</th>
+                        <th>Occupancy</th>
+                        <th>Room Code</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <button style="float: left; width: 100%;" id="tenantinfo"  data-bs-toggle="modal" data-bs-target="#TenantInfo">
+                                <div class="alignleft">
+                                    <span class="residenttile textstyle0 ">Maria P. Detablurs</span>
+                                </div>
+                                <div class="alignleft">
+                                    <span class="textstyle1">09123456789</span>
+                                </div>
+                                <div class="alignleft">
+                                    <span class="textstyle1">123 Mabini Street, Quezon City...</span>
+                                </div>
+                            </button>
+                        </td>
+                        <td>
+                            <div class="resize">
+                                <img src="/images/icons/Residents/active.jpg">
+                                <span>Active</span>
+                            </div>
+                        </td>
+                        <td>See more...</td>
+                        <td>Room</td>
+                        <td>B10101</td>
+                        <td>December 9, 2024</td>
+                        <td>
+                            <button id="openEditModalBtn" style="margin-right: 10px;">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editmyModal">
+                            </button>
+                            <button id="openDeleteModalBtn" style="margin-right: 10px;">
+                                <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button style="float: left;">
+                                <div class="alignleft">
+                                    <span class="residenttile textstyle0 ">Paninas O. Mahuyar</span>
+                                </div>
+                                <div class="alignleft">
+                                    <span class="textstyle1">09123456781</span>
+                                </div>
+                                <div class="alignleft">
+                                    <span class="textstyle1">Sampaguita Street, Buena Vista...</span>
+                                </div>
+                            </button>
+                        </td>
+                        <td>
+                            <div class="resize">
+                                <img src="/images/icons/Residents/active.jpg">
+                                <span>Active</span>
+                            </div>   
+                        </td>
+                        <td>See more...</td>
+                        <td>Bed-spacer</td>
+                        <td>B10102</td>
+                        <td>August 3,2024</td>
+                        <td>
+                            <button id="openEditModalBtn" style="margin-right: 10px;">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editmyModal">
+                            </button>
+                            <button id="openDeleteModalBtn" style="margin-right: 10px;">
+                                <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button style="float: left;">
+                                <div class="alignleft">
+                                    <span class="residenttile textstyle0 ">Casey L. Albangurz</span>
+                                </div>
+                                <div class="alignleft">
+                                    <span class="textstyle1">09187654321</span>
+                                </div>
+                                <div class="alignleft">
+                                    <span class="textstyle1">Narra Avenue, San Antonio, Cebu...</span>
+                                </div>
+                            </button>
+                            </td>
+                        <td>
+                            <div class="resize">
+                                <img src="/images/icons/Residents/inactive.jpg">
+                                <span>Inactive</span>
+                            </div>   
+                        </td>
+                        <td>See more...</td>
+                        <td>Bed-spacer</td>
+                        <td>B20201</td>
+                        <td>July 4, 2024</td>
+                        <td>
+                            <button id="openEditModalBtn" style="margin-right: 10px;">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editmyModal">
+                            </button>
+                            <button id="openDeleteModalBtn" style="margin-right: 10px;">
+                                <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Additional rows can be added here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Pagination -->
+        <footer>
+            <div class="Leftside-portion">
+                <Span class="text-color">Showing 1 page to 3 of 3 entries</Span>
+            </div>
+            <div class="Rightside-portion">
+                <div class="Previous-Next">
+                <button class="Previous">Previous</button>
+                <Span class="current">1</Span>
+                <button class="Next">Next</button>
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     </div>
+</div>
 
 <!-- Add Tenant Modal Revision-------------- -->
  <!-- Modal -->
@@ -331,9 +262,9 @@
                     </div>
                     <div>
                         <input type="text" id="countrycode" name="countrycode" placeholder="+63" class="countrycode shadow" required>
-                        <input type="text" id="number" name="number" placeholder="123456789" class="number shadow" required>
+                        <input type="number" id="number" name="number" placeholder="123456789" class="number shadow" required>
                     </div>
-                    <!-- Emergenct Contact -->
+                    <!-- Emergency Contact -->
                     <div class="header label-position">
                         <div>Emergency Contact</div>
                     </div>
@@ -433,7 +364,7 @@
                     </div>
                     <div>
                         <input type="text" id="Editcountrycode" name="Editcountrycode" placeholder="+63" class="countrycode shadow" required>
-                        <input type="text" id="Editnumber" name="Editnumber" placeholder="123456789" class="number shadow" required>
+                        <input type="number" id="Editnumber" name="Editnumber" placeholder="123456789" class="number shadow" required>
                     </div>
                     <!-- Emergenct Contact -->
                     <div class="header label-position">
@@ -450,7 +381,7 @@
                             <input type="text" id="EditEClname" name="EditEClastname" placeholder="Detablurs" class="LNclass shadow" required>
                         </div>
                         <input type="text" id="EditECcountrycode" name="EditECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;">
-                        <input type="text" id="EditECnumber" name="EditECnumber" placeholder="123456789" class="number shadow" required>
+                        <input type="number" id="EditECnumber" name="EditECnumber" placeholder="123456789" class="number shadow" required>
                     </div>
                     <div class="label label-position label-under">
                         <div class="label-fn">First Name</div>
@@ -469,18 +400,19 @@
                         <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
                     </div>
                     <div class="displayflex">
-                        <input type="submit" class="btn-var-4" value="Save">
+                        <input type="submit" class="btn-var-4 shadow" value="Save">
                     </div>
                   </form>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Delete Modal Revision-------------- -->
 <div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
+            <div class="modal-header bg-custom border-0">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="displayflex header bg-custom">
@@ -489,8 +421,8 @@
             <div class="modal-body bg-custom">
                 <form action="/action_page.php">
                     <div class="displayflex">
-                        <input type="button" name="Yes" id="Yesdelete" class="btn-yes" value="Yes">
-                        <input type="button" name="No" id="Nodelete" class="btn-no" value="No">
+                        <input type="button" name="Yes" id="Yesdelete" class="btn-var-6" value="Yes">
+                        <input type="button" name="No" id="Nodelete" class="btn-var-6" value="No">
                     </div>
                 </form>
             </div>
@@ -500,6 +432,7 @@
         </div>
     </div>
 </div>
+
 <!-- Tenant Information Modal-------------- -->
 <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -581,6 +514,6 @@
 </div>
 
 
-    <script src="/js/general.js"></script>
-</body>
-</html>
+<script src="/js/general.js"></script>
+
+<?php html_end(); ?>

@@ -13,6 +13,10 @@
 
 /*====================General Content====================*/
 
+.container-fluid {
+    height: 100vh;
+}
+
 .label{
     color: rgba(2, 67, 154, 0.50);
 }
