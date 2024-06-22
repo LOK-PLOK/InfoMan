@@ -2,14 +2,16 @@
  * @author: Nash Adam Muñoz
  * @co-authors: 
  * @filename: general_styles.css
- * @version: Alpha 1
+ * @version: Alpha 1.5
  * @lastupdate: June 14, 2024
  */
 
 
  @import url('https://fonts.googleapis.com/css2?family=Mallanna&display=swap');  /* Importing Mallanna Font */
 
-
+nav, div, img{
+    border: red 0.5px solid;
+}
 
 
 /*====================UNIVERSAL STYLES====================*/
@@ -20,10 +22,6 @@
     box-sizing: border-box;
     font-family: "Mallanna", sans-serif;
     font-weight: 600;
-}
-
-nav, div, img{
-    border: red 0.5px solid;
 }
 
 .page-header { /* Style for page headers */
@@ -222,7 +220,7 @@ nav {
     font-size: clamp(0.65rem, 2.5vw, 1rem);
 }
 
-.btn-var-3 {
+.btn-var-3 { /* Button with Image */
     width: 140px;
     background-color: #344799; 
     color: white;
@@ -288,4 +286,28 @@ nav {
     .styled-table tbody tr td:nth-child(n+4) {
         display: table-cell;
     }
+}
+
+
+/*====================General Table Styles====================*/
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+table td,
+table th,
+tbody {
+    border: 1px solid #344799;
+}
+
+table th,
+.styled-table thead tr th {
+    color: white;
+}
+
+table td {
+    background-color: white;
 }

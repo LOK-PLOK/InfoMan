@@ -167,6 +167,10 @@
     outline: none;
     border-color: #007bff;
 }
+
+
+
+
 /*====================Table Section====================*/
 
 /* Table Container */
@@ -181,39 +185,18 @@
 /* Table css */
 .styled-table {
     width: 100%; 
-    border: 1px solid #344799; 
     border-collapse: collapse; 
-}
-
-.styled-table th,
-.styled-table td {
-    border: 1px solid #344799;
-    padding: 10px;
-    text-align: center; 
 }
 
 .styled-table thead tr th {
     background-color: #344799;
-    color: white;
-    border: 1px solid #344799;
-    padding: -2px;
-}
-
-.styled-table tbody:last-child {
-    background-color: #faf9f6;
-    border-left: 3px solid #344799;
-    border-right: 3px solid #344799;
-    border-bottom: 3px solid #344799;
 }
 
 .styled-table tbody tr td {
-    border: 2px solid #344799;
-    text-align: center; 
     vertical-align: middle; 
 }
 
 .styled-table {
-    border-radius: 30px; 
     overflow: hidden;
 }
 .alignleft {
