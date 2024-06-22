@@ -207,7 +207,7 @@ th {
     height: 35px;
 }
 
-/* .modalcolumn input[type=text], input[type=date],select{
+.modalcolumn input[type=text], input[type=date],select{
     margin-bottom: 15px
 }
 
@@ -217,33 +217,6 @@ th {
 
 .modal-body select{
     width: 40%;
-} */
-
-/* Ensure consistent alignment and spacing */
-.modalcolumn .row {
-    align-items: center; /* Vertical center alignment */
-    margin-bottom: 10px; /* Space between rows */
-}
-
-.modalcolumn .col-md-4 {
-    display: flex;
-    justify-content: flex-end; /* Align labels to the right */
-    padding-right: 10px; /* Optional padding for better spacing */
-}
-
-.modalcolumn .col-md-8 {
-    display: flex;
-    align-items: center; /* Vertically center-align input fields */
-}
-
-.form-label {
-    margin-bottom: 0; /* Remove extra bottom margin */
-    padding-top: 5px; /* Add some padding to align with inputs */
-}
-
-.form-control, .form-select {
-    width: 100%; /* Ensure full width */
-    box-shadow: none; /* Remove extra shadow for cleaner look */
 }
 
 .action{
@@ -255,4 +228,3 @@ th {
 label{
     color: rgba(2, 67, 154, 0.50);
 }
-
