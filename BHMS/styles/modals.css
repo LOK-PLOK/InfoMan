@@ -2,6 +2,7 @@
 
 .modal-content {
     background-color: #edf6f7 !important;
+    padding: 0 20px;
 }
 
 .modal-content input,
@@ -18,9 +19,21 @@
 .modal-content input[type=date],
 .modal-content select {
     padding: 3px 10px;
+    border-radius: 10px;
 }
 
+.input-label {
+    color: #02449a80;
+}
 
+.input-sub-label {
+    font-size: 9px;
+    color: #02449a80;
+}
+
+.modal-content input:disabled{
+    background-color: #D5DDDE;
+}
 
 /*====================Add/Edit Tenant Styles====================*/
 
@@ -58,19 +71,6 @@
     display: flex;
     justify-content: center;
 }
-
-/* .modal-body input[type=text]{
-    padding: 3px 10px;
-}
-
-.modal-body input[type=date]{
-    padding: 5px;
-}
-
-.modal-body select{
-    padding: 1px 3px 3px 3px;
-    width: 12%;
-} */
 
 /* Name */
 .NameInput{
@@ -233,11 +233,6 @@
     margin: 5px; 
 }
 
-div.modal-content.bg-custom {
-    /* your styles here */
-    padding: 0px 20px;
-}
-
 .billings-modal-labels{
     color: #02439A;
 }
@@ -256,6 +251,4 @@ div.modal-content.bg-custom {
     color: rgb(126, 126, 126);
 }
 
-#end-date:disabled{
-    background-color: #D5DDDE;
-}
+

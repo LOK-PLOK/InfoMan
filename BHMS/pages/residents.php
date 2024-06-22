@@ -47,8 +47,8 @@
             <!-- Leftside Area header -->
             <div class="leftside-content">
                 <span class="text-color">Sort by:</span>
-                <div class="btn-group " style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="pe-5 fs-6">Category...</span>
                     </button>
                     <ul class="dropdown-menu">
@@ -60,7 +60,7 @@
             <!-- Rightside Area header -->
             <div class="rigthside-content">
                 <form>
-                    <div class="search-container" style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
+                    <div class="search-container shadow">
                         <input type="text" id="search" name="search" placeholder="Search">
                         <span class="search-icon"><i class="fas fa-search"></i></span>
                     </div>
@@ -70,7 +70,7 @@
 
         <!-- Table Actual -->
         <section class="table-data">
-            <table class="table table-bordered styled-table rounded-top rounded-bottom">
+            <table class="table styled-table">
                 <thead>
                     <tr>
                         <th>Residents Info</th>
@@ -413,10 +413,10 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-custom">
             <div class="modal-header bg-custom border-0">
+                <div class="displayflex header bg-custom">
+                    <span style="font-size: 25px;">Are you Sure you want to delete this tenant?</span>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="displayflex header bg-custom">
-                <span style="font-size: 25px;">Are you Sure you want to delete this tenant?</span>
             </div>
             <div class="modal-body bg-custom">
                 <form action="/action_page.php">
@@ -428,6 +428,8 @@
             </div>
             <div class="displayflex bg-custom label" style="border-radius: 10px;">
                 <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
+            </div>
+            <div class="modal-footer">
             </div>
         </div>
     </div>

@@ -61,13 +61,14 @@
                                     <td>250.00</td>
                                     <td>Door Repair</td>
                                     <td>May 20, 2024</td>
-                                    <td>
-                                    <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                                    </button>
-                                    <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                                    </button>
+
+                                    <td class="action-buttons">
+                                        <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
+                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                                        </button>
+                                        <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
+                                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -75,7 +76,7 @@
                                     <td>500.00</td>
                                     <td>General cleaning</td>
                                     <td>May 30, 2024</td>
-                                    <td>
+                                    <td class="action-buttons">
                                     <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
                                         <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                     </button>
@@ -126,7 +127,7 @@
                                     <td>250.00</td>
                                     <td>Door Repair</td>
                                     <td>May 12, 2024</td>
-                                    <td>
+                                    <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
@@ -140,7 +141,7 @@
                                     <td>400.00</td>
                                     <td>Ceiling repair</td>
                                     <td>April 26, 2024</td>
-                                    <td>
+                                    <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
@@ -154,7 +155,7 @@
                                     <td>800.00</td>
                                     <td>Air conditioner to be fixed</td>
                                     <td>Feb 2, 2024</td>
-                                    <td>
+                                    <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
@@ -168,7 +169,7 @@
                                     <td>200.00</td>
                                     <td>Bed repair</td>
                                     <td>January 13, 2024</td>
-                                    <td>
+                                    <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
@@ -182,7 +183,7 @@
                                     <td>500.00</td>
                                     <td>General cleaning</td>
                                     <td>December 7, 2023</td>
-                                    <td>
+                                    <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
@@ -233,13 +234,15 @@
                                     <td>250.00</td>
                                     <td>Door Repair</td>
                                     <td>April 30, 2024</td>
-                                    <td>
-                                    <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                                    </button>
-                                    <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                                    </button>
+
+                                    <td class="action-buttons">
+                                        <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                                        </button>
+                                        <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
+                                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                                        </button>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -247,13 +250,15 @@
                                     <td>500.00</td>
                                     <td>General cleaning</td>
                                     <td>January 28, 2024</td>
-                                    <td>
-                                    <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                                    </button>
-                                    <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                                    </button>
+
+                                    <td class="action-buttons">
+                                        <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                                        </button>
+                                        <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
+                                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                                        </button>
+
                                     </td>
                                 </tr>
                             </table>
