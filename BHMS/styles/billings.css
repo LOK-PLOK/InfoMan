@@ -83,7 +83,6 @@ table {
     /* margin: 30px 0 0 0; */
     border-collapse: collapse;
     width: 100%;
-    background-color: #F4F6FF;
 }
   
 td, 
@@ -101,6 +100,10 @@ th{
 
 .red-th th{
     background-color: #D53737;
+}
+
+.action-buttons button {
+    background-color: white;
 }
 
 
