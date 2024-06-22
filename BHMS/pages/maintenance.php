@@ -20,7 +20,7 @@
         <div>
             <span class="page-header">Maintenance</span><br>
         </div>
-        <button type="button" class="btn-var-1 bg-btn" data-bs-toggle="modal" data-bs-target="#addModal">
+        <button type="button" class="btn-var-1 bg-btn" data-bs-toggle="modal" data-bs-target="#add-modal-info">
             <img src="/images/icons/Residents/add_new_light.png" alt=""> Add Maintenance
         </button>
     </div>
@@ -61,9 +61,10 @@
                                     <td>250.00</td>
                                     <td>Door Repair</td>
                                     <td>May 20, 2024</td>
+
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -77,7 +78,7 @@
                                     <td>May 30, 2024</td>
                                     <td class="action-buttons">
                                     <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                     </button>
                                     <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                         <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -128,7 +129,7 @@
                                     <td>May 12, 2024</td>
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -142,7 +143,7 @@
                                     <td>April 26, 2024</td>
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -156,7 +157,7 @@
                                     <td>Feb 2, 2024</td>
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -170,7 +171,7 @@
                                     <td>January 13, 2024</td>
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -184,7 +185,7 @@
                                     <td>December 7, 2023</td>
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
@@ -233,13 +234,15 @@
                                     <td>250.00</td>
                                     <td>Door Repair</td>
                                     <td>April 30, 2024</td>
+
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                                         </button>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -247,13 +250,15 @@
                                     <td>500.00</td>
                                     <td>General cleaning</td>
                                     <td>January 28, 2024</td>
+
                                     <td class="action-buttons">
                                         <button id="openEditModalBtn" style="margin-right: 10px;border: none;">
-                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                         </button>
                                         <button id="openDeleteModalBtn" style="margin-right: 10px;border: none;">
                                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                                         </button>
+
                                     </td>
                                 </tr>
                             </table>
@@ -280,7 +285,7 @@
 </div>
 
 <!-- Add MODAL -->
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-custom">
             <div class="modal-header bg-custom">
@@ -315,10 +320,150 @@
             </div>
         </div>
     </div>
+</div> -->
+
+<!-- Revision Add MODAL -->
+<div class="modal fade" id="add-modal-info" tabindex="-1" aria-labelledby="add-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-custom">
+            <div class="modal-header bg-custom">
+                <h5 class="modal-title" id="add-modal">Add Maintenance</h5>
+                <button type="button" class="btn-close" id="addCloseButton" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-custom">
+                <form action="/action_page.php" class="modalcolumn">
+                    <!-- Row 1: Room Code -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="roomcode" class="form-label">Room Code:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="roomcode" name="roomcode" placeholder="Enter room code..." class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Row 2: Date -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                           <label for="date" class="form-label">Date:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="date" id="date" name="date" class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Row 3: Reason -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="reason" class="form-label">Reason:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="reason" name="reason" placeholder="Enter a reason..." class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Row 4: Status -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="status" class="form-label">Status:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="status" name="status" class="form-select shadow" required>
+                                <option value="" disabled selected>Choose the status...</option>
+                                <option value="On-going">On-going</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Canceled">Canceled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Row 5: Maintenance Cost -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="maintenancecost" class="form-label">Maintenance Cost:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="maintenancecost" name="maintenancecost" placeholder="Enter the cost..." class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="displayflex">
+                        <input type="submit" class="btn-var-2" value="Add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Revision Edit MODAL -->
+<div class="modal fade" id="edit-modal-info" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-custom">
+            <div class="modal-header bg-custom">
+                <h5 class="modal-title" id="edit-modal">Room Maintenance Information</h5>
+                <button type="button" class="btn-close" id="editCloseButton" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-custom">
+                <form action="/action_page.php" class="modalcolumn">
+                    <!-- Row 1: Room Code -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="edit-roomcode" class="form-label">Room Code:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="edit-roomcode" name="edit-roomcode" placeholder="Enter room code..." class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Row 2: Date -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                           <label for="edit-date" class="form-label">Date:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="date" id="edit-date" name="edit-date" class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Row 3: Reason -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="edit-reason" class="form-label">Reason:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="edit-reason" name="edit-reason" placeholder="Enter a reason..." class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Row 4: Status -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="edit-status" class="form-label">Status:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="edit-status" name="edit-status" class="form-select shadow" required>
+                                <option value="" disabled selected>Choose the status...</option>
+                                <option value="On-going">On-going</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Canceled">Canceled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Row 5: Maintenance Cost -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4 text-md-end">
+                            <label for="edit-maintenance-cost" class="form-label">Maintenance Cost:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="edit-maintenance-cost" name="edit-maintenance-cost" placeholder="Enter the cost..." class="form-control shadow" required>
+                        </div>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="displayflex">
+                        <input type="submit" class="btn-var-2" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Edit MODAL -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-custom">
             <div class="modal-header bg-custom">
@@ -353,7 +498,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Delete Modal Revision-------------- -->
 <div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -363,13 +508,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="displayflex header bg-custom">
-                <span style="font-size: 25px;">Are you Sure you want to delete this tenant <br><span style="display: flex;justify-content: center;">maintenance information?</span></span>
+                <span style="font-size: 25px;">Are you sure you want to delete this tenant <br><span style="display: flex;justify-content: center;">maintenance information?</span></span>
             </div>
             <div class="modal-body bg-custom">
                 <form action="/action_page.php">
                     <div class="displayflex">
-                        <input type="button" name="Yes" id="Yesdelete" class="btn-yes" value="Yes">
-                        <input type="button" name="No" id="Nodelete" class="btn-no" value="No">
+                        <input type="button" name="Yes" id="Yesdelete" class="btn-var-2 ms-4 me-4" value="Yes">
+                        <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" value="No">
                     </div>
                 </form>
             </div>
@@ -396,10 +541,10 @@
         }
 
         // Setup closing for AddModal
-        setupModalClose('addModal', 'addCloseButton');
+        setupModalClose('add-modal-info', 'addCloseButton');
 
         // Setup closing for EditModal
-        setupModalClose('editModal', 'editCloseButton');
+        setupModalClose('edit-modal-info', 'editCloseButton');
     });
 </script>
 <script src="/js/general.js"></script>
