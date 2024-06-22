@@ -1,6 +1,11 @@
 <?php
+
+    $more_links = '
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/styles/residents.css">';
+
     require '../php/templates.php';
-    html_start('dashboard.css');
+    html_start('dashboard.css', $more_links);
 ?>
 
 <!-- Sidebar -->
