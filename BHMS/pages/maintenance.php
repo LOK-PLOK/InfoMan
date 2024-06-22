@@ -37,8 +37,10 @@
                     <div class="line"></div>
                 </div>
                 <div class="content-box">
+
+                    <!-- On-going -->
                     <div class="content active">
-                        <div class="table-section">
+                        <div class="table-section styled-table">
                             <div class="table-cont-1" >
                                 <div class="table-cont-1-1">
                                     <span>Sort By</span>
@@ -49,16 +51,21 @@
                             </div>
                             
                             <table>
+                                <thead>
                                 <tr>
                                     <th>Room Code</th>
                                     <th>Cost</th>
+                                    <th>More</th>
                                     <th>Reason</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td>B10101</td>
                                     <td>250.00</td>
+                                    <td>See more...</td>
                                     <td>Door Repair</td>
                                     <td>May 20, 2024</td>
 
@@ -74,6 +81,7 @@
                                 <tr>
                                     <td>B20102</td>
                                     <td>500.00</td>
+                                    <td>See more...</td>
                                     <td>General cleaning</td>
                                     <td>May 30, 2024</td>
                                     <td class="action-buttons">
@@ -85,6 +93,7 @@
                                     </button>
                                 </td>
                                 </tr>
+                                </tbody>
                             </table>
         
                             <span class="table-section-footer" >
@@ -103,8 +112,9 @@
                         </div>
                     </div>
 
+                    <!-- Completed -->
                     <div class="content">
-                        <div class="table-section">
+                        <div class="table-section styled-table">
                             <div class="table-cont-1" >
                                 <div class="table-cont-1-1">
                                     <span>Sort By</span>
@@ -115,16 +125,21 @@
                             </div>
                             
                             <table>
+                                <thead>
                                 <tr class="unpaid">
                                     <th>Room Code</th>
                                     <th>Cost</th>
+                                    <th>More</th>
                                     <th>Reason</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td>B10203</td>
                                     <td>250.00</td>
+                                    <td>See more...</td>
                                     <td>Door Repair</td>
                                     <td>May 12, 2024</td>
                                     <td class="action-buttons">
@@ -139,6 +154,7 @@
                                 <tr>
                                     <td>10102</td>
                                     <td>400.00</td>
+                                    <td>See more...</td>
                                     <td>Ceiling repair</td>
                                     <td>April 26, 2024</td>
                                     <td class="action-buttons">
@@ -153,6 +169,7 @@
                                 <tr>
                                     <td>20204</td>
                                     <td>800.00</td>
+                                    <td>See more...</td>
                                     <td>Air conditioner to be fixed</td>
                                     <td>Feb 2, 2024</td>
                                     <td class="action-buttons">
@@ -167,6 +184,7 @@
                                 <tr>
                                     <td>B20101</td>
                                     <td>200.00</td>
+                                    <td>See more...</td>
                                     <td>Bed repair</td>
                                     <td>January 13, 2024</td>
                                     <td class="action-buttons">
@@ -181,6 +199,7 @@
                                 <tr>
                                     <td>10204</td>
                                     <td>500.00</td>
+                                    <td>See more...</td>
                                     <td>General cleaning</td>
                                     <td>December 7, 2023</td>
                                     <td class="action-buttons">
@@ -192,6 +211,7 @@
                                         </button>
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
         
                             <span class="table-section-footer" >
@@ -210,8 +230,9 @@
                         </div>
                     </div>
 
+                    <!-- Canceled -->
                     <div class="content">
-                        <div class="table-section">
+                        <div class="table-section styled-table">
                             <div class="table-cont-1" >
                                 <div class="table-cont-1-1">
                                     <span>Sort By</span>
@@ -222,16 +243,21 @@
                             </div>
                             
                             <table>
+                                <thead>
                                 <tr class="canceled">
                                     <th>Room Code</th>
                                     <th>Cost</th>
+                                    <th>More</th>
                                     <th>Reason</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td>B20101</td>
                                     <td>250.00</td>
+                                    <td>See more...</td>
                                     <td>Door Repair</td>
                                     <td>April 30, 2024</td>
 
@@ -248,6 +274,7 @@
                                 <tr>
                                     <td>B10104</td>
                                     <td>500.00</td>
+                                    <td>See more...</td>
                                     <td>General cleaning</td>
                                     <td>January 28, 2024</td>
 
@@ -261,6 +288,7 @@
 
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
         
                             <span class="table-section-footer" >
@@ -283,44 +311,6 @@
         </div>
     </div>
 </div>
-
-<!-- Add MODAL -->
-<!-- <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
-                <h5 class="modal-title" id="addModalLabel">Add Maintenance</h5>
-                <button type="button" class="btn-close" id="addCloseButton" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-custom">
-                <form action="/action_page.php" class="modalcolumn">
-                    <label for="roomcode">Room Code:</label>
-                    <input type="text" id="roomcode" name="roomcode" placeholder="Enter room code..." class="roomcode shadow" required><br>
-
-                    <label for="date">Date:</label>
-                    <input type="date" id="date" name="date" class="date shadow" required><br>
-
-                    <label for="reason">Reason</label>
-                    <input type="text" id="reason" name="reason" placeholder="Enter a reason..." class="reason shadow" required><br>
-
-                    <label for="status">Status</label>
-                    <select id="status" name="status" class="status shadow" required>
-                        <option value="" disabled selected>Choose the status...</option>
-                        <option value="On-going">On-going</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Canceled">Canceled</option>
-                    </select><br>
-
-                    <label for="maintenancecost">Maintenance Cost:</label>
-                    <input type="text" id="maintenancecost" name="maintenancecost" placeholder="Enter the cost..." class="maintenancecost shadow" required><br>
-                    <div class="displayflex">
-                        <input type="submit" class="btn-var-2" value="Add">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 <!-- Revision Add MODAL -->
 <div class="modal fade" id="add-modal-info" tabindex="-1" aria-labelledby="add-modal" aria-hidden="true">
@@ -462,53 +452,15 @@
     </div>
 </div>
 
-<!-- Edit MODAL -->
-<!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
-                <h5 class="modal-title" id="editModalLabel">Edit Maintenance</h5>
-                <button type="button" class="btn-close" id="editCloseButton" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-custom">
-                <form action="/action_page.php" class="modalcolumn">
-                    <label for="roomcode">Room Code:</label>
-                    <input type="text" id="roomcode" name="roomcode" placeholder="Enter room code..." class="roomcode shadow" required><br>
-
-                    <label for="date">Date:</label>
-                    <input type="date" id="date" name="date" class="date shadow" required><br>
-
-                    <label for="reason">Reason</label>
-                    <input type="text" id="reason" name="reason" placeholder="Enter a reason..." class="reason shadow" required><br>
-
-                    <label for="status">Status</label>
-                    <select id="status" name="status" class="status shadow" required>
-                        <option value="" disabled selected>Choose the status...</option>
-                        <option value="On-going">On-going</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Canceled">Canceled</option>
-                    </select><br>
-
-                    <label for="maintenancecost">Maintenance Cost:</label>
-                    <input type="text" id="maintenancecost" name="maintenancecost" placeholder="Enter the cost..." class="maintenancecost shadow" required><br>
-                    <div class="displayflex">
-                        <input type="submit" class="btn-var-2" value="Edit">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <!-- Delete Modal Revision-------------- -->
 <div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-custom">
             <div class="modal-header bg-custom">
+                <div class="displayflex header bg-custom">
+                    <span style="font-size: 25px;">Are you sure you want to delete this maintenance information?</span></span>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="displayflex header bg-custom">
-                <span style="font-size: 25px;">Are you sure you want to delete this tenant <br><span style="display: flex;justify-content: center;">maintenance information?</span></span>
             </div>
             <div class="modal-body bg-custom">
                 <form action="/action_page.php">
@@ -521,6 +473,7 @@
             <div class="displayflex bg-custom label" style="border-radius: 10px;">
                 <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
             </div>
+            <div class="modal-footer"></div>
         </div>
     </div>
 </div>

@@ -207,18 +207,6 @@ th {
     height: 35px;
 }
 
-/* .modalcolumn input[type=text], input[type=date],select{
-    margin-bottom: 15px
-}
-
-.modalcolumn input[type=date]{
-    padding: 4px 10px;
-}
-
-.modal-body select{
-    width: 40%;
-} */
-
 /* Ensure consistent alignment and spacing */
 .modalcolumn .row {
     align-items: center; /* Vertical center alignment */

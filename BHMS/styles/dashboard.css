@@ -26,12 +26,14 @@ body {
 }
 
 /* Notification Bell */
-.notification {
+.notification-group {
     position: fixed;
     top: 0;
     right: 0;
     margin: 20px;
     padding: 0 5px;
+    cursor: pointer;
+    z-index: 1000;
 }
 
 .notification img {
@@ -50,6 +52,33 @@ body {
     width: 16px; 
     height: 16px; 
     line-height: 1px; 
+}
+
+.dropdown-menu {
+    background-color: #edf6f7 !important;
+    width: 350px !important;
+    max-height: 600px !important;
+    overflow: scroll;
+}
+
+.dropdown-menu > li {
+    padding: 5px;
+}
+
+.dropdown-menu > li:last-child {
+    border-bottom: none !important;
+}
+
+
+.notification-item-head {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-item-body {
+    color: rgb(76, 76, 76);
+    font-size: 14px;
 }
 
 

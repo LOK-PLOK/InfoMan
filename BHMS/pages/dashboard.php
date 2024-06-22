@@ -13,10 +13,72 @@
 
 <!-- Dashboard Section -->
 <div class="container-fluid">
+
     <!-- Notification Bell -->
-    <div class="notification">
-        <div class="notification-num">10</div>
-        <img src="/images/icons/Dashboard/notification_bell.png">
+    <div class="notification-group">
+        <div class="notification" type="button" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+            <div class="notification-num">10</div>
+            <img src="/images/icons/Dashboard/notification_bell.png">
+        </div>
+        <ul class="notification-dd dropdown-menu dropdown-menu-end ">
+            <li><h6 class="dropdown-header">Recent Notifications</h6></li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Maintenance</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Billings</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Maintenance</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Billings</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Maintenance</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Billings</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+            <li class="border-bottom border-1">
+                <div class="dropdown-item text-wrap">
+                    <span class="notification-item-head">Maintenance</span><br>
+                    <div style="padding-left: 10px">
+                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div> 
 
     <!-- Header -->

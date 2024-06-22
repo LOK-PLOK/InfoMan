@@ -65,7 +65,7 @@
                             </div>
                         </header>
             
-                        
+                        <!-- Paid -->
                         <div class="content active">
                             <!-- ---------------------------------------- -->
                             <table>
@@ -147,6 +147,7 @@
                             </table>
                         </div>
 
+                        <!-- Unpaid -->
                         <div class="content">
                             <table>
                               <thead>
@@ -227,6 +228,7 @@
                             </table>
                         </div>
 
+                        <!-- Overdue -->
                         <div class="content">
                             <table>
                               <thead>
