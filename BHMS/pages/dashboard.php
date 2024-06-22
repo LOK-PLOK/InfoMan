@@ -1,6 +1,11 @@
 <?php
+
+    $more_links = '
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/styles/residents.css">';
+
     require '../php/templates.php';
-    html_start('dashboard.css');
+    html_start('dashboard.css', $more_links);
 ?>
 
 <!-- Sidebar -->
@@ -245,52 +250,73 @@
     </div>
 </div>
 
-<!-- Add Payment Modal -->
-<div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-custom">
-                <form action="/action_page.php">
-                    <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
-                    <select name="tenantName" id="tenantName">
-                        <option value="" disabled selected>Select a tenant...</option>
-                        <option value="Maria P. Detablurs">Maria P. Detablurs</option>
-                        <option value="Nash Marie Abangan">Nash Marie Abangan</option>
-                    </select>
-                    <p class="small-text">Name</p>
+<!--------------- ADD PAYMENT MODAL --------------->
+<div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content bg-custom">
+			<div class="modal-header bg-custom">
+				<h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body bg-custom">
+				<form action="/action_page.php">
+					<label class="billings-modal-labels" for="tenantName">Tenant Information</label>
+					<select name="tenantName" id="tenantName">
+						<option value="">Select Tenant</option>
+						<option value="Maria P. Detablurs">Maria P. Detablurs</option>
+						<option value="Nash Marie Abangan">Nash Marie Abangan</option>
+					</select>
+					<p class="small-text">Name</p>
+					<label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
+					<input type="text" id="paymentAmount" name="paymentAmount">
+					<p class="small-text">Amount</p>
 
-                    <label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
-                    <input type="text" id="paymentAmount" name="paymentAmount">
-                    <p class="small-text">Amount</p>
+					<label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
+					<div class="month-allocated-cont">
+						<div>
+							<input type="date" id="start-date" name="start-date">
+							<p class="small-text">Start Date</p>
+						</div>
+						<div>
+							<input type="date" id="end-date" name="end-date" disabled>
+							<p class="small-text">End Date</p>
+						</div>
+						
+					</div>
 
-                    <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
-                    <div class="month-allocated-cont">
-                        <div>
-                            <input type="date" id="startDate" name="startDate">
-                            <p class="small-text">Start Date</p>
-                        </div>
-                        <div>
-                            <input type="date" id="endDate" name="endDate">
-                            <p class="small-text">End Date</p>
-                        </div>
-                        
-                    </div>
+					<input type="checkbox" id="non-tenant-check" name="non-tenant-check">
+					<span class="custom-checkbox">Transaction made by a non-tenant payer</span>
+					
+					<div class="payer-details">
+					<label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
+					<div class="payer-info">
+					<div>
+						<input type="text" id="payer-fname" name="payer-fname">
+						<p class="small-text">First Name</p>
+					</div>
+					
+					<div>
+						<input type="text" id="payer-MI" name="payer-MI">
+						<p class="small-text">M.I</p>
+					</div>
+					
+					<div>
+						<input type="text" id="payer-lname" name="payer-lname">
+						<p class="small-text">Last Name</p>
+					</div>
+					
+					</div>
 
-                    <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
-                    <span class="custom-checkbox"></span>
-                    Transaction made by a non-tenant payer
-                    <div class="add-cont">
-                        <button class="btn-var-3 add-button">Add</button>
-                    </div>
-                    
-                </form>
-            </div>
-        </div>
-    </div>
+					</div>
+
+					<div class="add-cont">
+						<button class="btn-var-3 add-button">Add</button>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Add New Rent Modal -->
@@ -359,7 +385,18 @@
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="/js/general.js"></script>
+<script src="/js/sliding-tab.js"></sc>
+<script src="/js/date.js"></script>
+<script src="/js/checkbox.js"></script>
+<script>
+    $(function(){
+        $("#tenantName").selectize();
+    }); 
+</script>
 
 <?php html_end(); ?>
 

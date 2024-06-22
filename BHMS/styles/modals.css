@@ -216,8 +216,10 @@
 
 #addPaymentModal input[type=text], 
 #tenantName,
+.searchable-drop-down,
 #monthAllocated, 
-.selectize-input{
+.selectize-control .selectize-input,
+.rounded-inputs{
     width: 100%;
     margin: 8px 0;
     padding: 7px;
@@ -228,9 +230,26 @@
     border-radius: 8px;
 }
 
+.uniform-aligned-inputs{
+    width: 70%;
+}
+
+.selectize-control.single .selectize-input{
+    height: 38px;
+}
+
+.selectize-input.items.not-full.has-options, .selectize-input.items.has-options.full.has-items {
+    display: flex;
+    align-items: center;
+}
+
 #addPaymentModal input[type="checkbox"] {
     transform: scale(1.5);
     margin: 5px; 
+}
+
+div.modal-content.bg-custom {
+    padding: 0px 20px;
 }
 
 .billings-modal-labels{
@@ -251,4 +270,41 @@
     color: rgb(126, 126, 126);
 }
 
+#end-date:disabled{
+    background-color: #D5DDDE;
+}
+
+/* ======== PAYER INFO CSS ======== */
+form .payer-info{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+}
+
+form .payer-info #payer-MI{
+    width: 30px;
+}
+
+.payer-details{
+    margin-top: 25px;
+    display: none;
+}
+
+/* EDIT BILLINGS MODAL */
+.edit-billings-cont{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-billings-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.light-blue-text{
+    color: #6187b5;
+    margin: 0;
+}
 
