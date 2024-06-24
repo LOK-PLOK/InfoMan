@@ -65,10 +65,9 @@ DashboardViews::dashboard_header();
 <!-- Add Tenant Modal -->
 <?php 
 
-DashboardViews::add_tenant_model_view(); 
+DashboardViews::add_tenant_model_view();
 
-if(isset($_POST['create-tenant-submit'])){
-
+if (isset($_POST['create-tenant-submit'])) {
     $new_tenant = array(
         "tenFname" => $_POST['tenFname'],
         "tenMI" => $_POST['tenMI'],
@@ -87,8 +86,12 @@ if(isset($_POST['create-tenant-submit'])){
         "emContactNum" => $_POST['emContactNum']
     );
 
-    DashboardViews::create_new_tenant($new_tenant);
-
+    $result = DashboardController::create_new_tenant($new_tenant);
+    if ($result) {
+        echo '<script>console.log("Tenant added successfully")</script>';
+    } else {
+        echo '<script>console.log("Error")</script>';
+    }
 }
 
 ?>

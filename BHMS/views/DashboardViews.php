@@ -148,11 +148,11 @@ class DashboardViews extends GeneralViews{
                                     <div>Address:</div>
                                 </div>
                                 <div>
-                                    <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow" required>
-                                    <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow" required>
-                                    <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow" required>
-                                    <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow" required>
-                                    <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow" required>
+                                    <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
+                                    <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
+                                    <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
+                                    <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
+                                    <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
                                 </div>
                                 <div class="label label-position label-under">
                                     <div class="label-houseno">House No.</div>
@@ -179,12 +179,12 @@ class DashboardViews extends GeneralViews{
                                 </div>
                                 <div style="display: flex; justify-content:left;">
                                     <div class="NameInput">
-                                        <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow" required>
-                                        <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow" required>
-                                        <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow" required>
+                                        <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
+                                        <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
+                                        <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
                                     </div>
                                     <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
-                                    <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow" required>
+                                    <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
                                 </div>
                                 <div class="label label-position label-under">
                                     <div class="label-fn">First Name</div>
