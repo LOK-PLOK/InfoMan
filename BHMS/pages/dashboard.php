@@ -1,98 +1,39 @@
 <?php
 
-    $more_links = '
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="/styles/residents.css">';
+// $filePath = __FILE__;
+// echo "The file path is: $filePath";
 
-    require '../php/templates.php';
-    html_start('dashboard.css', $more_links);
+session_start();
+
+require '../php/templates.php';
+require '../views/DashboardViews.php';
+
+$more_links = '
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" 
+integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>';
+
+html_start('dashboard.css', $more_links);
+
+// Sidebar
+require '../php/navbar.php';
+
+// Hamburger Sidebar
+DashboardViews::burger_sidebar();
+
+// Notification Bell
+DashboardViews::notification();
+
 ?>
 
-<!-- Sidebar -->
-<?php require '../php/navbar.php'; ?>
-
-<!-- Burger Sidebar -->
-<div class="hamburger-sidebar">
-    <i class="fa-solid fa-bars"></i>
-</div>
-
-<!-- Dashboard Section -->
+<!-- Dashboard Content Section -->
 <div class="container-fluid">
 
-    <!-- Notification Bell -->
-    <div class="notification-group">
-        <div class="notification" type="button" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-            <div class="notification-num">10</div>
-            <img src="/images/icons/Dashboard/notification_bell.png">
-        </div>
-        <ul class="notification-dd dropdown-menu dropdown-menu-end ">
-            <li><h6 class="dropdown-header">Recent Notifications</h6></li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Maintenance</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Billings</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Maintenance</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Billings</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Maintenance</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Billings</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-            <li class="border-bottom border-1">
-                <div class="dropdown-item text-wrap">
-                    <span class="notification-item-head">Maintenance</span><br>
-                    <div style="padding-left: 10px">
-                        <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div> 
+<?php
 
-    <!-- Header -->
-    <div class="header-container">
-        <div>
-            <span class="page-header">Welcome Back, Juan!</span><br>
-            <span class="page-sub-header">Here's what we have for you today!</span>
-        </div>
-    </div>
+// Header
+DashboardViews::dashboard_header();
+
+?>
     
     <!-- Modal Buttons -->
     <div class="dashboard-button">
@@ -102,153 +43,57 @@
     </div>
 
     <!-- Overview -->
-    <br><span style="font-size: larger;">Boarding House Capacity Overview</span><br>
+    <span style="font-size: larger;">Boarding House Capacity Overview</span><br>
     <div class="row dashboard-icons-cont">
 
-        <div class="col-auto">
-            <div class="dashboard-icons shadow" style="background-color: #344799; color: white;">
-                <div>
-                    <img src="/images/icons/Dashboard/Overview/user_light.png" alt="">
-                    <div>30</div>
-                </div>
-                <p>Total Residents</p>
-            </div>
-        </div>
+        <?php 
+        
+        // Total Residents
+        DashboardViews::ov_total_residents(); 
+        
+        // Total Occupied Beds and Available Beds
+        DashboardViews::ov_bedsOcc_bedsAvail();
 
-        <div class="col-auto">
-            <div class="dashboard-icons shadow">
-                <div>
-                    <img src="/images/icons/Dashboard/Overview/occupied_beds_dark.png" alt="">
-                    <div>30</div>
-                </div>
-                <p>Occupied Beds</p>
-            </div>
-        </div>
-
-        <div class="col-auto">
-            <div class="dashboard-icons shadow">
-                <div>
-                    <img src="/images/icons/Dashboard/Overview/available_beds_dark.png" alt="">
-                    <div>30</div>
-                </div>
-                <p>Available Beds</p>
-            </div>
-        </div>
-
-        <div class="col-auto">
-            <div class="dashboard-icons shadow">
-                <div>
-                    <img src="/images/icons/Dashboard/Overview/available_rooms_dark.png" alt="">
-                    <div>30</div>
-                </div>
-                <p>Available Rooms</p>
-            </div>
-        </div>
+        // Total Available Rooms
+        DashboardViews::ov_available_rooms();
+        
+        ?>
         
     </div>
 </div>
 
 <!-- Add Tenant Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Tenant</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-custom">
-                <form action="/action_page.php">
-                    <!-- Name,Gender,Date -->
-                    <div class="label label-position">
-                        <div style="width: 65.9%;">Name:</div>
-                        <div style="width: 17%;">Gender:</div>
-                        <div>Birth Date:</div>
-                    </div>
-                    <div class="positioning">
-                        <div class="NameInput">
-                            <input type="text" id="fname" name="firstname" placeholder="Maria" class="FNclass shadow" required>
-                            <input type="text" id="mi" name="Middle Initial" placeholder="P" class="MIclass shadow" required>
-                            <input type="text" id="lname" name="lastname" placeholder="Detablurs" class="LNclass shadow" required>
-                        </div>
-                        <select id="country" name="country" class="shadow">
-                        <option value="">...</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        </select>
-                        <input type="date" id="lname" name="lastname" class="Bday shadow">
-                    </div>
-                    <div class="label label-position label-under">
-                        <div class="label-fn">First Name</div>
-                        <div class="label-mi">Middle Inital</div>
-                        <div class="label-ln">Last Name</div>
-                    </div>
-                    <!-- Address -->
-                    <div class="label label-position">
-                        <div>Address:</div>
-                    </div>
-                    <div>
-                        <input type="text" id="houseno" name="houseno" placeholder="123" class="houseno shadow" required>
-                        <input type="text" id="street" name="street" placeholder="Mabini Street" class="street shadow" required>
-                        <input type="text" id="barangay" name="barangay" placeholder="" class="barangay shadow" required>
-                        <input type="text" id="city" name="city" placeholder="Quezon City" class="city shadow" required>
-                        <input type="text" id="province" name="province" placeholder="Quezon" class="province shadow" required>
-                    </div>
-                    <div class="label label-position label-under">
-                        <div class="label-houseno">House No.</div>
-                        <div class="label-street">Street</div>
-                        <div class="label-barangay">Barangay</div>
-                        <div class="label-city">City</div>
-                        <div class="label-province">Province</div>
-                    </div>
-                    <!-- Contact Number -->
-                    <div class="label label-position">
-                        <div>Contact Number:</div>
-                    </div>
-                    <div>
-                        <input type="text" id="countrycode" name="countrycode" placeholder="+63" class="countrycode shadow" required>
-                        <input type="text" id="number" name="number" placeholder="123456789" class="number shadow" required>
-                    </div>
-                    <!-- Emergenct Contact -->
-                    <div class="header label-position">
-                        <div>Emergency Contact</div>
-                    </div>
-                    <div class="label label-position">
-                        <div style="width: 60%;">Name:</div>
-                        <div>Contact Number:</div>
-                    </div>
-                    <div style="display: flex; justify-content:left;">
-                        <div class="NameInput">
-                            <input type="text" id="ECfname" name="ECfirstname" placeholder="Maria" class="FNclass shadow" required>
-                            <input type="text" id="ECmi" name="ECMiddle Initial" placeholder="P" class="MIclass shadow" required>
-                            <input type="text" id="EClname" name="EClastname" placeholder="Detablurs" class="LNclass shadow" required>
-                        </div>
-                        <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;">
-                        <input type="text" id="ECnumber" name="ECnumber" placeholder="123456789" class="number shadow" required>
-                    </div>
-                    <div class="label label-position label-under">
-                        <div class="label-fn">First Name</div>
-                        <div class="label-mi">Middle Inital</div>
-                        <div class="label-ln">Last Name</div>
-                    </div>
-                    <!-- Appliances -->
-                    <div class="header label-position">
-                        <div>Appliances</div>
-                    </div>
-                    <div>
-                        <input type="text" id="appliance" name="appliance" placeholder="Rice cooker" class="appliance shadow" required>
-                        <input type="image" id="deleteappliance" src="/images/icons/Residents/delete.png" alt="Submit" class="deleteappliance">
-                    </div>
-                    <div>
-                        <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
-                    </div>
-                    <div class="displayflex">
-                        <input type="submit" class="btn-var-4 shadow" value="Add">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<?php 
+
+DashboardViews::add_tenant_model_view(); 
+
+if(isset($_POST['create-tenant-submit'])){
+
+    $new_tenant = array(
+        "tenFname" => $_POST['tenFname'],
+        "tenMI" => $_POST['tenMI'],
+        "tenLname" => $_POST['tenLname'],
+        "tenGender" => $_POST['tenGender'],
+        "tenBdate" => $_POST['tenBdate'],
+        "tenHouseNum" => $_POST['tenHouseNum'],
+        "tenSt" => $_POST['tenSt'],
+        "tenBrgy" => $_POST['tenBrgy'],
+        "tenCityMun" => $_POST['tenCityMun'],
+        "tenProvince" => $_POST['tenProvince'],
+        "tenContact" => $_POST['tenContact'],
+        "emContactFname" => $_POST['emContactFname'],
+        "emContactMI" => $_POST['emContactMI'],
+        "emContactLname" => $_POST['emContactLname'],
+        "emContactNum" => $_POST['emContactNum']
+    );
+
+    DashboardViews::create_new_tenant($new_tenant);
+
+}
+
+?>
+
+
 
 <!--------------- ADD PAYMENT MODAL --------------->
 <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
@@ -385,13 +230,9 @@
   </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="/js/general.js"></script>
-<script src="/js/sliding-tab.js"></script>
-<script src="/js/date.js"></script>
-<script src="/js/checkbox.js"></script>
 <script>
     $(function(){
         $("#tenantName").selectize();

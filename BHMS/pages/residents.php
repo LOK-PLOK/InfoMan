@@ -515,7 +515,4 @@
     </div>
 </div>
 
-
-<script src="/js/general.js"></script>
-
 <?php html_end(); ?>

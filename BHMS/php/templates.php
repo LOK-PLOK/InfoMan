@@ -12,7 +12,7 @@
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>'.$page.'</title>
-                <link rel="stylesheet" href="/styles/gen_styles.css">
+                <link rel="stylesheet" href="/styles/general.css">
                 <link rel="stylesheet" href="/styles/modals.css">
                 <link rel="stylesheet" href="/styles/'.$page_css_file.'">
                 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,8 +29,13 @@
 
     
     function html_end(){
-        echo ('</body>
-               </html>');
+        echo ('
+                <script src="/js/general.js"></script>
+                <script src="/js/sliding-tab.js"></script>
+                <script src="/js/date.js"></script>
+                <script src="/js/checkbox.js"></script>
+                </body>
+                </html>');
     }
 
 

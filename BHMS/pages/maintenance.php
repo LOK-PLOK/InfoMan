@@ -500,7 +500,5 @@
         setupModalClose('edit-modal-info', 'editCloseButton');
     });
 </script>
-<script src="/js/general.js"></script>
-<script src="/js/sliding-tab.js"></script>
 
 <?php html_end(); ?>
