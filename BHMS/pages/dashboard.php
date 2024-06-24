@@ -92,6 +92,9 @@ if (isset($_POST['create-tenant-submit'])) {
     } else {
         echo '<script>console.log("Error")</script>';
     }
+    //  // After processing, redirect to the same page or another page
+    //  header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the current page
+    //  exit();
 }
 
 ?>

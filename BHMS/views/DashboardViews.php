@@ -107,7 +107,9 @@ class DashboardViews extends GeneralViews{
         ');
     }
 
+
     public static function add_tenant_model_view() {
+        
 
         echo ('
             <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
