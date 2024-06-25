@@ -15,6 +15,14 @@ class ResidentsController{
     public static function residents_table_data(){
         return ResidentsModel::residents_data();
     }
+
+    public static function edit_tenant($edit_tenant,$tenID){
+        return ResidentsModel::edit_tenant($edit_tenant,$tenID);
+    }
+
+    public static function deleteTenantById($tenantIdToDelete){
+        return ResidentsModel::deleteTenantById($tenantIdToDelete);
+    }
 }
 
 ?>

@@ -92,21 +92,20 @@ class ResidentsModel extends dbcreds{
 
     public static function residents_data(){
         try {
-            // Create a connection to the database
+            //connection 
             $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
-            // Check for connection errors
+            
             if ($conn->connect_error) {
                 throw new Exception("Connection failed: " . $conn->connect_error);
             }
     
-            // Prepare the SQL query to select all tenants
+            // SQL query to select all tenants
             $query = "SELECT * FROM tenant";
     
             // Execute the query
             $result = $conn->query($query);
     
-            // Check for errors in execution
             if ($result === false) {
                 throw new Exception("Query failed: " . $conn->error);
             }
@@ -117,7 +116,7 @@ class ResidentsModel extends dbcreds{
                 $tenants[] = $row;
             }
     
-            // Free the result set
+            
             $result->free();
     
             // Close the connection
@@ -126,11 +125,132 @@ class ResidentsModel extends dbcreds{
             // Return the array of tenants
             return $tenants;
         } catch (Exception $e) {
-            // Log the error to a file
+            
             error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
     
             // Return an empty array to indicate failure
             return [];
+        }
+    }
+
+    public static function edit_tenant($edit_tenant, $tenID) {
+        try {
+            // Create a connection to the database
+            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+            if ($conn->connect_error) {
+                throw new Exception("Connection failed: " . $conn->connect_error);
+            }
+    
+            // Prepare the SQL UPDATE query
+            $query = "UPDATE tenant SET 
+                tenFname = ?, 
+                tenMI = ?, 
+                tenLname = ?, 
+                tenGender = ?, 
+                tenBdate = ?, 
+                tenHouseNum = ?, 
+                tenSt = ?, 
+                tenBrgy = ?, 
+                tenCityMun = ?, 
+                tenProvince = ?, 
+                tenContact = ?, 
+                emContactFname = ?, 
+                emContactMI = ?, 
+                emContactLname = ?, 
+                emContactNum = ?
+                WHERE tenID = ?";
+    
+            // Prepare the statement
+            $stmt = $conn->prepare($query);
+    
+            // Check if the statement was prepared successfully
+            if (!$stmt) {
+                throw new Exception("Preparation failed: " . $conn->error);
+            }
+    
+            // Bind the parameters from the $edit_tenant array
+            $stmt->bind_param(
+                'sssssssssssssssi', 
+                $edit_tenant['Edit-tenFname'],
+                $edit_tenant['Edit-tenMI'],
+                $edit_tenant['Edit-tenLname'],
+                $edit_tenant['Edit-tenGender'],
+                $edit_tenant['Edit-tenBdate'],
+                $edit_tenant['Edit-tenHouseNum'],
+                $edit_tenant['Edit-tenSt'],
+                $edit_tenant['Edit-tenBrgy'],
+                $edit_tenant['Edit-tenCityMun'],
+                $edit_tenant['Edit-tenProvince'],
+                $edit_tenant['Edit-tenContact'],
+                $edit_tenant['Edit-emContactFname'],
+                $edit_tenant['Edit-emContactMI'],
+                $edit_tenant['Edit-emContactLname'],
+                $edit_tenant['Edit-emContactNum'],
+                $tenID
+            );
+    
+            // Execute the statement
+            if (!$stmt->execute()) {
+                throw new Exception("Execution failed: " . $stmt->error);
+            }
+    
+            // Check if the update was successful
+            if ($stmt->affected_rows === 0) {
+                throw new Exception("No records updated. Please check if the tenant ID exists.");
+            }
+    
+            // Close the statement and connection
+            $stmt->close();
+            $conn->close();
+    
+            // Return true to indicate success
+            return true;
+        } catch (Exception $e) {
+            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+    
+            // Return false to indicate failure
+            return false;
+        }
+    }
+
+    public static function deleteTenantById($tenantIdToDelete) {
+        try {
+            // Create a connection to the database
+            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+            // Check for connection errors
+            if ($conn->connect_error) {
+                throw new Exception("Connection failed: " . $conn->connect_error);
+            }
+    
+            // Prepare the DELETE statement with a parameterized query to prevent SQL injection
+            $stmt = $conn->prepare("DELETE FROM tenant WHERE tenID = ?");
+    
+            // Bind the parameter to the statement
+            $stmt->bind_param("s", $tenantIdToDelete);
+    
+            // Execute the statement
+            if ($stmt->execute()) {
+                // Return true if deletion was successful
+                return true;
+            } else {
+                // Return false or handle the failure as needed
+                return false;
+            }
+    
+            // Close the statement
+            $stmt->close();
+    
+            // Close the connection
+            $conn->close();
+    
+        } catch (Exception $e) {
+            // Log the error to a file or handle it as needed
+            error_log("Error deleting tenant: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+    
+            // Return false to indicate failure
+            return false;
         }
     }
 }
