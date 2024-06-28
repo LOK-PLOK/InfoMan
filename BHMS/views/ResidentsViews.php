@@ -38,116 +38,193 @@ class ResidentsViews extends GeneralViews{
         HTML;
     }
 
-    public static function add_tenant_model_view(){
-
+    public static function add_tenant_model_view() {
         echo <<<HTML
         <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Tenant</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body bg-custom">
-                            <form method="POST">
-                                <!-- Name,Gender,Date -->
-                                <div class="label label-position">
-                                    <div style="width: 65.9%;">Name:</div>
-                                    <div style="width: 17%;">Gender:</div>
-                                    <div>Birth Date:</div>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-custom">
+                    <div class="modal-header bg-custom">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Tenant</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-custom">
+                        <form method="POST">
+                            <!-- Name, Gender, Date -->
+                            <div class="label label-position">
+                                <div style="width: 65.9%;">Name:</div>
+                                <div style="width: 17%;">Gender:</div>
+                                <div>Birth Date:</div>
+                            </div>
+                            <div class="positioning">
+                                <div class="NameInput">
+                                    <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" required>
+                                    <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
                                 </div>
-                                <div class="positioning">
-                                    <div class="NameInput">
-                                        <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
-                                        <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" required>
-                                        <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
+                                <select id="tenGender" name="tenGender" class="shadow">
+                                    <option value="" disabled selected>...</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                                <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
+                            </div>
+                            <div class="label label-position label-under">
+                                <div class="label-fn">First Name</div>
+                                <div class="label-mi">Middle Initial</div>
+                                <div class="label-ln">Last Name</div>
+                            </div>
+                            <!-- Address -->
+                            <div class="label label-position">
+                                <div>Address:</div>
+                            </div>
+                            <div>
+                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
+                                <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
+                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
+                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
+                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
+                            </div>
+                            <div class="label label-position label-under">
+                                <div class="label-houseno">House No.</div>
+                                <div class="label-street">Street</div>
+                                <div class="label-barangay">Barangay</div>
+                                <div class="label-city">City/Municipality</div>
+                                <div class="label-province">Province</div> 
+                            </div>
+                            <!-- Contact Number -->
+                            <div class="label label-position">
+                                <div>Contact Number:</div>
+                            </div>
+                            <div>
+                                <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
+                                <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" required>
+                            </div>
+                            <!-- Emergency Contact -->
+                            <div class="header label-position">
+                                <div>Emergency Contact</div>
+                            </div>
+                            <div class="label label-position">
+                                <div style="width: 60%;">Name:</div>
+                                <div>Contact Number:</div>
+                            </div>
+                            <div style="display: flex; justify-content:left;">
+                                <div class="NameInput">
+                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
+                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
+                                </div>
+                                <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
+                                <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
+                            </div>
+                            <div class="label label-position label-under">
+                                <div class="label-fn">First Name</div>
+                                <div class="label-mi">Middle Initial</div>
+                                <div class="label-ln">Last Name</div>
+                            </div>
+                            <!-- Appliances -->
+                            <div class="header label-position">
+                                <div>Appliances</div>
+                            </div>
+                            <div id="applianceContainer">
+                                <div class="applianceGroup" id="applianceGroup1" style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <input type="text" id="appliance1" name="appliance1" placeholder="Rice cooker" class="appliance shadow">
+                                    <div id = "appliance_input_container">
+                                    <button type="button" class="deleteButton" style="background: none; border: none; margin-left: 10px;">
+                                        <img src="/images/icons/Residents/delete.png" alt="Delete" style="width: 20px; height: 20px;">
+                                    </button>
                                     </div>
-                                    <select id="tenGender" name="tenGender" class="shadow">
-                                        <option value="" disabled selected>...</option>
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                    </select>
-                                    <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
+                                   
                                 </div>
-                                <div class="label label-position label-under">
-                                    <div class="label-fn">First Name</div>
-                                    <div class="label-mi">Middle Inital</div>
-                                    <div class="label-ln">Last Name</div>
-                                </div>
-                                <!-- Address -->
-                                <div class="label label-position">
-                                    <div>Address:</div>
-                                </div>
-                                <div>
-                                    <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
-                                    <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
-                                    <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
-                                    <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
-                                    <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
-                                </div>
-                                <div class="label label-position label-under">
-                                    <div class="label-houseno">House No.</div>
-                                    <div class="label-street">Street</div>
-                                    <div class="label-barangay">Barangay</div>
-                                    <div class="label-city">City/Municipality</div>
-                                    <div class="label-province">Province</div> 
-                                </div>
-                                <!-- Contact Number -->
-                                <div class="label label-position">
-                                    <div>Contact Number:</div>
-                                </div>
-                                <div>
-                                    <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
-                                    <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" required>
-                                </div>
-                                <!-- Emergenct Contact -->
-                                <div class="header label-position">
-                                    <div>Emergency Contact</div>
-                                </div>
-                                <div class="label label-position">
-                                    <div style="width: 60%;">Name:</div>
-                                    <div>Contact Number:</div>
-                                </div>
-                                <div style="display: flex; justify-content:left;">
-                                    <div class="NameInput">
-                                        <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
-                                        <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
-                                        <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
-                                    </div>
-                                    <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
-                                    <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
-                                </div>
-                                <div class="label label-position label-under">
-                                    <div class="label-fn">First Name</div>
-                                    <div class="label-mi">Middle Inital</div>
-                                    <div class="label-ln">Last Name</div>
-                                </div>
-                                <!-- Appliances -->
-                                
-
-                                <div class="header label-position">
-                                    <div>Appliances</div>
-                                </div>
-                                <div>
-                                    <input type="text" id="appliance" name="appliance" placeholder="Rice cooker" class="appliance shadow">
-                                    <input type="image" id="deleteappliance" src="/images/icons/Residents/delete.png" alt="Submit" class="deleteappliance">
-                                </div>
-                                <div>
-                                    <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
-                                </div> 
-
-
-                                <div class="displayflex">
-                                    <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" value="Add">
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div>
+                                <input type="button" id="addMoreAppliance" class="btn-var-5 shadow" value="Add More">
+                            </div>
+                            <div class="displayflex">
+                                <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" value="Add">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var applianceCounter = 1;
+                var maxAppliances = 5;
+    
+                // Function to add a new appliance input field
+                document.getElementById('addMoreAppliance').addEventListener('click', function() {
+                    if (applianceCounter < maxAppliances) {
+                        applianceCounter++;
+                        var container = document.getElementById('applianceContainer');
+                        var newGroup = document.createElement('div');
+                        newGroup.className = 'applianceGroup';
+                        newGroup.id = 'applianceGroup' + applianceCounter;
+                        newGroup.style = 'display: flex; align-items: center; margin-bottom: 10px;';
+    
+                        // Creating new appliance input field
+                        var newInput = document.createElement('input');
+                        newInput.type = 'text';
+                        newInput.id = 'appliance' + applianceCounter;
+                        newInput.name = 'appliance' + applianceCounter;
+                        newInput.placeholder = 'Appliance ' + applianceCounter;
+                        newInput.className = 'appliance shadow';
+    
+                        // Creating new delete button
+                        var newButton = document.createElement('button');
+                        newButton.type = 'button';
+                        newButton.className = 'deleteButton';
+                        newButton.style = 'background: none; border: none; margin-left: 10px;';
+    
+                        var deleteIcon = document.createElement('img');
+                        deleteIcon.src = '/images/icons/Residents/delete.png';
+                        deleteIcon.alt = 'Delete';
+                        deleteIcon.style = 'width: 20px; height: 20px;';
+    
+                        // Append the delete icon to the delete button
+                        newButton.appendChild(deleteIcon);
+    
+                        // Append input and button to the new group
+                        newGroup.appendChild(newInput);
+                        newGroup.appendChild(newButton);
+    
+                        // Append the new group to the container
+                        container.appendChild(newGroup);
+    
+                        // Add event listener to the new delete button
+                        newButton.addEventListener('click', function() {
+                            container.removeChild(newGroup);
+                            applianceCounter--;
+                            updateApplianceIds();
+                        });
+    
+                        // Disable "Add More" button if maximum is reached
+                        if (applianceCounter === maxAppliances) {
+                            this.disabled = true;
+                        }
+                    }
+                });
+    
+                // Function to update IDs and names of appliance inputs after deletion
+                function updateApplianceIds() {
+                    var groups = document.querySelectorAll('#applianceContainer .applianceGroup');
+                    applianceCounter = 0;
+                    groups.forEach(function(group, index) {
+                        applianceCounter++;
+                        group.id = 'applianceGroup' + applianceCounter;
+                        var input = group.querySelector('input.appliance');
+                        input.id = 'appliance' + applianceCounter;
+                        input.name = 'appliance' + applianceCounter;
+                        input.placeholder = 'Appliance ' + applianceCounter;
+                    });
+    
+                    // Enable "Add More" button if maximum is not reached
+                    document.getElementById('addMoreAppliance').disabled = applianceCounter >= maxAppliances;
+                }
+            });
+        </script>
         HTML;
-       
     }
 
 
@@ -284,7 +361,96 @@ class ResidentsViews extends GeneralViews{
             </div>
         HTML;
     
+        
         // Modal for displaying tenant information
+        self::residents_info_model_view();
+        // Modal for Editing tenant information
+        self::edit_tenant_model_view();
+        // Modal for Delete tenant
+        self::delete_tenant_model_view();
+        
+
+
+        // JavaScript for handling the click event and loading data into modal
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
+                var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
+    
+                var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
+    
+                tenantInfoButtons.forEach(function(btn) {
+                    btn.addEventListener("click", function() {
+                        var tenantData = JSON.parse(this.getAttribute("data-tenant"));
+    
+                        // Update tenant information section
+                        tenantInfoModalBody.innerHTML = `
+                            <div class="split-left">
+                                <div>
+                                    <span class="label">Name:</span>
+                                    <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
+                                </div>
+                                <div>
+                                    <span class="label">Contact Number:</span>
+                                    <span>${tenantData.tenContact}</span>
+                                </div>
+                                <div>
+                                    <span class="label">Address:</span>
+                                    <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
+                                </div>
+                                <div>
+                                    <span class="label">Gender:</span>
+                                    <span>${tenantData.tenGender}</span>
+                                </div>
+                                <div>
+                                    <span class="label">Birth Date:</span>
+                                    <span>${tenantData.tenBdate}</span>
+                                </div>
+                                <div>
+                                    <span class="label">Appliances:</span>
+                                    <span>${tenantData.appliances}</span>
+                                </div>
+                            </div>
+                            <div class="split-right">
+                                <div>
+                                    <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
+                                </div>
+                                <div>
+                                    <span class="label">Name:</span>
+                                    <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactLname}. ${tenantData.emContactMI}</span>
+                                </div>
+                                <div>
+                                    <span class="label">Contact Number:</span>
+                                    <span>${tenantData.emContactNum}</span>
+                                </div>
+                            </div>
+                        `;
+    
+                        // Update rent history section (example data)
+                        rentHistoryTableBody.innerHTML = `
+                            <tr>
+                                <td>B10101</td>
+                                <td>April 9, 2024</td>
+                                <td>March 9, 2024</td>  
+                            </tr>
+                            <tr>
+                                <td>B10101</td>
+                                <td>March 9, 2024</td>
+                                <td>April 9, 2024</td>
+                            `;
+                        // Additional rows can be added here
+                    });
+                });
+    
+                // Script for edit modal
+                
+            });
+        </script>
+        ';
+    }
+
+    public static function residents_info_model_view(){
         echo '
         <!-- Tenant Info Modal -->
         <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -317,9 +483,9 @@ class ResidentsViews extends GeneralViews{
                 </div>
             </div>
         </div>';
-        
+    }
 
-        // Modal for Editing tenant information
+    public static function edit_tenant_model_view(){
         echo <<<HTML
         <!-- Edit Tenant Modal -->
         <div class="modal fade" id="editmyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -419,8 +585,10 @@ class ResidentsViews extends GeneralViews{
             </div>
         </div> 
         HTML;
+    }
+    
 
-        // Modal for Delete tenant
+    public static function delete_tenant_model_view(){
         echo '<div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-custom">
@@ -451,94 +619,6 @@ class ResidentsViews extends GeneralViews{
             </div>
         </div>
     </div>';
-
-
-        // JavaScript for handling the click event and loading data into modal
-        echo '
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
-                var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
-    
-                var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
-    
-                tenantInfoButtons.forEach(function(btn) {
-                    btn.addEventListener("click", function() {
-                        var tenantData = JSON.parse(this.getAttribute("data-tenant"));
-    
-                        // Update tenant information section
-                        tenantInfoModalBody.innerHTML = `
-                            <div class="split-left">
-                                <div>
-                                    <span class="label">Name:</span>
-                                    <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
-                                </div>
-                                <div>
-                                    <span class="label">Contact Number:</span>
-                                    <span>${tenantData.tenContact}</span>
-                                </div>
-                                <div>
-                                    <span class="label">Address:</span>
-                                    <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
-                                </div>
-                                <div>
-                                    <span class="label">Gender:</span>
-                                    <span>${tenantData.tenGender}</span>
-                                </div>
-                                <div>
-                                    <span class="label">Birth Date:</span>
-                                    <span>${tenantData.tenBdate}</span>
-                                </div>
-                                <div>
-                                    <span class="label">Appliances:</span>
-                                    <span>${tenantData.appliances}</span>
-                                </div>
-                            </div>
-                            <div class="split-right">
-                                <div>
-                                    <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
-                                </div>
-                                <div>
-                                    <span class="label">Name:</span>
-                                    <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactLname}. ${tenantData.emContactMI}</span>
-                                </div>
-                                <div>
-                                    <span class="label">Contact Number:</span>
-                                    <span>${tenantData.emContactNum}</span>
-                                </div>
-                            </div>
-                        `;
-    
-                        // Update rent history section (example data)
-                        rentHistoryTableBody.innerHTML = `
-                            <tr>
-                                <td>B10101</td>
-                                <td>April 9, 2024</td>
-                                <td>March 9, 2024</td>  
-                            </tr>
-                            <tr>
-                                <td>B10101</td>
-                                <td>March 9, 2024</td>
-                                <td>April 9, 2024</td>
-                            `;
-                        // Additional rows can be added here
-                    });
-                });
-    
-                // Script for edit modal
-                
-            });
-        </script>
-        ';
-    }
-
-    public static function edit_tenant_model_view(){
-
-    }
-    
-
-    public static function delete_tenant_model_view(){
-
     }
 
 
