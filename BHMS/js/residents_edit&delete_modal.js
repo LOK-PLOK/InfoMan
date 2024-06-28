@@ -4,7 +4,8 @@ function displayEditModal(tenID, tenFname, tenLname, tenMI, tenHouseNum, tenSt, 
     var modalEdit = document.getElementById("editmyModal");
 
     // Populate the modal fields with the passed data
-    document.getElementById('Edit-tenFname').value = tenFname;
+    document.getElementById('Edit-tenID').value = tenID;
+    document.getElementById('Edit-tenFname').value = tenFname;  
     document.getElementById('Edit-tenLname').value = tenLname;
     document.getElementById('Edit-tenMI').value = tenMI;
     document.getElementById('Edit-tenHouseNum').value = tenHouseNum;

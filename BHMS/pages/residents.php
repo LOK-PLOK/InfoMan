@@ -1,14 +1,12 @@
 <?php
-  
-// $filePath = __FILE__;
-// echo "The file path is: $filePath";
-
+// Start output buffering at the beginning of your script
+ob_start();
 session_start();
 
 require '../php/templates.php';
 require '../views/ResidentsViews.php';
-echo '<script src="../js/residents_edit_modal.js"></script>';
 
+echo '<script src="../js/residents_edit&delete_modal.js"></script>';
 
 html_start('residents.css');
 
@@ -18,15 +16,12 @@ require '../php/navbar.php';
 // Hamburger Sidebar
 ResidentsViews::burger_sidebar();
 
-
 ?>
-
 
 <!-- Residents Contents -->
 <div class="container-fluid">
 
-<?php 
-
+<?php
 ResidentsViews::residents_header();
 
 /** For the Add tenant */
@@ -57,101 +52,53 @@ if (isset($_POST['create-tenant-submit'])) {
     } else {
         echo '<script>console.log("Error")</script>';
     }
-    
+
+    // After handling the form submission, redirect to avoid form resubmission
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit(); // Make sure to exit after redirect
 }
 ?>
 
-    <?php
-    $tenant_list = ResidentsController::residents_table_data();
-    ResidentsViews::residents_table_display($tenant_list);
-    
+<!-- For EDIT -->
+<?php
+if (isset($_POST['edit-tenant-submit'])) {
+    $edit_tenant = array(
+        "Edit-tenFname" => $_POST['Edit-tenFname'],
+        "Edit-tenMI" => $_POST['Edit-tenMI'],
+        "Edit-tenLname" => $_POST['Edit-tenLname'],
+        "Edit-tenGender" => $_POST['Edit-tenGender'],
+        "Edit-tenBdate" => $_POST['Edit-tenBdate'],
+        "Edit-tenHouseNum" => $_POST['Edit-tenHouseNum'],
+        "Edit-tenSt" => $_POST['Edit-tenSt'],
+        "Edit-tenBrgy" => $_POST['Edit-tenBrgy'],
+        "Edit-tenCityMun" => $_POST['Edit-tenCityMun'],
+        "Edit-tenProvince" => $_POST['Edit-tenProvince'],
+        "Edit-tenContact" => $_POST['Edit-tenContact'],
+        "Edit-emContactFname" => $_POST['Edit-emContactFname'],
+        "Edit-emContactMI" => $_POST['Edit-emContactMI'],
+        "Edit-emContactLname" => $_POST['Edit-emContactLname'],
+        "Edit-emContactNum" => $_POST['Edit-emContactNum']
+    );
 
-    //Test
-    $json_tenant_list = json_encode($tenant_list);
+    $tenID = $_GET['tenID'];
+    $result = ResidentsController::edit_tenant($edit_tenant, $tenID);
 
-    // Log the data to the console using JavaScript
-    echo '<script>console.log("Tenant List:", ' . $json_tenant_list . ')</script>';
-
-    if ($tenant_list) {
-        echo '<script>console.log("Tenant added successfully")</script>';
+    if ($result) {
+        echo '<script>console.log("Tenant edited successfully")</script>';
     } else {
         echo '<script>console.log("Error")</script>';
     }
-    ?>
-    
-    <?php 
-    if (isset($_POST['edit-tenant-submit'])) {
-        $edit_tenant = array(
-            "Edit-tenFname" => $_POST['Edit-tenFname'],
-            "Edit-tenMI" => $_POST['Edit-tenMI'],
-            "Edit-tenLname" => $_POST['Edit-tenLname'],
-            "Edit-tenGender" => $_POST['Edit-tenGender'],
-            "Edit-tenBdate" => $_POST['Edit-tenBdate'],
-            "Edit-tenHouseNum" => $_POST['Edit-tenHouseNum'],
-            "Edit-tenSt" => $_POST['Edit-tenSt'],
-            "Edit-tenBrgy" => $_POST['Edit-tenBrgy'],
-            "Edit-tenCityMun" => $_POST['Edit-tenCityMun'],
-            "Edit-tenProvince" => $_POST['Edit-tenProvince'],
-            "Edit-tenContact" => $_POST['Edit-tenContact'],
-            "Edit-emContactFname" => $_POST['Edit-emContactFname'],
-            "Edit-emContactMI" => $_POST['Edit-emContactMI'],
-            "Edit-emContactLname" => $_POST['Edit-emContactLname'],
-            "Edit-emContactNum" => $_POST['Edit-emContactNum']
-        );
 
-        $tenID = $_GET['tenID'];
-    
-        $result = ResidentsController::edit_tenant($edit_tenant,$tenID);
-        if ($result) {
-            echo '<script>console.log("Tenant added successfully")</script>';
-        } else {
-            echo '<script>console.log("Error")</script>';
-        }
-        //  // After processing, redirect to the same page or another page
-        //  header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the current page
-        //  exit();
-    }
-    ?>
-    <!-- For EDIT -->
-    <?php 
-    if (isset($_POST['edit-tenant-submit'])) {
-        $edit_tenant = array(
-            "Edit-tenFname" => $_POST['Edit-tenFname'],
-            "Edit-tenMI" => $_POST['Edit-tenMI'],
-            "Edit-tenLname" => $_POST['Edit-tenLname'],
-            "Edit-tenGender" => $_POST['Edit-tenGender'],
-            "Edit-tenBdate" => $_POST['Edit-tenBdate'],
-            "Edit-tenHouseNum" => $_POST['Edit-tenHouseNum'],
-            "Edit-tenSt" => $_POST['Edit-tenSt'],
-            "Edit-tenBrgy" => $_POST['Edit-tenBrgy'],
-            "Edit-tenCityMun" => $_POST['Edit-tenCityMun'],
-            "Edit-tenProvince" => $_POST['Edit-tenProvince'],
-            "Edit-tenContact" => $_POST['Edit-tenContact'],
-            "Edit-emContactFname" => $_POST['Edit-emContactFname'],
-            "Edit-emContactMI" => $_POST['Edit-emContactMI'],
-            "Edit-emContactLname" => $_POST['Edit-emContactLname'],
-            "Edit-emContactNum" => $_POST['Edit-emContactNum']
-        );
+    // Redirect to avoid form resubmission and duplicate entries
+    header("Location: /pages/residents.php");
+    exit();
+}
+?>
 
-        $tenID = $_GET['tenID'];
-    
-        $result = ResidentsController::edit_tenant($edit_tenant,$tenID);
-        if ($result) {
-            echo '<script>console.log("Edited added successfully")</script>';
-        } else {
-            echo '<script>console.log("Error")</script>';
-        }
-        //  // After processing, redirect to the same page or another page
-        //  header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the current page
-        //  exit();
-    }
-    ?>
-
-    <!-- For DELETE-->
-    <?php
+<!-- For DELETE-->
+<?php
 // Check if form was submitted for deleting a tenant
 if (isset($_POST['delete-tenant-submit'])) {
-
     // Retrieve the tenant ID to delete
     $tenantIdToDelete = $_GET['tenID'];
     $result = ResidentsController::deleteTenantById($tenantIdToDelete);
@@ -161,20 +108,32 @@ if (isset($_POST['delete-tenant-submit'])) {
     } else {
         echo '<script>console.log("Error")</script>';
     }
+
+    // Redirect to avoid form resubmission and to refresh the page
+    header("Location: /pages/residents.php");
+    exit();
 }
 ?>
-    
 
-<!-- Add Tenant Modal Revision-------------- -->
-<!-- Na remove na and nasa ResidentsViews -->
+<!-- Display Tenant Table and Other Content -->
+<?php
+$tenant_list = ResidentsController::residents_table_data();
+ResidentsViews::residents_table_display($tenant_list);
 
-<!-- Tenant Information Modal-------------- -->
-<!-- Na remove na and nasa ResidentsViews -->
+// Test: Log tenant list to console
+$json_tenant_list = json_encode($tenant_list);
+echo '<script>console.log("Tenant List:", ' . $json_tenant_list . ')</script>';
 
-<!-- Edit Tenant Modal Revision-------------- -->
-<!-- Na remove na and nasa ResidentsViews -->
+if ($tenant_list) {
+    echo '<script>console.log("Tenant list fetched successfully")</script>';
+} else {
+    echo '<script>console.log("Error fetching tenant list")</script>';
+}
 
-<!-- Delete Modal Revision-------------- -->
+html_end();
+?>
 
-
-<?php html_end(); ?>
+<?php
+// End output buffering and flush the buffer
+ob_end_flush();
+?>

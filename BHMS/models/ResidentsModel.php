@@ -199,19 +199,31 @@ class ResidentsModel extends dbcreds{
             if ($stmt->affected_rows === 0) {
                 throw new Exception("No records updated. Please check if the tenant ID exists.");
             }
+
+            return true;
+            } catch (Exception $e) {
+                // error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+        
+                // Return false to indicate failure
+                return false;
+            }
+
+        
     
             // Close the statement and connection
             $stmt->close();
             $conn->close();
+
+            
     
             // Return true to indicate success
-            return true;
-        } catch (Exception $e) {
-            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+        //     return true;
+        // } catch (Exception $e) {
+        //     // error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
     
-            // Return false to indicate failure
-            return false;
-        }
+        //     // Return false to indicate failure
+        //     return false;
+        // }
     }
 
     public static function deleteTenantById($tenantIdToDelete) {

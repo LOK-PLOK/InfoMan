@@ -9,7 +9,9 @@ class ResidentsViews extends GeneralViews{
         $total_current_residents = ResidentsController::total_current_residents();
 
         echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
-        echo ('
+        
+    
+        echo <<<HTML
             <div class="header-container">
             <div class="left-content">
                 <div>
@@ -28,17 +30,17 @@ class ResidentsViews extends GeneralViews{
                 </div>
                 <div class="right-child">
                         <img src="/images/icons/Residents/number_of_residents.png" alt="">
-                        <div>'.$total_current_residents.'</div>
+                        <div>$total_current_residents</div>
                 </div>
             </div>
         </div>
 
-        ');
+        HTML;
     }
 
     public static function add_tenant_model_view(){
 
-        echo ('
+        echo <<<HTML
         <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -122,8 +124,18 @@ class ResidentsViews extends GeneralViews{
                                     <div class="label-ln">Last Name</div>
                                 </div>
                                 <!-- Appliances -->
-                                 
+                                
 
+                                <div class="header label-position">
+                                    <div>Appliances</div>
+                                </div>
+                                <div>
+                                    <input type="text" id="appliance" name="appliance" placeholder="Rice cooker" class="appliance shadow">
+                                    <input type="image" id="deleteappliance" src="/images/icons/Residents/delete.png" alt="Submit" class="deleteappliance">
+                                </div>
+                                <div>
+                                    <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
+                                </div> 
 
 
                                 <div class="displayflex">
@@ -134,17 +146,8 @@ class ResidentsViews extends GeneralViews{
                     </div>
                 </div>
             </div>
-        ');
-        // <div class="header label-position">
-        //                             <div>Appliances</div>
-        //                         </div>
-        //                         <div>
-        //                             <input type="text" id="appliance" name="appliance" placeholder="Rice cooker" class="appliance shadow">
-        //                             <input type="image" id="deleteappliance" src="/images/icons/Residents/delete.png" alt="Submit" class="deleteappliance">
-        //                         </div>
-        //                         <div>
-        //                             <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
-        //                         </div> 
+        HTML;
+       
     }
 
 
@@ -258,7 +261,7 @@ class ResidentsViews extends GeneralViews{
         }
     
         // Close the table and container
-        echo '
+        echo <<<HTML
                         </tbody>
                     </table>
                 </section>
@@ -279,7 +282,7 @@ class ResidentsViews extends GeneralViews{
                     </div> 
                 </footer>
             </div>
-        ';
+        HTML;
     
         // Modal for displaying tenant information
         echo '
@@ -314,9 +317,10 @@ class ResidentsViews extends GeneralViews{
                 </div>
             </div>
         </div>';
-    
+        
+
         // Modal for Editing tenant information
-        echo '
+        echo <<<HTML
         <!-- Edit Tenant Modal -->
         <div class="modal fade" id="editmyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -328,7 +332,7 @@ class ResidentsViews extends GeneralViews{
                     <div class="modal-body bg-custom">
                         <form id="editTenantForm" action="/update_tenant.php" method="POST">
                             <!-- Hidden field for tenant ID -->
-                            <input type="hidden" id="Edit-tenID" name="tenID">
+                            <input type="hidden" id="Edit-tenID" name="tenID" value="   ">
     
                             <!-- Name, Gender, Date -->
                             <div class="label label-position">
@@ -414,7 +418,7 @@ class ResidentsViews extends GeneralViews{
                 </div>
             </div>
         </div> 
-        ';
+        HTML;
 
         // Modal for Delete tenant
         echo '<div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -510,7 +514,7 @@ class ResidentsViews extends GeneralViews{
                             <tr>
                                 <td>B10101</td>
                                 <td>April 9, 2024</td>
-                                <td>March 9, 2024</td>
+                                <td>March 9, 2024</td>  
                             </tr>
                             <tr>
                                 <td>B10101</td>
@@ -527,7 +531,15 @@ class ResidentsViews extends GeneralViews{
         </script>
         ';
     }
+
+    public static function edit_tenant_model_view(){
+
+    }
     
+
+    public static function delete_tenant_model_view(){
+
+    }
 
 
 }
@@ -536,4 +548,4 @@ class ResidentsViews extends GeneralViews{
     
 
 
-?>
+?> 
