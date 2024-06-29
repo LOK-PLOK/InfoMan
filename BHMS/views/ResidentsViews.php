@@ -213,13 +213,11 @@ class ResidentsViews extends GeneralViews{
         </script>
         HTML;
     }
-    
-
 
     public static function residents_table_display($tenant_list){
 
         // Start echoing the HTML content
-        echo '
+        echo <<<HTML
             <div class="data-container">
     
                 <!-- Table Header -->
@@ -262,12 +260,13 @@ class ResidentsViews extends GeneralViews{
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>';
+                        <tbody>
+HTML;
     
         // Loop through each tenant in the list
         foreach ($tenant_list as $tenant) {
             $tenantDataJson = htmlspecialchars(json_encode($tenant));
-            echo '
+echo '
                             <tr>
                                 <td>
                                     <button style="float: left; width: 100%;" class="tenant-info-btn" data-bs-toggle="modal" data-bs-target="#TenantInfo" data-tenant=\'' . $tenantDataJson . '\'>
@@ -438,7 +437,7 @@ class ResidentsViews extends GeneralViews{
     }
 
     public static function residents_info_model_view(){
-        echo '
+        echo <<<HTML
         <!-- Tenant Info Modal -->
         <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -469,7 +468,8 @@ class ResidentsViews extends GeneralViews{
                     </div>
                 </div>
             </div>
-        </div>';
+        </div>
+        HTML;
     }
 
     public static function edit_tenant_model_view(){

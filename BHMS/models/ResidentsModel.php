@@ -244,7 +244,7 @@ class ResidentsModel extends dbcreds{
             }
     
             // Fetch all rows as an associative array
-            $tenants = [];
+            $appliance = [];
             while ($row = $result->fetch_assoc()) {
                 $appliance[] = $row;
             }
