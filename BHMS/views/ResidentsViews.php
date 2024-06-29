@@ -6,11 +6,11 @@ require '../controllers/ResidentsController.php';
 class ResidentsViews extends GeneralViews{
 
     public static function residents_header(){
+        
         $total_current_residents = ResidentsController::total_current_residents();
 
         echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
         
-    
         echo <<<HTML
             <div class="header-container">
             <div class="left-content">

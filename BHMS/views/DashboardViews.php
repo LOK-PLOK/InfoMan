@@ -1,45 +1,21 @@
 <?php
 
-require 'GeneralViews.php';
-require '../controllers/DashboardController.php';
+include 'GeneralViews.php';
+include '../controllers/DashboardController.php';
 
 class DashboardViews extends GeneralViews{
-
-    public static function notification() { // Needs Model to show all Notification
-        
-        echo ('
-            <div class="notification-group">
-                <div class="notification" type="button" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                    <div class="notification-num">10</div>
-                    <img src="/images/icons/Dashboard/notification_bell.png">
-                </div>
-                <ul class="notification-dd dropdown-menu dropdown-menu-end ">
-                    <li><h6 class="dropdown-header">Recent Notifications</h6></li>
-                    <li class="border-bottom border-1">
-                        <div class="dropdown-item text-wrap">
-                            <span class="notification-item-head">Maintenance</span><br>
-                            <div style="padding-left: 10px">
-                                <span class="notification-item-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet at architecto</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div> 
-        ');
-
-    }
 
     public static function dashboard_header() {
 
         echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
-        echo ('
+        echo <<<HTML
             <div class="header-container">
                 <div>
-                    <span class="page-header">Welcome Back, '.$_SESSION['First-Name'].'</span><br>
+                    <span class="page-header">Welcome Back, {$_SESSION['First-Name']}</span><br>
                     <span class="page-sub-header">Here\'s what we have for you today!</span>
                 </div>
             </div>
-        ');
+        HTML;
 
     }
 
@@ -47,71 +23,69 @@ class DashboardViews extends GeneralViews{
 
         $total_current_residents = DashboardController::total_current_residents();
 
-        echo ('
+        echo<<<HTML
             <div class="col-auto">
                 <div class="dashboard-icons shadow" style="background-color: #344799; color: white;">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/user_light.png" alt="">
-                        <div>'.$total_current_residents.'</div>
+                        <div>{$total_current_residents}</div>
                     </div>
                     <p>Total Residents</p>
                 </div>
             </div>
-        ');
+        HTML;
     }
 
     public static function ov_bedsOcc_bedsAvail() {
 
         $result = DashboardController::total_occupied_beds_and_available_beds();
 
-        echo ('
+        echo<<<HTML
             <div class="col-auto">
                 <div class="dashboard-icons shadow">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/occupied_beds_dark.png" alt="">
-                        <div>'.$result['occupied_beds'].'</div>
+                        <div>{$result['occupied_beds']}</div>
                     </div>
                     <p>Occupied Beds</p>
                 </div>
             </div>
-        ');
+        HTML;
 
-        echo ('
+        echo<<<HTML
             <div class="col-auto">
                 <div class="dashboard-icons shadow">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/available_beds_dark.png" alt="">
-                        <div>'.$result['available_beds'].'</div>
+                        <div>{$result['available_beds']}</div>
                     </div>
                     <p>Available Beds</p>
                 </div>
             </div>
         
-        ');
+        HTML;
     }
 
     public static function ov_available_rooms() {
 
         $available_rooms = DashboardController::available_rooms();
 
-        echo ('
+        echo<<<HTML
              <div class="col-auto">
                 <div class="dashboard-icons shadow">
                     <div>
                         <img src="/images/icons/Dashboard/Overview/available_rooms_dark.png" alt="">
-                        <div>'.$available_rooms.'</div>
+                        <div>{$available_rooms}</div>
                     </div>
                     <p>Available Rooms</p>
                 </div>
             </div> 
-        ');
+        HTML;
     }
 
-
     public static function add_tenant_model_view() {
-        
 
-        echo ('
+        echo<<<HTML
             <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content bg-custom">
@@ -212,8 +186,119 @@ class DashboardViews extends GeneralViews{
                     </div>
                 </div>
             </div>
-        ');
+        HTML;
 
+    }
+
+    public static function create_new_rent_modal() {
+        $tenants = DashboardController::get_tenants();
+        $rooms = DashboardController::get_rooms();
+        $rent_types = DashboardController::get_types();
+
+        echo <<<HTML
+            <div class="modal fade" id="add-new-rent-modal" tabindex="-1" aria-labelledby="add-new-rent-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <form method="POST">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add-new-rent-modal">Add New Rent</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                
+                    <div>
+                        <div>
+                            <label for="new-rent-tenant" class="input-label">Tenant Assigned:</label>
+                            <!-- Tenant -->
+                            <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow">
+                                <option value="" disabled selected>Select a tenant...</option>
+        HTML;
+                                foreach ($tenants as $tenant){
+                                    $tenant_id = $tenant['tenID'];
+                                    $tenant_fName = $tenant['tenFname'];
+                                    $tenant_MI = $tenant['tenMI'];
+                                    $tenant_lName = $tenant['tenLname'];
+                                    $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                    echo<<<HTML
+                                        <option value="$tenant_id">$tenant_fullName</option>
+                                    HTML;
+                                }                         
+        echo <<<HTML
+                            </select>
+                            <div class="d-flex justify-content-center input-sub-label">Name</div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <label for="new-rent-room" class="input-label">Room Details:</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-sm-5">
+                                    <!-- Room -->
+                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow">
+                                        <option value="" disabled selected>Select a Room...</option>
+        HTML;
+                                        foreach ($rooms as $room){
+                                            $room_id = $room['roomID'];
+                                            echo<<<HTML
+                                                <option value="$room_id">$room_id</option>
+                                            HTML;
+                                        }       
+
+        echo <<<HTML
+                                    </select>
+                                    <div class="d-flex justify-content-center input-sub-label">Room Code</div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <!-- Occupancy Type -->
+                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow">
+                                            <option value="" disabled selected>Select a Type...</option>
+        HTML;
+                                            foreach ($rent_types as $rent_type){
+                                                $occTypeID = $rent_type['occTypeID'];
+                                                $occTypeName = $rent_type['occTypeName'];
+                                                $occRate = $rent_type['occRate'];
+                                                $combinedValue = $occTypeID . '|' . $occRate;
+                                                echo<<<HTML
+                                                    <option value="$combinedValue">$occTypeName</option>
+                                                HTML;
+                                            }
+        echo <<<HTML
+                                    </select>
+                                    <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <label for="new-rent-start" class="input-label">Additional Information:</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-sm-5">
+                                    <!-- Start Date -->
+                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow">
+                                    <!-- End Date -->
+                                    <input type="date" name="new-rent-end" id="new-rent-end" class="w-100 shadow" style="display: none">
+                                    <div class="d-flex justify-content-center input-sub-label">Starting Date</div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="number" id="new-rent-rate" class="w-100 shadow" disabled>
+                                    <!-- Rent Rate -->
+                                    <input type="hidden" name="new-rent-rate" id="actual-new-rent-rate">
+                                    <div class="d-flex justify-content-center input-sub-label">Monthly Payment</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <!-- Submit Button -->
+                    <button type="submit" name="create-new-rent" class="btn-var-3 add-button">Add</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        HTML;
     }
 
 }

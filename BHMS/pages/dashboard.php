@@ -20,9 +20,6 @@ require '../php/navbar.php';
 // Hamburger Sidebar
 DashboardViews::burger_sidebar();
 
-// Notification Bell
-DashboardViews::notification();
-
 ?>
 
 <!-- Dashboard Content Section -->
@@ -67,39 +64,36 @@ DashboardViews::dashboard_header();
 
 DashboardViews::add_tenant_model_view();
 
-if (isset($_POST['create-tenant-submit'])) {
-    $new_tenant = array(
-        "tenFname" => $_POST['tenFname'],
-        "tenMI" => $_POST['tenMI'],
-        "tenLname" => $_POST['tenLname'],
-        "tenGender" => $_POST['tenGender'],
-        "tenBdate" => $_POST['tenBdate'],
-        "tenHouseNum" => $_POST['tenHouseNum'],
-        "tenSt" => $_POST['tenSt'],
-        "tenBrgy" => $_POST['tenBrgy'],
-        "tenCityMun" => $_POST['tenCityMun'],
-        "tenProvince" => $_POST['tenProvince'],
-        "tenContact" => $_POST['tenContact'],
-        "emContactFname" => $_POST['emContactFname'],
-        "emContactMI" => $_POST['emContactMI'],
-        "emContactLname" => $_POST['emContactLname'],
-        "emContactNum" => $_POST['emContactNum']
-    );
-
-    $result = DashboardController::create_new_tenant($new_tenant);
-    if ($result) {
-        echo '<script>console.log("Tenant added successfully")</script>';
-    } else {
-        echo '<script>console.log("Error")</script>';
-    }
-    //  // After processing, redirect to the same page or another page
-    //  header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the current page
-    //  exit();
+if($_SERVER['REQUEST_METHOD'] == "POST") {
+	if (isset($_POST['create-tenant-submit'])) {
+		$new_tenant = array(
+			"tenFname" => $_POST['tenFname'],
+			"tenMI" => $_POST['tenMI'],
+			"tenLname" => $_POST['tenLname'],
+			"tenGender" => $_POST['tenGender'],
+			"tenBdate" => $_POST['tenBdate'],
+			"tenHouseNum" => $_POST['tenHouseNum'],
+			"tenSt" => $_POST['tenSt'],
+			"tenBrgy" => $_POST['tenBrgy'],
+			"tenCityMun" => $_POST['tenCityMun'],
+			"tenProvince" => $_POST['tenProvince'],
+			"tenContact" => $_POST['tenContact'],
+			"emContactFname" => $_POST['emContactFname'],
+			"emContactMI" => $_POST['emContactMI'],
+			"emContactLname" => $_POST['emContactLname'],
+			"emContactNum" => $_POST['emContactNum']
+		);
+	
+		$result = DashboardController::create_new_tenant($new_tenant);
+		if ($result) {
+			echo '<script>console.log("Tenant added successfully")</script>';
+		} else {
+			echo '<script>console.log("Error")</script>';
+		}
+	}
 }
 
 ?>
-
-
 
 <!--------------- ADD PAYMENT MODAL --------------->
 <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
@@ -171,78 +165,80 @@ if (isset($_POST['create-tenant-submit'])) {
 </div>
 
 <!-- Add New Rent Modal -->
-<div class="modal fade" id="add-new-rent-modal" tabindex="-1" aria-labelledby="add-new-rent-modal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="add-new-rent-modal">Add New Rent</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div>
-            <div>
-                <label for="new-rent-tenant" class="input-label">Tenant Assigned:</label>
-                <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow">
-                    <option value="" disabled selected>Select a tenant...</option>
-                    <option value="Maria P. Detablurs">Maria P. Detablurs</option>
-                    <option value="Nash Marie Abangan">Nash Marie Abangan</option>
-                </select>
-                <div class="d-flex justify-content-center input-sub-label">Name</div>
-            </div>
-            <div class="row-fluid">
-                <div class="col-12">
-                    <label for="new-rent-room" class="input-label">Room Details:</label>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="col-sm-5">
-                        <select name="new-rent-room" id="new-rent-room" class="w-100 shadow">
-                            <option value="" disabled selected>Select a Room...</option>
-                            <option value="Maria P. Detablurs">B10101</option>
-                            <option value="Nash Marie Abangan">B10102</option>
-                        </select>
-                        <div class="d-flex justify-content-center input-sub-label">Room Code</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <select name="new-rent-type" id="new-rent-type"" class="w-100 shadow">
-                                <option value="" disabled selected>Select a Type...</option>
-                                <option value="Maria P. Detablurs">Bed-Spacer</option>
-                                <option value="Nash Marie Abangan">Room</option>
-                        </select>
-                        <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row-fluid">
-                <div class="col-12">
-                    <label for="new-rent-start" class="input-label">Additional Information:</label>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="col-sm-5">
-                        <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow">
-                        <div class="d-flex justify-content-center input-sub-label">Starting Date</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <input type="number" name="new-rent-rate" id="new-rent-rate" class="w-100 shadow" disabled>
-                        <div class="d-flex justify-content-center input-sub-label">Monthly Payment</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="modal-footer border-0 justify-content-center">
-        <button class="btn-var-3 add-button">Add</button>
-      </div>
-    </div>
-  </div>
-</div>
+<?php
+DashboardViews::create_new_rent_modal();
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></>
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+    if (isset($_POST['create-new-rent'])) {
+        $create_rent = array(
+            "tenID" => htmlspecialchars($_POST['new-rent-tenant']),
+            "roomID" => htmlspecialchars($_POST['new-rent-room']),
+            "occTypeID" => htmlspecialchars($_POST['new-rent-type']),
+            "occDateStart" => htmlspecialchars($_POST['new-rent-start']),
+            "occDateEnd" => htmlspecialchars($_POST['new-rent-end']),
+            "occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
+        );
+
+        $result = DashboardController::create_new_rent($create_rent);
+        if ($result) {
+            echo '<script>console.log("New Rent added successfully")</script>';
+        } else {
+            echo '<script>console.log("Error")</script>';
+        }
+
+        // Output the contents of $create_rent for debugging
+        echo '<script>console.log(' . json_encode($create_rent) . ');</script>';
+    }
+
+}
+?>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    $(function(){
+	$(document).ready(function() {
         $("#tenantName").selectize();
-    }); 
+        $("#new-rent-tenant").selectize();
+    });
+
+	document.getElementById('new-rent-type').addEventListener('change', function () {
+		const selectedValue = this.value;
+    
+		if (selectedValue) {
+			const [occTypeID, occRate] = selectedValue.split('|');
+			
+			// Example: Update elements based on occTypeID and occRate
+			const viewOccupancyRate = document.getElementById('new-rent-rate');
+			const actualOccupancyRate = document.getElementById('actual-new-rent-rate');
+			
+			viewOccupancyRate.value = occRate;
+			actualOccupancyRate.value = occRate;
+			
+			console.log("Selected occTypeID:", occTypeID);
+			console.log("Selected occRate:", occRate);
+		}
+	});
+
+
+	// End Date Setter for Add New Rent
+	document.getElementById('new-rent-start').addEventListener('change', function() {
+		const startDate = new Date(this.value);
+
+		if(!isNaN(startDate.getTime())) {
+			const endDate = new Date(startDate);
+			endDate.setDate(endDate.getDate() + 30);
+
+			const endDateString = endDate.toISOString().split('T')[0];
+			document.getElementById('new-rent-end').value = endDateString;
+		} else {
+			console.log('Invalid start date');
+		}
+	});
 </script>
 
 <?php html_end(); ?>

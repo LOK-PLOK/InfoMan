@@ -5,15 +5,8 @@ require 'dbcreds.php';
 class DashboardModel extends dbcreds {
 
     public static function residents_counter() {
-        // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        // Check for connection errors
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-    
-        // Prepare the SQL statement with a parameter placeholder
+
+        $conn = self::get_connection();
         $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1";
         $stmt = $conn->query($query);
     
@@ -30,21 +23,12 @@ class DashboardModel extends dbcreds {
         $conn->close();
     
         // Return the result
-        return $result;
-
-        echo '<script>console.log('.json_encode("test").')</script>';
-        
+        return $result; 
     }
 
     public static function occupied_bed_and_available_bed() {
-        // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        // Check for connection errors
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-    
+        
+        $conn = self::get_connection();
         // Prepare the SQL statement with a parameter placeholder
         $query = "SELECT SUM(rentCount) AS occupied_beds, (SUM(capacity) - SUM(rentCount)) AS available_beds FROM room;";
         $stmt = $conn->query($query);
@@ -66,14 +50,8 @@ class DashboardModel extends dbcreds {
     }
 
     public static function total_available_rooms() {
-        // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        // Check for connection errors
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-    
+        
+        $conn = self::get_connection();
         // Prepare the SQL statement with a parameter placeholder
         $query = "SELECT COUNT(*) AS available_rooms FROM room WHERE rentCount = 0;";
         $stmt = $conn->query($query);
@@ -96,12 +74,8 @@ class DashboardModel extends dbcreds {
     
     public static function add_new_tenant($new_tenant) {
         try {
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
-    
+            
+            $conn = self::get_connection();
             $query = $conn->prepare("INSERT INTO tenant (
                 tenFname, 
                 tenLname, 
@@ -146,7 +120,116 @@ class DashboardModel extends dbcreds {
             error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
             return false;
         }
-    }    
+    } 
+    
+    public static function query_add_new_rent($create_rent) {
+        try {
+
+            echo '<script>console.log(' . json_encode($create_rent) . ');</script>';
+
+            $conn = self::get_connection();
+            $query = $conn->prepare("INSERT INTO occupancy (
+                tenID, 
+                roomID, 
+                occDateStart, 
+                occDateEnd, 
+                occTypeID, 
+                occupancyRate
+            ) VALUES (?, ?, ?, ?, ?, ?);");
+    
+            if ($query === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+    
+            // Bind parameters
+            $query->bind_param(
+                'isssid',  
+                $create_rent['tenID'], 
+                $create_rent['roomID'], 
+                $create_rent['occDateStart'],
+                $create_rent['occDateEnd'], 
+                $create_rent['occTypeID'], 
+                $create_rent['occupancyRate']
+            );
+    
+            if (!$query->execute()) {
+                throw new Exception("Execute failed: " . $query->error);
+            }
+    
+            $query->close();
+            $conn->close();
+    
+            return true;
+        } catch (Exception $e) {
+            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+            return false;
+        }
+    }
+
+    public static function query_tenants(){
+        
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
+
+    public static function query_rooms() {
+        
+        $conn = self::get_connection();
+        $query = "SELECT * FROM room";
+        $stmt = $conn->query($query);
+    
+        if ($stmt === false) {
+            $conn->close();
+            throw new Exception("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
+
+    public static function query_types() {
+        
+        $conn = self::get_connection();
+        $query = "SELECT * FROM occupancy_type";
+        $stmt = $conn->query($query);
+    
+        if ($stmt === false) {
+            $conn->close();
+            throw new Exception("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
     
  
 }
