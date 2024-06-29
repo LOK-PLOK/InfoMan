@@ -1,0 +1,162 @@
+/**
+ * @author: Nash Adam Muñoz
+ * @co-authors: 
+ * @filename: general_styles.css
+ * @version: Alpha 1
+ * @lastupdate: June 14, 2024
+ */
+
+body {
+    background-color: #344799 !important;
+    height: 100vh;
+}
+
+/*==================== CONTENT ====================*/
+
+@media only screen and (min-width: 1130px) {
+    .container-fluid {
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .container-fluid {
+        height: 100%;
+    }
+}
+
+/* Notification Bell */
+.notification-group {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 20px;
+    padding: 0 5px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.notification img {
+    width: 30px;
+    cursor: pointer;
+}
+
+.notification-num {
+    position: absolute;
+    right: 0;
+    background-color: #d53030;
+    border-radius: 50%; 
+    color: white;
+    font-size: 10px;
+    padding: 7px 2px; 
+    width: 16px; 
+    height: 16px; 
+    line-height: 1px; 
+}
+
+.dropdown-menu {
+    background-color: #edf6f7 !important;
+    width: 350px !important;
+    max-height: 600px !important;
+    overflow: scroll;
+}
+
+.dropdown-menu > li {
+    padding: 5px;
+}
+
+.dropdown-menu > li:last-child {
+    border-bottom: none !important;
+}
+
+
+.notification-item-head {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-item-body {
+    color: rgb(76, 76, 76);
+    font-size: 14px;
+}
+
+
+/* Add Buttons */
+.dashboard-button{
+    display: flex;
+    justify-content: end;
+    gap: 13px;
+    height: 45px;
+    margin: 20px 0;
+}
+
+
+/* Overview */
+.dashboard-icons-cont{
+    display: flex;
+    justify-content: center;
+    height: auto;
+    margin: 20px 0 !important;
+}
+
+.dashboard-icons{
+    height: 160px;
+    width: 160px;
+    padding: 10px;
+    border-radius: 8px;
+    color: #344799;
+    margin-bottom: 20px;
+    background: #edf6f7;
+}
+
+.dashboard-icons div{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 85%;
+    gap: 8px;
+}
+
+.dashboard-icons div div{
+    font-size: 50px;
+}
+
+.dashboard-icons img{
+    height: 80px;
+}
+
+.dashboard-icons p{
+    font-size: 15px;
+    text-align: right;
+}
+
+@media only screen and (max-width: 400px) {
+    .dashboard-icons {
+        height: 140px;
+        width: 140px;
+    }
+
+    .dashboard-icons img {
+        height: 70px;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    .dashboard-icons {
+        height: 250px;
+        width: 250px;
+    }
+
+    .dashboard-icons img {
+        height: 150px;
+    }
+
+    .dashboard-icons div div{
+        font-size: 70px;
+    }
+
+    .dashboard-icons p {
+        font-size: 20px;
+    }
+}

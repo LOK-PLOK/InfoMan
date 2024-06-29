@@ -1,0 +1,64 @@
+/**
+ * @author: Nash Adam Muñoz
+ * @co-author: Juliana Ochea, Paul Detablan
+ * @filename: login_styles.css
+ * @version: Alpha 1
+ * @lastupdate: June 11, 2024
+ */
+
+
+body {
+    display: flex;
+    height: 100vh;
+    background: url("/images/login_background.png");
+}
+
+.login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.login-header img{
+    width: 175px;
+    height: auto;
+}
+
+.login-container {
+    display: flex;
+    margin: auto;
+    padding: 40px;
+    border-radius: 14px;
+    height: 4in;
+    width: 4in;
+    background:  rgba(52, 71, 153, 0.80);
+    color: white;
+}
+
+input[type=text],
+input[type=password] {
+    border: none;
+    border-radius: 8px;
+    margin: 8px 0;
+    padding: 10px 20px;
+    width: 100%;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
+}
+
+input[type=submit] {
+    border-radius: 10px;
+    background: #6379AF;
+    color: white;
+    height: 40px;
+    width: 100px;
+    border: none;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
+}
+
+.center-login{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
