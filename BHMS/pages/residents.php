@@ -46,7 +46,18 @@ if (isset($_POST['create-tenant-submit'])) {
         "emContactNum" => $_POST['emContactNum']
     );
 
-    $result = ResidentsController::create_new_tenant($new_tenant);
+     // Process form data for appliances
+     $appliances = array();
+     for ($i = 1; $i <= 5; $i++) {
+         if (isset($_POST['appliance' . $i])) {
+             $appliances[] = $_POST['appliance' . $i];
+         }
+     }
+
+    $last_id = ResidentsController::get_last_inserted_tenant_id() + 1;
+    $result1 = ResidentsController::create_new_tenant($new_tenant);
+    $result2 = ResidentsController:: appliance_tenID($appliances,$last_id);
+    
     if ($result) {
         echo '<script>console.log("Tenant added successfully")</script>';
     } else {
@@ -118,7 +129,8 @@ if (isset($_POST['delete-tenant-submit'])) {
 <!-- Display Tenant Table and Other Content -->
 <?php
 $tenant_list = ResidentsController::residents_table_data();
-ResidentsViews::residents_table_display($tenant_list);
+$appliance_list = ResidentsController::appliance_data();
+ResidentsViews::residents_table_display($tenant_list,$appliance_list);
 
 // Test: Log tenant list to console
 $json_tenant_list = json_encode($tenant_list);
