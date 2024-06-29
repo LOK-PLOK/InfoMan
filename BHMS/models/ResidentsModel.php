@@ -83,12 +83,102 @@ class ResidentsModel extends dbcreds{
             $query->close();
             $conn->close();
     
-            return true;
+            return true; // Return true if insertion was successful
         } catch (Exception $e) {
             error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
-            return false;
+            return false; // Return false if an error occurred
         }
-    }    
+    }
+    
+    public static function get_last_inserted_tenant_id() {
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        try {
+            // Prepare the SQL query to get the maximum tenID
+            $sql = "SELECT MAX(tenID) AS last_id FROM tenant";
+            $stmt = $conn->prepare($sql);
+    
+            // Check if preparation was successful
+            if (!$stmt) {
+                throw new Exception("Prepare statement failed: " . $conn->error);
+            }
+    
+            // Execute the query
+            $stmt->execute();
+    
+            // Bind the result to a variable
+            $stmt->bind_result($last_id);
+    
+            // Fetch the result
+            $stmt->fetch();
+    
+            // Close the statement
+            $stmt->close();
+    
+            // Close the connection
+            $conn->close();
+    
+            // Return the last inserted tenant ID
+            return $last_id;
+        } catch (Exception $e) {
+            // Handle any errors
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+    public static function appliance_tenID($appliances, $last_id) {
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        try {
+            // Prepare the SQL insert statement with placeholders
+            $sql = "INSERT INTO appliance (tenID, appInfo, appRate) VALUES (?, ?, ?)";
+    
+            // Prepare the statement
+            $stmt = $conn->prepare($sql);
+            
+            // Check if preparation was successful
+            if (!$stmt) {
+                throw new Exception("Prepare statement failed: " . $conn->error);
+            }
+    
+            // Default value for appRate
+            $defaultAppRate = 100.00;
+    
+            // Loop through each appliance and insert it into the appliance table
+            foreach ($appliances as $applianceInfo) {
+                // Bind parameters: "i" for integer (tenID), "s" for string (appInfo), "d" for double (appRate)
+                $stmt->bind_param("isd", $last_id, $applianceInfo, $defaultAppRate);
+    
+                // Execute the statement
+                if (!$stmt->execute()) {
+                    throw new Exception("Execution failed: " . $stmt->error);
+                }
+            }
+    
+            // Close the statement
+            $stmt->close();
+    
+            // Close the connection
+            $conn->close();
+    
+            return true; // Return true if insertion is successful
+    
+        } catch (Exception $e) {
+            // Handle any errors
+            echo "Error: " . $e->getMessage();
+            return false; // Return false if an error occurs
+        }
+    }
 
     public static function residents_data(){
         try {
@@ -124,6 +214,49 @@ class ResidentsModel extends dbcreds{
     
             // Return the array of tenants
             return $tenants;
+        } catch (Exception $e) {
+            
+            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+    
+            // Return an empty array to indicate failure
+            return [];
+        }
+    }
+
+    public static function appliance_data(){
+        try {
+            //connection 
+            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+            
+            if ($conn->connect_error) {
+                throw new Exception("Connection failed: " . $conn->connect_error);
+            }
+    
+            // SQL query to select all appliance
+            $query = "SELECT * FROM appliance";
+    
+            // Execute the query
+            $result = $conn->query($query);
+    
+            if ($result === false) {
+                throw new Exception("Query failed: " . $conn->error);
+            }
+    
+            // Fetch all rows as an associative array
+            $tenants = [];
+            while ($row = $result->fetch_assoc()) {
+                $appliance[] = $row;
+            }
+    
+            
+            $result->free();
+    
+            // Close the connection
+            $conn->close();
+    
+            // Return the array of appliance
+            return $appliance;
         } catch (Exception $e) {
             
             error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
