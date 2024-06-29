@@ -1,10 +1,13 @@
 <?php
+    ob_start();
     require '../php/templates.php';
     require '../views/BillingsViews.php';
 
-    $more_links = '
+    $more_links = <<<HTML
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="/styles/residents.css">';
+    <link rel="stylesheet" href="/styles/residents.css">
+    <script src="/js/date.js"></script>
+    HTML;
 
     html_start('billings.css', $more_links);
 
@@ -103,8 +106,46 @@
 
 <?php
     BillingsViews::add_payment_modal();
-    BillingsViews::edit_payment_modal();
-    BillingsViews::delete_payment_modal();
+    BillingsViews::edit_billing_modal();
+    BillingsViews::delete_billing_modal();
+    BillingsViews::create_billing_modal();
+
+    if (isset($_POST['create-billing-submit'])){
+
+            $new_billing = array(
+                "tenID" => $_POST['create-billing-tenant'],
+                "billTotal" => $_POST['create-billing-billTotal'],
+                "billDateIssued" => $_POST['create-billing-billDateIssued'],
+                "billDueDate" => $_POST['create-billing-billDueDate'],
+                "isPaid" => $_POST['create-billing-isPaid']
+            );
+
+        $result = BillingsController::create_billings($new_billing);
+
+        if ($result) {
+            echo '<script>console.log("Billing created successfully")</script>';
+        } else {
+            echo '<script>console.log("Error created billing")</script>';
+        }
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    }
+
+    if (isset($_POST['delete-billing-submit'])) {
+        $billing_id = $_POST['billing_id'];
+        $result = BillingsController::delete_billings($billing_id);
+        if ($result) {
+            echo '<script>console.log("Billing deleted successfully")</script>';
+        } else {
+            echo '<script>console.log("Error deleting billing")</script>';
+        }
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    }
+
+    // if (isset($_POST['create-billing-submit'])){
+
+    // }
     
     // if (isset($_POST['edit-payment-submit'])){
     //     $payment_details = array(
@@ -124,6 +165,8 @@
     //         "isPaid" => $_POST['isPaid']
     //     );
     // }
+
+    
 ?>
 
 
@@ -137,7 +180,27 @@
         $("#editTenantName").selectize();
         $("#editDatePayment").selectize();
         $("#editStatusPayment").selectize();
-    }); 
+        $("#create-billing-tenant").selectize();
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const billingId = this.getAttribute('data-billing-id');
+                document.getElementById('billing_id').value = billingId;
+                const deleteModal = new bootstrap.Modal(document.getElementById('deleteBillingsModal'));
+                deleteModal.show();
+            });
+        });
+    });
+
+    calculateDate('#start-date', '#end-date');
+    calculateDate('#create-billing-billDateIssued', '#create-billing-billDueDate');
 </script>
 
-<?php html_end(); ?>
+<?php 
+    html_end(); 
+    ob_end_flush();
+?>
