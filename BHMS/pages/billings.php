@@ -65,7 +65,7 @@
                         <!-- Paid -->
                         <div class="content active">
                             <?php
-                                BillingsViews::paid_table();
+                                BillingsViews::generate_billing_table('paid');
                             ?>
                         </div>
                         
@@ -73,14 +73,17 @@
 						<!-- UNPAID TABLE -->
                         <div class="content">
                             <?php
-                                BillingsViews::unpaid_table();
+                                BillingsViews::generate_billing_table('unpaid');
                             ?>
                         </div>
 
-						<!-- OVERDUE TABLE -->
-                        <?php
-                            BillingsViews::overdue_table();
-                        ?>
+                        <!-- OVERDUE TABLE -->
+                        <div class="content">
+                            <?php
+                                BillingsViews::generate_billing_table('overdue');
+                            ?>
+                        </div>
+
     
                         <span class="table-section-footer" >
                             Showing 1 page to 3 of 3 entries
@@ -113,10 +116,19 @@
 
             $new_billing = array(
                 "tenID" => $_POST['create-billing-tenant'],
+
                 "billTotal" => $_POST['create-billing-billTotal'],
+
+                "startDate" => $_POST['create-billing-start-date'],
+
                 "billDateIssued" => $_POST['create-billing-billDateIssued'],
+
+                "endDate" => $_POST['create-billing-end-date'],
+
                 "billDueDate" => $_POST['create-billing-billDueDate'],
-                "isPaid" => $_POST['create-billing-isPaid']
+
+                "isPaid" => $_POST['create-billing-isPaid'],
+
             );
 
         $result = BillingsController::create_billings($new_billing);
@@ -142,30 +154,6 @@
         exit();
     }
 
-    // if (isset($_POST['create-billing-submit'])){
-
-    // }
-    
-    // if (isset($_POST['edit-payment-submit'])){
-    //     $payment_details = array(
-    //         "tenID" => $_POST['tenantName'],
-    //         "billTotal" => $_POST['billTotal'],
-    //         "editStatusPayment" => $_POST['editStatusPayment'],
-            
-    //     )
-    // }
-
-    // if (isset($_POST['add-payment-submit'])){
-    //     $new_payment = array(
-    //         "tenID" => $_POST['tenantName'],
-    //         "billTotal" => $_POST['paymentAmount'],
-    //         "billDateIssued" => $_POST['start-date'],
-    //         "billDueDate" => $_POST['end-date'],
-    //         "isPaid" => $_POST['isPaid']
-    //     );
-    // }
-
-    
 ?>
 
 
@@ -184,19 +172,76 @@
 
     
     document.addEventListener('DOMContentLoaded', function () {
-        const deleteButtons = document.querySelectorAll('.delete-button');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const billingId = this.getAttribute('data-billing-id');
-                document.getElementById('billing_id').value = billingId;
-                const deleteModal = new bootstrap.Modal(document.getElementById('deleteBillingsModal'));
-                deleteModal.show();
-            });
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteBillingsModal'));
+
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const billingId = this.getAttribute('data-billing-id');
+            document.getElementById('billing_id').value = billingId;
+            deleteModal.show();
         });
     });
 
-    calculateDate('start-date', 'end-date');
-    calculateDate('create-billing-billDateIssued', 'create-billing-billDueDate');
+    document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => {
+        button.addEventListener('click', function() {
+            deleteModal.hide();
+        });
+    });
+
+    document.getElementById('deleteBillingsModal').addEventListener('hidden.bs.modal', function () {
+        var backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(backdrop => backdrop.remove());
+    });
+});
+
+
+    calculateDate('start-date', 'dummy-end-date','end-date');
+    calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
+
+    
+function handleTabSwitching() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const allContent = document.querySelectorAll('.content');
+    const slider = document.querySelector('.line');
+
+    function switchTab(tabIndex) {
+        tabs.forEach((tab, index) => {
+            if (index === tabIndex) {
+                tab.classList.add('active');
+                slider.style.width = tab.offsetWidth + "px";
+                slider.style.left = tab.offsetLeft + "px";
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        allContent.forEach((content, index) => {
+            if (index === tabIndex) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
+            }
+        });
+        localStorage.setItem('activeTabIndex', tabIndex);
+    }
+
+
+    const activeTabIndex = localStorage.getItem('activeTabIndex');
+    if (activeTabIndex !== null) {
+        switchTab(parseInt(activeTabIndex));
+    }
+
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+            switchTab(index);
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', handleTabSwitching);
+
 </script>
 
 

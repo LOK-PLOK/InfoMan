@@ -17,7 +17,7 @@ class BillingsController {
     }
 
     public static function create_billings($new_billing){
-        return BillingsModel::query_create_billings();
+        return BillingsModel::query_create_billings($new_billing);
     }
 
     public static function delete_billings($billing_id) {

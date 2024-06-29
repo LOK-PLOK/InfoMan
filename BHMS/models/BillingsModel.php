@@ -5,24 +5,34 @@ require 'dbcreds.php';
 class BillingsModel extends dbcreds {
 
     public static function query_create_billings($new_billing){
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) VALUES (NULL, $tenID, $billTotal, $billDateIssued, $billDueDate, $isPaid);";
-        $stmt = $conn->query($query);
-
-        if ($stmt === false) {
-            die("Error executing query: " . $conn->error);
+        $conn = self::get_connection();
+        
+        // Check if all required fields are set
+        if (!isset($new_billing['tenID'], $new_billing['billTotal'], $new_billing['billDateIssued'], $new_billing['isPaid'])) {
+            die("Error: Missing required billing data.");
         }
     
-        $stmt->close();
+        // Sanitize the inputs
+        $tenID = $new_billing['tenID'];
+        $billTotal = $new_billing['billTotal'];
+        $billDateIssued = date('Y-m-d');
+        $isPaid = $new_billing['isPaid'];
+
+        $endDate = $_POST['create-billing-end-date'];
+        $billDueDate = date('Y-m-d', strtotime($endDate . ' +7 days'));
+    
+        $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) 
+                  VALUES (NULL, '$tenID', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid');";
+        if ($conn->query($query) === FALSE) {
+            die("Error executing query: " . $conn->error . " Query: " . $query);
+        }
+
         $conn->close();
     
         return true;
     }
+    
+    
 
 
     public static function query_delete_billings($billing_id) {
