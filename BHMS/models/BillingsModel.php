@@ -4,6 +4,39 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+    public static function query_create_billings($new_billing){
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) VALUES (NULL, $tenID, $billTotal, $billDateIssued, $billDueDate, $isPaid);";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return true;
+    }
+
+
+    public static function query_delete_billings($billing_id) {
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $stmt = $conn->prepare("DELETE FROM billing WHERE billRefNo = ?");
+        $stmt->bind_param("i", $billing_id);
+        return $stmt->execute();
+    }
+
     public static function query_tenants(){
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
