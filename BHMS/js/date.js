@@ -14,7 +14,7 @@
 //     });
 // });
 
-function calculateDate(startDateID, endDateID){
+function calculateDate(startDateID, endDateID) {
     document.getElementById(startDateID).addEventListener('change', function() {
         const startDate = new Date(this.value);
         
@@ -29,3 +29,4 @@ function calculateDate(startDateID, endDateID){
         }
     });
 }
+
