@@ -6,7 +6,6 @@
     $more_links = <<<HTML
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/styles/residents.css">
-    <script src="/js/date.js"></script>
     HTML;
 
     html_start('billings.css', $more_links);
@@ -173,7 +172,7 @@
 <!-- Additional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="/js/date.js"></script>
 <script>
     $(function(){
         $("#tenantName").selectize();
@@ -196,9 +195,10 @@
         });
     });
 
-    calculateDate('#start-date', '#end-date');
-    calculateDate('#create-billing-billDateIssued', '#create-billing-billDueDate');
+    calculateDate('start-date', 'end-date');
+    calculateDate('create-billing-billDateIssued', 'create-billing-billDueDate');
 </script>
+
 
 <?php 
     html_end(); 
