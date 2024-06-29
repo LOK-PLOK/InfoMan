@@ -54,8 +54,9 @@ if (isset($_POST['create-tenant-submit'])) {
          }
      }
 
-    $last_id = ResidentsController::get_last_inserted_tenant_id() + 1;
+    
     $result1 = ResidentsController::create_new_tenant($new_tenant);
+    $last_id = ResidentsController::get_last_inserted_tenant_id() + 1;
     $result2 = ResidentsController:: appliance_tenID($appliances,$last_id);
     
     if ($result) {
@@ -133,8 +134,7 @@ $appliance_list = ResidentsController::appliance_data();
 ResidentsViews::residents_table_display($tenant_list,$appliance_list);
 
 // Test: Log tenant list to console
-$json_tenant_list = json_encode($tenant_list);
-echo '<script>console.log("Tenant List:", ' . $json_tenant_list . ')</script>';
+echo '<script>console.log("Tenant List:", ' . json_encode($tenant_list) . ')</script>';
 
 if ($tenant_list) {
     echo '<script>console.log("Tenant list fetched successfully")</script>';
