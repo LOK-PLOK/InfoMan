@@ -129,31 +129,32 @@ class MaintenanceViews extends GeneralViews{
     public static function On_going_table_data() {
         // Fetch the "On-going" maintenance data.
         $On_going = MaintenanceController::get_On_going_data();
+        echo '<script> console.log(' . json_encode($On_going) . ') </script>';
     
         // Begin the HTML output.
         echo '
         <!-- On-going -->
         <div class="content active">
             <div class="table-section styled-table">
-                <div class="table-cont-1" >
+                <div class="table-cont-1">
                     <div class="table-cont-1-1">
                         <span>Sort By</span>
                         <button class="blue-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
                     </div>
-        
+    
                     <button class="search">Search <span class="search-icon"><i class="fas fa-search"></i></span></button>
                 </div>
                 
                 <table>
                     <thead>
-                    <tr>
-                        <th>Room Code</th>
-                        <th>Cost</th>
-                        <th>More</th>
-                        <th>Reason</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
+                        <tr>
+                            <th>Room Code</th>
+                            <th>Cost</th>
+                            <th>More</th>
+                            <th>Reason</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>';
     
@@ -170,11 +171,13 @@ class MaintenanceViews extends GeneralViews{
                     <button id="openEditModalBtn" style="margin-right: 10px; border: none;">
                         <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                     </button>
-                    <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;">
+                    <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                         <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                     </button>
                 </td>
+                <script>console.log(\'' . htmlspecialchars($maintenance['maintID']) . '\')</script>
             </tr>';
+        
         }
     
         // Close the HTML tags.
@@ -197,6 +200,9 @@ class MaintenanceViews extends GeneralViews{
                 </span>
             </div>
         </div>';
+    
+        // Echo the JavaScript code.
+        
     }
 
     public static function Completed_table_data(){

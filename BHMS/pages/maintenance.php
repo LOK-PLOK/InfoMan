@@ -6,7 +6,7 @@ session_start();
 require '../php/templates.php';
 require '../views/MaintenanceViews.php';
 
-
+echo '<script src="../js/maintenance_edit&delete_modal.js"></script>';
 
 html_start('maintenance.css');
 
@@ -32,7 +32,7 @@ MaintenanceViews::burger_sidebar();
 
     <!-- Overview -->
 
-    <!-- Add New Rent Modal -->
+    <!-- Add New Maintenance Modal -->
 <?php
 MaintenanceViews::create_maintenance_modal();
 
@@ -60,12 +60,28 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     
+
+    
     // After handling the form submission, redirect to avoid form resubmission
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit(); // Make sure to exit after redirect
 
 }
 ?>
+
+<?php 
+
+if (isset($_POST['delete-maintenance-submit'])){
+    $maintenanceID = $_GET['maintID'];
+    echo '<script>console.log(' .$maintenanceID. ');</script>';
+}
+
+
+
+?>
+
+<!-- Add New Maintenance Modal -->
+
    
 
 <!-- Revision Edit MODAL -->
@@ -144,16 +160,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class="modal-content bg-custom">
             <div class="modal-header bg-custom">
                 <div class="displayflex header bg-custom">
-                    <span style="font-size: 25px;">Are you sure you want to delete this maintenance information?</span></span>
+                    <span style="font-size: 25px;">Are you sure you want to delete this maintenance information?</span>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body bg-custom">
-                <form action="/action_page.php">
-                    <div class="displayflex">
-                        <input type="button" name="Yes" id="Yesdelete" class="btn-var-2 ms-4 me-4" value="Yes">
-                        <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" value="No">
-                    </div>
+                <form id="deleteMaintenanceForm" action="../pages/maintenance.php" method="POST">
+                <!-- Hidden input to store the maintenance ID -->
+                
+                <div class="displayflex">
+                    <input type="hidden" id="deleteMaintID" value="">
+                    <input type="submit" name="Yes" id="Yesdelete" name="delete-maintenance-submit" class="btn-var-2 ms-4 me-4" value="Yes">
+                    <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" value="No" data-bs-dismiss="modal" aria-label="Close">
+                </div>
+                
                 </form>
             </div>
             <div class="displayflex bg-custom label" style="border-radius: 10px;">
