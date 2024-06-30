@@ -6,8 +6,10 @@ session_start();
 require '../php/templates.php';
 require '../views/MaintenanceViews.php';
 
-
-
+echo '<script src="../js/maintenance_edit&delete_modal.js"></script>';
+echo'<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+';
 html_start('maintenance.css');
 
 // Sidebar
@@ -16,23 +18,6 @@ MaintenanceViews::burger_sidebar();
 ?>
 
 
-<div class="container-fluid">
-
-
-    <!-- Header -->
-    <?php
-    MaintenanceViews::maintenance_header();
-    MaintenanceViews::maintenance_content();
-    
-    ?>
-    
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-    <!-- Overview -->
-
-    <!-- Add New Rent Modal -->
 <?php
 MaintenanceViews::create_maintenance_modal();
 
@@ -60,132 +45,87 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     
+
+    
     // After handling the form submission, redirect to avoid form resubmission
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit(); // Make sure to exit after redirect
 
 }
 ?>
+
+<?php
+MaintenanceViews::delete_maintenance_modal();
+
+if (isset($_GET['delete-maintenance-submit'])) {
+    
+    if (isset($_GET['deleteMaintID'])) {
+        $maintenanceID = $_GET['deleteMaintID'] ?? '';
+        echo '<script>console.log("Deleting maintenance ID: ", ' . json_encode($maintenanceID) . ');</script>';
+
+        // Handle your deletion logic here using MaintenanceController::deleteMaintenanceById($maintenanceID);
+        $result = MaintenanceController::deleteMaintenanceById($maintenanceID);
+
+        // Example response based on your controller logic
+        if ($result) {
+            echo '<script>console.log("Deleted successfully");</script>';
+        } else {
+            echo '<script>console.log("Error deleting maintenance ID: ' . $maintenanceID . '");</script>';
+        }
+        
+    } else {
+        echo '<script>console.log("No maintID found in $_GET");</script>';
+    }
+
+    header("Location: /pages/maintenance.php");
+    exit();
+
+} 
+?>
+
+<?php 
+MaintenanceViews::edit_maintenance_modal();
+
+if (isset($_GET["edit-maintenance-submit"])) {
+    $edit_maintenance = array(
+        "Edit-maintID" => $_GET["Edit-maintID"],
+        "Edit-roomID" => $_GET["Edit-roomID"],
+        "Edit-maintDate" => $_GET["Edit-maintDate"],
+        "Edit-maintStatus" => $_GET["Edit-maintStatus"],
+        "Edit-maintDesc" => $_GET["Edit-maintDesc"],
+        "Edit-maintCost" => $_GET["Edit-maintCost"],
+    );
+
+    // JSON encode the array and log it to the console
+    // echo '<script>console.log("Editing maintenance:", ' . json_encode($edit_maintenance) . ');</script>';
+    $result = MaintenanceController::edit_maintenance($edit_maintenance);
+
+    header("Location: /pages/maintenance.php");
+    exit();
+}
+?>
+
+<!-- Header -->
+<?php
+MaintenanceViews::maintenance_header();
+MaintenanceViews::maintenance_content();
+
+
+?>
+    
+
+<!-- Overview -->
+
+<!-- Add New Maintenance Modal -->
+
+
+
+
+<!-- Add New Maintenance Modal -->
+
    
 
-<!-- Revision Edit MODAL -->
-<div class="modal fade" id="edit-modal-info" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
-                <h5 class="modal-title" id="edit-modal">Room Maintenance Information</h5>
-                <button type="button" class="btn-close" id="editCloseButton" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-custom">
-                <form action="/action_page.php" class="modalcolumn">
-                    <!-- Row 1: Room Code -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-md-4 text-md-end">
-                            <label for="edit-roomcode" class="form-label">Room Code:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="edit-roomcode" name="edit-roomcode" placeholder="Enter room code..." class="form-control shadow" required>
-                        </div>
-                    </div>
-                    <!-- Row 2: Date -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-md-4 text-md-end">
-                           <label for="edit-date" class="form-label">Date:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="date" id="edit-date" name="edit-date" class="form-control shadow" required>
-                        </div>
-                    </div>
-                    <!-- Row 3: Reason -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-md-4 text-md-end">
-                            <label for="edit-reason" class="form-label">Reason:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="edit-reason" name="edit-reason" placeholder="Enter a reason..." class="form-control shadow" required>
-                        </div>
-                    </div>
-                    <!-- Row 4: Status -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-md-4 text-md-end">
-                            <label for="edit-status" class="form-label">Status:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <select id="edit-status" name="edit-status" class="form-select shadow" required>
-                                <option value="" disabled selected>Choose the status...</option>
-                                <option value="On-going">On-going</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Canceled">Canceled</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- Row 5: Maintenance Cost -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-md-4 text-md-end">
-                            <label for="edit-maintenance-cost" class="form-label">Maintenance Cost:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" id="edit-maintenance-cost" name="edit-maintenance-cost" placeholder="Enter the cost..." class="form-control shadow" required>
-                        </div>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="displayflex">
-                        <input type="submit" class="btn-var-2" value="Save">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Delete Modal Revision-------------- -->
-<div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-custom">
-            <div class="modal-header bg-custom">
-                <div class="displayflex header bg-custom">
-                    <span style="font-size: 25px;">Are you sure you want to delete this maintenance information?</span></span>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-custom">
-                <form action="/action_page.php">
-                    <div class="displayflex">
-                        <input type="button" name="Yes" id="Yesdelete" class="btn-var-2 ms-4 me-4" value="Yes">
-                        <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" value="No">
-                    </div>
-                </form>
-            </div>
-            <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Additional JavaScript -->
-<script>
-    // To be Asked !
-    document.addEventListener('DOMContentLoaded', function() {
-        // Function to close modal given the modal element and button id
-        function setupModalClose(modalId, buttonId) {
-            var closeButton = document.getElementById(buttonId);
-            var modalElement = document.getElementById(modalId);
-            var modalInstance = new bootstrap.Modal(modalElement);
-
-            closeButton.addEventListener('click', function() {
-                modalInstance.hide(); // Hide the modal
-            });
-        }
-
-        // Setup closing for AddModal
-        setupModalClose('add-modal-info', 'addCloseButton');
-
-        // Setup closing for EditModal
-        setupModalClose('edit-modal-info', 'editCloseButton');
-    });
-</script>
 
 <?php html_end(); ?>
 
