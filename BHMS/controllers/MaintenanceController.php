@@ -1,8 +1,9 @@
 <?php
 
 require '../models/MaintenanceModel.php';
+require 'GeneralController.php';
 
-class MaintenanceController {
+class MaintenanceController extends GeneralController{
     public static function get_room(){
         return MaintenanceModel::query_rooms();
     }

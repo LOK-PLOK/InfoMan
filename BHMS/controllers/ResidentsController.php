@@ -1,8 +1,9 @@
 <?php
 
 require '../models/ResidentsModel.php';
+require 'GeneralController.php';
 
-class ResidentsController{
+class ResidentsController extends GeneralController{
 
     public static function total_current_residents(){
         return ResidentsModel::residents_counter();

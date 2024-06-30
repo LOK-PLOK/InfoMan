@@ -32,8 +32,6 @@
         echo ('
                 <script src="/js/general.js"></script>
                 <script src="/js/sliding-tab.js"></script>
-                <script src="/js/date.js"></script>
-                <script src="/js/checkbox.js"></script>
                 </body>
                 </html>');
     }

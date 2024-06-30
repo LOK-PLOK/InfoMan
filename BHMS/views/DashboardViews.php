@@ -1,13 +1,14 @@
 <?php
 
-include 'GeneralViews.php';
-include '../controllers/DashboardController.php';
+require_once 'GeneralViews.php';
+require_once '../controllers/DashboardController.php';
+
+DashboardController::rentCountUpdater();
 
 class DashboardViews extends GeneralViews{
 
     public static function dashboard_header() {
 
-        echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
         echo <<<HTML
             <div class="header-container">
                 <div>
@@ -190,6 +191,105 @@ class DashboardViews extends GeneralViews{
 
     }
 
+    public static function create_new_payment_modal() {
+        $tenants = DashboardController::get_tenants();
+
+        echo <<<HTML
+            <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                            <form method="POST">
+                                <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
+                                <!-- Tenant Info -->
+                                <select name="tenantName" id="tenantName">
+                                    <option value="">Select Tenant</option>
+        HTML;
+                                    foreach ($tenants as $tenant){
+                                        $tenant_id = $tenant['tenID'];
+                                        $tenant_fName = $tenant['tenFname'];
+                                        $tenant_MI = $tenant['tenMI'];
+                                        $tenant_lName = $tenant['tenLname'];
+                                        $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                        echo<<<HTML
+                                            <option value="$tenant_id">$tenant_fullName</option>
+                                        HTML;
+                                    }                         
+        echo <<<HTML
+                                </select>
+                                <p class="small-text">Name</p>
+
+                                <!-- Payment Details -->
+                                <label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
+                                <input type="number" id="paymentAmount" name="paymentAmount" placeholder="100.00" class="d-flex w-100 shadow">
+                                <p class="small-text">Amount</p>
+                                
+                                <!-- Mode of Transaction -->
+                                <label class="billings-modal-labels" for="paymentAmount">Mode of Transaction</label>
+                                <select name="payMethod" class="d-flex w-100 shadow">>
+                                    <option selected disabled>Select Option</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="GCash">GCash</option>
+                                </select>
+                                <p class="small-text">Payment Method</p>
+
+
+                                <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
+                                <div class="month-allocated-cont">
+                                    <div>
+                                        <!-- Payment Start -->
+                                        <input type="date" id="payment-start-date" name="payment-start-date">
+                                        <p class="small-text">Start Date</p>
+                                    </div>
+                                    <div>
+                                        <!-- Payment End -->
+                                        <input type="date" id="payment-end-date" name="payment-end-date" disabled>
+                                        <input type="date" id="payment-due-date" name="payment-due-date" style="display: none">
+                                        <p class="small-text">End Date</p>
+                                    </div>
+                                    
+                                </div>
+
+                                <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
+                                <span class="custom-checkbox">Transaction made by a non-tenant payer</span>
+                                
+                                <div class="payer-details">
+                                    <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
+                                    <div class="payer-info">
+                                        <div>
+                                            <input type="text" id="payer-fname" name="payer-fname">
+                                            <p class="small-text">First Name</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <input type="text" id="payer-MI" name="payer-MI">
+                                            <p class="small-text">M.I</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <input type="text" id="payer-lname" name="payer-lname">
+                                            <p class="small-text">Last Name</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="add-cont">
+                                    <button type="submit" name="create-new-payment" class="btn-var-3 add-button">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        HTML;
+    }
+
+
+
     public static function create_new_rent_modal() {
         $tenants = DashboardController::get_tenants();
         $rooms = DashboardController::get_rooms();
@@ -197,7 +297,7 @@ class DashboardViews extends GeneralViews{
 
         echo <<<HTML
             <div class="modal fade" id="add-new-rent-modal" tabindex="-1" aria-labelledby="add-new-rent-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center align-items-center">
             <form method="POST">
                 <div class="modal-content">
                 <div class="modal-header">

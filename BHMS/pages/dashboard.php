@@ -1,9 +1,7 @@
 <?php
 
-// $filePath = __FILE__;
-// echo "The file path is: $filePath";
-
 session_start();
+ob_start();
 
 require '../php/templates.php';
 require '../views/DashboardViews.php';
@@ -19,18 +17,15 @@ require '../php/navbar.php';
 
 // Hamburger Sidebar
 DashboardViews::burger_sidebar();
-
 ?>
 
 <!-- Dashboard Content Section -->
 <div class="container-fluid">
 
-<?php
-
-// Header
-DashboardViews::dashboard_header();
-
-?>
+	<?php
+	// Dashboard Header
+	DashboardViews::dashboard_header();
+	?>
     
     <!-- Modal Buttons -->
     <div class="dashboard-button">
@@ -43,28 +38,36 @@ DashboardViews::dashboard_header();
     <span style="font-size: larger;">Boarding House Capacity Overview</span><br>
     <div class="row dashboard-icons-cont">
 
-        <?php 
-        
-        // Total Residents
-        DashboardViews::ov_total_residents(); 
-        
-        // Total Occupied Beds and Available Beds
-        DashboardViews::ov_bedsOcc_bedsAvail();
+	<?php 
+	
+	// Total Residents
+	DashboardViews::ov_total_residents(); 
+	
+	// Total Occupied Beds and Available Beds
+	DashboardViews::ov_bedsOcc_bedsAvail();
 
-        // Total Available Rooms
-        DashboardViews::ov_available_rooms();
-        
-        ?>
+	// Total Available Rooms
+	DashboardViews::ov_available_rooms();
+	
+	?>
         
     </div>
 </div>
 
-<!-- Add Tenant Modal -->
 <?php 
 
+// Add New Tenant Modal
 DashboardViews::add_tenant_model_view();
 
+// Add New Payment Modal
+DashboardViews::create_new_payment_modal();
+
+// Add New Rent Modal
+DashboardViews::create_new_rent_modal();
+
 if($_SERVER['REQUEST_METHOD'] == "POST") {
+
+	// Add New Tenant Handler
 	if (isset($_POST['create-tenant-submit'])) {
 		$new_tenant = array(
 			"tenFname" => $_POST['tenFname'],
@@ -85,111 +88,59 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		);
 	
 		$result = DashboardController::create_new_tenant($new_tenant);
-		if ($result) {
-			echo '<script>console.log("Tenant added successfully")</script>';
-		} else {
-			echo '<script>console.log("Error")</script>';
-		}
-	}
-}
-
-?>
-
-<!--------------- ADD PAYMENT MODAL --------------->
-<div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content bg-custom">
-			<div class="modal-header bg-custom">
-				<h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body bg-custom">
-				<form action="/action_page.php">
-					<label class="billings-modal-labels" for="tenantName">Tenant Information</label>
-					<select name="tenantName" id="tenantName">
-						<option value="">Select Tenant</option>
-						<option value="Maria P. Detablurs">Maria P. Detablurs</option>
-						<option value="Nash Marie Abangan">Nash Marie Abangan</option>
-					</select>
-					<p class="small-text">Name</p>
-					<label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
-					<input type="text" id="paymentAmount" name="paymentAmount">
-					<p class="small-text">Amount</p>
-
-					<label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
-					<div class="month-allocated-cont">
-						<div>
-							<input type="date" id="start-date" name="start-date">
-							<p class="small-text">Start Date</p>
-						</div>
-						<div>
-							<input type="date" id="end-date" name="end-date" disabled>
-							<p class="small-text">End Date</p>
-						</div>
-						
-					</div>
-
-					<input type="checkbox" id="non-tenant-check" name="non-tenant-check">
-					<span class="custom-checkbox">Transaction made by a non-tenant payer</span>
-					
-					<div class="payer-details">
-					<label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
-					<div class="payer-info">
-					<div>
-						<input type="text" id="payer-fname" name="payer-fname">
-						<p class="small-text">First Name</p>
-					</div>
-					
-					<div>
-						<input type="text" id="payer-MI" name="payer-MI">
-						<p class="small-text">M.I</p>
-					</div>
-					
-					<div>
-						<input type="text" id="payer-lname" name="payer-lname">
-						<p class="small-text">Last Name</p>
-					</div>
-					
-					</div>
-
-					</div>
-
-					<div class="add-cont">
-						<button class="btn-var-3 add-button">Add</button>
-					</div>
-					
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Add New Rent Modal -->
-<?php
-DashboardViews::create_new_rent_modal();
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-    if (isset($_POST['create-new-rent'])) {
-        $create_rent = array(
-            "tenID" => htmlspecialchars($_POST['new-rent-tenant']),
-            "roomID" => htmlspecialchars($_POST['new-rent-room']),
-            "occTypeID" => htmlspecialchars($_POST['new-rent-type']),
-            "occDateStart" => htmlspecialchars($_POST['new-rent-start']),
-            "occDateEnd" => htmlspecialchars($_POST['new-rent-end']),
-            "occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
-        );
-
-        $result = DashboardController::create_new_rent($create_rent);
         if ($result) {
-            echo '<script>console.log("New Rent added successfully")</script>';
+            // Redirect to the same page or to a confirmation page after successful form submission
+            header('Location: dashboard.php?addTenantStatus=success');
+            exit();
         } else {
-            echo '<script>console.log("Error")</script>';
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: dashboard.php?addTenantStatus=error');
+            exit();
         }
+	}
 
-        // Output the contents of $create_rent for debugging
-        echo '<script>console.log(' . json_encode($create_rent) . ');</script>';
-    }
+	// Add New Payment Handler
+	if(isset($_POST['create-new-payment'])){
+
+		// $create_payment = array(
+
+		// );
+
+		$result = '';
+		if ($result) {
+			// Redirect to avoid form resubmission
+			header('Location: dashboard.php?addPaymentStatus=success');
+			exit();
+		} else {
+			// Redirect with an error message
+			header('Location: dashboard.php?addPaymentStatus=error');
+			exit();
+		}
+
+	}
+
+	// Add New Rent Handler
+	if (isset($_POST['create-new-rent'])) {
+		$create_rent = array(
+			"tenID" => htmlspecialchars($_POST['new-rent-tenant']),
+			"roomID" => htmlspecialchars($_POST['new-rent-room']),
+			"occTypeID" => htmlspecialchars($_POST['new-rent-type']),
+			"occDateStart" => htmlspecialchars($_POST['new-rent-start']),
+			"occDateEnd" => htmlspecialchars($_POST['new-rent-end']),
+			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
+		);
+
+		$result = DashboardController::create_new_rent($create_rent);
+        if ($result) {
+            // Redirect to avoid form resubmission
+            header('Location: dashboard.php?addRentStatus=success');
+            exit();
+        } else {
+            // Redirect with an error message
+            header('Location: dashboard.php?addRentStatus=error');
+            exit();
+        }
+	}
 
 }
 ?>
@@ -199,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="/js/checkbox.js"></script>
 <script>
 	$(document).ready(function() {
         $("#tenantName").selectize();
@@ -225,6 +176,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	});
 
 
+	// End date and Due Date Setter for Add New Payment
+	document.getElementById('payment-start-date').addEventListener('change', function() {
+		const startDate = new Date(this.value);
+
+		if(!isNaN(startDate.getTime())) {
+			const endDate = new Date(startDate);
+			const dueDate = new Date(startDate);
+			endDate.setDate(endDate.getDate() + 30);
+			dueDate.setDate(dueDate.getDate() + 37);
+
+			const endDateString = endDate.toISOString().split('T')[0];
+			const dueDateString = dueDate.toISOString().split('T')[0];
+			document.getElementById('payment-end-date').value = endDateString;
+			document.getElementById('payment-due-date').value = dueDateString;
+		} else {
+			console.log('Invalid start date');
+		}
+	});
+
+
 	// End Date Setter for Add New Rent
 	document.getElementById('new-rent-start').addEventListener('change', function() {
 		const startDate = new Date(this.value);
@@ -239,7 +210,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			console.log('Invalid start date');
 		}
 	});
+
+
 </script>
 
-<?php html_end(); ?>
+<?php 
+
+ob_end_flush();
+html_end(); 
+
+?>
 

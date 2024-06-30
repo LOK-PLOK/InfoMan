@@ -1,8 +1,9 @@
 <?php
 
 require '../models/DashboardModel.php';
+require 'GeneralController.php';
 
-class DashboardController {
+class DashboardController extends GeneralController{
 
     public static function total_current_residents(){
         return DashboardModel::residents_counter();

@@ -1,8 +1,9 @@
 <?php
 
 require '../models/BillingsModel.php';
+require 'GeneralController.php';
 
-class BillingsController {
+class BillingsController extends GeneralController{
 
     public static function get_paid_billings(){
         return BillingsModel::query_paid_billings();
