@@ -190,7 +190,7 @@ th {
     transition: all .3s ease-in-out;
 }
 
-.unpaid th{
+.completed th{
     background-color: #00BA00;
 }
 .canceled th{
