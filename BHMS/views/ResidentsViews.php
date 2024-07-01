@@ -436,41 +436,41 @@ echo '
         ';
     }
 
-    public static function residents_info_model_view(){
-        echo <<<HTML
-        <!-- Tenant Info Modal -->
-        <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content bg-custom">
-                    <div class="modal-header bg-custom">
-                        <span style="font-size: 25px;" class="header">Tenant Information</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
-                        <!-- Tenant information will be loaded here dynamically -->
-                    </div>
-                    <div class="modal-footer-custom bg-custom">
-                        <div class="header">Rent History</div>
-                        <section class="table-data">
-                            <table class="table table-bordered styled-table rounded-top rounded-bottom">
-                                <thead>
-                                    <tr>
-                                        <th>Room Code</th>
-                                        <th>Start Date</th>
-                                        <th>Due Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="rentHistoryTableBody">
-                                    <!-- Rent history will be loaded here dynamically -->
-                                </tbody>
-                            </table>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-        HTML;
-    }
+    // public static function residents_info_model_view(){
+    //     echo <<<HTML
+    //     <!-- Tenant Info Modal -->
+    //     <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    //         <div class="modal-dialog modal-lg modal-dialog-centered">
+    //             <div class="modal-content bg-custom">
+    //                 <div class="modal-header bg-custom">
+    //                     <span style="font-size: 25px;" class="header">Tenant Information</span>
+    //                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    //                 </div>
+    //                 <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
+    //                     <!-- Tenant information will be loaded here dynamically -->
+    //                 </div>
+    //                 <div class="modal-footer-custom bg-custom">
+    //                     <div class="header">Rent History</div>
+    //                     <section class="table-data">
+    //                         <table class="table table-bordered styled-table rounded-top rounded-bottom">
+    //                             <thead>
+    //                                 <tr>
+    //                                     <th>Room Code</th>
+    //                                     <th>Start Date</th>
+    //                                     <th>Due Date</th>
+    //                                 </tr>
+    //                             </thead>
+    //                             <tbody id="rentHistoryTableBody">
+    //                                 <!-- Rent history will be loaded here dynamically -->
+    //                             </tbody>
+    //                         </table>
+    //                     </section>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    //     HTML;
+    // }
 
     public static function edit_tenant_model_view(){
         echo <<<HTML
