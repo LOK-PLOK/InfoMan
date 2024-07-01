@@ -56,14 +56,31 @@ if (isset($_POST['create-tenant-submit'])) {
 
     
     $result1 = ResidentsController::create_new_tenant($new_tenant);
-    $last_id = ResidentsController::get_last_inserted_tenant_id() + 1;
+    $last_id = ResidentsController::get_last_inserted_tenant_id() ;
     $result2 = ResidentsController:: appliance_tenID($appliances,$last_id);
     
-    if ($result) {
-        echo '<script>console.log("Tenant added successfully")</script>';
-    } else {
-        echo '<script>console.log("Error")</script>';
-    }
+
+    
+
+    // Echo the script to log the data to the browser console
+    // echo '
+    // <script>
+    //     // Log the result of the tenant creation operation
+    //     console.log("Tenant Creation Result: ", ' . json_encode($result1) . ');
+
+    //     // Log the last inserted tenant ID (incremented by 1)
+    //     console.log("Last Inserted Tenant ID (incremented by 1): ", ' . json_encode($last_id) . ');
+
+    //     // Log the result of the appliance association operation
+    //     console.log("Appliance Association Result: ", ' . json_encode($result2) . ');
+    // </script>';
+
+
+    // if ($result1) {
+    //     echo '<script>console.log("Tenant added successfully")</script>';
+    // } else {
+    //     echo '<script>console.log("Error")</script>';
+    // }
 
     // After handling the form submission, redirect to avoid form resubmission
     header("Location: " . $_SERVER['REQUEST_URI']);
@@ -102,8 +119,8 @@ if (isset($_POST['edit-tenant-submit'])) {
     }
 
     // Redirect to avoid form resubmission and duplicate entries
-    header("Location: /pages/residents.php");
-    exit();
+    // header("Location: /pages/residents.php");
+    // exit();
 }
 ?>
 
@@ -134,7 +151,7 @@ $appliance_list = ResidentsController::appliance_data();
 ResidentsViews::residents_table_display($tenant_list,$appliance_list);
 
 // Test: Log tenant list to console
-echo '<script>console.log("Tenant List:", ' . json_encode($tenant_list) . ')</script>';
+// echo '<script>console.log("Tenant List:", ' . json_encode($tenant_list) . ')</script>';
 
 if ($tenant_list) {
     echo '<script>console.log("Tenant list fetched successfully")</script>';
