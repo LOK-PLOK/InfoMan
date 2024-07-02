@@ -14,13 +14,15 @@
     background-color: white;
 }
 
+/* 
+change this later
 .modal-content input[type=text],
 .modal-content input[type=number],
 .modal-content input[type=date],
 .modal-content select {
     padding: 3px 10px;
     border-radius: 10px;
-}
+} */
 
 .input-label {
     color: #02449a80;
@@ -222,7 +224,7 @@
 .rounded-inputs{
     width: 100%;
     margin: 8px 0;
-    padding: 7px;
+    padding: 5px;
     box-sizing: border-box;
     border: none;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);

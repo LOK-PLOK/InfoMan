@@ -98,9 +98,8 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
-    public static function edit_billing_modal(){
-        $tenants = BillingsController::get_tenants();
-        echo <<< HTML
+    public static function edit_billing_modal() {
+        echo <<<HTML
             <div class="modal fade" id="editBillingsModal" tabindex="-1" aria-labelledby="editBillingsLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content bg-custom">
@@ -111,49 +110,39 @@ class BillingsViews extends GeneralViews{
                         <div class="modal-body bg-custom">
                             <form method="POST">
                                 <div class="edit-billings-cont">
+                                    <input type="hidden" id="editBillingId" name="editBillingId">
+                                    
                                     <div class="edit-billings-row">
-                                        <p class="light-blue-text" >Tenant Name</p>
-                                        <select class="uniform-aligned-inputs" name="editTenantName" id="editTenantName">
-                                            <option value="">Select Tenant</option>
-        HTML;
-                                            foreach ($tenants as $tenant){
-                                                $id = $tenant['tenID'];
-                                                $fName = $tenant['tenFname'];
-                                                $MI = $tenant['tenMI'];
-                                                $lName = $tenant['tenLname'];
-                                                $fullName = $fName.' '.$MI.'. '.$lName;
-                                                echo<<<HTML
-                                                    <option value="$id">$fullName</option>
-                                                HTML;
-                                            }                         
-        echo <<<HTML
-                                        </select>
+                                        <p class="light-blue-text">Tenant Name</p>
+                                        <input type="text" class="uniform-aligned-inputs rounded-inputs" name="editTenantName" id="editTenantName" disabled>
                                     </div>
+    
                                     <div class="edit-billings-row">
-                                        <p class="light-blue-text">End Date</p>
-                                        <input type="date" id="edit-billing-billDateIssued" name="edit-billing-billDateIssued">
+                                        <p class="light-blue-text">Date Issued</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued">
                                     </div>
+                                
                                     <div class="edit-billings-row">
-                                        <p class="light-blue-text" >Due Date</p>
-                                        <input type="date" id="edit-billing-billDateIssued" name="edit-billing-billDateIssued">
+                                        <p class="light-blue-text">Date Due</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDueDate" name="editBillDueDate">
                                     </div>
+                                
                                     <div class="edit-billings-row">
-                                        <p class="light-blue-text" >Amount</p>
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="text" id="billTotal" name="billTotal">
+                                        <p class="light-blue-text">Amount</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="text" id="editBillTotal" name="editBillTotal">
                                     </div>
+                                
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Status</p>
-                                        <select class="uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment">
-                                            <option value="">Select Status</option>
-                                            <option value="Paid">Paid</option>
-                                            <option value="Unpaid">Unpaid</option>
-                                            <option value="Overdue">Overdue</option>
+                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment">
+                                            <option value="1">Paid</option>
+                                            <option value="0">Unpaid</option>
                                         </select>
                                     </div>
-                                    
+    
                                     <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
-                                    <button type="submit" name="edit-payment-submit" class="btn-var-2">Save</button>
-                                </div>
+                                        <button type="submit" name="edit-billing-submit" class="btn-var-2">Save</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -162,6 +151,7 @@ class BillingsViews extends GeneralViews{
             </div>
         HTML;
     }
+    
 
     public static function delete_billing_modal(){
         echo <<<HTML
@@ -320,9 +310,12 @@ class BillingsViews extends GeneralViews{
                 $billingId = $billing['billRefNo'];
                 $billDateIssued = $billing['billDateIssued'];
                 $billDueDate = $billing['billDueDate'];
-                $tenantFullName = $billing['tenant_first_name'] . ' ' . $billing['tenant_last_name'];
+                $tenantFullName = $billing['tenant_first_name'] . ' ' . $billing['tenMI'] . ' ' . $billing['tenant_last_name'];
                 $billTotal = $billing['billTotal'];
-        
+                $isPaid = $billing['isPaid'];
+                echo<<<HTML
+                    <script>console.log('{$billDateIssued}');</script>
+                HTML;
                 echo <<<HTML
                     <tr>
                         <td>$billDateIssued</td>
@@ -330,8 +323,9 @@ class BillingsViews extends GeneralViews{
                         <td>$tenantFullName</td>
                         <td>$billTotal</td>
                         <td class="action-buttons">
+                            <input type="hidden" name="billRefNo" value="$billingId">
                             <button id="openEditBillingsModalBtn" style="margin-right: 10px;">
-                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editBillingsModal">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editBillingsModal" onclick="prepopulateValues('$billingId', '$tenantFullName', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid')">
                             </button>
                             <button class="delete-button" data-billing-id="$billingId" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteBillingsModal">

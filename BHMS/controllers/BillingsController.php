@@ -24,6 +24,10 @@ class BillingsController {
         return BillingsModel::query_delete_billings($billing_id);
     }
 
+    public static function update_billing($updated_billing){
+        return BillingsModel::query_update_billing($updated_billing);
+    }
+
 }
 
 ?>

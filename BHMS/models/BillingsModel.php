@@ -20,6 +20,7 @@ class BillingsModel extends dbcreds {
 
         $endDate = $_POST['create-billing-end-date'];
         $billDueDate = date('Y-m-d', strtotime($endDate . ' +7 days'));
+
     
         $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) 
                   VALUES (NULL, '$tenID', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid');";
@@ -32,8 +33,46 @@ class BillingsModel extends dbcreds {
         return true;
     }
     
+    public static function query_update_billing($updated_billing) {
+        $conn = self::get_connection();
     
-
+        $billRefNo = $updated_billing['billRefNo'];
+        $billDateIssued = $updated_billing['billDateIssued'];
+        $billDueDate = $updated_billing['billDueDate'];
+        $billTotal = $updated_billing['billTotal'];
+        $isPaid = $updated_billing['isPaid'];
+    
+        echo<<<HTML
+            <script>console.log('{$billDateIssued}');</script>
+        HTML;
+    
+        // Use prepared statements to prevent SQL injection and ensure correct syntax
+        $query = "UPDATE billing 
+                  SET billDateIssued = ?, 
+                      billDueDate = ?, 
+                      billTotal = ?, 
+                      isPaid = ? 
+                  WHERE billRefNo = ?";
+    
+        $stmt = $conn->prepare($query);
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        // Bind parameters
+        $stmt->bind_param("ssdii", $billDateIssued, $billDueDate, $billTotal, $isPaid, $billRefNo);
+    
+        // Execute statement
+        if ($stmt->execute() === false) {
+            die("Error executing statement: " . $stmt->error);
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return true;
+    }
+    
 
     public static function query_delete_billings($billing_id) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -79,7 +118,7 @@ class BillingsModel extends dbcreds {
             die("Connection failed: " . $conn->connect_error);
         }
     
-        $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name
+        $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
                   WHERE b.isPaid = 1";
@@ -108,7 +147,7 @@ class BillingsModel extends dbcreds {
             die("Connection failed: " . $conn->connect_error);
         }
     
-        $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name
+        $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
                   WHERE b.isPaid = 0";

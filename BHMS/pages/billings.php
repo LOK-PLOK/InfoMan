@@ -87,15 +87,7 @@
     
                         <span class="table-section-footer" >
                             Showing 1 page to 3 of 3 entries
-                            <div>
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </div>
+                            
                         </span>
                     </div>
                     
@@ -112,6 +104,7 @@
     BillingsViews::delete_billing_modal();
     BillingsViews::create_billing_modal();
 
+    // LISTEN TO POST REQUEST FROM CREATE MODAL
     if (isset($_POST['create-billing-submit'])){
 
             $new_billing = array(
@@ -142,6 +135,7 @@
         exit();
     }
 
+    // LISTEN TO POST REQUEST FROM DELETE MODAL
     if (isset($_POST['delete-billing-submit'])) {
         $billing_id = $_POST['billing_id'];
         $result = BillingsController::delete_billings($billing_id);
@@ -154,19 +148,40 @@
         exit();
     }
 
+    // LISTEN TO POST REQUEST FROM EDIT MODAL
+    if (isset($_POST['edit-billing-submit'])) {
+        $updated_billing = array(
+            "billRefNo" => $_POST['editBillingId'],
+            "billDateIssued" => $_POST['editBillDateIssued'],
+            "billDueDate" => $_POST['editBillDueDate'],
+            "billTotal" => $_POST['editBillTotal'],
+            "isPaid" => $_POST['editStatusPayment'],
+        );
+        $result = BillingsController::update_billing($updated_billing);
+
+        if ($result) {
+            echo '<script>console.log("Billing created successfully")</script>';
+        } else {
+            echo '<script>console.log("Error created billing")</script>';
+        }
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    }
 ?>
 
 
 <!-- Additional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/js/date.js"></script>
+<script src="/js/date.js">
+    
+</script>
+<script src="/js/prepopulate.js"></script>
 <script>
+
     $(function(){
         $("#tenantName").selectize();
-        $("#editTenantName").selectize();
         $("#editDatePayment").selectize();
-        $("#editStatusPayment").selectize();
         $("#create-billing-tenant").selectize();
     });
 
@@ -242,6 +257,7 @@ function handleTabSwitching() {
 
 document.addEventListener('DOMContentLoaded', handleTabSwitching);
 
+console.log("owowowow");
 </script>
 
 
