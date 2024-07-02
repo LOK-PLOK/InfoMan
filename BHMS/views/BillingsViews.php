@@ -98,61 +98,6 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
-    public static function edit_billing_modal() {
-        echo <<<HTML
-            <div class="modal fade" id="editBillingsModal" tabindex="-1" aria-labelledby="editBillingsLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <h5 class="modal-title" id="editBillingsLabel">Billing Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body bg-custom">
-                            <form method="POST">
-                                <div class="edit-billings-cont">
-                                    <input type="hidden" id="editBillingId" name="editBillingId">
-                                    
-                                    <div class="edit-billings-row">
-                                        <p class="light-blue-text">Tenant Name</p>
-                                        <input type="text" class="uniform-aligned-inputs rounded-inputs" name="editTenantName" id="editTenantName" disabled>
-                                    </div>
-    
-                                    <div class="edit-billings-row">
-                                        <p class="light-blue-text">Date Issued</p>
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued">
-                                    </div>
-                                
-                                    <div class="edit-billings-row">
-                                        <p class="light-blue-text">Date Due</p>
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDueDate" name="editBillDueDate">
-                                    </div>
-                                
-                                    <div class="edit-billings-row">
-                                        <p class="light-blue-text">Amount</p>
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="text" id="editBillTotal" name="editBillTotal">
-                                    </div>
-                                
-                                    <div class="edit-billings-row">
-                                        <p class="light-blue-text">Status</p>
-                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment">
-                                            <option value="1">Paid</option>
-                                            <option value="0">Unpaid</option>
-                                        </select>
-                                    </div>
-    
-                                    <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
-                                        <button type="submit" name="edit-billing-submit" class="btn-var-2">Save</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        HTML;
-    }
-    
-
     public static function delete_billing_modal(){
         echo <<<HTML
             <div class="modal fade" id="deleteBillingsModal" tabindex="-1" aria-labelledby="deleteBillingsLabel" aria-hidden="true">
@@ -272,20 +217,164 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+    public static function edit_billing_modal() {
+        echo <<<HTML
+            <div class="modal fade" id="editBillingsModal" tabindex="-1" aria-labelledby="editBillingsLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <h5 class="modal-title" id="editBillingsLabel">Billing Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                            <form method="POST">
+                                <div class="edit-billings-cont">
+                                    <input type="hidden" id="editBillingId" name="editBillingId">
+                                    
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Tenant Name</p>
+                                        <input type="text" class="uniform-aligned-inputs rounded-inputs" name="editTenantName" id="editTenantName" disabled>
+                                    </div>
+    
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Date Issued</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued">
+                                    </div>
+                                
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Date Due</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDueDate" name="editBillDueDate">
+                                    </div>
+                                
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Amount</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="text" id="editBillTotal" name="editBillTotal">
+                                    </div>
+                                
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Status</p>
+                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment">
+                                            <option value="1">Paid</option>
+                                            <option value="0">Unpaid</option>
+                                        </select>
+                                    </div>
+    
+                                    <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
+                                        <button type="submit" name="edit-billing-submit" class="btn-var-2">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        HTML;
+    }
+
+    public static function edit_paid_billing_modal(){
+        echo <<<HTML
+            <div class="modal fade" id="editPaidBillingsModal" tabindex="-1" aria-labelledby="editBillingsLabel" aria-hidden="true">
+            <form method="POST">    
+            <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <h5 class="modal-title" id="editBillingsLabel">Paid Billing Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                            
+                                <div class="edit-billings-cont">
+                                    <!-- editBillingId -->
+                                    <input type="hidden" id="editPaidBillingId" name="editPaidBillingId">
+                                    
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Tenant Name</p>
+                                        <input type="text" class="uniform-aligned-inputs rounded-inputs" name="editPaidTenantName" id="editPaidTenantName" disabled>
+                                    </div>
+    
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Date Due</p>
+                                        <!-- editPaidBillDueDate -->
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editPaidBillDueDate" name="editPaidBillDueDate">
+                                    </div>
+
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Date Paid</p>
+                                        <!-- edit-datePaid -->
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="edit-datePaid" name="edit-datePaid">
+                                         <!-- Get data from payment table -->
+                                    </div>
+                                
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Amount</p>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="text" id="editPaidBillTotal" name="editPaidBillTotal">
+                                    </div>
+                                
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Status</p>
+                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment" disabled>
+                                            <option value="1">Paid</option>
+                                            <option value="0">Unpaid</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="edit-billings-row">
+                                        <p class="light-blue-text">Mode of Transaction</p>
+                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="edit-payMethod" id="edit-payMethod">
+                                            <option value="Cash">Cash on Hand</option>
+                                            <option value="Gcash">GCash</option>
+                                        </select>
+                                    </div>
+
+                                    <div style="display:block" class="payer-details">
+                                    <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
+                                        <div class="payer-info">
+                                            <div>
+                                                <input class="rounded-inputs" type="text" id="edit-payer-fname" name="edit-payer-fname">
+                                                <p class="small-text">First Name</p>
+                                            </div>
+                                            
+                                            <div>
+                                                <input class="rounded-inputs" type="text" id="edit-payer-MI" name="edit-payer-MI">
+                                                <p class="small-text">M.I</p>
+                                            </div>
+                                            
+                                            <div>
+                                                <input class="rounded-inputs" type="text" id="edit-payer-lname" name="edit-payer-lname">
+                                                <p class="small-text">Last Name</p>
+                                            </div>  
+                                        </div>
+                                    </div>
+    
+                                    <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
+                                        <button type="submit" name="test-submit" class="btn-var-2">Save</button>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        HTML;
+    }
+
     public static function generate_billing_table($billingType) {
         $billings = [];
         switch ($billingType) {
             case 'paid':
                 $billings = BillingsController::get_paid_billings();
                 $tableHeader = '<tr><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $editModalType = '#editPaidBillingsModal';
                 break;
             case 'unpaid':
                 $billings = BillingsController::get_unpaid_billings();
                 $tableHeader = '<tr class="orange-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $editModalType = '#editBillingsModal';
                 break;
             case 'overdue':
                 $billings = []; // Implement logic to fetch overdue billings
                 $tableHeader = '<tr class="red-th"><th>Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $editModalType = '#editBillingsModal';
                 break;
             default:
                 break;
@@ -305,17 +394,21 @@ class BillingsViews extends GeneralViews{
                     <td colspan="5" style="text-align: center;color: rgb(118, 118, 118);">No data available</td>
                 </tr>
             HTML;
-        }else{
+        } else {
             foreach ($billings as $billing) {
                 $billingId = $billing['billRefNo'];
                 $billDateIssued = $billing['billDateIssued'];
                 $billDueDate = $billing['billDueDate'];
-                $tenantFullName = $billing['tenant_first_name'] . ' ' . $billing['tenMI'] . ' ' . $billing['tenant_last_name'];
+                $tenantFullName = $billing['tenant_first_name'] . ' ' . $billing['tenMI'] . '. ' . $billing['tenant_last_name'];
                 $billTotal = $billing['billTotal'];
                 $isPaid = $billing['isPaid'];
-                echo<<<HTML
-                    <script>console.log('{$billDateIssued}');</script>
-                HTML;
+                $payment_billing_info_json = '';
+                if($isPaid){
+                    $payment_billing_info = BillingsController::get_payment_billing_info($billingId);
+                    $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
+
+                }
+    
                 echo <<<HTML
                     <tr>
                         <td>$billDateIssued</td>
@@ -325,7 +418,7 @@ class BillingsViews extends GeneralViews{
                         <td class="action-buttons">
                             <input type="hidden" name="billRefNo" value="$billingId">
                             <button id="openEditBillingsModalBtn" style="margin-right: 10px;">
-                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editBillingsModal" onclick="prepopulateValues('$billingId', '$tenantFullName', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid')">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType" onclick="prepopulateValues('$payment_billing_info_json','$billingId', '$tenantFullName', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid')">
                             </button>
                             <button class="delete-button" data-billing-id="$billingId" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteBillingsModal">
@@ -339,6 +432,6 @@ class BillingsViews extends GeneralViews{
                 </tbody>
             </table>
         HTML;
-    }
+    }    
 }
 ?>

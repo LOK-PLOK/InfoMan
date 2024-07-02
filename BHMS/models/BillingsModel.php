@@ -4,6 +4,100 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+    public static function query_update_billing_payment($updated_billing_payment) {
+        $conn = self::get_connection();
+        echo '<script>console.log("HEYHEYHEY")</script>';
+        $billRefNo = $updated_billing_payment['billRefNo'];
+        $billDueDate = $updated_billing_payment['billDueDate'];
+        $billTotal = $updated_billing_payment['billTotal'];
+        $payMethod = $updated_billing_payment['payMethod'];
+        $payDate = $updated_billing_payment['payDate'];
+        $payerFname = $updated_billing_payment['payerFname'];
+        $payerLname = $updated_billing_payment['payerLname'];
+        $payerMI = $updated_billing_payment['payerMI'];
+        
+        
+        // Use prepared statements to prevent SQL injection and ensure correct syntax
+        $query_billing = "UPDATE billing 
+                          SET billDueDate = ?, 
+                              billTotal = ?
+                          WHERE billRefNo = ?";
+    
+        $stmt_billing = $conn->prepare($query_billing);
+        if ($stmt_billing === false) {
+            die("Error preparing billing statement: " . $conn->error);
+        }
+    
+        // Bind parameters for billing update
+        $stmt_billing->bind_param("sdi", $billDueDate, $billTotal, $billRefNo);
+    
+        // Execute billing statement
+        if ($stmt_billing->execute() === false) {
+            die("Error executing billing statement: " . $stmt_billing->error);
+        }
+    
+        $stmt_billing->close();
+    
+        // Update payment table
+        $query_payment = "UPDATE payment 
+                          SET payMethod = ?, 
+                              payDate = ?,
+                              payerFname = ?,
+                              payerMI = ?,
+                              payerLname = ?
+                          WHERE billRefNo = ?";
+    
+        $stmt_payment = $conn->prepare($query_payment);
+        if ($stmt_payment === false) {
+            die("Error preparing payment statement: " . $conn->error);
+        }
+    
+        // Bind parameters for payment update
+        $stmt_payment->bind_param("sssssi", $payMethod, $payDate, $payerFname, $payerMI, $payerLname, $billRefNo);
+    
+        // Execute payment statement
+        if ($stmt_payment->execute() === false) {
+            die("Error executing payment statement: " . $stmt_payment->error);
+        }
+    
+        $stmt_payment->close();
+        $conn->close();
+    
+        return true;
+    }
+    
+
+    public static function query_get_payment_billing_info($billRefNo){
+        $conn = self::get_connection();
+    
+        $query = "SELECT * FROM payment WHERE billRefNo = ?";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $billRefNo); 
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $results = [];
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $results;
+    }
+     
+
     public static function query_create_billings($new_billing){
         $conn = self::get_connection();
         
@@ -41,10 +135,6 @@ class BillingsModel extends dbcreds {
         $billDueDate = $updated_billing['billDueDate'];
         $billTotal = $updated_billing['billTotal'];
         $isPaid = $updated_billing['isPaid'];
-    
-        echo<<<HTML
-            <script>console.log('{$billDateIssued}');</script>
-        HTML;
     
         // Use prepared statements to prevent SQL injection and ensure correct syntax
         $query = "UPDATE billing 
