@@ -321,7 +321,7 @@ HTML;
                             </div>
                             <div>
                                 <span class="label">Name:</span>
-                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactLname}. ${tenantData.emContactMI}</span>
+                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname} </span>
                             </div>
                             <div>
                                 <span class="label">Contact Number:</span>
