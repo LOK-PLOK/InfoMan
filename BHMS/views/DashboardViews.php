@@ -3,7 +3,8 @@
 require_once 'GeneralViews.php';
 require_once '../controllers/DashboardController.php';
 
-DashboardController::rentCountUpdater();
+DashboardController::updateTenantRentStatus();
+DashboardController::updateRoomTenantCount();
 
 class DashboardViews extends GeneralViews{
 

@@ -28,7 +28,7 @@ class RoomlogsModel extends dbcreds {
 
     public static function query_room_tenants($room_code) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? ORDER BY occDateStart DESC");
+        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd ORDER BY occDateStart DESC;");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -140,6 +140,32 @@ class RoomlogsModel extends dbcreds {
         $conn->close();
     }
 
+    public static function updateOccupancy($editInfo) {
+        $conn = self::get_connection();
+        $query = $conn->prepare("UPDATE occupancy SET roomID = ?, occDateStart = ?, occDateEnd = ? WHERE occupancyID = ?");
+
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        $query->bind_param(
+            'sssi', 
+            $editInfo['roomID'], $editInfo['occDateStart'], 
+            $editInfo['occDateEnd'], $editInfo['occupancyID']
+        );
+
+        if (!$query->execute()) {
+            $query->close();
+            $conn->close();
+            throw new Exception("Execute failed: " . $query->error);
+            return false;
+        } else {
+            $query->close();
+            $conn->close();
+            return true;
+        }
+    }
+
     public static function check_recent_rent($tenant_id) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM `occupancy` WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
@@ -229,6 +255,49 @@ class RoomlogsModel extends dbcreds {
 
         return $occ_type;
     }
+
+    public static function query_tenants(){
+        
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
+
+    public static function query_types() {
+        
+        $conn = self::get_connection();
+        $query = "SELECT * FROM occupancy_type";
+        $stmt = $conn->query($query);
+    
+        if ($stmt === false) {
+            $conn->close();
+            throw new Exception("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }   
 
 }
 

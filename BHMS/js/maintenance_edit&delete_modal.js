@@ -17,6 +17,7 @@ function displayeditModal(maintID, roomID, maintDate, maintStatus, maintDesc, ma
 
     // Populate your modal fields or perform any other necessary actions
 }
+
 function displaydeleteModal(maintID) {
     document.getElementById("deleteMaintID").value = maintID;
     console.log("Displaying delete modal for maintenance ID: " + maintID);
@@ -24,7 +25,7 @@ function displaydeleteModal(maintID) {
 }
 
 
-// To be Asked !
+
 document.addEventListener('DOMContentLoaded', function() {
     // Function to close modal given the modal element and button id
     function setupModalClose(modalId, buttonId) {

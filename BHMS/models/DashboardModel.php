@@ -231,7 +231,6 @@ class DashboardModel extends dbcreds {
         return $results;
     }
     
- 
 }
 
 ?>

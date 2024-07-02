@@ -41,8 +41,30 @@ RoomlogsViews::burger_sidebar();
 <?php 
 RoomlogsViews::room_info_modal(); 
 RoomlogsViews::deleteOccupancyModal();
+RoomlogsViews::editOccupancyModal();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    // Editing Occupancy
+    if(isset($_POST['edit-rent-submit'])){
+        $editInfo = array(
+            'occupancyID' => $_POST['edit-occupancy-id'],
+            'roomID' => $_POST['edit-rent-room'],
+            'occDateStart' => $_POST['edit-rent-start'],
+            'occDateEnd' => $_POST['edit-rent-end'],
+        );
+
+        $result = RoomlogsController::editOccupancy($editInfo);
+        if($result){
+            // Redirect to the same page or to a confirmation page after successful edit
+            header('Location: room_logs.php?editOccStatus=success');
+            exit();
+        } else {
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: room_logs.php?editOccStatus=error');
+            exit();
+        }
+    }
     
     // Deleting Occupancy
     if (isset($_POST['delete-occupancy-id'])) {
@@ -95,64 +117,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
-<script>
-
-// Add event listener for editing the button
-document.querySelectorAll('.editOccupancyBtn').forEach(button => {
-    button.addEventListener('click', function() {
-        // Get the room ID from the button's value attribute
-        const editOccId = this.value;
-        console.log(`Edit Room ID: ${editOccId}`);
-        
-    });
-});
-
-// Looks for the button with the class 'deleteOccupancyBtn' and sets the value of the delete-occupancy-id input field
-document.querySelectorAll('.deleteOccupancyBtn').forEach(button => {
-    button.addEventListener('click', function() {
-        const delOccInfo = this.value;
-        console.log(`Delete Occ ID: ${delOccInfo}`);
-        document.getElementById('delete-occupancy-id').value = delOccInfo;
-    });
-});
-
-// Looks for the button with the class 'show-avail-rm-btn' and all elements with the class 'rm-info-container'
-document.addEventListener('DOMContentLoaded', () => {
-    const showAvailRmBtn = document.querySelector('.show-avail-rm-btn');
-    const roomInfo = document.querySelectorAll('.rm-info-container');
-
-    // Store the initial display state of each room
-    const initialDisplayStates = Array.from(roomInfo).map(room => 
-        window.getComputedStyle(room).display);
-
-    // Toggle visibility on button click
-    showAvailRmBtn.addEventListener('click', () => {
-        let visibleRoomsCount = roomInfo.length;
-
-        roomInfo.forEach((room, index) => {
-            const availInfo = room.getElementsByClassName('rm-info-avail')[0];
-            if (availInfo && availInfo.textContent === 'Not Available') {
-                if (room.style.display === 'none') {
-                    room.style.display = initialDisplayStates[index]; // Restore initial state
-                } else {
-                    room.style.display = 'none';
-                    visibleRoomsCount--; // Decrement count as room is made invisible
-                }
-            }
-        });
-
-        // Update button text based on the count of visible rooms
-        showAvailRmBtn.textContent = visibleRoomsCount === roomInfo.length ? 
-            'Show Available Rooms' : 'Show All Rooms';
-    });
-});
-</script>
-
+<script src="../js/roomLogsGeneral.js"></script>
 
 <?php 
 
 ob_end_flush();
 html_end(); 
-
 ?>
 
