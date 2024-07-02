@@ -99,109 +99,110 @@
 </div>
 
 <?php
+
     BillingsViews::add_payment_modal();
     BillingsViews::edit_billing_modal();
     BillingsViews::edit_paid_billing_modal();
     BillingsViews::delete_billing_modal();
     BillingsViews::create_billing_modal();
 
-    // LISTEN TO POST REQUEST FROM CREATE MODAL
-    if (isset($_POST['create-billing-submit'])){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        
+        // LISTEN TO POST REQUEST FROM CREATE MODAL
+        if (isset($_POST['create-billing-submit'])){
 
-            $new_billing = array(
-                "tenID" => $_POST['create-billing-tenant'],
+                $new_billing = array(
+                    "tenID" => $_POST['create-billing-tenant'],
 
-                "billTotal" => $_POST['create-billing-billTotal'],
+                    "billTotal" => $_POST['create-billing-billTotal'],
 
-                "startDate" => $_POST['create-billing-start-date'],
+                    "startDate" => $_POST['create-billing-start-date'],
 
-                "billDateIssued" => $_POST['create-billing-billDateIssued'],
+                    "billDateIssued" => $_POST['create-billing-billDateIssued'],
 
-                "endDate" => $_POST['create-billing-end-date'],
+                    "endDate" => $_POST['create-billing-end-date'],
 
-                "billDueDate" => $_POST['create-billing-billDueDate'],
+                    "billDueDate" => $_POST['create-billing-billDueDate'],
 
-                "isPaid" => $_POST['create-billing-isPaid'],
+                    "isPaid" => $_POST['create-billing-isPaid'],
 
+                );
+
+            $result = BillingsController::create_billings($new_billing);
+
+            if ($result) {
+                echo '<script>console.log("Billing created successfully")</script>';
+            } else {
+                echo '<script>console.log("Error created billing")</script>';
+            }
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        }
+
+        // LISTEN TO POST REQUEST FROM DELETE MODAL
+        if (isset($_POST['delete-billing-submit'])) {
+            $billing_id = $_POST['billing_id'];
+            $result = BillingsController::delete_billings($billing_id);
+            if ($result) {
+                echo '<script>console.log("Billing deleted successfully")</script>';
+            } else {
+                echo '<script>console.log("Error deleting billing")</script>';
+            }
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        }
+
+        // LISTEN TO POST REQUEST FROM EDIT MODAL
+        if (isset($_POST['edit-billing-submit'])) {
+            $updated_billing = array(
+                "billRefNo" => $_POST['editBillingId'],
+                "billDateIssued" => $_POST['editBillDateIssued'],
+                "billDueDate" => $_POST['editBillDueDate'],
+                "billTotal" => $_POST['editBillTotal'],
+                "isPaid" => $_POST['editStatusPayment'],
+            );
+            
+            $result = BillingsController::update_billing($updated_billing);
+
+            if ($result) {
+                echo '<script>console.log("Billing created successfully")</script>';
+            } else {
+                echo '<script>console.log("Error created billing")</script>';
+            }
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        }
+
+        //LISTEN TO POST REQUEST FROM EDIT PAID BILLING
+        if (isset($_POST['edit-paid-billing-submit'])) {
+
+            $updated_bp = array(
+                "billRefNo" => $_POST['editPaidBillingId'],
+                "billDueDate" => $_POST['editPaidBillDueDate'],
+                "billTotal" => $_POST['editPaidBillTotal'],
+                "payMethod" => $_POST['edit-payMethod'],
+
+                "payDate" => $_POST['edit-datePaid'],
+                "payerFname" => $_POST['edit-payer-fname'],
+                "payerLname" => $_POST['edit-payer-lname'],
+                "payerMI" => $_POST['edit-payer-MI']
             );
 
-        $result = BillingsController::create_billings($new_billing);
+            echo '<script>console.log('.json_encode($updated_bp).')</script>';
 
-        if ($result) {
-            echo '<script>console.log("Billing created successfully")</script>';
-        } else {
-            echo '<script>console.log("Error created billing")</script>';
+            $result = BillingsController::update_billing_payment($updated_bp);
+
+            if ($result) {
+                echo '<script>console.log("Billing created successfully")</script>';
+            } else {
+                echo '<script>console.log("Error created billing")</script>';
+            }
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
         }
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
+
     }
-
-    // LISTEN TO POST REQUEST FROM DELETE MODAL
-    if (isset($_POST['delete-billing-submit'])) {
-        $billing_id = $_POST['billing_id'];
-        $result = BillingsController::delete_billings($billing_id);
-        if ($result) {
-            echo '<script>console.log("Billing deleted successfully")</script>';
-        } else {
-            echo '<script>console.log("Error deleting billing")</script>';
-        }
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
-    }
-
-    // LISTEN TO POST REQUEST FROM EDIT MODAL
-    if (isset($_POST['edit-billing-submit'])) {
-        $updated_billing = array(
-            "billRefNo" => $_POST['editBillingId'],
-            "billDateIssued" => $_POST['editBillDateIssued'],
-            "billDueDate" => $_POST['editBillDueDate'],
-            "billTotal" => $_POST['editBillTotal'],
-            "isPaid" => $_POST['editStatusPayment'],
-        );
-        
-        $result = BillingsController::update_billing($updated_billing);
-
-        if ($result) {
-            echo '<script>console.log("Billing created successfully")</script>';
-        } else {
-            echo '<script>console.log("Error created billing")</script>';
-        }
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
-    }
-
-    $check = isset($_POST['test-submit']) ? 'Detected' : 'Not Detected';
-    echo '<script>console.log("'.$check.'")</script>';
-
-    //LISTEN TO POST REQUEST FROM EDIT PAID BILLING
-    if (isset($_POST['test-submit'])) {
-
-        $updated_bp = array(
-            "billRefNo" => $_POST['editPaidBillingId'],
-            "billDueDate" => $_POST['editPaidBillDueDate'],
-            "billTotal" => $_POST['editPaidBillTotal'],
-            "payMethod" => $_POST['edit-payMethod'],
-
-            "payDate" => $_POST['edit-datePaid'],
-            "payerFname" => $_POST['edit-payer-fname'],
-            "payerLname" => $_POST['edit-payer-lname'],
-            "payerMI" => $_POST['edit-payer-MI']
-        );
-
-        echo '<script>console.log('.json_encode($updated_bp).')</script>';
-
-        $result = BillingsController::update_billing_payment($updated_bp);
-
-        if ($result) {
-            echo '<script>console.log("Billing created successfully")</script>';
-        } else {
-            echo '<script>console.log("Error created billing")</script>';
-        }
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
-    }else{
-        echo '<script>console.log("Error updated billing")</script>';
-    }
+    
 ?>
 
 

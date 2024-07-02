@@ -347,7 +347,7 @@ class BillingsViews extends GeneralViews{
                                     </div>
     
                                     <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
-                                        <button type="submit" name="test-submit" class="btn-var-2">Save</button>
+                                        <button type="submit" name="edit-paid-billing-submit" class="btn-var-2">Save</button>
                                     </div>
                                 </div> 
                             </div>
