@@ -94,10 +94,18 @@ class RoomlogsViews extends GeneralViews{
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <p class="rm-modal-info">Room Code: <span>{$roomID}</span> </p>
-                                    <p class="rm-modal-info">Availability: <span>{$availability}</span></p>
-                                    <p class="rm-modal-info">Status: <span>{$avail_info}</span></p>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="rm-modal-info">Room Code: <span>{$roomID}</span> </p>
+                                        <p class="rm-modal-info">Availability: <span>{$availability}</span></p>
+                                        <p class="rm-modal-info">Status: <span>{$avail_info}</span></p>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <button type="button" class="btn-var-5 my-1 bg-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
+                                        onclick="delRoomID('{$roomID}')">Delete Room</button>
+                                        <button type="button" class="btn-var-5 my-1" data-bs-toggle="modal" data-bs-target="#edit-rm"
+                                        onclick="setValuesEditRoom('{$roomID}', '{$room['capacity']}')">Edit Room</button>
+                                    </div>
                                 </div>
                                 <div class="rm-occupants">
                                     <p class="rm-modal-info">Occupants: </p>
@@ -281,6 +289,102 @@ class RoomlogsViews extends GeneralViews{
         HTML;
     }
 
+    public static function addNewRoomModal(){
+        echo <<<HTML
+        <div class="modal fade" id="add-new-rm" tabindex="-1" aria-labelledby="add-new-rm-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content m-5">
+                    <div class="modal-header">
+                        <h3 class="rm-modal-title" id="add-new-rm-modal">Add New Room</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+                            <div class="row-fluid d-flex justify-content-between">
+                                <div class="d-flex flex-column justify-content-evenly w-50">
+                                    <label for="add-new-rm-code" class="input-label my-3">Room Code: </label>
+                                    <label for="add-new-rm-cap" class="input-label my-3">Room Capacity: </label>
+                                </div>
+                                <div class="d-flex flex-column justify-content-evenly w-50">
+                                    <!-- roomID -->
+                                    <input type="text" name="add-new-rm-code" id="add-new-rm-code" placeholder="Enter room code..." class="my-3 shadow w-100" value="B"><br>
+                                    <!-- capacity -->
+                                    <input type="number" name="add-new-rm-cap" id="add-new-rm-cap" placeholder="Enter room capacity..." class="my-3 shadow w-100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0 justify-content-center">
+                            <button type="submit" name="add-room-submit" class="btn-var-4">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        HTML;
+    }
+
+    public static function editRoomModal(){
+        echo <<<HTML
+        <div class="modal fade" id="edit-rm" tabindex="-1" aria-labelledby="edit-rm" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content m-5">
+                    <div class="modal-header">
+                        <h3 class="rm-modal-title" id="edit-rm-modal">Edit Room</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+                            <div class="row-fluid d-flex justify-content-between">
+                                <div class="d-flex flex-column justify-content-evenly w-50">
+                                    <label for="edit-rm-code" class="input-label my-3">Room Code: </label>
+                                    <label for="edit-rm-cap" class="input-label my-3">Room Capacity: </label>
+                                </div>
+                                <div class="d-flex flex-column justify-content-evenly w-50">
+                                    <!-- roomID -->
+                                    <input type="text" name="edit-rm-code" id="edit-rm-code" placeholder="Enter room code..." class="my-3 shadow w-100" disabled><br>
+                                    <input type="hidden" name="edit-rm-code-hidden" id="edit-rm-code-hidden">
+                                    <!-- capacity -->
+                                    <input type="number" name="edit-rm-cap" id="edit-rm-cap" placeholder="Enter room capacity..." class="my-3 shadow w-100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0 justify-content-center">
+                            <button type="submit" name="edit-room-submit" class="btn-var-4">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        HTML;
+    }
+
+    public static function deleteRoomModal(){
+        echo <<<HTML
+            <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-labelledby="deleteRoomModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <span style="font-size: 25px;">Are you sure you want to delete this room?</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                        <form method="POST">
+                            <div class="displayflex">
+                                <input type="hidden" name="delete-room-id" id="delete-room-id">
+                                <input type="submit" name="delete-room-submit" class="btn-var-2 ms-4 me-4 bg-danger" value="Yes">
+                                <input type="button" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                            </div>
+                        </form>
+                        </div>
+                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
+                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+        HTML;
+    }
 }
 
 ?>

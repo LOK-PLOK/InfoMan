@@ -299,6 +299,84 @@ class RoomlogsModel extends dbcreds {
         return $results;
     }   
 
+    public static function addNewRoom($newRoomInfo) {
+        try {
+            $conn = self::get_connection();
+            $query = $conn->prepare("INSERT INTO room (roomID, capacity) VALUES (?, ?)");
+
+            if ($query === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+
+            $query->bind_param('si', $newRoomInfo['roomID'], $newRoomInfo['capacity']);
+
+            if (!$query->execute()) {
+                throw new Exception("Execute failed: " . $query->error);
+            }
+
+            $query->close();
+            $conn->close();
+            
+            return true;
+        } catch (Exception $e) {
+            // Handle the exception
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function editRoom($editRoomInfo) {
+        try {
+            $conn = self::get_connection();
+            $query = $conn->prepare("UPDATE room SET capacity = ? WHERE roomID = ?");
+
+            if ($query === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+
+            $query->bind_param('is', $editRoomInfo['capacity'], $editRoomInfo['roomID']);
+
+            if (!$query->execute()) {
+                throw new Exception("Execute failed: " . $query->error);
+            }
+
+            $query->close();
+            $conn->close();
+            
+            return true;
+        } catch (Exception $e) {
+            // Handle the exception
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function deleteRoom($roomCode) {
+        try {
+            $conn = self::get_connection();
+            $query = $conn->prepare("DELETE FROM room WHERE roomID = ?");
+
+            if ($query === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+
+            $query->bind_param('s', $roomCode);
+
+            if (!$query->execute()) {
+                throw new Exception("Execute failed: " . $query->error);
+            }
+
+            $query->close();
+            $conn->close();
+            
+            return true;
+        } catch (Exception $e) {
+            // Handle the exception
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
 }
 
 ?>

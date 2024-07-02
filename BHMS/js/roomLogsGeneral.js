@@ -12,6 +12,15 @@ function setValuesTenantInfo(occupancyID, name, roomID, rentType, occDateStart, 
 
 }
 
+function setValuesEditRoom(roomID, roomCapacity) {
+    document.getElementById('edit-rm-code').value = roomID;
+    document.getElementById('edit-rm-code-hidden').value = roomID;
+    document.getElementById('edit-rm-cap').value = roomCapacity;
+
+    console.log('Room ID: ' + roomID);
+    console.log('Room Capacity: ' + roomCapacity);
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -74,6 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log('Invalid start date');
 		}
 	});
+
+
+    const addRoomInput = document.getElementById('add-new-rm-code');
+
+    // Convert input to uppercase and limit to 6 characters
+    addRoomInput.addEventListener('input', () => {
+        addRoomInput.value = addRoomInput.value.toUpperCase().slice(0, 6);
+    });
 
 
 });

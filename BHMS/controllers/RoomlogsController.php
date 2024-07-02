@@ -45,6 +45,18 @@ class RoomlogsController extends GeneralController{
         return RoomlogsModel::query_types();
     }
 
+    public static function addNewRoom($newRoomInfo) {
+        return RoomlogsModel::addNewRoom($newRoomInfo);
+    }
+
+    public static function editRoom($editRoomInfo) {
+        return RoomlogsModel::editRoom($editRoomInfo);
+    }
+
+    public static function deleteRoom($roomCode) {
+        return RoomlogsModel::deleteRoom($roomCode);
+    }
+
 }
 
 ?>
