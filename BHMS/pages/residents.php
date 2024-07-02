@@ -39,6 +39,7 @@ if (isset($_POST['delete-tenant-submit'])) {
     $tenantIdToDelete = $_GET['tenID'];
     $result = ResidentsController::deleteTenantById($tenantIdToDelete);
 
+
     if ($result) {
         echo '<script>console.log("Deleted successfully")</script>';
     } else {
@@ -89,6 +90,17 @@ if (isset($_POST['create-tenant-submit'])) {
     foreach($_POST['appliances'] as $appliance){
         $appliances[] = ['appInfo' => $appliance];
     }
+    
+    $result1 = ResidentsController::create_new_tenant($new_tenant);
+    $last_id = ResidentsController::get_last_inserted_tenant_id() + 1;
+    $result2 = ResidentsController:: appliance_tenID($appliances,$last_id);
+    
+    if ($result) {
+        echo '<script>console.log("Tenant added successfully")</script>';
+    } else {
+        echo '<script>console.log("Error")</script>';
+    }
+
 
     $result = ResidentsController::create_new_tenant($newTenant, $appliances);
     if($result){
@@ -231,13 +243,12 @@ if (isset($_POST['edit-tenant-submit'])) {
         addApplianceCount--;
     }
 
+
     function edit_deleteAppliance(button) {
         const appliance = button.parentNode;
         appliance.remove();
         editApplianceCount--;
     }
-
-
 </script>
 
 <?php

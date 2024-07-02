@@ -45,8 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     
-
-    
     // After handling the form submission, redirect to avoid form resubmission
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit(); // Make sure to exit after redirect
@@ -113,23 +111,8 @@ MaintenanceViews::maintenance_content();
 
 ?>
     
-
-<!-- Overview -->
-
-<!-- Add New Maintenance Modal -->
-
-
-
-
-<!-- Add New Maintenance Modal -->
-
-   
-
-
-
-<?php html_end(); ?>
-
 <?php
+html_end();
 // End output buffering and flush the buffer
 ob_end_flush();
 ?>

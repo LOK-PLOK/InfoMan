@@ -99,7 +99,7 @@ class GeneralModel extends dbcreds {
         $conn->close();
     }
 
-    public static function update_tenant_rent($tenant_id, $isRent) {
+    public static function update_rent_status($tenant_id, $isRent) {
         $conn = self::get_connection();
         $query = $conn->prepare("UPDATE tenant SET isRenting = ? WHERE tenID = ?");
 
@@ -119,7 +119,7 @@ class GeneralModel extends dbcreds {
 
     public static function check_recent_rent($tenant_id) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM `occupancy` WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
+        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM occupancy WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
     
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -139,6 +139,27 @@ class GeneralModel extends dbcreds {
         $conn->close();
     
         return $rent_count > 0; // Return true if there are recent rents, false otherwise
+    }
+
+    public static function get_all_tenants() {
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+
+        // Fetch the result
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $results;
     }
 
 }
