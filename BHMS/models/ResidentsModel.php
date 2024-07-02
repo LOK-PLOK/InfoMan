@@ -36,57 +36,75 @@ class ResidentsModel extends dbcreds{
         
     }
 
-    public static function add_new_tenant($new_tenant) {
-        try {
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+    public static function add_new_tenant($new_tenant, $appliances) {
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: " . $conn->connect_error);
+        }
+    
+        $query = $conn->prepare("INSERT INTO tenant (
+            tenFname, 
+            tenLname, 
+            tenMI, 
+            tenHouseNum, 
+            tenSt, 
+            tenBrgy, 
+            tenCityMun, 
+            tenProvince, 
+            tenContact, 
+            tenBdate, 
+            tenGender, 
+            emContactFname, 
+            emContactLname, 
+            emContactMI, 
+            emContactNum, 
+            isRenting
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);");
+    
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+    
+        $query->bind_param(
+            'sssssssssssssss',
+            $new_tenant['tenFname'], $new_tenant['tenLname'], $new_tenant['tenMI'],
+            $new_tenant['tenHouseNum'], $new_tenant['tenSt'], $new_tenant['tenBrgy'],
+            $new_tenant['tenCityMun'], $new_tenant['tenProvince'], $new_tenant['tenContact'],
+            $new_tenant['tenBdate'], $new_tenant['tenGender'], $new_tenant['emContactFname'],
+            $new_tenant['emContactLname'], $new_tenant['emContactMI'], $new_tenant['emContactNum']
+        );
+    
+        if ($query->execute()) {
+            $tenantID = $conn->insert_id;
+            $query->close();
+    
+            foreach($appliances as $appliance) {
+                $appInfo = $appliance['appInfo'];
+                $appQuery = $conn->prepare("INSERT INTO appliance (tenID, appInfo, appRate) VALUES (?, ?, ?)");
+                
+                if ($appQuery === false) {
+                    throw new Exception("Prepare failed for appliance: " . $conn->error);
+                }
+    
+                $appRate = 100.00; // assuming a fixed rate, adjust if needed
+                $appQuery->bind_param('isd', $tenantID, $appInfo, $appRate);
+    
+                if (!$appQuery->execute()) {
+                    $appQuery->close();
+                    $conn->close();
+                    throw new Exception("Execution failed for appliance: " . $appQuery->error);
+                }
+    
+                $appQuery->close();
             }
     
-            $query = $conn->prepare("INSERT INTO tenant (
-                tenFname, 
-                tenLname, 
-                tenMI, 
-                tenHouseNum, 
-                tenSt, 
-                tenBrgy, 
-                tenCityMun, 
-                tenProvince, 
-                tenContact, 
-                tenBdate, 
-                tenGender, 
-                emContactFname, 
-                emContactLname, 
-                emContactMI, 
-                emContactNum, 
-                isRenting
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);");
-    
-            if ($query === false) {
-                throw new Exception("Prepare failed: " . $conn->error);
-            }
-    
-            $query->bind_param(
-                'sssssssssssssss',
-                $new_tenant['tenFname'], $new_tenant['tenLname'], $new_tenant['tenMI'],
-                $new_tenant['tenHouseNum'], $new_tenant['tenSt'], $new_tenant['tenBrgy'],
-                $new_tenant['tenCityMun'], $new_tenant['tenProvince'], $new_tenant['tenContact'],
-                $new_tenant['tenBdate'], $new_tenant['tenGender'], $new_tenant['emContactFname'],
-                $new_tenant['emContactLname'], $new_tenant['emContactMI'], $new_tenant['emContactNum']
-            );
-    
-            if (!$query->execute()) {
-                throw new Exception("Execute failed: " . $query->error);
-            }
-    
+            $conn->close();
+            return true;
+        } else {
             $query->close();
             $conn->close();
-    
-            return true; // Return true if insertion was successful
-        } catch (Exception $e) {
-            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
-            return false; // Return false if an error occurred
+            throw new Exception("Execution failed: " . $query->error);
         }
     }
     
@@ -131,6 +149,7 @@ class ResidentsModel extends dbcreds{
             return null;
         }
     }
+
     public static function appliance_tenID($appliances, $last_id) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
@@ -223,140 +242,92 @@ class ResidentsModel extends dbcreds{
         }
     }
 
-    public static function appliance_data(){
-        try {
-            //connection 
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-            
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
-    
-            // SQL query to select all appliance
-            $query = "SELECT * FROM appliance";
-    
-            // Execute the query
-            $result = $conn->query($query);
-    
-            if ($result === false) {
-                throw new Exception("Query failed: " . $conn->error);
-            }
-    
-            // Fetch all rows as an associative array
-            $appliance = [];
-            while ($row = $result->fetch_assoc()) {
-                $appliance[] = $row;
-            }
-    
-            
-            $result->free();
-    
-            // Close the connection
-            $conn->close();
-    
-            // Return the array of appliance
-            return $appliance;
-        } catch (Exception $e) {
-            
-            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
-    
-            // Return an empty array to indicate failure
-            return [];
+    public static function edit_tenant($editTenantData, $editAppliances) {
+        // Extract tenant ID from the tenant data
+        $tenantID = $editTenantData['Edit-tenID'];
+
+        // Establish database connection
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: " . $conn->connect_error);
         }
-    }
 
-    public static function edit_tenant($edit_tenant, $tenID) {
-        try {
-            // Create a connection to the database
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
-    
-            // Prepare the SQL UPDATE query
-            $query = "UPDATE tenant SET 
-                tenFname = ?, 
-                tenMI = ?, 
-                tenLname = ?, 
-                tenGender = ?, 
-                tenBdate = ?, 
-                tenHouseNum = ?, 
-                tenSt = ?, 
-                tenBrgy = ?, 
-                tenCityMun = ?, 
-                tenProvince = ?, 
-                tenContact = ?, 
-                emContactFname = ?, 
-                emContactMI = ?, 
-                emContactLname = ?, 
-                emContactNum = ?
-                WHERE tenID = ?";
-    
-            // Prepare the statement
-            $stmt = $conn->prepare($query);
-    
-            // Check if the statement was prepared successfully
-            if (!$stmt) {
-                throw new Exception("Preparation failed: " . $conn->error);
-            }
-    
-            // Bind the parameters from the $edit_tenant array
-            $stmt->bind_param(
-                'sssssssssssssssi', 
-                $edit_tenant['Edit-tenFname'],
-                $edit_tenant['Edit-tenMI'],
-                $edit_tenant['Edit-tenLname'],
-                $edit_tenant['Edit-tenGender'],
-                $edit_tenant['Edit-tenBdate'],
-                $edit_tenant['Edit-tenHouseNum'],
-                $edit_tenant['Edit-tenSt'],
-                $edit_tenant['Edit-tenBrgy'],
-                $edit_tenant['Edit-tenCityMun'],
-                $edit_tenant['Edit-tenProvince'],
-                $edit_tenant['Edit-tenContact'],
-                $edit_tenant['Edit-emContactFname'],
-                $edit_tenant['Edit-emContactMI'],
-                $edit_tenant['Edit-emContactLname'],
-                $edit_tenant['Edit-emContactNum'],
-                $tenID
-            );
-    
-            // Execute the statement
-            if (!$stmt->execute()) {
-                throw new Exception("Execution failed: " . $stmt->error);
-            }
-    
-            // Check if the update was successful
-            if ($stmt->affected_rows === 0) {
-                throw new Exception("No records updated. Please check if the tenant ID exists.");
+        // Prepare the UPDATE query for tenant
+        $query = $conn->prepare("UPDATE tenant SET 
+            tenFname = ?, 
+            tenLname = ?, 
+            tenMI = ?, 
+            tenHouseNum = ?, 
+            tenSt = ?, 
+            tenBrgy = ?, 
+            tenCityMun = ?, 
+            tenProvince = ?, 
+            tenContact = ?, 
+            tenBdate = ?, 
+            tenGender = ?, 
+            emContactFname = ?, 
+            emContactLname = ?, 
+            emContactMI = ?, 
+            emContactNum = ? 
+        WHERE tenID = ?");
+
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        // Bind parameters to the prepared statement
+        $query->bind_param(
+            'sssssssssssssssi',
+            $editTenantData['Edit-tenFname'], $editTenantData['Edit-tenLname'], $editTenantData['Edit-tenMI'],
+            $editTenantData['Edit-tenHouseNum'], $editTenantData['Edit-tenSt'], $editTenantData['Edit-tenBrgy'],
+            $editTenantData['Edit-tenCityMun'], $editTenantData['Edit-tenProvince'], $editTenantData['Edit-tenContact'],
+            $editTenantData['Edit-tenBdate'], $editTenantData['Edit-tenGender'], $editTenantData['Edit-emContactFname'],
+            $editTenantData['Edit-emContactLname'], $editTenantData['Edit-emContactMI'], $editTenantData['Edit-emContactNum'],
+            $tenantID
+        );
+
+        // Execute the update query
+        if (!$query->execute()) {
+            throw new Exception("Execution failed: " . $query->error);
+        }
+
+        $query->close();
+
+        // Use prepared statement for DELETE operation to prevent SQL injection
+        $deleteQuery = $conn->prepare("DELETE FROM appliance WHERE tenID = ?");
+        if ($deleteQuery === false) {
+            throw new Exception("Prepare failed for DELETE: " . $conn->error);
+        }
+
+        $deleteQuery->bind_param('i', $tenantID);
+        if (!$deleteQuery->execute()) {
+            throw new Exception("Execution failed for DELETE: " . $conn->error);
+        }
+
+        $deleteQuery->close();
+
+        // Insert appliances
+        foreach ($editAppliances as $appliance) {
+            $appInfo = $appliance['appInfo'];
+            $appQuery = $conn->prepare("INSERT INTO appliance (tenID, appInfo, appRate) VALUES (?, ?, ?)");
+
+            if ($appQuery === false) {
+                throw new Exception("Prepare failed for appliance: " . $conn->error);
             }
 
-            return true;
-            } catch (Exception $e) {
-                // error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
-        
-                // Return false to indicate failure
-                return false;
+            $appRate = 100.00; // assuming a fixed rate, adjust if needed
+            $appQuery->bind_param('isd', $tenantID, $appInfo, $appRate);
+
+            if (!$appQuery->execute()) {
+                throw new Exception("Execution failed for appliance: " . $appQuery->error);
             }
 
-        
-    
-            // Close the statement and connection
-            $stmt->close();
-            $conn->close();
+            $appQuery->close();
+        }
 
-            
-    
-            // Return true to indicate success
-        //     return true;
-        // } catch (Exception $e) {
-        //     // error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
-    
-        //     // Return false to indicate failure
-        //     return false;
-        // }
+        $conn->close();
+        return true;
     }
 
     public static function deleteTenantById($tenantIdToDelete) {
@@ -396,6 +367,49 @@ class ResidentsModel extends dbcreds{
     
             // Return false to indicate failure
             return false;
+        }
+    }
+
+    public static function get_appliances($tenantID){
+        try {
+            // Create a connection to the database
+            $conn = self::get_connection();
+    
+            // Prepare the SQL query to get all appliances for a specific tenant
+            $stmt = $conn->prepare("SELECT * FROM appliance WHERE tenID = ?");
+    
+            // Bind the tenant ID to the statement
+            $stmt->bind_param("i", $tenantID);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            // Get the result
+            $result = $stmt->get_result();
+    
+            // Fetch all rows as an associative array
+            $appliances = [];
+            while ($row = $result->fetch_assoc()) {
+                $appliances[] = $row;
+            }
+    
+            // Free the result
+            $result->free();
+    
+            // Close the statement
+            $stmt->close();
+    
+            // Close the connection
+            $conn->close();
+    
+            // Return the array of appliances
+            return $appliances;
+        } catch (Exception $e) {
+            // Log the error to a file or handle it as needed
+            error_log("Error getting appliances: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+    
+            // Return an empty array to indicate failure
+            return [];
         }
     }
 }
