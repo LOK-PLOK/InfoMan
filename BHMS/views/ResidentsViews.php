@@ -174,7 +174,7 @@ class ResidentsViews extends GeneralViews{
                                 <span class="pe-5 fs-6">Category...</span>
                             </button>
                             <ul class="dropdown-menu">
-                                I Love you wehhhh
+                                Testing
                             </ul>
                         </div>
                     </div>
@@ -212,14 +212,24 @@ HTML;
             $tenantDataJson = htmlspecialchars(json_encode($tenant));
             $appliances = ResidentsController::get_appliances($tenant['tenID']);
             $appliancesDataJson = htmlspecialchars(json_encode($appliances));
+            $occupancy = ResidentsController::get_occupancy($tenant['tenID']);
+            $occupancyDataJson = htmlspecialchars(json_encode($occupancy));
 
-            echo '<script>console.log('.$tenantDataJson.')</script>';
+            // Echoing the JavaScript to log each variable in the console
+            echo '<script>
+            // console.log("Tenant Data:", ('.(json_encode($tenantDataJson)).'));
+            // console.log("Appliances Data:", ('.json_encode($appliancesDataJson).'));
+             console.log("Occupancy Data:", ('.json_encode($occupancyDataJson).'));
+            // console.log("Appliance Data:", ('.json_encode($appliances).'));
+            console.log("Occupancy Data:", ('.json_encode($occupancy).'));
+
+            </script>';
             
             echo '
                             <tr>
                                 <td>
                                     <button style="float: left; width: 100%;" class="tenant-info-btn" data-bs-toggle="modal" data-bs-target="#TenantInfo" data-tenant=\'' . $tenantDataJson . '\'
-                                                                 data-appliances = \'' . $appliancesDataJson . '\'>
+                                                                 data-appliances = \'' . $appliancesDataJson . '\' data-occupancy=\'' . $occupancyDataJson . '\'>
                                         <div class="alignleft">
                                             <span class="residenttile textstyle0">' . htmlspecialchars($tenant['tenFname'] . ' ' . $tenant['tenMI'] . '. ' . $tenant['tenLname']) . '</span>
                                         </div>
@@ -238,9 +248,9 @@ HTML;
                                     </div>
                                 </td>
                                 <td>See more...</td>
-                                <td>' . htmlspecialchars($tenant['room'] ?? 'N/A') . '</td>
-                                <td>' . htmlspecialchars($tenant['roomCode'] ?? 'N/A') . '</td>
-                                <td>' . htmlspecialchars(date("F j, Y", strtotime($tenant['tenBdate']))) . '</td>
+                                <td>' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
+                                <td>' . htmlspecialchars($occupancy[0]['roomID'] ?? 'N/A') . '</td>
+                                <td>' . htmlspecialchars(date("F j, Y", strtotime($occupancy[0]['occDateEnd']))) . '</td>
                                 <td>
                                     <button class="openEditModalBtn" style="margin-right: 10px;" 
                                         data-bs-toggle="modal" 
@@ -276,127 +286,127 @@ HTML;
         // JavaScript for handling the click event and loading data into modal
         echo '
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
-            var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
+document.addEventListener("DOMContentLoaded", function() {
+    var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
+    var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
+    var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
 
-            var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
+    tenantInfoButtons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            var tenantData = JSON.parse(this.getAttribute("data-tenant"));
+            var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
+            var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
+            console.log("Occupancy data infoModal", occupancyData);
 
-            tenantInfoButtons.forEach(function(btn) {
-                btn.addEventListener("click", function() {
-                    var tenantData = JSON.parse(this.getAttribute("data-tenant"));
-                    var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
+            // Update tenant information section
+            tenantInfoModalBody.innerHTML = `
+                <div class="split-left">
+                    <div>
+                        <span class="label">Name:</span>
+                        <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
+                    </div>
+                    <div>
+                        <span class="label">Contact Number:</span>
+                        <span>${tenantData.tenContact}</span>
+                    </div>
+                    <div>
+                        <span class="label">Address:</span>
+                        <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
+                    </div>
+                    <div>
+                        <span class="label">Gender:</span>
+                        <span>${tenantData.tenGender}</span>
+                    </div>
+                    <div>
+                        <span class="label">Birth Date:</span>
+                        <span>${tenantData.tenBdate}</span>
+                    </div>
+                    <div>
+                        <span class="label">Appliances:</span>
+                        <ul id="appliancesList"></ul>
+                    </div>
+                </div>
+                <div class="split-right">
+                    <div>
+                        <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
+                    </div>
+                    <div>
+                        <span class="label">Name:</span>
+                        <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
+                    </div>
+                    <div>
+                        <span class="label">Contact Number:</span>
+                        <span>${tenantData.emContactNum}</span>
+                    </div>
+                </div>
+            `;
 
-                    // Update tenant information section
-                    tenantInfoModalBody.innerHTML = `
-                        <div class="split-left">
-                            <div>
-                                <span class="label">Name:</span>
-                                <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
-                            </div>
-                            <div>
-                                <span class="label">Contact Number:</span>
-                                <span>${tenantData.tenContact}</span>
-                            </div>
-                            <div>
-                                <span class="label">Address:</span>
-                                <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
-                            </div>
-                            <div>
-                                <span class="label">Gender:</span>
-                                <span>${tenantData.tenGender}</span>
-                            </div>
-                            <div>
-                                <span class="label">Birth Date:</span>
-                                <span>${tenantData.tenBdate}</span>
-                            </div>
-                            <div>
-                                <span class="label">Appliances:</span>
-                                <ul id="appliancesList"></ul>
-                            </div>
-                        </div>
-                        <div class="split-right">
-                            <div>
-                                <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
-                            </div>
-                            <div>
-                                <span class="label">Name:</span>
-                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname} </span>
-                            </div>
-                            <div>
-                                <span class="label">Contact Number:</span>
-                                <span>${tenantData.emContactNum}</span>
-                            </div>
-                        </div>
-                    `;
-
-                    // Update appliances list
-                    var appliancesList = document.getElementById("appliancesList");
-                    appliancesList.innerHTML = ""; // Clear previous content
-
-                    appliancesData.forEach(function(appliance) {
-                        var li = document.createElement("li");
-                        li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
-                        appliancesList.appendChild(li);
-                    });
-
-                    // Update rent history section (example data)
-                    rentHistoryTableBody.innerHTML = `
-                        <tr>
-                            <td>B10101</td>
-                            <td>April 9, 2024</td>
-                            <td>March 9, 2024</td>  
-                        </tr>
-                        <tr>
-                            <td>B10101</td>
-                            <td>March 9, 2024</td>
-                            <td>April 9, 2024</td>
-                        `;
-                    // Additional rows can be added here
-                });
+            // Update appliances list
+            var appliancesList = document.getElementById("appliancesList");
+            appliancesList.innerHTML = ""; // Clear previous content
+            appliancesData.forEach(function(appliance) {
+                var li = document.createElement("li");
+                li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
+                appliancesList.appendChild(li);
             });
 
-            // Script for edit modal
+            // Update rent history table with occupancy data
+            rentHistoryTableBody.innerHTML = ""; // Clear previous content
+            occupancyData.forEach(function(occupancy) {
+                var tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${occupancy.roomID}</td>
+                    <td>${occupancy.occDateStart}</td>
+                    <td>${occupancy.occDateEnd}</td>
+                `;
+                rentHistoryTableBody.appendChild(tr);
+            });
         });
-    </script>
+    });
+});
+</script>
+
+
 ';
     }
 
-    public static function residents_info_model_view(){
-        echo <<<HTML
-        <!-- Tenant Info Modal -->
-        <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content bg-custom">
-                    <div class="modal-header bg-custom">
-                        <span style="font-size: 25px;" class="header">Tenant Information</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
-                        <!-- Tenant information will be loaded here dynamically -->
-                    </div>
-                    <div class="modal-footer-custom bg-custom">
-                        <div class="header">Rent History</div>
-                        <section class="table-data">
-                            <table class="table table-bordered styled-table rounded-top rounded-bottom">
+    public static function residents_info_model_view() {
+    echo <<<HTML
+    <!-- Tenant Info Modal -->
+    <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-custom">
+                <div class="modal-header bg-custom">
+                    <span style="font-size: 25px;" class="header">Tenant Information</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
+                    <!-- Tenant information will be loaded here dynamically -->
+                </div>
+                <div class="modal-footer-custom bg-custom overflow-auto" style="max-height: 200px;">
+                    <div class="header">Rent History</div>
+                    <section class="table-data">
+                        <div class="table-responsive">
+                            <table class="table table-bordered styling rounded-top rounded-bottom">
                                 <thead>
                                     <tr>
                                         <th>Room Code</th>
                                         <th>Start Date</th>
-                                        <th>Due Date</th>
+                                        <th>End Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="rentHistoryTableBody">
                                     <!-- Rent history will be loaded here dynamically -->
                                 </tbody>
                             </table>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
-        HTML;
-    }
+    </div>
+    HTML;
+}
 
     public static function edit_tenant_modal_view(){
         echo <<<HTML

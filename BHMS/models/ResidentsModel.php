@@ -412,6 +412,49 @@ class ResidentsModel extends dbcreds{
             return [];
         }
     }
+
+    public static function get_occupancy($tenantID){
+        try {
+            // Create a connection to the database
+            $conn = self::get_connection();
+    
+            // Prepare the SQL query to get all appliances for a specific tenant
+            $stmt = $conn->prepare("SELECT occTypeName ,roomID,occDateStart,occDateEnd FROM tenant,occupancy,occupancy_type WHERE tenant.tenID = occupancy.tenID AND tenant.tenID = ? AND occupancy.occTypeID = occupancy_type.occTypeID ORDER BY occupancy.occDateStart DESC ");
+    
+            // Bind the tenant ID to the statement
+            $stmt->bind_param("i", $tenantID);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            // Get the result
+            $result = $stmt->get_result();
+    
+            // Fetch all rows as an associative array
+            $occupancy = [];
+            while ($row = $result->fetch_assoc()) {
+                $occupancy[] = $row;
+            }
+    
+            // Free the result
+            $result->free();
+    
+            // Close the statement
+            $stmt->close();
+    
+            // Close the connection
+            $conn->close();
+    
+            // Return the array of appliances
+            return $occupancy;
+        } catch (Exception $e) {
+            // Log the error to a file or handle it as needed
+            error_log("Error getting appliances: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+    
+            // Return an empty array to indicate failure
+            return [];
+        }
+    }
 }
 
 ?>
