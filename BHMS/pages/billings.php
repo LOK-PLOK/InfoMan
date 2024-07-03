@@ -225,6 +225,7 @@
 </script>
 <script src="/js/prepopulate.js"></script>
 <script src="/js/checkbox.js"></script>
+<script src="/js/date.js"></script>
 <script>
 
     const payOccType = document.getElementById('payment-occupanyType');
@@ -339,7 +340,6 @@ function handleTabSwitching() {
 
 document.addEventListener('DOMContentLoaded', handleTabSwitching);
 
-console.log("owowowow");
 </script>
 
 

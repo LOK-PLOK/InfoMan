@@ -23,6 +23,7 @@ class BillingsViews extends GeneralViews{
 
     public static function create_billing_modal(){
         $tenants = BillingsController::get_tenants();
+        $occupancy_types = BillingsController::get_occupancy_types();
         echo <<<HTML
             <div class="modal fade" id="createBillingModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -51,9 +52,32 @@ class BillingsViews extends GeneralViews{
                                 </select>
                                 <p class="small-text">Name</p>
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
+                                <div class="d-flex w-100 flex-row justify-content-between">
+                                    <!-- occupancy type -->
+                                    <select id="payment-occupanyType" class=" shadow" style="width: 75%">
+                                        <option value="0">Select Occupancy Type...</option>
+            HTML;
+            foreach ($occupancy_types as $occupancy_type){
+                $rate = $occupancy_type['occRate'];
+                $occTypeName = $occupancy_type['occTypeName'];
+                echo<<<HTML
+                    <option value="$rate">$occTypeName</option>
+                HTML;
+            }
+            echo <<<HTML
+                                    </select>
+                                    <!-- no. of appliances -->
+                                    <input type="number" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0">
+                                    <!-- appliance rate -->
+                                    <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled>
+                                </div>
+                                <div class="d-flex flex-row w-100">
+                                    <div class="small-text w-75">Occupancy Type</div>
+                                    <div class="small-text w-25">No. of Appliances</div>
+                                </div>
                                 <input style="padding: 7px;" class="rounded-inputs" type="number" id="create-billing-billTotal" name="create-billing-billTotal">
                                 <p class="small-text">Amount</p>
-
+                                
                                 <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
                                 <div class="month-allocated-cont">
                                     <div>
@@ -76,14 +100,6 @@ class BillingsViews extends GeneralViews{
                                     </div>
                                     
                                 </div>
-
-                                <div class="status-cont" >
-                                    <label class="billings-modal-labels" for="">Status:</label>
-                                    <select id="create-billing-isPaid" name="create-billing-isPaid"  class="rounded-inputs" >
-                                        <option value="1" >Paid</option>
-                                        <option value="0" >Unpaid</option>
-                                    </select>
-                                </div >
 
                                 <div class="add-cont">
                                     <button type="submit" name="create-billing-submit" class="btn-var-3 add-button">Add</button>
@@ -132,7 +148,6 @@ class BillingsViews extends GeneralViews{
     public static function add_payment_modal(){
         $rate_per_appliance = 100;
         $tenants = BillingsController::get_tenants();
-        $occupancy_types = BillingsController::get_occupancy_types();
         echo <<<HTML
             <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -154,29 +169,7 @@ class BillingsViews extends GeneralViews{
                                 <input type="date" class="w-100 shadow" id="paymentBillDueDate" name="paymentBillDueDate" value="test" disabled>
                                 <p class="small-text">Due Date</p>
                                 <label class="billings-modal-labels" for="paymentAmount">Payment Details</label><br>
-                                <div class="d-flex w-100 flex-row justify-content-between">
-                                    <!-- occupancy type -->
-                                    <select id="payment-occupanyType" class=" shadow" style="width: 75%">
-                                        <option value="0">Select Occupancy Type...</option>
-            HTML;
-            foreach ($occupancy_types as $occupancy_type){
-                $rate = $occupancy_type['occRate'];
-                $occTypeName = $occupancy_type['occTypeName'];
-                echo<<<HTML
-                    <option value="$rate">$occTypeName</option>
-                HTML;
-            }
-            echo <<<HTML
-                                    </select>
-                                    <!-- no. of appliances -->
-                                    <input type="number" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0">
-                                    <!-- appliance rate -->
-                                    <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled>
-                                </div>
-                                <div class="d-flex flex-row w-100">
-                                    <div class="small-text w-75">Occupancy Type</div>
-                                    <div class="small-text w-25">No. of Appliances</div>
-                                </div>
+                                
                                 <!-- payment amount -->
                                 <input class="rounded-inputs" type="number" id="paymentAmount" name="paymentAmount" placeholder="0.00" disabled>
                                 <input type="hidden" id="actualPaymentAmount" name="actualPaymentAmount" placeholder="0.00" >
