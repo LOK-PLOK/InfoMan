@@ -30,6 +30,8 @@ class MaintenanceController extends GeneralController{
     public static function edit_maintenance($edit_maintenance){
         return MaintenanceModel::edit_maintenance($edit_maintenance);
     }
+
+    
 }
 
 ?>
