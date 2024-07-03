@@ -16,7 +16,6 @@ class BillingsViews extends GeneralViews{
 
                 <div style="gap:25px" class="d-flex flex-row" >
                     <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#createBillingModal"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Create Billing</button>
-                    <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
                 </div>
             </div>
         HTML;
@@ -131,55 +130,65 @@ class BillingsViews extends GeneralViews{
 
     // doesn't work yet
     public static function add_payment_modal(){
+        $rate_per_appliance = 100;
         $tenants = BillingsController::get_tenants();
+        $occupancy_types = BillingsController::get_occupancy_types();
         echo <<<HTML
             <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content bg-custom">
                         <div class="modal-header bg-custom">
                             <h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body bg-custom">
-                            <form action="/action_page.php">
-                                <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
-                                <select name="tenantName" id="tenantName">
-                                    <option value="">Select Tenant</option>
-            HTML;
-            foreach ($tenants as $tenant){
-                $id = $tenant['tenID'];
-                $fName = $tenant['tenFname'];
-                $MI = $tenant['tenMI'];
-                $lName = $tenant['tenLname'];
-                $fullName = $fName.' '.$MI.'. '.$lName;
-                echo<<<HTML
-                    <option value="$id">$fullName</option>
-                HTML;
-            }                         
-            echo <<<HTML
-                                </select>
+                            <form method="POST">
+                                <!-- BillRefNo -->
+                                <input type="hidden" id="billRefNo" name="billRefNo">
+                                <label class="billings-modal-labels" for="tenantName">Billing Information</label>
+                                <!-- tenantID -->
+                                <input type="hideen" id="paymentTenantID" name="paymentTenantID">
+                                <input type="text" name="tenantName" id="paymentTenantName" value="test" disabled>
                                 <p class="small-text">Name</p>
-                                <label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
-                                <input type="text" id="paymentAmount" name="paymentAmount">
+                                <!-- due date -->
+                                <input type="date" class="w-100 shadow" id="paymentBillDueDate" name="paymentBillDueDate" value="test" disabled>
+                                <p class="small-text">Due Date</p>
+                                <label class="billings-modal-labels" for="paymentAmount">Payment Details</label><br>
+                                <div class="d-flex w-100 flex-row justify-content-between">
+                                    <!-- occupancy type -->
+                                    <select id="payment-occupanyType" class=" shadow" style="width: 75%">
+                                        <option value="0">Select Occupancy Type...</option>
+            HTML;
+            foreach ($occupancy_types as $occupancy_type){
+                $rate = $occupancy_type['occRate'];
+                $occTypeName = $occupancy_type['occTypeName'];
+                echo<<<HTML
+                    <option value="$rate">$occTypeName</option>
+                HTML;
+            }
+            echo <<<HTML
+                                    </select>
+                                    <!-- no. of appliances -->
+                                    <input type="number" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0">
+                                    <!-- appliance rate -->
+                                    <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled>
+                                </div>
+                                <div class="d-flex flex-row w-100">
+                                    <div class="small-text w-75">Occupancy Type</div>
+                                    <div class="small-text w-25">No. of Appliances</div>
+                                </div>
+                                <!-- payment amount -->
+                                <input class="rounded-inputs" type="number" id="paymentAmount" name="paymentAmount" placeholder="0.00" disabled>
+                                <input type="hidden" id="actualPaymentAmount" name="actualPaymentAmount" placeholder="0.00" >
                                 <p class="small-text">Amount</p>
 
-                                <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
-                                <div class="month-allocated-cont">
-                                    <div>
-                                        <input type="date" id="start-date" name="start-date">
-                                        <p class="small-text">Start Date</p>
-                                    </div>
-                                    <div>
-                                        <!-- Display Purposes -->
-                                        <input type="date" id="dummy-end-date">
-
-                                        <!-- Actual POST data gets taken here -->
-                                        <!-- <input type="date" id="create-billing-billDueDate" name="add-payment-billDueDate" style="display:none;" >
-                                        <p class="small-text">End Date</p> -->
-                                    </div>
-                                    
-                                </div>
-                                <input type="hidden" id="isPaid" name="isPaid" value="1">
+                                <!-- payMethod -->
+                                <span class="billings-modal-labels">Mode of Transaction</span><br>
+                                <select style="padding:1px;" class="rounded-inputs" name="paymentMethod" id="add-payMethod">
+                                    <option value="Cash">Cash on Hand</option>
+                                    <option value="Gcash">GCash</option>
+                                </select>
+                                
                                 <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
                                 <span class="custom-checkbox">Transaction made by a non-tenant payer</span>
                                 
@@ -187,16 +196,19 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
                                 <div class="payer-info">
                                 <div>
+                                    <!-- payerFname -->
                                     <input type="text" id="payer-fname" name="payer-fname">
                                     <p class="small-text">First Name</p>
                                 </div>
                                 
                                 <div>
+                                    <!-- payerMI -->
                                     <input type="text" id="payer-MI" name="payer-MI">
                                     <p class="small-text">M.I</p>
                                 </div>
                                 
                                 <div>
+                                    <!-- payerLname -->
                                     <input type="text" id="payer-lname" name="payer-lname">
                                     <p class="small-text">Last Name</p>
                                 </div>
@@ -253,14 +265,16 @@ class BillingsViews extends GeneralViews{
                                 
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Status</p>
-                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment">
+                                        <select style="padding:1px;" class="rounded-inputs uniform-aligned-inputs" name="editStatusPayment" id="editStatusPayment" disabled>
                                             <option value="1">Paid</option>
                                             <option value="0">Unpaid</option>
                                         </select>
                                     </div>
     
                                     <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
-                                        <button type="submit" name="edit-billing-submit" class="btn-var-2">Save</button>
+                                        <button type="submit" name="edit-billing-submit" class="btn-var-2 mx-3">Save</button>
+                                        <button class="btn-var-3" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                                        <img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
                                     </div>
                                 </div>
                             </form>
@@ -408,6 +422,9 @@ class BillingsViews extends GeneralViews{
                     $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
 
                 }
+
+                $billingData = BillingsController::get_billing_data($billingId);
+                $billingDataJson = htmlspecialchars(json_encode($billingData));
     
                 echo <<<HTML
                     <tr>
@@ -418,7 +435,7 @@ class BillingsViews extends GeneralViews{
                         <td class="action-buttons">
                             <input type="hidden" name="billRefNo" value="$billingId">
                             <button id="openEditBillingsModalBtn" style="margin-right: 10px;">
-                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType" onclick="prepopulateValues('$payment_billing_info_json','$billingId', '$tenantFullName', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid')">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType" onclick="prepopulateValues($billingDataJson, $payment_billing_info_json)">
                             </button>
                             <button class="delete-button" data-billing-id="$billingId" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteBillingsModal">

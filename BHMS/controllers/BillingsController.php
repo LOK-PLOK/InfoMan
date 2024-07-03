@@ -37,6 +37,35 @@ class BillingsController extends GeneralController{
         return BillingsModel::query_update_billing_payment($updated_billing_payment);
     }
 
+    public static function get_occupancy_types() {
+        return BillingsModel::query_get_occupancy_types();
+    }
+
+    public static function create_payment($new_payment){
+    
+        $payerName = [];
+
+        if(empty($new_payment['payerFname']) || empty($new_payment['payerLname']) || empty($new_payment['payerMI'])){
+            $payerName = self::get_specific_tenant($new_payment['tenID']);
+            $new_payment['payerFname'] = $payerName['tenFname'];
+            $new_payment['payerLname'] = $payerName['tenLname'];
+            $new_payment['payerMI'] = $payerName['tenMI'];
+        } 
+
+        return BillingsModel::query_create_payment($new_payment);
+    }
+
+    public static function get_billing_data($billRefNo){
+        return BillingsModel::query_billing_data($billRefNo);
+    }
+
+    public static function get_specific_tenant($tenID){
+        return BillingsModel::query_get_specific_tenant($tenID);
+    }
+
+    public static function update_billing_status($new_payment){
+        return BillingsModel::query_update_billing_status($new_payment);
+    }
 }
 
 ?>

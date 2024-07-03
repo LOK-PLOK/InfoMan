@@ -4,9 +4,148 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+    public static function query_update_billing_status($new_payment){
+        $conn = self::get_connection();
+        $billRefNo = $new_payment['billRefNo'];
+
+        echo '<script>console.log("'.$billRefNo.'")</script>';
+        
+        $query = "UPDATE billing SET isPaid = '1' WHERE billing.billRefNo = ?;";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $billRefNo);
+    
+        if ($stmt->execute() === false) {
+            die("Error executing statement: " . $stmt->error);
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return true;
+    }
+
+    public static function query_get_specific_tenant($tenID){
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant WHERE tenID = ?";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $tenID); 
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $results = $result->fetch_assoc();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $results;
+    }
+
+    public static function query_create_payment($new_payment) {
+        $conn = self::get_connection();
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        $query = "INSERT INTO payment (billRefNo, payAmnt, payDate, payMethod, payerFname, payerLname, payerMI) 
+                  VALUES (?, ?, CURRENT_DATE(), ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+    
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param(
+            "idssss", 
+            $new_payment['billRefNo'], $new_payment['payAmount'], $new_payment['payMethod'],
+            $new_payment['payerFname'], $new_payment['payerLname'], $new_payment['payerMI']);
+
+    
+        if ($stmt->execute() === false) {
+            die("Error executing statement: " . $stmt->error);
+        }
+    
+    
+        $stmt->close();
+        $conn->close();
+    
+        return true;
+    }
+    
+
+    public static function query_billing_data($billRefNo){
+        $conn = self::get_connection();
+    
+        $query = "SELECT CONCAT(tenant.tenFname, ' ', tenant.tenMI, '. ', tenant.tenLname) AS 
+        full_name, billing.* FROM billing LEFT JOIN tenant ON billing.tenID = tenant.tenID WHERE billing.billRefNo = ?;";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $billRefNo); 
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $results = $result->fetch_assoc();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $results;
+    }
+
+    public static function query_get_occupancy_types(){
+        $conn = self::get_connection();
+        $query = "SELECT * FROM occupancy_type";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $results = [];
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $results;
+
+    }
+
     public static function query_update_billing_payment($updated_billing_payment) {
         $conn = self::get_connection();
-        echo '<script>console.log("HEYHEYHEY")</script>';
         $billRefNo = $updated_billing_payment['billRefNo'];
         $billDueDate = $updated_billing_payment['billDueDate'];
         $billTotal = $updated_billing_payment['billTotal'];
