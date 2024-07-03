@@ -17,6 +17,10 @@ class ResidentsController extends GeneralController{
         return ResidentsModel::get_appliances($tenantID);
     }
 
+    public static function get_occupancy($tenantID){
+        return ResidentsModel::get_occupancy($tenantID);
+    }
+
     public static function get_last_inserted_tenant_id(){
         return ResidentsModel::get_last_inserted_tenant_id();
     }
