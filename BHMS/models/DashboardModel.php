@@ -228,6 +228,17 @@ class DashboardModel extends dbcreds {
     
         return $results;
     }
+
+    public static function query_room_info($roomID){
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
+        $query->bind_param('s', $roomID);
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        return $result;
+    }
     
 }
 

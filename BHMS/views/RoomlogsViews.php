@@ -5,6 +5,7 @@ require_once '../controllers/RoomlogsController.php';
 
 RoomlogsController::updateTenantRentStatus();
 RoomlogsController::updateRoomTenantCount();
+RoomlogsController::updateRoomAvailability();
 
 class RoomlogsViews extends GeneralViews{
 

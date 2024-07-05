@@ -5,6 +5,7 @@ require_once '../controllers/DashboardController.php';
 
 DashboardController::updateTenantRentStatus();
 DashboardController::updateRoomTenantCount();
+DashboardController::updateRoomAvailability();
 
 class DashboardViews extends GeneralViews{
 

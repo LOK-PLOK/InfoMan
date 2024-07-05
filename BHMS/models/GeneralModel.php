@@ -162,6 +162,24 @@ class GeneralModel extends dbcreds {
         return $results;
     }
 
+    public static function update_room_availability($roomID, $status){
+        $conn = self::get_connection();
+        $query = $conn->prepare("UPDATE room SET isAvailable = ? WHERE roomID = ?");
+
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        $query->bind_param('is', $status, $roomID);
+
+        if (!$query->execute()) {
+            throw new Exception("Execute failed: " . $query->error);
+        }
+
+        $query->close();
+        $conn->close();
+    }
+
 }
 
 ?>

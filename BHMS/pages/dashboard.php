@@ -158,13 +158,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		);
 
 		$result = DashboardController::create_new_rent($create_rent);
-        if ($result) {
+        if ($result === true) {
             // Redirect to avoid form resubmission
             header('Location: dashboard.php?addRentStatus=success');
             exit();
         } else {
             // Redirect with an error message
-            header('Location: dashboard.php?addRentStatus=error');
+            header('Location: dashboard.php?addRentStatus='.$result);
             exit();
         }
 	}

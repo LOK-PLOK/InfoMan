@@ -23,15 +23,19 @@ class DashboardController extends GeneralController{
 
     public static function create_new_rent($create_rent) {
         $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
+        $roomInfo = DashboardModel::query_room_info($create_rent['roomID']);
 
         echo '<script>console.log('.json_encode($create_rent).')</script>';
+        echo '<script>console.log('.json_encode($roomInfo).')</script>';
 
         $bedSpacerID = 1;
         if($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0){
-            echo '<script>alert("Room can only be occupied for bedspacers!")</script>';
-            return false;
+            return "Room can only be occupied for bedspacers!";
+        } else if ($roomInfo['isAvailable'] == 0) {
+            return "Room is already in Full Capacity!";
         } else {
-            return DashboardModel::query_add_new_rent($create_rent);
+            DashboardModel::query_add_new_rent($create_rent);
+            return true;
         }
     }
 
