@@ -1,4 +1,4 @@
-<?php   
+<?php
   ob_start();
   session_start();
 
@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve the tenant ID to delete
         $tenantIdToDelete = $_POST['deleteUserID'];
 
+        echo '<script>console.log("Deleting user with ID(POST): ", '.$tenantIdToDelete.')</script>';
         $result = SettingsController::delete_user_by_id($tenantIdToDelete);
 
         if ($result) {
@@ -77,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Call create_user method from settingsmodel.php
         $result = SettingsController::edit_user($edit_user);
+        echo '<script>console.log('.json_encode($result).')</script>';
         if ($result) {
             // Return success response (if using AJAX)
             header('Location: /pages/settings.php?editUser=success');
@@ -123,31 +125,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!--sections-->
     <div class="section">
-        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#ratesAndPricingModal">
-            <img src="/images/icons/Settings/rates_and_pricing.png" alt="rates and pricing icon">
+        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#ratesAndPricingModal" onmouseover="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_light.png'" onmouseout="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_dark.png'">
+            <img id="rates-and-pricing" src="/images/icons/Settings/rates_and_pricing_dark.png" alt="rates and pricing icon">
             <span>Rates and Pricing</span>
             <i class="fa-solid fa-angle-right"></i>
         </button>
 
-        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#userInfoModal">
-            <img src="/images/icons/Settings/user_info_dark.png" alt="user information icon">
+        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#userInfoModal" onmouseover="document.getElementById('user-info').src='/images/icons/Settings/user_info_light.png'" onmouseout="document.getElementById('user-info').src='/images/icons/Settings/user_info_dark.png'">
+            <img id="user-info" src="/images/icons/Settings/user_info_dark.png" alt="user information icon">
             <span>User Information</span>
             <i class="fa-solid fa-angle-right"></i>
         </button>
 
-        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#createUserModal">
-            <img src="/images/icons/Settings/add_user_dark.png" alt="add user icon">
+        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#createUserModal" onmouseover="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_light.png'" onmouseout="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_dark.png'">
+            <img id="create-user-icon" src="/images/icons/Settings/add_user_dark.png" alt="add user icon">
             <span>Create User</span>
             <i class="fa-solid fa-angle-right"></i>
         </button>
     </div>
 
-    <div class="login-sett-cont my-5">
-        <a href="?logout=1">
-            <div class="settings-sub-header">
-                <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
-            </div>
-        </a>
+    <div class="login-sett-cont">
+        <div class="settings-sub-header">
+            <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
+        </div>
     </div>
 
 <?php
@@ -160,6 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Test: Log user list to console
     $json_user_list = json_encode($user_list);
+    echo '<script>console.log("User List:", ' . $json_user_list . ')</script>';
 
     if ($user_list) {
       echo '<script>console.log("User list fetched successfully")</script>';
@@ -179,7 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
 </div>
 
+<script src="/js/general.js"></script>
 <script src="../js/settings.js"></script>
+
 
 <?php 
 ob_end_flush();

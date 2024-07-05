@@ -1,7 +1,7 @@
 <?php
 
 require '../models/SettingsModel.php'; 
-    
+
 
 class SettingsController {
 
