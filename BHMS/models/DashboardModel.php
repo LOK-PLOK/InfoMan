@@ -125,8 +125,6 @@ class DashboardModel extends dbcreds {
     public static function query_add_new_rent($create_rent) {
         try {
 
-            echo '<script>console.log(' . json_encode($create_rent) . ');</script>';
-
             $conn = self::get_connection();
             $query = $conn->prepare("INSERT INTO occupancy (
                 tenID, 

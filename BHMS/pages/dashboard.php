@@ -1,10 +1,13 @@
 <?php
-
 session_start();
 ob_start();
 
 require '../php/templates.php';
 require '../views/DashboardViews.php';
+
+if (!isset($_SESSION['userID'])) {
+	header('Location: /index.php');
+}
 
 $more_links = '
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" 
@@ -169,8 +172,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			viewOccupancyRate.value = occRate;
 			actualOccupancyRate.value = occRate;
 			
-			console.log("Selected occTypeID:", occTypeID);
-			console.log("Selected occRate:", occRate);
 		}
 	});
 
@@ -190,7 +191,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			document.getElementById('payment-end-date').value = endDateString;
 			document.getElementById('payment-due-date').value = dueDateString;
 		} else {
-			console.log('Invalid start date');
+			alert("Invalid start date");
 		}
 	});
 
@@ -206,7 +207,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			const endDateString = endDate.toISOString().split('T')[0];
 			document.getElementById('new-rent-end').value = endDateString;
 		} else {
-			console.log('Invalid start date');
+			alert("Invalid start date");
 		}
 	});
 

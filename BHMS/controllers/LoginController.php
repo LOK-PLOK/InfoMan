@@ -11,13 +11,15 @@ class LoginController {
         if($result !== NULL && $result['password'] === $password) {
             $_SESSION['userID'] = $result['userID'];
             $_SESSION['First-Name'] = $result['userFname'];
+            $_SESSION['Middle-Name'] = $result['userMname'];
+            $_SESSION['Last-Name'] = $result['userLname'];
+            $_SESSION['Position'] = $result['userType'];
             header('Location: pages/dashboard.php');
             exit();
         } else {
-            echo '<script>console.log("Invalid Credentials!")</script>';
+            echo '<script>alert("Invalid User Credentials!")</script>';
         }
     }
-
 }
 
-?>  `
+?>  

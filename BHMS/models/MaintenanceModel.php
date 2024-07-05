@@ -28,8 +28,6 @@ class MaintenanceModel extends dbcreds {
     public static function query_new_maintenance($create_maintenance){
         try {
 
-            echo '<script>console.log(' . json_encode($create_maintenance) . ');</script>';
-
             $conn = self::get_connection();
             $query = $conn->prepare("INSERT INTO maintenance (
                 roomID, 
@@ -170,12 +168,10 @@ class MaintenanceModel extends dbcreds {
     
         // Execute the statement
         if ($stmt->execute()) {
-            echo '<script>console.log("Maintenance record updated successfully.");</script>';
             $stmt->close();
             $conn->close();
             return true;
         } else {
-            echo '<script>console.log("Error updating maintenance record: ' . $conn->error . '");</script>';
             $stmt->close();
             $conn->close();
             return false;

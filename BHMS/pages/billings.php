@@ -1,4 +1,5 @@
 <?php
+    session_start();
     ob_start();
     require '../php/templates.php';
     require '../views/BillingsViews.php';

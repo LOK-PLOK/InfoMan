@@ -47,7 +47,6 @@ class SettingsModel extends dbcreds{
         $occupancyRates = [];
         while ($row = $result->fetch_assoc()) {
             $occupancyRates[] = $row;
-            echo '<script>console.log("Occupancy Rates: ", '.json_encode($occupancyRates).')</script>';
         }
 
         return $occupancyRates;
@@ -204,7 +203,6 @@ class SettingsModel extends dbcreds{
     //delete user (user information modal)
     public static function delete_user($userIdToDelete) {
         try {
-            echo '<script>console.log("Deleting user with ID(MODEL): ", '.$userIdToDelete.')</script>';
             
             $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
 

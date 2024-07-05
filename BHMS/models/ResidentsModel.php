@@ -31,8 +31,6 @@ class ResidentsModel extends dbcreds{
     
         // Return the result
         return $result;
-
-        echo '<script>console.log('.json_encode("test").')</script>';
         
     }
 

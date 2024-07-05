@@ -11,6 +11,17 @@ function setActiveClass($page_name, $current_page) {
 function setActiveIcon($page_name, $current_page) {
     return $page_name === $current_page ? 'light' : 'dark';
 }
+
+if (isset($_GET['logout'])) {
+    session_start();
+    session_destroy();
+    header('Location: /index.php');
+}
+
+if (!isset($_SESSION['userID'])) {
+    header('Location: /index.php');
+}
+
 ?>
 
 <nav class="off-screen-menu">
@@ -65,7 +76,7 @@ function setActiveIcon($page_name, $current_page) {
     </div>
     <!-- Sign-out Button -->
     <div class="sign-out">
-        <a href="">
+        <a href="?logout=1">
             <div class="class-align-tabs">
                 <img src="/images/icons/Dashboard/Navigation Bar/logout.png">
                 <h3 class="paddingleft" style="color: white">Sign out</h3>

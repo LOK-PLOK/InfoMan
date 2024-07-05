@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ob_start();
 
 require '../php/templates.php';
@@ -74,8 +74,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             'capacity' => $_POST['edit-rm-cap'],
         );
 
-        echo '<script>console.log("Edit Room Info: ", '.json_encode($editRoomInfo).')</script>';
-
         $result = RoomlogsController::editRoom($editRoomInfo);
         if($result){
             // Redirect to the same page or to a confirmation page after successful edit
@@ -91,8 +89,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Deleting Room
     if(isset($_POST['delete-room-submit'])){
         $delRoomInfo = $_POST['delete-room-id'];
-        // Console log the delete room id
-        echo "<script>console.log('Delete Room ID: $delRoomInfo');</script>";
 
         $result = RoomlogsController::deleteRoom($delRoomInfo);
         if($result){
@@ -131,8 +127,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete-occupancy-id'])) {
 
         $delOccInfo = $_POST['delete-occupancy-id'];
-        // Console log the delete occupancy id
-        echo "<script>console.log('Delete Occ ID: $delOccInfo');</script>";
 
         $result = RoomlogsController::delete_occupancy($delOccInfo);
         if ($result) {
