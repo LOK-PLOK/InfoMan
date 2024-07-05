@@ -4,6 +4,31 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+    public static function query_overdue_billings(){
+        $conn = self::get_connection();
+    
+        $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
+                  FROM billing b
+                  INNER JOIN tenant t ON b.tenID = t.tenID
+                  WHERE b.billDueDate < CURRENT_DATE";
+        
+        $stmt = $conn->query($query);
+    
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
+
     public static function query_update_billing_status($new_payment){
         $conn = self::get_connection();
         $billRefNo = $new_payment['billRefNo'];
@@ -373,7 +398,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.isPaid = 0";
+                  WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE";
         
         $stmt = $conn->query($query);
     

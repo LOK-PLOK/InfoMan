@@ -5,6 +5,10 @@ require 'GeneralController.php';
 
 class BillingsController extends GeneralController{
 
+    public static function get_overdue_billings(){
+        return BillingsModel::query_overdue_billings();
+    }
+
     public static function get_paid_billings(){
         return BillingsModel::query_paid_billings();
     }
