@@ -14,7 +14,7 @@ require '../php/navbar.php';
 // Hamburger Sidebar
 ResidentsViews::burger_sidebar();
 
-?>
+?> 
 
 <!-- Residents Contents -->
 <div class="container-fluid">
@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Retrieve the tenant ID to delete
         $tenantIdToDelete = $_GET['tenID'];
         $result = ResidentsController::deleteTenantById($tenantIdToDelete);
-    
+        
         if ($result) {
             echo '<script>console.log("Deleted successfully")</script>';
         } else {
@@ -73,12 +73,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             'emContactMI' => $_POST['emContactMI'],
             'emContactNum' => $_POST['emContactNum']
         ];
-    
+
         $appliances = [];
         foreach($_POST['appliances'] as $appliance){
             $appliances[] = ['appInfo' => $appliance];
         }
-    
+
+        echo '<script>console.log("newTenant:", ' . json_encode($newTenant) . ');</script>';
+        echo '<script>console.log("appliances:", ' . json_encode($appliances) . ');</script>';
+        
         $result = ResidentsController::create_new_tenant($newTenant, $appliances);
         if($result){
             echo '<script>console.log("Tenant added successfully")</script>';
@@ -128,6 +131,44 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         header("Location: /pages/residents.php");
         exit();
     
+    }
+
+    if(isset($_POST['edit-rent-submit'])){
+        $editInfo = array(
+            'occupancyID' => $_POST['edit-occupancy-id'],
+            'roomID' => $_POST['edit-rent-room'],
+            'occDateStart' => $_POST['edit-rent-start'],
+            'occDateEnd' => $_POST['edit-rent-end'],
+        );
+
+        $result = ResidentsController::editOccupancy($editInfo);
+        if($result){
+            // Redirect to the same page or to a confirmation page after successful edit
+            header('Location: residents.php?editOccStatus=success');
+            exit();
+        } else {
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: residents.php?editOccStatus=error');
+            exit();
+        }
+    }
+
+    if(isset($_POST['delete-occupancy-submit'])) {
+
+
+        $delOccInfo = $_GET['occID'];
+        echo'<script>console.log("delOccInfo:", ' . json_encode($delOccInfo) . ');</script>';
+
+        $result = ResidentsController::delete_occupancy($delOccInfo);
+        if ($result) {
+            // Redirect to the same page or to a confirmation page after successful deletion
+            header('Location: residents.php?deleteOccStatus=success');
+            exit();
+        } else {
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: residents.php?deleteOccStatus=error');
+            exit();
+        }
     }
     
 }

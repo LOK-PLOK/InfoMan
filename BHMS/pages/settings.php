@@ -1,31 +1,127 @@
-<?php
-    require '../php/templates.php';
-    html_start('settings.css');
+<?php   
+  ob_start();
+  session_start();
+
+  require '../php/templates.php';
+  require '../views/SettingsViews.php';
+
+  html_start('settings.css');
+
+  // Sidebar
+  require '../php/navbar.php';
+
+  //Burger Sidebar
+  SettingsViews::burger_sidebar();
 ?>
 
-<!-- Sidebar -->
-<?php require '../php/navbar.php'; ?>
+<?php 
 
-<!-- Burger Sidebar -->
-<div class="hamburger-sidebar">
-    <i class="fa-solid fa-bars"></i>
-</div>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // Prepare data for insertion into database
+    if(isset($_POST['create-user-submit'])){
+        $new_user = [
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
+            'userFname' => $_POST['userFname'],
+            'userLname' => $_POST['userLname'],
+            'userMname' => $_POST['userMname'],
+            'userType' => $_POST['userType'],
+            'isActive' => $_POST['isActive']
+        ];
 
-<!-- Room Logs Section -->
+        // Call create_user method from settingsmodel.php
+        $result = SettingsController::create_new_user($new_user);
+        if ($result) {
+            // Return success response (if using AJAX)
+            header('Location: /pages/settings.php?addUser=success');
+            exit();
+        } else {
+            // Return error response (if using AJAX)
+            header('Location: /pages/settings.php?addUser=error');
+            exit();
+        }
+
+    }
+
+    // Check if form was submitted for deleting a user
+    if (isset($_POST['deleteUserInfoSubmit'])) {
+        
+        // Retrieve the tenant ID to delete
+        $tenantIdToDelete = $_POST['deleteUserID'];
+
+        $result = SettingsController::delete_user_by_id($tenantIdToDelete);
+
+        if ($result) {
+            header("Location: /pages/settings.php?deleteUser=success");
+            exit();
+        } else {
+            header("Location: /pages/settings.php?deleteUser=error");
+            exit();
+        }
+    }
+
+    // Check if form was submitted for editing a user
+    if(isset($_POST['edit-confirm'])){
+        $edit_user = [
+            'userID' => $_POST['Edit-userID'],
+            'username' => $_POST['Edit-userName'],
+            'password' => $_POST['Edit-password'],
+            'userFname' => $_POST['Edit-userFname'],
+            'userLname' => $_POST['Edit-userLname'],
+            'userMname' => $_POST['Edit-userMname'],
+            'userType' => $_POST['Edit-userType'],
+            'isActive' => $_POST['Edit-isActive']
+        ];
+        
+
+        // Call create_user method from settingsmodel.php
+        $result = SettingsController::edit_user($edit_user);
+        if ($result) {
+            // Return success response (if using AJAX)
+            header('Location: /pages/settings.php?editUser=success');
+            exit(); 
+        } else {
+            // Return error response (if using AJAX)
+            header('Location: /pages/settings.php?editUser=error');
+            exit();
+        }
+    }
+
+    // Check if form was submitted for editing rates and pricing
+    if(isset($_POST['edit-rate-pricing'])){
+        
+        $appRate = $_POST['ApplianceRate'];
+
+        $occRates =[
+            ['occTypeID' => $_POST['bedRateID'], 'occRate' => $_POST['bedRate']],
+            ['occTypeID' => $_POST['roomRate1ID'], 'occRate' => $_POST['roomOne']],
+            ['occTypeID' => $_POST['roomRate2ID'], 'occRate' => $_POST['roomTwo']], 
+            ['occTypeID' => $_POST['roomRate3ID'], 'occRate' => $_POST['roomThree']],
+            ['occTypeID' => $_POST['roomRate4ID'], 'occRate' => $_POST['roomFour']]
+        ];
+
+        $result = SettingsController::edit_rates_and_pricing($appRate, $occRates);
+        if ($result) {
+            header('Location: /pages/settings.php?editRate=success');
+            exit();
+        } else {
+            header('Location: /pages/settings.php?editRate=error');
+            exit();
+        }
+    }
+    
+}
+?> 
+
 <div class="container-fluid">
 
-    <!-- Header -->
-    <div class="settings-header" >
-        <span class="page-header">Settings</span><br>
-        <span style="color:#5f5f5f;">View and manage settings to the business</span>
-    </div>
-    
-    <div class="user-profile shadow">
-        <span class="user-name">Juan Jihyo De los Santos</span><br>
-        <span class="user-type">Admin</span>
-    </div>
+<?php
+    SettingsViews::settings_header();
+    SettingsViews::user_info_section();
+?>
 
-    <!-- Button Triggers for Modals -->
+    <!--sections-->
     <div class="section">
         <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#ratesAndPricingModal">
             <img src="/images/icons/Settings/rates_and_pricing.png" alt="rates and pricing icon">
@@ -38,246 +134,54 @@
             <span>User Information</span>
             <i class="fa-solid fa-angle-right"></i>
         </button>
+
+        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#createUserModal">
+            <img src="/images/icons/Settings/add_user_dark.png" alt="add user icon">
+            <span>Create User</span>
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
     </div>
 
-    <!-- Modals -->
-    <div class="modal fade" id="ratesAndPricingModal" tabindex="-1" role="dialog" aria-labelledby="ratesAndPricingModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ratesModalLabel">Rates and Pricing</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="login-sett-cont my-5">
+        <a href="?logout=1">
+            <div class="settings-sub-header">
+                <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
             </div>
-            <div class="modal-body">
-                <h5 class="modal-subtitle">Bed Rates:</h5>
-                <div class="input-with-edit">
-                    <input type="text" class="form-control modal-input shadow" placeholder="600.00">
-                    <span class="edit">edit</span>
-                </div>
-                <p class="monthly-cost">Monthly Cost</p>
-                <hr>
-                <h5 class="modal-subtitle">Room Rates:</h5>
-                <div class="room-rate">
-                    <p class="room-rate-label">Room Rate 1</p>
-                    <p class="room-rate-info">Room Capacity: 4 (Applies if occupants are less than or equal to two)</p>
-                    <div class="input-with-edit">
-                        <input type="text" class="form-control modal-input shadow" placeholder="2000.00">
-                        <span class="edit">edit</span>
-                    </div>
-                    <p class="monthly-cost">Monthly Cost</p>
-                </div>
-                <div class="room-rate">
-                    <p class="room-rate-label">Room Rate 2</p>
-                    <p class="room-rate-info">Room Capacity: 4 (Applies if occupants are more than two)</p>
-                    <div class="input-with-edit">
-                        <input type="text" class="form-control modal-input shadow" placeholder="2400.00">
-                        <span class="edit">edit</span>
-                    </div>
-                    <p class="monthly-cost-bottom">Monthly Cost</p>
-                </div>
-                <button type="button" class="btn-save-changes shadow" data-bs-dismiss="modal">Save Changes</button>
-            </div>
-        </div>
+        </a>
     </div>
+
+<?php
+    //rates and pricing modal
+    SettingsViews::rates_and_pricing_model_view();
+
+    //user information modal
+    $user_list = SettingsController::users_table_data();
+    SettingsViews::user_information_model_view($user_list);
+
+    // Test: Log user list to console
+    $json_user_list = json_encode($user_list);
+
+    if ($user_list) {
+      echo '<script>console.log("User list fetched successfully")</script>';
+    } else {
+      echo '<script>console.log("Error fetching user list")</script>';
+    }
+
+    //create user info modal
+    SettingsViews::create_user_info_model_view();
+
+    //edit user info
+    SettingsViews::edit_user_info();
+
+    //delete user info
+    SettingsViews::delete_user_info();
+?>
+   
 </div>
 
-<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="userInfoModalLabel">User Information</h5>
-                <div class="header-buttons">
-                <button type="button" class="btn btn-primary shadow" id="createUserButton" data-bs-toggle="modal" data-bs-target="#createUserModal">Create User</button>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <thead class="table-header">
-                        <tr>
-                            <th>Names</th>
-                            <th>Status</th>
-                            <th>Position</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Juan Jihyo De los Santos</td>
-                            <td>
-                            <div class="resize">
-                                <img src="/images/icons/Residents/active.jpg">
-                                <span>Active</span>
-                            </div>
-                            </td>
-                            <td>Admin</td>
-                            <td>
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editUserInfoModal">
-                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteUserInfoModal">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sharon Mina Cuizon</td>
-                            <td>
-                            <div class="resize">
-                                <img src="/images/icons/Residents/inactive.jpg">
-                                <span>Inactive</span>
-                            </div>
-                            </td>
-                            <td>Staff</td>
-                            <td>
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editUserInfoModal">
-                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteUserInfoModal">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Momo Hirai</td>
-                            <td>
-                            <div class="resize">
-                                <img src="/images/icons/Residents/active.jpg">
-                                <span>Active</span>
-                            </div>
-                            </td>
-                            <td>Staff</td>
-                            <td>
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="#editUserInfoModal">
-                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteUserInfoModal">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+<script src="../js/settings.js"></script>
 
-<div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createUserModalLabel">Create User</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Form -->
-        <form>
-          <!-- Name -->
-          <div class="mb-3">
-            <label for="userName" class="form-label">Name:</label>
-            <input type="text" id="fname" name="firstname" placeholder="First Name" class="FNclass shadow" required>
-            <input type="text" id="mi" name="Middle Initial" placeholder="Middle Initial" class="MIclass shadow" required>
-            <input type="text" id="lname" name="lastname" placeholder="Last Name" class="LNclass shadow" required>
-          </div>
-          <p class="monthly-cost">First Name, Middle Initial, Last Name</p>
-          <!-- Status -->
-          <div class="mb-3">
-            <label for="userStatus" class="form-label">Status:</label>
-            <select class="form-select" id="userStatus" required>
-                <option value="choose a status">Choose a status</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
-          <!-- Position -->
-          <div class="mb-3">
-            <label for="userPosition" class="form-label">Position:</label>
-            <input type="text" class="form-control" id="userPosition" placeholder="Enter position" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-create-save shadow" data-bs-dismiss="modal">Create</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="editUserInfoModal" tabindex="-1" aria-labelledby="editUserInfoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createUserModalLabel">Edit User Information</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Form -->
-        <form>
-          <!-- Name -->
-          <div class="mb-3">
-            <label for="userName" class="form-label">Name:</label>
-            <input type="text" id="fname" name="firstname" placeholder="Juan Jihyo" class="FNclass shadow" required>
-            <input type="text" id="mi" name="Middle Initial" placeholder="D." class="MIclass shadow" required>
-            <input type="text" id="lname" name="lastname" placeholder="Santos" class="LNclass shadow" required>
-          </div>
-          <p class="monthly-cost">First Name, Middle Initial, Last Name</p>
-          <!-- Status -->
-          <div class="mb-3">
-            <label for="userStatus" class="form-label">Status:</label>
-            <select class="form-select" id="userStatus" required>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
-          <!-- Position -->
-          <div class="mb-3">
-            <label for="userPosition" class="form-label">Position:</label>
-            <input type="text" class="form-control" id="userPosition" placeholder="Admin" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-create-save shadow" data-bs-dismiss="modal">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteUserInfoModal" tabindex="-1" aria-labelledby="deleteUserInfoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <p class="confirmation-question">Are you sure you want to delete this user?</p>
-          <div class="button-container">
-            <button type="button" class="btn-delete-yes" id="deleteUserYes">Yes</button>
-            <button type="button" class="btn-delete-no" data-bs-dismiss="modal">No</button>
-          </div>
-          <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-    <!-- Login Settings Actual -->
-    <div class="login-sett-cont">
-        <div class="settings-sub-header" >
-            <div>
-                <span class="page-header" style="font-size: 30px;">Login Settings</span><br>
-                <span style="color:#5f5f5f;">Change your username and password for enhanced security measures.</span>
-            </div>
-        </div>
-        <div class="edit-acc-cont">
-            <button class="save-btn btn-var-1 shadow">Save Changes</button>
-            <label for="ch-username">Username</label><br>
-            <div class="input-cont">
-                <input type="text" id="ch-username" placeholder="AdminThingz1">
-                <a href="">edit</a>
-            </div>
-            <hr>
-            <label for="ch-password">Password</label><br>
-            <div class="input-cont">
-                <input type="password" id="ch-password" placeholder="***********"><br>
-                <a href="">edit</a>
-            </div>
-            <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
-        </div>
-    </div>
-</div>
-
-
-<script src="/js/general.js"></script>
-    
-<?php html_end(); ?>
+<?php 
+ob_end_flush();
+html_end(); 
+?>

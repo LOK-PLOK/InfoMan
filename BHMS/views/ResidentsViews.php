@@ -3,6 +3,8 @@
 require 'GeneralViews.php';
 require '../controllers/ResidentsController.php';
 
+ResidentsController::updateTenantRentStatus();
+
 class ResidentsViews extends GeneralViews{
 
     public static function residents_header(){
@@ -213,13 +215,13 @@ HTML;
             $appliances = ResidentsController::get_appliances($tenant['tenID']);
             $appliancesDataJson = htmlspecialchars(json_encode($appliances));
             $occupancy = ResidentsController::get_occupancy($tenant['tenID']);
-            $occupancyDataJson = htmlspecialchars(json_encode($occupancy));
+            $occupancyDataJson = json_encode($occupancy);
 
             // Echoing the JavaScript to log each variable in the console
             echo '<script>
             // console.log("Tenant Data:", ('.(json_encode($tenantDataJson)).'));
             // console.log("Appliances Data:", ('.json_encode($appliancesDataJson).'));
-             console.log("Occupancy Data:", ('.json_encode($occupancyDataJson).'));
+            console.log("Occupancy Data:", ('.json_encode($occupancyDataJson).'));
             // console.log("Appliance Data:", ('.json_encode($appliances).'));
             console.log("Occupancy Data:", ('.json_encode($occupancy).'));
 
@@ -250,7 +252,7 @@ HTML;
                                 <td>See more...</td>
                                 <td>' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
                                 <td>' . htmlspecialchars($occupancy[0]['roomID'] ?? 'N/A') . '</td>
-                                <td>' . htmlspecialchars(date("F j, Y", strtotime($occupancy[0]['occDateEnd']))) . '</td>
+                                <td>' . (empty($occupancy) ? 'N/A' : htmlspecialchars(date("F j, Y", strtotime($occupancy[0]['occDateEnd'])))) . '</td>
                                 <td>
                                     <button class="openEditModalBtn" style="margin-right: 10px;" 
                                         data-bs-toggle="modal" 
@@ -278,99 +280,15 @@ HTML;
         
         // Modal for displaying tenant information
         self::residents_info_model_view();
+        self::editOccupancyModal();
+        self::deleteOccupancyModal();
         // Modal for Delete tenant
         self::delete_tenant_model_view();
         
-
-
-        // JavaScript for handling the click event and loading data into modal
-        echo '
-    <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
-    var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
-    var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
-
-    tenantInfoButtons.forEach(function(btn) {
-        btn.addEventListener("click", function() {
-            var tenantData = JSON.parse(this.getAttribute("data-tenant"));
-            var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
-            var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
-            console.log("Occupancy data infoModal", occupancyData);
-
-            // Update tenant information section
-            tenantInfoModalBody.innerHTML = `
-                <div class="split-left">
-                    <div>
-                        <span class="label">Name:</span>
-                        <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
-                    </div>
-                    <div>
-                        <span class="label">Contact Number:</span>
-                        <span>${tenantData.tenContact}</span>
-                    </div>
-                    <div>
-                        <span class="label">Address:</span>
-                        <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
-                    </div>
-                    <div>
-                        <span class="label">Gender:</span>
-                        <span>${tenantData.tenGender}</span>
-                    </div>
-                    <div>
-                        <span class="label">Birth Date:</span>
-                        <span>${tenantData.tenBdate}</span>
-                    </div>
-                    <div>
-                        <span class="label">Appliances:</span>
-                        <ul id="appliancesList"></ul>
-                    </div>
-                </div>
-                <div class="split-right">
-                    <div>
-                        <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
-                    </div>
-                    <div>
-                        <span class="label">Name:</span>
-                        <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
-                    </div>
-                    <div>
-                        <span class="label">Contact Number:</span>
-                        <span>${tenantData.emContactNum}</span>
-                    </div>
-                </div>
-            `;
-
-            // Update appliances list
-            var appliancesList = document.getElementById("appliancesList");
-            appliancesList.innerHTML = ""; // Clear previous content
-            appliancesData.forEach(function(appliance) {
-                var li = document.createElement("li");
-                li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
-                appliancesList.appendChild(li);
-            });
-
-            // Update rent history table with occupancy data
-            rentHistoryTableBody.innerHTML = ""; // Clear previous content
-            occupancyData.forEach(function(occupancy) {
-                var tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${occupancy.roomID}</td>
-                    <td>${occupancy.occDateStart}</td>
-                    <td>${occupancy.occDateEnd}</td>
-                `;
-                rentHistoryTableBody.appendChild(tr);
-            });
-        });
-    });
-});
-</script>
-
-
-';
     }
 
     public static function residents_info_model_view() {
+        
     echo <<<HTML
     <!-- Tenant Info Modal -->
     <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -393,6 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                         <th>Room Code</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="rentHistoryTableBody">
@@ -406,7 +325,228 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
     HTML;
+
+    // JavaScript for handling the click event and loading data into modal
+    echo '
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
+        var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
+        var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
+
+        tenantInfoButtons.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                var tenantData = JSON.parse(this.getAttribute("data-tenant"));
+                var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
+                var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
+                console.log("Occupancy data infoModal", occupancyData);
+
+                // Update tenant information section
+                tenantInfoModalBody.innerHTML = `
+                    <div class="split-left">
+                        <div>
+                            <span class="label">Name:</span>
+                            <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
+                        </div>
+                        <div>
+                            <span class="label">Contact Number:</span>
+                            <span>${tenantData.tenContact}</span>
+                        </div>
+                        <div>
+                            <span class="label">Address:</span>
+                            <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
+                        </div>
+                        <div>
+                            <span class="label">Gender:</span>
+                            <span>${tenantData.tenGender}</span>
+                        </div>
+                        <div>
+                            <span class="label">Birth Date:</span>
+                            <span>${formatDate(tenantData.tenBdate)}</span>
+                        </div>
+                        <div>
+                            <span class="label">Appliances:</span>
+                            <ul id="appliancesList"></ul>
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div>
+                            <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
+                        </div>
+                        <div>
+                            <span class="label">Name:</span>
+                            <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
+                        </div>
+                        <div>
+                            <span class="label">Contact Number:</span>
+                            <span>${tenantData.emContactNum}</span>
+                        </div>
+                    </div>
+                `;
+
+                // Update appliances list
+                var appliancesList = document.getElementById("appliancesList");
+                appliancesList.innerHTML = ""; // Clear previous content
+                appliancesData.forEach(function(appliance) {
+                    var li = document.createElement("li");
+                    li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
+                    appliancesList.appendChild(li);
+                });
+
+                // Update rent history table with occupancy data
+                rentHistoryTableBody.innerHTML = ""; // Clear previous content
+                occupancyData.forEach(function(occupancy) {
+                
+                    var tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${occupancy.roomID}</td>
+                        <td>${formatDate(occupancy.occDateStart)}</td>
+                        <td>${formatDate(occupancy.occDateEnd)}</td>
+                        <td>
+                            <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
+                                value=${occupancy.roomID}
+                                        onclick="setValuesTenantInfo(
+                                                        ${occupancy.occupancyID},
+                                                        \'${occupancy.tenFname}\',
+                                                        \'${occupancy.tenMI}\',
+                                                        \'${occupancy.tenLname}\',
+                                                        \'${occupancy.roomID}\',
+                                                        \'${occupancy.occTypeName}\',
+                                                        \'${occupancy.occDateStart}\',
+                                                        \'${occupancy.occDateEnd}\',
+                                                        ${occupancy.occupancyRate}
+                                                    );"
+                            >
+                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                            </button>
+
+                            <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
+                                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
+                            </button>
+                        
+                        </td>
+                    `;
+                    rentHistoryTableBody.appendChild(tr);
+                });
+            });
+        });
+    });
+    </script>
+
+
+    ';
 }
+
+    public static function  editOccupancyModal(){
+        $rooms = ResidentsController::get_rooms();
+    
+        echo <<<HTML
+            <div class="modal fade" id="editOccupancyModal" tabindex="-1" aria-labelledby="editOccupancyModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center align-items-center">
+            <form method="POST">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-rent-modal">Edit Rent</h5>
+                    <button type="button" id="editOccupancyModalCloseBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                
+                    <div>
+                        <div>
+                            <!-- Occupancy ID -->
+                            <input type="hidden" name="edit-occupancy-id" id="edit-occupancy-id">
+                            <label for="edit-rent-tenant" class="input-label">Tenant Assigned:</label>
+                            <!-- Tenant -->
+                            <input type="text" id="edit-rent-tenant-name" class="w-100 shadow" disabled>
+                            <div class="d-flex justify-content-center input-sub-label">Name</div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <label for="edit-rent-room" class="input-label">Room Details:</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-sm-5">
+                                    <!-- Room -->
+                                    <select name="edit-rent-room" id="edit-rent-room" class="w-100 shadow">
+        HTML;
+                                        foreach ($rooms as $room){
+                                            $room_id = $room['roomID'];
+                                            echo<<<HTML
+                                                <option value="$room_id">$room_id</option>
+                                            HTML;
+                                        }       
+
+        echo <<<HTML
+                                    </select>
+                                    <div class="d-flex justify-content-center input-sub-label">Room Code</div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <!-- Occupancy Type -->
+                                    <input type="text" id="edit-rent-type-name" class="w-100 shadow" disabled>
+                                    <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <label for="edit-rent-start" class="input-label">Additional Information:</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-sm-5">
+                                    <!-- Start Date -->
+                                    <input type="date" name="edit-rent-start" id="edit-rent-start" class="w-100 shadow">
+                                    <!-- End Date -->
+                                    <input type="date" name="edit-rent-end" id="edit-rent-end" class="w-100 shadow" style="display: none">
+                                    <div class="d-flex justify-content-center input-sub-label">Starting Date</div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="number" id="edit-rent-rate" class="w-100 shadow" disabled>
+                                    <!-- Rent Rate -->
+                                    <input type="hidden" name="edit-rent-rate" id="actual-edit-rent-rate">
+                                    <div class="d-flex justify-content-center input-sub-label">Monthly Payment</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <!-- Submit Button -->
+                    <button type="submit" name="edit-rent-submit" class="btn-var-3 add-button">Save</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        HTML;
+    }
+
+    public static function deleteOccupancyModal(){
+        echo <<<HTML
+            <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <span style="font-size: 25px;" class="header">Are you sure you want to delete this occupancy?</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                        <form method="POST" id = "deleteOccupancy">
+                            <div class="displayflex">
+                                <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
+                                <input type="submit" name="delete-occupancy-submit" class="btn-var-2 ms-4 me-4" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No" style="background: red;">
+                            </div>
+                        </form>
+                        </div>
+                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
+                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+        HTML;
+    }
 
     public static function edit_tenant_modal_view(){
         echo <<<HTML

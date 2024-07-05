@@ -7,8 +7,6 @@ class BillingsModel extends dbcreds {
     public static function query_update_billing_status($new_payment){
         $conn = self::get_connection();
         $billRefNo = $new_payment['billRefNo'];
-
-        echo '<script>console.log("'.$billRefNo.'")</script>';
         
         $query = "UPDATE billing SET isPaid = '1' WHERE billing.billRefNo = ?;";
         $stmt = $conn->prepare($query);

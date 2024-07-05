@@ -5,6 +5,7 @@ require_once '../controllers/RoomlogsController.php';
 
 RoomlogsController::updateTenantRentStatus();
 RoomlogsController::updateRoomTenantCount();
+RoomlogsController::updateRoomAvailability();
 
 class RoomlogsViews extends GeneralViews{
 
@@ -274,8 +275,8 @@ class RoomlogsViews extends GeneralViews{
                         <form method="POST">
                             <div class="displayflex">
                                 <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
-                                <input type="submit" name="delete-occupancy-submit" class="btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No" style="background: red;">
+                                <input type="submit" name="delete-occupancy-submit" class="bg-danger btn-var-2 ms-4 me-4" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
                             </div>
                         </form>
                         </div>

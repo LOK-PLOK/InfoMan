@@ -17,12 +17,33 @@ class DashboardController extends GeneralController{
         return DashboardModel::total_available_rooms();
     }
 
-    public static function create_new_tenant($new_tenant) {
-        return DashboardModel::add_new_tenant($new_tenant);
+    public static function create_new_tenant($new_tenant,$appliances) {
+        return DashboardModel::add_new_tenant($new_tenant,$appliances);
     }
 
     public static function create_new_rent($create_rent) {
-        return DashboardModel::query_add_new_rent($create_rent);
+        $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
+        $roomInfo = DashboardModel::query_room_info($create_rent['roomID']);
+
+        $tenID = $create_rent['tenID'];
+        $startDate = $create_rent['occDateStart'];
+        $endDate = $create_rent['occDateEnd'];
+
+        $checkTenant = DashboardModel::is_tenant_available($tenID, $startDate, $endDate);
+        if($checkTenant){
+            $bedSpacerID = 1;
+            if($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0){
+                return "Room can only be occupied for bedspacers!";
+            } else if ($roomInfo['isAvailable'] == 0) {
+                return "Room is already in Full Capacity!";
+            } else {
+                DashboardModel::query_add_new_rent($create_rent);
+                return true;
+            }
+        } else {
+            return "Tenant is already occupied on the selected date!";
+        }
+
     }
 
     public static function get_tenants() {

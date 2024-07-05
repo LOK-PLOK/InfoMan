@@ -15,7 +15,7 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 16px;
-    background: #edf6f7;
+    background: #344799;
 }
 
 .section {
@@ -54,7 +54,10 @@ body {
 }
 
 /* Inner Item Styles */
-.user-name,
+.user-name{
+    color: white;
+    font-size: 24px;
+}
 .rate-price-cont span {
     font-size: 18px;
 }
@@ -65,7 +68,7 @@ body {
 
 .user-type {
     font-size: 14px;
-    color:#5f5f5f;
+    color: white;
 }
 
 .rate-price-cont i {
@@ -140,8 +143,8 @@ body {
     gap: 20px; /* Adds space between input field and edit text */
 }
 
-.form-control.modal-input {
-    color: white;
+.form-control,.modal-input {
+    color: black; 
     border-radius: 10px;
     flex: 1; /* Makes the input field take available space */
     height: 40px;
@@ -356,6 +359,12 @@ body {
 .btn-create-save:hover {
     background-color: white !important;
     color: #344799;
+}
+
+.btn-create-save:disabled {
+    background-color: #D6DEDF !important; /* Default Bootstrap secondary color */
+    color: #344799 !important;
+    cursor: not-allowed; /* Change cursor to not-allowed */
 }
 
 .action:hover {
