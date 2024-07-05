@@ -3,6 +3,8 @@ function displaydeleteModal(tenID) {
     // Get the modal element (if you need to modify its display directly)
     var modalEdit = document.getElementById("DeletemyModal");
 
+    console.log('Tenant ID:', tenID)
+
     // Populate the modal fields with the passed data
     document.getElementById('deleteTenantId').value = tenID;
 
@@ -74,6 +76,7 @@ let addApplianceCount = 0;
 let editApplianceCount = 0;
 
 addApplianceBtn.addEventListener('click', function(e) {
+    
     e.preventDefault();
     if (addApplianceCount < 5) {
         const applianceContainer = document.getElementById('applianceContainer');
@@ -106,6 +109,61 @@ editApplianceBtn.addEventListener('click', function(e) {
     }   
 });
 
+function setValuesTenantInfo(occupancyID,Fname, MI,Lname, roomID, rentType, occDateStart, occDateEnd, rentRate) {
+    console.log('Occupancy ID: ' + occupancyID);
+    console.log('Name: ' + Fname + ' ' + MI + ' ' + Lname); 
+    console.log('Room ID: ' + roomID);
+    console.log('Rent Type: ' + rentType);
+    console.log('Start Date: ' + occDateStart);
+    console.log('End Date: ' + occDateEnd);
+    console.log('Rent Rate: ' + rentRate);
+    
 
+    rentRate = parseFloat(rentRate).toFixed(2);
 
+    document.getElementById('edit-occupancy-id').value = occupancyID;    
+    document.getElementById('edit-rent-tenant-name').value = Fname + ' ' + MI + ' ' + Lname;
+    document.getElementById('edit-rent-room').value = roomID;
+    document.getElementById('edit-rent-type-name').value = rentType;
+    document.getElementById('edit-rent-start').value = occDateStart;
+    document.getElementById('edit-rent-end').value = occDateEnd;
+    document.getElementById('edit-rent-rate').value = rentRate;
 
+}
+
+function setValuesEditRoom(roomID, roomCapacity) {
+    document.getElementById('edit-rm-code').value = roomID;
+    document.getElementById('edit-rm-code-hidden').value = roomID;
+    document.getElementById('edit-rm-cap').value = roomCapacity;
+
+    console.log('Room ID: ' + roomID);
+    console.log('Room Capacity: ' + roomCapacity);
+}
+
+function deleteOccupancy(occID) {
+    // Get the modal element (if you need to modify its display directly)
+    var modalEdit = document.getElementById("deleteOccupancyBtn");
+
+    console.log('Occupancy ID:', occID)
+
+    // Populate the modal fields with the passed data
+    document.getElementById('delete-occupancy-id').value = occID;
+
+    // Set the form action with the tenant ID
+    document.getElementById('deleteOccupancy').action = "./residents.php?occID=" + occID;
+}
+
+// End Date Setter for Edit Rent
+document.getElementById('edit-rent-start').addEventListener('change', function() {
+    const startDate = new Date(this.value);
+
+    if(!isNaN(startDate.getTime())) {
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 30);
+
+        const endDateString = endDate.toISOString().split('T')[0];
+        document.getElementById('edit-rent-end').value = endDateString;
+    } else {
+        console.log('Invalid start date');
+    }
+});

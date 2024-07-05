@@ -5,7 +5,6 @@ require_once '../controllers/DashboardController.php';
 
 DashboardController::updateTenantRentStatus();
 DashboardController::updateRoomTenantCount();
-DashboardController::updateRoomAvailability();
 
 class DashboardViews extends GeneralViews{
 
@@ -88,101 +87,214 @@ class DashboardViews extends GeneralViews{
 
     public static function add_tenant_model_view() {
 
-        echo<<<HTML
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
+        echo <<<HTML
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-custom">
+                    <div class="modal-header bg-custom">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Tenant</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-custom">
+                        <form method="POST">
+                            <div class="label label-position">
+                                <div style="width: 65.9%;">Name:</div>
+                                <div style="width: 17%;">Gender:</div>
+                                <div>Birth Date:</div>
+                            </div>
+                            <div class="positioning">
+                                <div class="NameInput">
+                                    <!-- tenFname -->
+                                    <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
+                                    <!-- tenMI -->
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" required>
+                                    <!-- tenLname -->
+                                    <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
+                                </div>
+                                <!-- tenGender -->
+                                <select id="tenGender" name="tenGender" class="shadow">
+                                    <option value="" disabled selected>...</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                                <!-- tenBdate -->
+                                <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
+                            </div>
+                            <div class="label label-position label-under">
+                                <div class="label-fn">First Name</div>
+                                <div class="label-mi">Middle Initial</div>
+                                <div class="label-ln">Last Name</div>
+                            </div>
+                            <!-- Address -->
+                            <div class="label label-position">
+                                <div>Address:</div>
+                            </div>
+                            <div>
+                                <!-- tenHouseNum -->
+                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
+                                <!-- tenSt-->
+                                <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
+                                <!-- tenBrgy -->
+                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
+                                <!-- tenCityMun -->
+                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
+                                <!-- tenProvince -->
+                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
+                            </div>
+                            <div class="label label-position label-under">
+                                <div class="label-houseno">House No.</div>
+                                <div class="label-street">Street</div>
+                                <div class="label-barangay">Barangay</div>
+                                <div class="label-city">City/Municipality</div>
+                                <div class="label-province">Province</div> 
+                            </div>
+                            <div class="label label-position">
+                                <div>Contact Number:</div>
+                            </div>
+                            <div>
+                                <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
+                                <!-- tenContact -->
+                                <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" required>
+                            </div>
+                            <!-- Emergency Contact -->
+                            <div class="header label-position">
+                                <div>Emergency Contact</div>
+                            </div>
+                            <div class="label label-position">
+                                <div style="width: 60%;">Name:</div>
+                                <div>Contact Number:</div>
+                            </div>
+                            <div style="display: flex; justify-content:left;">
+                                <div class="NameInput">
+                                    <!-- emContactFname -->
+                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
+                                    <!-- emContactMI -->
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
+                                    <!-- emContactLname -->
+                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
+                                </div>
+                                <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
+                                <!-- emContactNum -->
+                                <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
+                            </div>
+                            <div class="label label-position label-under">
+                                <div class="label-fn">First Name</div>
+                                <div class="label-mi">Middle Initial</div>
+                                <div class="label-ln">Last Name</div>
+                            </div>
+                            <!-- Appliances -->
+                            <div class="header label-position">
+                                <div id=>Appliances</div>
+                            </div>
+                            <div id="applianceContainer">
+                                <!-- Initially empty, fields will be added dynamically -->
+                            </div>
+                            <div>
+                                <!-- addbutton -->
+                                <input type="button" id="addMoreAppliance" class="btn-var-5 shadow" value="Add More">
+                            </div>
+                            <div class="displayflex">
+                                <!-- Submit Button -->
+                                <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" value="Add">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        HTML;
+
+    }
+
+    public static function create_new_payment_modal() {
+        $tenants = DashboardController::get_tenants();
+
+        echo <<<HTML
+            <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content bg-custom">
                         <div class="modal-header bg-custom">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Tenant</h5>
+                            <h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body bg-custom">
                             <form method="POST">
-                                <!-- Name,Gender,Date -->
-                                <div class="label label-position">
-                                    <div style="width: 65.9%;">Name:</div>
-                                    <div style="width: 17%;">Gender:</div>
-                                    <div>Birth Date:</div>
-                                </div>
-                                <div class="positioning">
-                                    <div class="NameInput">
-                                        <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
-                                        <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" required>
-                                        <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
+                                <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
+                                <!-- Tenant Info -->
+                                <select name="tenantName" id="tenantName">
+                                    <option value="">Select Tenant</option>
+        HTML;
+                                    foreach ($tenants as $tenant){
+                                        $tenant_id = $tenant['tenID'];
+                                        $tenant_fName = $tenant['tenFname'];
+                                        $tenant_MI = $tenant['tenMI'];
+                                        $tenant_lName = $tenant['tenLname'];
+                                        $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                        echo<<<HTML
+                                            <option value="$tenant_id">$tenant_fullName</option>
+                                        HTML;
+                                    }                         
+        echo <<<HTML
+                                </select>
+                                <p class="small-text">Name</p>
+
+                                <!-- Payment Details -->
+                                <label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
+                                <input type="number" id="paymentAmount" name="paymentAmount" placeholder="100.00" class="d-flex w-100 shadow">
+                                <p class="small-text">Amount</p>
+                                
+                                <!-- Mode of Transaction -->
+                                <label class="billings-modal-labels" for="paymentAmount">Mode of Transaction</label>
+                                <select name="payMethod" class="d-flex w-100 shadow">>
+                                    <option selected disabled>Select Option</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="GCash">GCash</option>
+                                </select>
+                                <p class="small-text">Payment Method</p>
+
+
+                                <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
+                                <div class="month-allocated-cont">
+                                    <div>
+                                        <!-- Payment Start -->
+                                        <input type="date" id="payment-start-date" name="payment-start-date">
+                                        <p class="small-text">Start Date</p>
                                     </div>
-                                    <select id="tenGender" name="tenGender" class="shadow">
-                                        <option value="" disabled selected>...</option>
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                    </select>
-                                    <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
-                                </div>
-                                <div class="label label-position label-under">
-                                    <div class="label-fn">First Name</div>
-                                    <div class="label-mi">Middle Inital</div>
-                                    <div class="label-ln">Last Name</div>
-                                </div>
-                                <!-- Address -->
-                                <div class="label label-position">
-                                    <div>Address:</div>
-                                </div>
-                                <div>
-                                    <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
-                                    <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
-                                    <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
-                                    <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
-                                    <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
-                                </div>
-                                <div class="label label-position label-under">
-                                    <div class="label-houseno">House No.</div>
-                                    <div class="label-street">Street</div>
-                                    <div class="label-barangay">Barangay</div>
-                                    <div class="label-city">City/Municipality</div>
-                                    <div class="label-province">Province</div> 
-                                </div>
-                                <!-- Contact Number -->
-                                <div class="label label-position">
-                                    <div>Contact Number:</div>
-                                </div>
-                                <div>
-                                    <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
-                                    <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" required>
-                                </div>
-                                <!-- Emergenct Contact -->
-                                <div class="header label-position">
-                                    <div>Emergency Contact</div>
-                                </div>
-                                <div class="label label-position">
-                                    <div style="width: 60%;">Name:</div>
-                                    <div>Contact Number:</div>
-                                </div>
-                                <div style="display: flex; justify-content:left;">
-                                    <div class="NameInput">
-                                        <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
-                                        <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
-                                        <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
+                                    <div>
+                                        <!-- Payment End -->
+                                        <input type="date" id="payment-end-date" name="payment-end-date" disabled>
+                                        <input type="date" id="payment-due-date" name="payment-due-date" style="display: none">
+                                        <p class="small-text">End Date</p>
                                     </div>
-                                    <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
-                                    <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
+                                    
                                 </div>
-                                <div class="label label-position label-under">
-                                    <div class="label-fn">First Name</div>
-                                    <div class="label-mi">Middle Inital</div>
-                                    <div class="label-ln">Last Name</div>
+
+                                <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
+                                <span class="custom-checkbox">Transaction made by a non-tenant payer</span>
+                                
+                                <div class="payer-details">
+                                    <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
+                                    <div class="payer-info">
+                                        <div>
+                                            <input type="text" id="payer-fname" name="payer-fname">
+                                            <p class="small-text">First Name</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <input type="text" id="payer-MI" name="payer-MI">
+                                            <p class="small-text">M.I</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <input type="text" id="payer-lname" name="payer-lname">
+                                            <p class="small-text">Last Name</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- Appliances -->
-                                <!-- <div class="header label-position">
-                                    <div>Appliances</div>
-                                </div>
-                                <div>
-                                    <input type="text" id="appliance" name="appliance" placeholder="Rice cooker" class="appliance shadow">
-                                    <input type="image" id="deleteappliance" src="/images/icons/Residents/delete.png" alt="Submit" class="deleteappliance">
-                                </div>
-                                <div>
-                                    <input type="button" name="Addmore" id="Addmore" class="btn-var-5 shadow" value="Add More">
-                                </div> -->
-                                <div class="displayflex">
-                                    <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" value="Add">
+
+                                <div class="add-cont">
+                                    <button type="submit" name="create-new-payment" class="btn-var-3 add-button">Add</button>
                                 </div>
                             </form>
                         </div>
@@ -190,106 +302,7 @@ class DashboardViews extends GeneralViews{
                 </div>
             </div>
         HTML;
-
     }
-
-    // Deprecated
-    // public static function create_new_payment_modal() {
-    //     $tenants = DashboardController::get_tenants();
-
-    //     echo <<<HTML
-    //         <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
-    //             <div class="modal-dialog modal-dialog-centered">
-    //                 <div class="modal-content bg-custom">
-    //                     <div class="modal-header bg-custom">
-    //                         <h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
-    //                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    //                     </div>
-    //                     <div class="modal-body bg-custom">
-    //                         <form method="POST">
-    //                             <label class="billings-modal-labels" for="tenantName">Tenant Information</label>
-    //                             <!-- Tenant Info -->
-    //                             <select name="tenantName" id="tenantName">
-    //                                 <option value="">Select Tenant</option>
-    //     HTML;
-    //                                 foreach ($tenants as $tenant){
-    //                                     $tenant_id = $tenant['tenID'];
-    //                                     $tenant_fName = $tenant['tenFname'];
-    //                                     $tenant_MI = $tenant['tenMI'];
-    //                                     $tenant_lName = $tenant['tenLname'];
-    //                                     $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
-    //                                     echo<<<HTML
-    //                                         <option value="$tenant_id">$tenant_fullName</option>
-    //                                     HTML;
-    //                                 }                         
-    //     echo <<<HTML
-    //                             </select>
-    //                             <p class="small-text">Name</p>
-
-    //                             <!-- Payment Details -->
-    //                             <label class="billings-modal-labels" for="paymentAmount">Payment Details</label>
-    //                             <input type="number" id="paymentAmount" name="paymentAmount" placeholder="100.00" class="d-flex w-100 shadow">
-    //                             <p class="small-text">Amount</p>
-                                
-    //                             <!-- Mode of Transaction -->
-    //                             <label class="billings-modal-labels" for="paymentAmount">Mode of Transaction</label>
-    //                             <select name="payMethod" class="d-flex w-100 shadow">>
-    //                                 <option selected disabled>Select Option</option>
-    //                                 <option value="Cash">Cash</option>
-    //                                 <option value="GCash">GCash</option>
-    //                             </select>
-    //                             <p class="small-text">Payment Method</p>
-
-
-    //                             <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
-    //                             <div class="month-allocated-cont">
-    //                                 <div>
-    //                                     <!-- Payment Start -->
-    //                                     <input type="date" id="payment-start-date" name="payment-start-date">
-    //                                     <p class="small-text">Start Date</p>
-    //                                 </div>
-    //                                 <div>
-    //                                     <!-- Payment End -->
-    //                                     <input type="date" id="payment-end-date" name="payment-end-date" disabled>
-    //                                     <input type="date" id="payment-due-date" name="payment-due-date" style="display: none">
-    //                                     <p class="small-text">End Date</p>
-    //                                 </div>
-                                    
-    //                             </div>
-
-    //                             <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
-    //                             <span class="custom-checkbox">Transaction made by a non-tenant payer</span>
-                                
-    //                             <div class="payer-details">
-    //                                 <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
-    //                                 <div class="payer-info">
-    //                                     <div>
-    //                                         <input type="text" id="payer-fname" name="payer-fname">
-    //                                         <p class="small-text">First Name</p>
-    //                                     </div>
-                                        
-    //                                     <div>
-    //                                         <input type="text" id="payer-MI" name="payer-MI">
-    //                                         <p class="small-text">M.I</p>
-    //                                     </div>
-                                        
-    //                                     <div>
-    //                                         <input type="text" id="payer-lname" name="payer-lname">
-    //                                         <p class="small-text">Last Name</p>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-
-    //                             <div class="add-cont">
-    //                                 <button type="submit" name="create-new-payment" class="btn-var-3 add-button">Add</button>
-    //                             </div>
-    //                         </form>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     HTML;
-    // }
 
 
 
@@ -341,13 +354,10 @@ class DashboardViews extends GeneralViews{
                                         <option value="" disabled selected>Select a Room...</option>
         HTML;
                                         foreach ($rooms as $room){
-                                            if($room['isAvailable'] !== 0){
-                                                $room_id = $room['roomID'];
-                                                $room_cap = $room['capacity'];
-                                                echo<<<HTML
-                                                    <option value="$room_id">$room_id: Capacity - $room_cap</option>
-                                                HTML;
-                                            }
+                                            $room_id = $room['roomID'];
+                                            echo<<<HTML
+                                                <option value="$room_id">$room_id</option>
+                                            HTML;
                                         }       
 
         echo <<<HTML
@@ -356,7 +366,6 @@ class DashboardViews extends GeneralViews{
                                 </div>
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
-                                    <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
                                     <select name="new-rent-type" id="new-rent-type" class="w-100 shadow">
                                             <option value="" disabled selected>Select a Type...</option>
         HTML;
@@ -371,7 +380,6 @@ class DashboardViews extends GeneralViews{
                                             }
         echo <<<HTML
                                     </select>
-                                    
                                     <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
                                 </div>
                             </div>

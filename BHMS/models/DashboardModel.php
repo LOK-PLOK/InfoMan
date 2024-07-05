@@ -72,53 +72,75 @@ class DashboardModel extends dbcreds {
         
     }
     
-    public static function add_new_tenant($new_tenant) {
-        try {
-            
-            $conn = self::get_connection();
-            $query = $conn->prepare("INSERT INTO tenant (
-                tenFname, 
-                tenLname, 
-                tenMI, 
-                tenHouseNum, 
-                tenSt, 
-                tenBrgy, 
-                tenCityMun, 
-                tenProvince, 
-                tenContact, 
-                tenBdate, 
-                tenGender, 
-                emContactFname, 
-                emContactLname, 
-                emContactMI, 
-                emContactNum, 
-                isRenting
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);");
+    public static function add_new_tenant($new_tenant,$appliances) {
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
-            if ($query === false) {
-                throw new Exception("Prepare failed: " . $conn->error);
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: " . $conn->connect_error);
+        }
+    
+        $query = $conn->prepare("INSERT INTO tenant (
+            tenFname, 
+            tenLname, 
+            tenMI, 
+            tenHouseNum, 
+            tenSt, 
+            tenBrgy, 
+            tenCityMun, 
+            tenProvince, 
+            tenContact, 
+            tenBdate, 
+            tenGender, 
+            emContactFname, 
+            emContactLname, 
+            emContactMI, 
+            emContactNum, 
+            isRenting
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);");
+    
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+    
+        $query->bind_param(
+            'sssssssssssssss',
+            $new_tenant['tenFname'], $new_tenant['tenLname'], $new_tenant['tenMI'],
+            $new_tenant['tenHouseNum'], $new_tenant['tenSt'], $new_tenant['tenBrgy'],
+            $new_tenant['tenCityMun'], $new_tenant['tenProvince'], $new_tenant['tenContact'],
+            $new_tenant['tenBdate'], $new_tenant['tenGender'], $new_tenant['emContactFname'],
+            $new_tenant['emContactLname'], $new_tenant['emContactMI'], $new_tenant['emContactNum']
+        );
+    
+        if ($query->execute()) {
+            $tenantID = $conn->insert_id;
+            $query->close();
+    
+            foreach($appliances as $appliance) {
+                $appInfo = $appliance['appInfo'];
+                $appQuery = $conn->prepare("INSERT INTO appliance (tenID, appInfo, appRate) VALUES (?, ?, ?)");
+                
+                if ($appQuery === false) {
+                    throw new Exception("Prepare failed for appliance: " . $conn->error);
+                }
+    
+                $appRate = 100.00; // assuming a fixed rate, adjust if needed
+                $appQuery->bind_param('isd', $tenantID, $appInfo, $appRate);
+    
+                if (!$appQuery->execute()) {
+                    $appQuery->close();
+                    $conn->close();
+                    throw new Exception("Execution failed for appliance: " . $appQuery->error);
+                }
+    
+                $appQuery->close();
             }
     
-            $query->bind_param(
-                'sssssssssssssss',
-                $new_tenant['tenFname'], $new_tenant['tenLname'], $new_tenant['tenMI'],
-                $new_tenant['tenHouseNum'], $new_tenant['tenSt'], $new_tenant['tenBrgy'],
-                $new_tenant['tenCityMun'], $new_tenant['tenProvince'], $new_tenant['tenContact'],
-                $new_tenant['tenBdate'], $new_tenant['tenGender'], $new_tenant['emContactFname'],
-                $new_tenant['emContactLname'], $new_tenant['emContactMI'], $new_tenant['emContactNum']
-            );
-    
-            if (!$query->execute()) {
-                throw new Exception("Execute failed: " . $query->error);
-            }
-    
+            $conn->close();
+            return true;
+        } else {
             $query->close();
             $conn->close();
-    
-            return true;
-        } catch (Exception $e) {
-            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
-            return false;
+            throw new Exception("Execution failed: " . $query->error);
         }
     } 
     
@@ -227,17 +249,6 @@ class DashboardModel extends dbcreds {
         $conn->close();
     
         return $results;
-    }
-
-    public static function query_room_info($roomID){
-        $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
-        $query->bind_param('s', $roomID);
-        $query->execute();
-        $result = $query->get_result()->fetch_assoc();
-        $query->close();
-        $conn->close();
-        return $result;
     }
     
 }

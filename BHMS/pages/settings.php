@@ -177,7 +177,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
 </div>
 
+<script src="/js/general.js"></script>
 <script src="../js/settings.js"></script>
+
 
 <?php 
 ob_end_flush();
