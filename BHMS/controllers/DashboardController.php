@@ -22,7 +22,17 @@ class DashboardController extends GeneralController{
     }
 
     public static function create_new_rent($create_rent) {
-        return DashboardModel::query_add_new_rent($create_rent);
+        $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
+
+        echo '<script>console.log('.json_encode($create_rent).')</script>';
+
+        $bedSpacerID = 1;
+        if($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0){
+            echo '<script>alert("Room can only be occupied for bedspacers!")</script>';
+            return false;
+        } else {
+            return DashboardModel::query_add_new_rent($create_rent);
+        }
     }
 
     public static function get_tenants() {
