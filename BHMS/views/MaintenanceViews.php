@@ -130,7 +130,6 @@ class MaintenanceViews extends GeneralViews{
     public static function On_going_table_data() {
         // Fetch the "On-going" maintenance data.
         $On_going = MaintenanceController::get_On_going_data();
-        echo '<script> console.log(' . json_encode($On_going) . ') </script>';
     
         // Begin the HTML output.
         echo '
@@ -197,7 +196,6 @@ class MaintenanceViews extends GeneralViews{
     public static function Completed_table_data() {
         // Fetch the "Completed" maintenance data.
         $completed = MaintenanceController::get_completed_data();
-        echo '<script> console.log(' . json_encode($completed) . ') </script>';
     
         // Begin the HTML output.
         echo '
@@ -263,7 +261,6 @@ class MaintenanceViews extends GeneralViews{
     public static function Canceled_table_data() {
         // Fetch the "Canceled" maintenance data.
         $cancelled = MaintenanceController::get_canceled_data();
-        echo '<script> console.log(' . json_encode($cancelled) . ') </script>';
     
         // Begin the HTML output.
         echo '

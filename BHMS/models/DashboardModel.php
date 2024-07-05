@@ -250,6 +250,45 @@ class DashboardModel extends dbcreds {
     
         return $results;
     }
+
+    public static function query_room_info($roomID){
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
+        $query->bind_param('s', $roomID);
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        return $result;
+    }
+
+    public static function is_tenant_available($tenID, $startDate, $endDate){
+
+        echo'<script>console.log('.json_encode($tenID).')</script>';
+        echo'<script>console.log('.json_encode($startDate).')</script>';
+        echo'<script>console.log('.json_encode($endDate).')</script>';
+
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT COUNT(*) AS no_of_conflicts 
+                                    FROM occupancy 
+                                    WHERE tenID = ? 
+                                    AND (
+                                        (occDateStart <= ? AND occDateEnd >= ?) OR
+                                        (occDateEnd >= ? AND occDateStart <= ?)
+                                    );");
+        $query->bind_param(
+            'issss', 
+            $tenID, 
+            $startDate, $endDate, 
+            $startDate, $endDate
+        );
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        // Return true if no_of_conflicts is 0, meaning tenant is available
+        return $result['no_of_conflicts'] == 0;
+    }
     
 }
 

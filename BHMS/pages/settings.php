@@ -142,10 +142,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </button>
     </div>
 
-    <div class="login-sett-cont">
-        <div class="settings-sub-header">
-            <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
-        </div>
+    <div class="login-sett-cont my-5">
+        <a href="?logout=1">
+            <div class="settings-sub-header">
+                <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
+            </div>
+        </a>
     </div>
 
 <?php
@@ -177,9 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
 </div>
 
-<script src="/js/general.js"></script>
 <script src="../js/settings.js"></script>
-
 
 <?php 
 ob_end_flush();

@@ -12,6 +12,13 @@ function displaydeleteModal(tenID) {
     document.getElementById('deleteTenantForm').action = "./residents.php?tenID=" + tenID;
 }
 
+// Formats the date to a more readable format
+function formatDate(dateString) {
+    const dateObj = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return dateObj.toLocaleDateString('en-US', options);
+}
+
 // Edit Modal Content Injecter
 function showTenantData(appliance_array, tenantData){
 

@@ -156,7 +156,7 @@ class SettingsViews extends GeneralViews {
             // para edit og delete
             $userID = $user['userID'];
             $userFname = $user['userFname'];
-            $userMname = $user['userMname'];
+            $userMname = $user['userMI'];
             $userLname = $user['userLname'];
             $isActive = $user['isActive'];
             $userType = $user['userType'];

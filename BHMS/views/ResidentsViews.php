@@ -362,7 +362,7 @@ HTML;
                         </div>
                         <div>
                             <span class="label">Birth Date:</span>
-                            <span>${tenantData.tenBdate}</span>
+                            <span>${formatDate(tenantData.tenBdate)}</span>
                         </div>
                         <div>
                             <span class="label">Appliances:</span>
@@ -400,8 +400,8 @@ HTML;
                     var tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td>${occupancy.roomID}</td>
-                        <td>${occupancy.occDateStart}</td>
-                        <td>${occupancy.occDateEnd}</td>
+                        <td>${formatDate(occupancy.occDateStart)}</td>
+                        <td>${formatDate(occupancy.occDateEnd)}</td>
                         <td>
                             <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
                                 value=${occupancy.roomID}
