@@ -70,7 +70,7 @@ class BillingsViews extends GeneralViews{
                                     <input type="number" onchange="amountCalculator()" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
 
                                     <!-- appliance rate -->
-                                    <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled>
+                                    <!-- <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled> -->
                                 </div>
 
                                 <div class="d-flex flex-row w-100">
@@ -152,8 +152,8 @@ class BillingsViews extends GeneralViews{
 
     // doesn't work yet
     public static function add_payment_modal(){
-        $rate_per_appliance = 100;
         $tenants = BillingsController::get_tenants();
+
         echo <<<HTML
             <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -166,18 +166,21 @@ class BillingsViews extends GeneralViews{
                             <form method="POST">
                                 <!-- BillRefNo -->
                                 <input type="hidden" id="billRefNo" name="billRefNo">
+
                                 <label class="billings-modal-labels" for="tenantName">Billing Information</label>
                                 <!-- tenantID -->
-                                <input type="hideen" id="paymentTenantID" name="paymentTenantID">
-                                <input type="text" name="tenantName" id="paymentTenantName" value="test" disabled>
+                                <input type="hidden" id="paymentTenantID" name="paymentTenantID">
+
+                                <input type="text" name="tenantName" id="paymentTenantName" disabled>
                                 <p class="small-text">Name</p>
                                 <!-- due date -->
-                                <input type="date" class="w-100 shadow" id="paymentBillDueDate" name="paymentBillDueDate" value="test" disabled>
+                                <input type="date" class="w-100 shadow" id="paymentBillDueDate" name="paymentBillDueDate" value="" disabled>
                                 <p class="small-text">Due Date</p>
                                 <label class="billings-modal-labels" for="paymentAmount">Payment Details</label><br>
                                 
                                 <!-- payment amount -->
                                 <input class="rounded-inputs" type="number" id="paymentAmount" name="paymentAmount" placeholder="0.00" disabled>
+
                                 <input type="hidden" id="actualPaymentAmount" name="actualPaymentAmount" placeholder="0.00" >
                                 <p class="small-text">Amount</p>
 
@@ -429,6 +432,7 @@ class BillingsViews extends GeneralViews{
             HTML;
         } else {
             foreach ($billings as $billing) {
+                $tenID = $billing['tenID'];
                 $billingId = $billing['billRefNo'];
                 $billDateIssued = $billing['billDateIssued'];
                 $billDueDate = $billing['billDueDate'];
@@ -453,9 +457,10 @@ class BillingsViews extends GeneralViews{
                         <td>$billTotal</td>
                         <td class="action-buttons">
                             <input type="hidden" name="billRefNo" value="$billingId">
+                            <input type="hidden" name="tenID" value="$tenID">
 
                             <!-- Add payment -->
-                            <button id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                            <button onclick="prepopulatePayment($billingDataJson, $payment_billing_info_json)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
                                 <div style="margin-right: 10px;padding:5px;border-radius:100px;background-color: #344799" >
                                     <img style="height:27.5px" src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">
                                 </div>

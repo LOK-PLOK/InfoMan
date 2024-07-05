@@ -1,7 +1,7 @@
 const amountCalculator = () => {
     const payOccType = document.getElementById('payment-occupancyType');
     const noOfAppliances = document.getElementById('noOfAppliances');
-    const applianceRate = document.getElementById('applianceRate');
+    // const applianceRate = parseInt(document.getElementById('applianceRate').value);
     const totalAmountPayment = document.getElementById('dummy-create-billing-billTotal');
     const actualAmountPayment = document.getElementById('create-billing-billTotal');
 

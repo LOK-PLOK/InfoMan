@@ -110,14 +110,19 @@
         
         // LISTEN TO POST REQUEST FROM CREATE PAYMENT MODAL
         if(isset($_POST['add-payment-submit'])){
+            echo '<script>console.log(' . json_encode($_POST['billRefNo']) . ');</script>';
+
             $new_payment = array(
                 "billRefNo" => $_POST['billRefNo'],
                 "tenID" => $_POST['paymentTenantID'],
                 "payAmount" => $_POST['actualPaymentAmount'],
                 "payMethod" => $_POST['paymentMethod'],
-                "payerFname" => $_POST['payer-fname'],
-                "payerLname" => $_POST['payer-lname'],
-                "payerMI" => $_POST['payer-MI']
+
+                "payerFname" => isset($_POST['payer-fname']) ? $_POST['payer-fname'] : '',
+
+                "payerLname" => isset($_POST['payer-lname']) ? $_POST['payer-lname'] : '',
+
+                "payerMI" => isset($_POST['payer-MI']) ? $_POST['payer-MI'] : ''
             );
 
             $result = BillingsController::create_payment($new_payment);

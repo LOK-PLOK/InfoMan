@@ -45,3 +45,16 @@ function prepopulateValues(billingData, payment_billing_info_json) {
         }
         console.log(document.getElementById('editBillingId').value);
 }
+
+function prepopulatePayment(billingData, payment_billing_info_json){
+    console.log(billingData);
+    console.log(payment_billing_info_json);
+
+    document.getElementById('paymentTenantName').value = billingData.full_name;
+    document.getElementById('paymentBillDueDate').value = billingData.billDueDate;
+    document.getElementById('paymentAmount').value = billingData.billTotal;
+    document.getElementById('paymentTenantID').value = billingData.tenID;
+    document.getElementById('billRefNo').value = billingData.billRefNo;
+    console.log(document.getElementById('billRefNo').value);
+    console.log(document.getElementById('paymentTenantID'));
+}
