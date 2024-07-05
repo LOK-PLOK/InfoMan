@@ -5,6 +5,14 @@ require 'GeneralController.php';
 
 class BillingsController extends GeneralController{
 
+    public static function get_appliances($tenID){
+        return BillingsModel::query_get_appliances($tenID);
+    }
+
+    public static function get_specific_occupancy_type($tenID){
+        return BillingsModel::query_specific_occupancy_type($tenID);
+    }
+
     public static function get_overdue_billings(){
         return BillingsModel::query_overdue_billings();
     }

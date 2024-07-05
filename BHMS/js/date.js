@@ -1,5 +1,4 @@
 function calculateDate(startDateID, dummyEndDateID, endDateID) {
-    console.log(startDateID);
     document.getElementById(startDateID).addEventListener('change', function() {
         const startDate = new Date(this.value);
         

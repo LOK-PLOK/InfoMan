@@ -147,11 +147,6 @@
 
             $result = BillingsController::create_billings($new_billing);
 
-            if ($result) {
-                echo '<script>console.log("Billing created successfully")</script>';
-            } else {
-                echo '<script>console.log("Error created billing")</script>';
-            }
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit();
         }
@@ -173,19 +168,10 @@
         if (isset($_POST['edit-billing-submit'])) {
             $updated_billing = array(
                 "billRefNo" => $_POST['editBillingId'],
-                "billDateIssued" => $_POST['editBillDateIssued'],
-                "billDueDate" => $_POST['editBillDueDate'],
                 "billTotal" => $_POST['editBillTotal'],
-                "isPaid" => $_POST['editStatusPayment'],
             );
             
             $result = BillingsController::update_billing($updated_billing);
-
-            if ($result) {
-                echo '<script>console.log("Billing created successfully")</script>';
-            } else {
-                echo '<script>console.log("Error created billing")</script>';
-            }
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit();
         }
@@ -204,7 +190,6 @@
                 "payerMI" => $_POST['edit-payer-MI']
             );
 
-            echo '<script>console.log('.json_encode($updated_bp).')</script>';
 
             $result = BillingsController::update_billing_payment($updated_bp);
 
