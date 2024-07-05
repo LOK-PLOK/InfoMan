@@ -240,23 +240,17 @@ class BillingsModel extends dbcreds {
     public static function query_create_billings($new_billing){
         $conn = self::get_connection();
         
-        // Check if all required fields are set
-        if (!isset($new_billing['tenID'], $new_billing['billTotal'], $new_billing['billDateIssued'], $new_billing['isPaid'])) {
-            die("Error: Missing required billing data.");
-        }
-    
         // Sanitize the inputs
         $tenID = $new_billing['tenID'];
         $billTotal = $new_billing['billTotal'];
         $billDateIssued = date('Y-m-d');
-        $isPaid = $new_billing['isPaid'];
 
         $endDate = $_POST['create-billing-end-date'];
         $billDueDate = date('Y-m-d', strtotime($endDate . ' +7 days'));
 
     
         $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) 
-                  VALUES (NULL, '$tenID', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid');";
+                  VALUES (NULL, '$tenID', '$billTotal', '$billDateIssued', '$billDueDate', 0);";
         if ($conn->query($query) === FALSE) {
             die("Error executing query: " . $conn->error . " Query: " . $query);
         }

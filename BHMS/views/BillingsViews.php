@@ -54,8 +54,8 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select id="payment-occupanyType" class=" shadow" style="width: 75%">
-                                        <option value="0">Select Occupancy Type...</option>
+                                    <select onchange="amountCalculator()" id="payment-occupancyType" class=" shadow" style="width: 75%">
+                                        <option value="0" disabled selected>Select Occupancy Type...</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
                 $rate = $occupancy_type['occRate'];
@@ -67,16 +67,21 @@ class BillingsViews extends GeneralViews{
             echo <<<HTML
                                     </select>
                                     <!-- no. of appliances -->
-                                    <input type="number" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0">
+                                    <input type="number" onchange="amountCalculator()" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
                                     <!-- appliance rate -->
                                     <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled>
                                 </div>
+
                                 <div class="d-flex flex-row w-100">
                                     <div class="small-text w-75">Occupancy Type</div>
                                     <div class="small-text w-25">No. of Appliances</div>
                                 </div>
-                                <input style="padding: 7px;" class="rounded-inputs" type="number" id="create-billing-billTotal" name="create-billing-billTotal">
+
+                                <input style="padding: 7px;" class="rounded-inputs" type="number" id="dummy-create-billing-billTotal" name="dummy-create-billing-billTotal" disabled>
                                 <p class="small-text">Amount</p>
+
+                                <input style="padding: 7px;" class="rounded-inputs" type="number" id="create-billing-billTotal" name="create-billing-billTotal" hidden>
+                            
                                 
                                 <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
                                 <div class="month-allocated-cont">
@@ -266,8 +271,8 @@ class BillingsViews extends GeneralViews{
     
                                     <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
                                         <button type="submit" name="edit-billing-submit" class="btn-var-2 mx-3">Save</button>
-                                        <button class="btn-var-3" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
-                                        <img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button>
+                                        <!-- <button class="btn-var-3" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                                        <img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Add Payment</button> -->
                                     </div>
                                 </div>
                             </form>
@@ -427,9 +432,20 @@ class BillingsViews extends GeneralViews{
                         <td>$billTotal</td>
                         <td class="action-buttons">
                             <input type="hidden" name="billRefNo" value="$billingId">
+
+                            <!-- Add payment -->
+                            <button id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                                <div style="margin-right: 10px;padding:5px;border-radius:100px;background-color: #344799" >
+                                    <img style="height:27.5px" src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">
+                                </div>
+                            </button>
+            
+                            <!-- edit billing -->
                             <button id="openEditBillingsModalBtn" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType" onclick="prepopulateValues($billingDataJson, $payment_billing_info_json)">
                             </button>
+
+                            <!-- delete billing -->
                             <button class="delete-button" data-billing-id="$billingId" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteBillingsModal">
                             </button>

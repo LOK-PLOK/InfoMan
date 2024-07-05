@@ -30,9 +30,9 @@
         <div class="direction-column">
             <div class="tab-container" >
                 <div class="tab-box">
-                    <button class="tab-btn active">Paid</button>
+                    <button class="tab-btn active">Overdue</button>
                     <button class="tab-btn">Unpaid</button>
-                    <button class="tab-btn">Overdue</button>
+                    <button class="tab-btn">Paid</button>
                     <div class="line"></div>
                 </div>
                 <div class="content-box">
@@ -65,7 +65,7 @@
                         <!-- Paid -->
                         <div class="content active">
                             <?php
-                                BillingsViews::generate_billing_table('paid');
+                                BillingsViews::generate_billing_table('overdue');  
                             ?>
                         </div>
                         
@@ -80,7 +80,7 @@
                         <!-- OVERDUE TABLE -->
                         <div class="content">
                             <?php
-                                BillingsViews::generate_billing_table('overdue');
+                                BillingsViews::generate_billing_table('paid');
                             ?>
                         </div>
 
@@ -137,7 +137,7 @@
                     "billDateIssued" => $_POST['create-billing-billDateIssued'],
                     "endDate" => $_POST['create-billing-end-date'],
                     "billDueDate" => $_POST['create-billing-billDueDate'],
-                    "isPaid" => $_POST['create-billing-isPaid'],
+                    // set billing to unpaid as default
                 );
 
             $result = BillingsController::create_billings($new_billing);
@@ -224,42 +224,10 @@
 <script src="/js/prepopulate.js"></script>
 <script src="/js/checkbox.js"></script>
 <script src="/js/date.js"></script>
+<script src="/js/billingsFunction.js"></script>
 
 <script>
-    const payOccType = document.getElementById('payment-occupanyType');
-    const addPaymentBtn = document.getElementById('add-payment-button');
-    const noOfAppliances = document.getElementById('noOfAppliances');
-    const totalAmountPayment = document.getElementById('paymentAmount');
-    const actualAmountPayment = document.getElementById('actualPaymentAmount');
-    const applianceRate = document.getElementById('applianceRate');
-
-    let totalAppliance = 0;
-    let totalOccRate = 0;
-
-    payOccType.addEventListener('change', function() {
-        console.log(this.value);
-        totalOccRate = parseInt(this.value);
-        totalAmountPayment.value = totalOccRate + totalAppliance;
-        actualAmountPayment.value = totalOccRate + totalAppliance;
-    });
-
-    addPaymentBtn.addEventListener('click', function() {
-        console.log(this.value);    
-    });
-
-    noOfAppliances.addEventListener('change', function() {
-        let value = parseInt(this.value);
-        if (value < 0) {
-            value = 0;
-        } else if (value > 5) {
-            value = 5;
-        }
-        this.value = value;
-        totalAppliance = value * parseInt(applianceRate.value);
-        totalAmountPayment.value = totalOccRate + totalAppliance;
-        actualAmountPayment.value = totalOccRate + totalAppliance;
-    });
-
+    // searchable drop down handler
     $(function(){
         $("#tenantName").selectize();
         $("#editDatePayment").selectize();
@@ -290,44 +258,43 @@
     });
 });
 
-
-    calculateDate('start-date', 'dummy-end-date','end-date');
-    calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
-
+    // calculateDate handler
     
-function handleTabSwitching() {
-    const tabs = document.querySelectorAll('.tab-btn');
-    const allContent = document.querySelectorAll('.content');
-    const slider = document.querySelector('.line');
-
-    function switchTab(tabIndex) {
-        tabs.forEach((tab, index) => {
-            if (index === tabIndex) {
-                tab.classList.add('active');
-                slider.style.width = tab.offsetWidth + "px";
-                slider.style.left = tab.offsetLeft + "px";
-            } else {
-                tab.classList.remove('active');
-            }
-        });
-
-        allContent.forEach((content, index) => {
-            if (index === tabIndex) {
-                content.classList.add('active');
-            } else {
-                content.classList.remove('active');
-            }
-        });
-        localStorage.setItem('activeTabIndex', tabIndex);
-    }
+    calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
+    // comment this out for the mean time
+    // calculateDate('start-date', 'dummy-end-date','end-date');
 
 
+    // tab save even when refreshing handler
+    function handleTabSwitching() {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const allContent = document.querySelectorAll('.content');
+        const slider = document.querySelector('.line');
+
+        function switchTab(tabIndex) {
+            tabs.forEach((tab, index) => {
+                if (index === tabIndex) {
+                    tab.classList.add('active');
+                    slider.style.width = tab.offsetWidth + "px";
+                    slider.style.left = tab.offsetLeft + "px";
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            allContent.forEach((content, index) => {
+                if (index === tabIndex) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+            localStorage.setItem('activeTabIndex', tabIndex);
+        }
     const activeTabIndex = localStorage.getItem('activeTabIndex');
     if (activeTabIndex !== null) {
         switchTab(parseInt(activeTabIndex));
     }
-
-
     tabs.forEach((tab, index) => {
         tab.addEventListener('click', () => {
             switchTab(index);
@@ -336,7 +303,6 @@ function handleTabSwitching() {
 }
 
 document.addEventListener('DOMContentLoaded', handleTabSwitching);
-
 </script>
 
 
