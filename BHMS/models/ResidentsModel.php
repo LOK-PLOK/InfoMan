@@ -414,7 +414,7 @@ class ResidentsModel extends dbcreds{
             $conn = self::get_connection();
     
             // Prepare the SQL query to get all appliances for a specific tenant
-            $stmt = $conn->prepare("SELECT occTypeName ,roomID,occDateStart,occDateEnd FROM tenant,occupancy,occupancy_type WHERE tenant.tenID = occupancy.tenID AND tenant.tenID = ? AND occupancy.occTypeID = occupancy_type.occTypeID ORDER BY occupancy.occDateStart DESC ");
+            $stmt = $conn->prepare("SELECT occTypeName ,roomID,occDateStart,occDateEnd,occupancy.tenID,occupancyID, tenFname, tenMI, tenLname,occupancyRate FROM tenant,occupancy,occupancy_type WHERE tenant.tenID = occupancy.tenID AND tenant.tenID = ? AND occupancy.occTypeID = occupancy_type.occTypeID ORDER BY occupancy.occDateStart DESC");
     
             // Bind the tenant ID to the statement
             $stmt->bind_param("i", $tenantID);
@@ -450,6 +450,74 @@ class ResidentsModel extends dbcreds{
             return [];
         }
     }
+
+    public static function get_rooms(){
+        
+        $conn = self::get_connection();
+        $query = "SELECT * FROM room";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+
+        // Fetch the result
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $results;
+    }
+
+   public static function editOccupancy($editInfo){
+    $conn = self::get_connection();
+        $query = $conn->prepare("UPDATE occupancy SET roomID = ?, occDateStart = ?, occDateEnd = ? WHERE occupancyID = ?");
+
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        $query->bind_param(
+            'sssi', 
+            $editInfo['roomID'], $editInfo['occDateStart'], 
+            $editInfo['occDateEnd'], $editInfo['occupancyID']
+        );
+
+        if (!$query->execute()) {
+            $query->close();
+            $conn->close();
+            throw new Exception("Execute failed: " . $query->error);
+            return false;
+        } else {
+            $query->close();
+            $conn->close();
+            return true;
+        }
+   }
+
+   public static function delete_occupancy($delOccInfo){
+    $conn = self::get_connection();
+        $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
+
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        $query->bind_param('i', $delOccInfo);
+
+        if (!$query->execute()) {
+            throw new Exception("Execute failed: " . $query->error);
+        }
+
+        $query->close();
+        $conn->close();
+
+        return true;
+   }
 }
 
 ?>

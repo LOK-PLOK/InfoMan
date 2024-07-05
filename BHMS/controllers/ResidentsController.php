@@ -41,6 +41,26 @@ class ResidentsController extends GeneralController{
         return ResidentsModel::edit_tenant($editTenantData, $editAppliances);
     }
 
+    public static function all_rooms(){
+        return ResidentsModel::all_rooms();
+    }
+
+    public static function room_tenants($roomID){
+        return ResidentsModel::room_tenants($roomID);
+    }
+
+    public static function get_rooms(){
+        return ResidentsModel::get_rooms();
+    }
+
+    public static function editOccupancy($editInfo){
+        return ResidentsModel::editOccupancy($editInfo);
+    }
+
+    public static function delete_occupancy($delOccInfo){
+        return ResidentsModel::delete_occupancy($delOccInfo);
+    }
+
 }
 
 ?>

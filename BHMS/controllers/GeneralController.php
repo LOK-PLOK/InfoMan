@@ -19,25 +19,6 @@ class GeneralController {
         }
     }
 
-    public static function updateRoomAvailability() {
-        $get_rooms = self::all_rooms();
-
-        foreach($get_rooms as $room) {
-            
-            $roomID = $room['roomID'];
-            $roomCount = $room['rentCount'];
-            $roomCapacity = $room['capacity'];
-
-            if($roomCount === $roomCapacity) {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
-
-            GeneralModel::update_room_availability($roomID, $status);
-        }
-    }
-
     public static function updateRoomTenantCount() {
         $get_rooms = self::all_rooms();
         
@@ -52,10 +33,6 @@ class GeneralController {
             
             GeneralModel::update_room_count($room['roomID'], $tenant_count);
         }
-    }
-
-    public static function current_room_tenants($roomID) {
-        return GeneralModel::query_current_room_tenants($roomID);
     }
 
 }
