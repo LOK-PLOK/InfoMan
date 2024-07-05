@@ -101,26 +101,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
         }
 	}
 
-	// Add New Payment Handler
-	if(isset($_POST['create-new-payment'])){
-
-		// $create_payment = array(
-
-		// );
-
-		$result = '';
-		if ($result) {
-			// Redirect to avoid form resubmission
-			header('Location: dashboard.php?addPaymentStatus=success');
-			exit();
-		} else {
-			// Redirect with an error message
-			header('Location: dashboard.php?addPaymentStatus=error');
-			exit();
-		}
-
-	}
-
 	// Add New Rent Handler
 	if (isset($_POST['create-new-rent'])) {
 		$create_rent = array(

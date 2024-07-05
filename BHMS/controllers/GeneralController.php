@@ -23,8 +23,13 @@ class GeneralController {
         $get_rooms = self::all_rooms();
         
         foreach ($get_rooms as $room) {
+            $bedSpacerID = 1;
             $tenants = GeneralModel::query_current_room_tenants($room['roomID']);
             $tenant_count = count($tenants);
+
+            if($tenant_count === 1 && $tenants[0]['occTypeID'] !== $bedSpacerID){
+                $tenant_count = $room['capacity'];
+            }
             
             GeneralModel::update_room_count($room['roomID'], $tenant_count);
         }

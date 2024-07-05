@@ -158,7 +158,7 @@ class ResidentsModel extends dbcreds{
     
         try {
             // Prepare the SQL insert statement with placeholders
-            $sql = "INSERT INTO appliance (tenID, appInfo, appRate) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO appliance (tenID, appInfo) VALUES (?, ?)";
     
             // Prepare the statement
             $stmt = $conn->prepare($sql);
@@ -168,13 +168,10 @@ class ResidentsModel extends dbcreds{
                 throw new Exception("Prepare statement failed: " . $conn->error);
             }
     
-            // Default value for appRate
-            $defaultAppRate = 100.00;
-    
             // Loop through each appliance and insert it into the appliance table
             foreach ($appliances as $applianceInfo) {
-                // Bind parameters: "i" for integer (tenID), "s" for string (appInfo), "d" for double (appRate)
-                $stmt->bind_param("isd", $last_id, $applianceInfo, $defaultAppRate);
+                // Bind the parameters to the statement
+                $stmt->bind_param("is", $last_id, $applianceInfo);
     
                 // Execute the statement
                 if (!$stmt->execute()) {
