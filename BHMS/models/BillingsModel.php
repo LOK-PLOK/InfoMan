@@ -229,10 +229,9 @@ class BillingsModel extends dbcreds {
     public static function query_update_billing_payment($updated_billing_payment) {
         $conn = self::get_connection();
         $billRefNo = $updated_billing_payment['billRefNo'];
-        $billDueDate = $updated_billing_payment['billDueDate'];
         $billTotal = $updated_billing_payment['billTotal'];
+
         $payMethod = $updated_billing_payment['payMethod'];
-        $payDate = $updated_billing_payment['payDate'];
         $payerFname = $updated_billing_payment['payerFname'];
         $payerLname = $updated_billing_payment['payerLname'];
         $payerMI = $updated_billing_payment['payerMI'];
@@ -240,8 +239,7 @@ class BillingsModel extends dbcreds {
         
         // Use prepared statements to prevent SQL injection and ensure correct syntax
         $query_billing = "UPDATE billing 
-                          SET billDueDate = ?, 
-                              billTotal = ?
+                          SET billTotal = ?
                           WHERE billRefNo = ?";
     
         $stmt_billing = $conn->prepare($query_billing);
@@ -250,7 +248,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters for billing update
-        $stmt_billing->bind_param("sdi", $billDueDate, $billTotal, $billRefNo);
+        $stmt_billing->bind_param("di", $billTotal, $billRefNo);
     
         // Execute billing statement
         if ($stmt_billing->execute() === false) {
@@ -262,7 +260,6 @@ class BillingsModel extends dbcreds {
         // Update payment table
         $query_payment = "UPDATE payment 
                           SET payMethod = ?, 
-                              payDate = ?,
                               payerFname = ?,
                               payerMI = ?,
                               payerLname = ?
@@ -274,7 +271,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters for payment update
-        $stmt_payment->bind_param("sssssi", $payMethod, $payDate, $payerFname, $payerMI, $payerLname, $billRefNo);
+        $stmt_payment->bind_param("ssssi", $payMethod, $payerFname, $payerMI, $payerLname, $billRefNo);
     
         // Execute payment statement
         if ($stmt_payment->execute() === false) {

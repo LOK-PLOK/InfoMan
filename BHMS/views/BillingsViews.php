@@ -306,13 +306,13 @@ class BillingsViews extends GeneralViews{
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Date Due</p>
                                         <!-- editPaidBillDueDate -->
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editPaidBillDueDate" name="editPaidBillDueDate">
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editPaidBillDueDate" name="editPaidBillDueDate" disabled>
                                     </div>
 
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Date Paid</p>
                                         <!-- edit-datePaid -->
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="edit-datePaid" name="edit-datePaid">
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="edit-datePaid" name="edit-datePaid" disabled>
                                          <!-- Get data from payment table -->
                                     </div>
                                 
@@ -376,16 +376,19 @@ class BillingsViews extends GeneralViews{
                 $billings = BillingsController::get_paid_billings();
                 $tableHeader = '<tr><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editPaidBillingsModal';
+                $prepBool = 0;
                 break;
             case 'unpaid':
                 $billings = BillingsController::get_unpaid_billings();
                 $tableHeader = '<tr class="orange-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editBillingsModal';
+                $prepBool = 1;
                 break;
             case 'overdue':
                 $billings = BillingsController::get_overdue_billings();
                 $tableHeader = '<tr class="red-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editBillingsModal';
+                $prepBool = 1;
                 break;
             default:
                 break;
@@ -414,11 +417,6 @@ class BillingsViews extends GeneralViews{
                 $tenantFullName = $billing['tenant_first_name'] . ' ' . $billing['tenMI'] . '. ' . $billing['tenant_last_name'];
                 $billTotal = $billing['billTotal'];
                 $isPaid = $billing['isPaid'];
-                $payment_billing_info_json = '';
-                if($isPaid){
-                    $payment_billing_info = BillingsController::get_payment_billing_info($billingId);
-                    $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
-                }
 
                 $billingData = BillingsController::get_billing_data($billingId);
                 $billingDataJson = htmlspecialchars(json_encode($billingData));
@@ -428,7 +426,11 @@ class BillingsViews extends GeneralViews{
 
                 $appliancesCount = BillingsController::get_appliances($tenID);
                 $APCount = htmlspecialchars(json_encode($appliancesCount));
-    
+                $payment_billing_info_json = $APCount;
+                if($isPaid){
+                    $payment_billing_info = BillingsController::get_payment_billing_info($billingId);
+                    $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
+                }
                 echo <<<HTML
                     <tr>
                         <td>$billDateIssued</td>
@@ -438,16 +440,20 @@ class BillingsViews extends GeneralViews{
                         <td class="action-buttons">
                             <input type="hidden" name="billRefNo" value="$billingId">
                             <input type="hidden" name="tenID" value="$tenID">
-
-                            <!-- Add payment -->
-                            <button onclick="prepopulatePayment($billingDataJson)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                HTML;
+                if($prepBool==1){
+                    echo<<<HTML
+                        <!-- Add payment -->
+                        <button onclick="prepopulatePayment($billingDataJson)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
                                 <div style="margin-right: 10px;padding:5px;border-radius:100px;background-color: #344799" >
                                     <img style="height:27.5px" src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">
                                 </div>
                             </button>
-            
+                    HTML;
+                }
+                echo<<<HTML
                             <!-- edit billing -->
-                            <button id="openEditBillingsModalBtn" style="margin-right: 10px;" onclick="prepopulateValues($occTypeJson,$billingDataJson, $APCount)">
+                            <button id="openEditBillingsModalBtn" style="margin-right: 10px;" onclick="prepopulateValues($payment_billing_info_json, $billingDataJson, $prepBool)">
                                 <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType">
                             </button>
 

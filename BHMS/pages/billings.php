@@ -181,16 +181,14 @@
 
             $updated_bp = array(
                 "billRefNo" => $_POST['editPaidBillingId'],
-                "billDueDate" => $_POST['editPaidBillDueDate'],
                 "billTotal" => $_POST['editPaidBillTotal'],
                 "payMethod" => $_POST['edit-payMethod'],
-                "payDate" => $_POST['edit-datePaid'],
                 "payerFname" => $_POST['edit-payer-fname'],
                 "payerLname" => $_POST['edit-payer-lname'],
                 "payerMI" => $_POST['edit-payer-MI']
             );
 
-
+            echo'<script>console.log( '.json_encode($updated_bp).');</script>';
             $result = BillingsController::update_billing_payment($updated_bp);
 
             if ($result) {

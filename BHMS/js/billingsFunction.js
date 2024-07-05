@@ -5,12 +5,8 @@ const amountCalculator = () => {
     const totalAmountPayment = document.getElementById('dummy-create-billing-billTotal');
     const actualAmountPayment = document.getElementById('create-billing-billTotal');
 
-
     const payOccTypeValue = parseInt(payOccType.value, 10);
     const noOfAppliancesValue = parseInt(noOfAppliances.value, 10);
-    
-    console.log(payOccTypeValue);
-    console.log(noOfAppliancesValue);
     
     totalAmountPayment.value = payOccTypeValue + noOfAppliancesValue * 100;
     actualAmountPayment.value = payOccTypeValue + noOfAppliancesValue * 100;
