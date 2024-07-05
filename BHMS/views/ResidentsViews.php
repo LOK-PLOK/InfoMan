@@ -3,6 +3,8 @@
 require 'GeneralViews.php';
 require '../controllers/ResidentsController.php';
 
+ResidentsController::updateTenantRentStatus();
+
 class ResidentsViews extends GeneralViews{
 
     public static function residents_header(){

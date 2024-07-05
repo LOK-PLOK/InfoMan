@@ -14,7 +14,7 @@ require '../php/navbar.php';
 // Hamburger Sidebar
 ResidentsViews::burger_sidebar();
 
-?>
+?> 
 
 <!-- Residents Contents -->
 <div class="container-fluid">
