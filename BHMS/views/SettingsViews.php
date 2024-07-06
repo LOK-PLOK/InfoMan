@@ -6,6 +6,9 @@ require '../controllers/SettingsController.php';
 class SettingsViews extends GeneralViews {
     //settings header
     public static function settings_header(){
+        echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
+        echo '<script>console.log('.json_encode($_SESSION['Middle-Name']).')</script>';
+        echo '<script>console.log('.json_encode($_SESSION['Last-Name']).')</script>';
 
         echo <<<HTML
         <div class="settings-header" >
@@ -26,7 +29,7 @@ class SettingsViews extends GeneralViews {
                 . (isset($_SESSION['Last-Name']) ? $_SESSION['Last-Name'] : '') . 
             '</span><br>
             <span class="user-type">'
-                . (isset($_SESSION['Position']) ? $_SESSION['Position'] : 'test') . '</span>
+                . (isset($_SESSION['Position']) ? $_SESSION['Position'] : '') . '</span>
         </div>
         ';
     }
@@ -156,7 +159,7 @@ class SettingsViews extends GeneralViews {
             // para edit og delete
             $userID = $user['userID'];
             $userFname = $user['userFname'];
-            $userMname = $user['userMI'];
+            $userMname = $user['userMname'];
             $userLname = $user['userLname'];
             $isActive = $user['isActive'];
             $userType = $user['userType'];

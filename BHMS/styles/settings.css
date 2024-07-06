@@ -15,109 +15,67 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 16px;
-    background: #344799;
+    background: #02439A;
 }
 
+/* User's name*/
+.user-name{
+    color: white;
+    font-size: 24px;
+}
+
+/* User's position*/
+.user-type {
+    font-size: 14px;
+    color: white;
+}
+
+/* Sections for rates and pricing, user information, and create user*/
 .section {
     display: flex;
-    justify-content: space-between; /* Ensure spacing between the sections */
+    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    gap: 20px; /* Adds space between the sections */
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 /* Individual sections */
 .rate-price-cont {
-    flex: 1; /* Allows sections to take up equal space */
-    max-width: calc(50% - 10px); /* Ensures sections take up half the container width minus gap */
+    flex: 1;
+    max-width: calc(50% - 10px); 
     display: flex;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
     padding: 20px 20px;
-    background: #edf6f7; /* Match background for better look */
+    background: #edf6f7;
     border-width: 0;
 }
 
-.rate-price-cont .section:hover {
-    background-color: #fff; /* Change background on hover */
-}
-
-.rate-price-cont div {
-    display: flex;
-    align-items: center;
-}
-
+/* Container for images inside the containers per section*/
 .rate-price-cont img {
     margin-right: 10px;
     height: 25px;
 }
 
-/* Inner Item Styles */
-.user-name{
+.rate-price-cont:hover {
     color: white;
-    font-size: 24px;
+    background-color: #344799; 
 }
+
+.rate-price-cont:hover i {
+    color: white;
+}
+
 .rate-price-cont span {
     font-size: 18px;
-}
-
-.rate-price-cont span {
     margin-right: auto;
-}
-
-.user-type {
-    font-size: 14px;
-    color: white;
 }
 
 .rate-price-cont i {
     font-size: 30px;
     cursor: pointer;
     color: #344799;
-}
-
-/*---------------Login Settings---------------*/
-
-.edit-acc-cont {
-    position: relative;
-    padding-top: 20px;
-}
-
-.edit-acc-cont .save-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 5px;
-}
-
-.edit-acc-cont label {
-    color: #344799;
-    padding: 10px 0;
-    font-size: 20px;
-}
-
-.edit-acc-cont input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #7d7d7d;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.04);
-}
-
-.edit-acc-cont .input-cont {
-    position: relative;
-}
-
-.edit-acc-cont .input-cont a {
-    color: #5f5f5f;
-    position: absolute;
-    top: 20%;
-    right: 3%;
-}
-
-.edit-acc-cont .sign-out-btn {
-    margin: 20px 0;
 }
 
 /*---------------Button---------------*/
