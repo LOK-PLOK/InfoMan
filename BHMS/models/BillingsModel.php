@@ -4,6 +4,88 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+    public static function query_get_appliances($tenID){
+        $conn = self::get_connection();
+        $query = "SELECT COUNT(*) AS count
+            FROM appliance
+            WHERE tenID = ?;";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $tenID); 
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $results = $result->fetch_assoc();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $results;
+    }
+
+    public static function query_specific_occupancy_type($tenID){
+        $conn = self::get_connection();
+        $query = "SELECT occTypeName, occRate
+                FROM occupancy 
+                INNER JOIN occupancy_type ON occupancy.occTypeID=occupancy_type.occTypeID
+                WHERE occupancy.tenID = ?;";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $tenID); 
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $results = $result->fetch_assoc();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $results;
+    }
+
+    public static function query_overdue_billings(){
+        $conn = self::get_connection();
+    
+        $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
+                  FROM billing b
+                  INNER JOIN tenant t ON b.tenID = t.tenID
+                  WHERE b.billDueDate < CURRENT_DATE AND b.isPaid = 0";
+        
+        $stmt = $conn->query($query);
+    
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
+
     public static function query_update_billing_status($new_payment){
         $conn = self::get_connection();
         $billRefNo = $new_payment['billRefNo'];
@@ -145,10 +227,9 @@ class BillingsModel extends dbcreds {
     public static function query_update_billing_payment($updated_billing_payment) {
         $conn = self::get_connection();
         $billRefNo = $updated_billing_payment['billRefNo'];
-        $billDueDate = $updated_billing_payment['billDueDate'];
         $billTotal = $updated_billing_payment['billTotal'];
+
         $payMethod = $updated_billing_payment['payMethod'];
-        $payDate = $updated_billing_payment['payDate'];
         $payerFname = $updated_billing_payment['payerFname'];
         $payerLname = $updated_billing_payment['payerLname'];
         $payerMI = $updated_billing_payment['payerMI'];
@@ -156,8 +237,7 @@ class BillingsModel extends dbcreds {
         
         // Use prepared statements to prevent SQL injection and ensure correct syntax
         $query_billing = "UPDATE billing 
-                          SET billDueDate = ?, 
-                              billTotal = ?
+                          SET billTotal = ?
                           WHERE billRefNo = ?";
     
         $stmt_billing = $conn->prepare($query_billing);
@@ -166,7 +246,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters for billing update
-        $stmt_billing->bind_param("sdi", $billDueDate, $billTotal, $billRefNo);
+        $stmt_billing->bind_param("di", $billTotal, $billRefNo);
     
         // Execute billing statement
         if ($stmt_billing->execute() === false) {
@@ -178,7 +258,6 @@ class BillingsModel extends dbcreds {
         // Update payment table
         $query_payment = "UPDATE payment 
                           SET payMethod = ?, 
-                              payDate = ?,
                               payerFname = ?,
                               payerMI = ?,
                               payerLname = ?
@@ -190,7 +269,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters for payment update
-        $stmt_payment->bind_param("sssssi", $payMethod, $payDate, $payerFname, $payerMI, $payerLname, $billRefNo);
+        $stmt_payment->bind_param("ssssi", $payMethod, $payerFname, $payerMI, $payerLname, $billRefNo);
     
         // Execute payment statement
         if ($stmt_payment->execute() === false) {
@@ -238,23 +317,17 @@ class BillingsModel extends dbcreds {
     public static function query_create_billings($new_billing){
         $conn = self::get_connection();
         
-        // Check if all required fields are set
-        if (!isset($new_billing['tenID'], $new_billing['billTotal'], $new_billing['billDateIssued'], $new_billing['isPaid'])) {
-            die("Error: Missing required billing data.");
-        }
-    
         // Sanitize the inputs
         $tenID = $new_billing['tenID'];
         $billTotal = $new_billing['billTotal'];
         $billDateIssued = date('Y-m-d');
-        $isPaid = $new_billing['isPaid'];
 
         $endDate = $_POST['create-billing-end-date'];
         $billDueDate = date('Y-m-d', strtotime($endDate . ' +7 days'));
 
     
         $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) 
-                  VALUES (NULL, '$tenID', '$billTotal', '$billDateIssued', '$billDueDate', '$isPaid');";
+                  VALUES (NULL, '$tenID', '$billTotal', '$billDateIssued', '$billDueDate', 0);";
         if ($conn->query($query) === FALSE) {
             die("Error executing query: " . $conn->error . " Query: " . $query);
         }
@@ -268,17 +341,11 @@ class BillingsModel extends dbcreds {
         $conn = self::get_connection();
     
         $billRefNo = $updated_billing['billRefNo'];
-        $billDateIssued = $updated_billing['billDateIssued'];
-        $billDueDate = $updated_billing['billDueDate'];
         $billTotal = $updated_billing['billTotal'];
-        $isPaid = $updated_billing['isPaid'];
     
         // Use prepared statements to prevent SQL injection and ensure correct syntax
         $query = "UPDATE billing 
-                  SET billDateIssued = ?, 
-                      billDueDate = ?, 
-                      billTotal = ?, 
-                      isPaid = ? 
+                  SET billTotal = ? 
                   WHERE billRefNo = ?";
     
         $stmt = $conn->prepare($query);
@@ -287,7 +354,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters
-        $stmt->bind_param("ssdii", $billDateIssued, $billDueDate, $billTotal, $isPaid, $billRefNo);
+        $stmt->bind_param("di", $billTotal, $billRefNo);
     
         // Execute statement
         if ($stmt->execute() === false) {
@@ -377,7 +444,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.isPaid = 0";
+                  WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE";
         
         $stmt = $conn->query($query);
     

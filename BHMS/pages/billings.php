@@ -31,9 +31,9 @@
         <div class="direction-column">
             <div class="tab-container" >
                 <div class="tab-box">
-                    <button class="tab-btn active">Paid</button>
+                    <button class="tab-btn active">Overdue</button>
                     <button class="tab-btn">Unpaid</button>
-                    <button class="tab-btn">Overdue</button>
+                    <button class="tab-btn">Paid</button>
                     <div class="line"></div>
                 </div>
                 <div class="content-box">
@@ -66,7 +66,7 @@
                         <!-- Paid -->
                         <div class="content active">
                             <?php
-                                BillingsViews::generate_billing_table('paid');
+                                BillingsViews::generate_billing_table('overdue');  
                             ?>
                         </div>
                         
@@ -81,7 +81,7 @@
                         <!-- OVERDUE TABLE -->
                         <div class="content">
                             <?php
-                                BillingsViews::generate_billing_table('overdue');
+                                BillingsViews::generate_billing_table('paid');
                             ?>
                         </div>
 
@@ -111,14 +111,19 @@
         
         // LISTEN TO POST REQUEST FROM CREATE PAYMENT MODAL
         if(isset($_POST['add-payment-submit'])){
+            echo '<script>console.log(' . json_encode($_POST['billRefNo']) . ');</script>';
+
             $new_payment = array(
                 "billRefNo" => $_POST['billRefNo'],
                 "tenID" => $_POST['paymentTenantID'],
                 "payAmount" => $_POST['actualPaymentAmount'],
                 "payMethod" => $_POST['paymentMethod'],
-                "payerFname" => $_POST['payer-fname'],
-                "payerLname" => $_POST['payer-lname'],
-                "payerMI" => $_POST['payer-MI']
+
+                "payerFname" => isset($_POST['payer-fname']) ? $_POST['payer-fname'] : '',
+
+                "payerLname" => isset($_POST['payer-lname']) ? $_POST['payer-lname'] : '',
+
+                "payerMI" => isset($_POST['payer-MI']) ? $_POST['payer-MI'] : ''
             );
 
             $result = BillingsController::create_payment($new_payment);
@@ -138,16 +143,11 @@
                     "billDateIssued" => $_POST['create-billing-billDateIssued'],
                     "endDate" => $_POST['create-billing-end-date'],
                     "billDueDate" => $_POST['create-billing-billDueDate'],
-                    "isPaid" => $_POST['create-billing-isPaid'],
+                    // set billing to unpaid as default
                 );
 
             $result = BillingsController::create_billings($new_billing);
 
-            if ($result) {
-                echo '<script>console.log("Billing created successfully")</script>';
-            } else {
-                echo '<script>console.log("Error created billing")</script>';
-            }
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit();
         }
@@ -169,19 +169,10 @@
         if (isset($_POST['edit-billing-submit'])) {
             $updated_billing = array(
                 "billRefNo" => $_POST['editBillingId'],
-                "billDateIssued" => $_POST['editBillDateIssued'],
-                "billDueDate" => $_POST['editBillDueDate'],
                 "billTotal" => $_POST['editBillTotal'],
-                "isPaid" => $_POST['editStatusPayment'],
             );
             
             $result = BillingsController::update_billing($updated_billing);
-
-            if ($result) {
-                echo '<script>console.log("Billing created successfully")</script>';
-            } else {
-                echo '<script>console.log("Error created billing")</script>';
-            }
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit();
         }
@@ -191,17 +182,14 @@
 
             $updated_bp = array(
                 "billRefNo" => $_POST['editPaidBillingId'],
-                "billDueDate" => $_POST['editPaidBillDueDate'],
                 "billTotal" => $_POST['editPaidBillTotal'],
                 "payMethod" => $_POST['edit-payMethod'],
-                "payDate" => $_POST['edit-datePaid'],
                 "payerFname" => $_POST['edit-payer-fname'],
                 "payerLname" => $_POST['edit-payer-lname'],
                 "payerMI" => $_POST['edit-payer-MI']
             );
 
-            echo '<script>console.log('.json_encode($updated_bp).')</script>';
-
+            echo'<script>console.log( '.json_encode($updated_bp).');</script>';
             $result = BillingsController::update_billing_payment($updated_bp);
 
             if ($result) {
@@ -221,48 +209,14 @@
 <!-- Additional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/js/date.js">
-    
-</script>
+<script src="/js/date.js"></script>
 <script src="/js/prepopulate.js"></script>
 <script src="/js/checkbox.js"></script>
 <script src="/js/date.js"></script>
+<script src="/js/billingsFunction.js"></script>
+
 <script>
-
-    const payOccType = document.getElementById('payment-occupanyType');
-    const addPaymentBtn = document.getElementById('add-payment-button');
-    const noOfAppliances = document.getElementById('noOfAppliances');
-    const totalAmountPayment = document.getElementById('paymentAmount');
-    const actualAmountPayment = document.getElementById('actualPaymentAmount');
-    const applianceRate = document.getElementById('applianceRate');
-
-    let totalAppliance = 0;
-    let totalOccRate = 0;
-
-    payOccType.addEventListener('change', function() {
-        console.log(this.value);
-        totalOccRate = parseInt(this.value);
-        totalAmountPayment.value = totalOccRate + totalAppliance;
-        actualAmountPayment.value = totalOccRate + totalAppliance;
-    });
-
-    addPaymentBtn.addEventListener('click', function() {
-        console.log(this.value);    
-    });
-
-    noOfAppliances.addEventListener('change', function() {
-        let value = parseInt(this.value);
-        if (value < 0) {
-            value = 0;
-        } else if (value > 5) {
-            value = 5;
-        }
-        this.value = value;
-        totalAppliance = value * parseInt(applianceRate.value);
-        totalAmountPayment.value = totalOccRate + totalAppliance;
-        actualAmountPayment.value = totalOccRate + totalAppliance;
-    });
-
+    // searchable drop down handler
     $(function(){
         $("#tenantName").selectize();
         $("#editDatePayment").selectize();
@@ -272,7 +226,6 @@
     
     document.addEventListener('DOMContentLoaded', function () {
     const deleteModal = new bootstrap.Modal(document.getElementById('deleteBillingsModal'));
-
     const deleteButtons = document.querySelectorAll('.delete-button');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -294,44 +247,43 @@
     });
 });
 
-
-    calculateDate('start-date', 'dummy-end-date','end-date');
-    calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
-
+    // calculateDate handler
     
-function handleTabSwitching() {
-    const tabs = document.querySelectorAll('.tab-btn');
-    const allContent = document.querySelectorAll('.content');
-    const slider = document.querySelector('.line');
-
-    function switchTab(tabIndex) {
-        tabs.forEach((tab, index) => {
-            if (index === tabIndex) {
-                tab.classList.add('active');
-                slider.style.width = tab.offsetWidth + "px";
-                slider.style.left = tab.offsetLeft + "px";
-            } else {
-                tab.classList.remove('active');
-            }
-        });
-
-        allContent.forEach((content, index) => {
-            if (index === tabIndex) {
-                content.classList.add('active');
-            } else {
-                content.classList.remove('active');
-            }
-        });
-        localStorage.setItem('activeTabIndex', tabIndex);
-    }
+    calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
+    // comment this out for the mean time
+    // calculateDate('start-date', 'dummy-end-date','end-date');
 
 
+    // tab save even when refreshing handler
+    function handleTabSwitching() {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const allContent = document.querySelectorAll('.content');
+        const slider = document.querySelector('.line');
+
+        function switchTab(tabIndex) {
+            tabs.forEach((tab, index) => {
+                if (index === tabIndex) {
+                    tab.classList.add('active');
+                    slider.style.width = tab.offsetWidth + "px";
+                    slider.style.left = tab.offsetLeft + "px";
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            allContent.forEach((content, index) => {
+                if (index === tabIndex) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+            localStorage.setItem('activeTabIndex', tabIndex);
+        }
     const activeTabIndex = localStorage.getItem('activeTabIndex');
     if (activeTabIndex !== null) {
         switchTab(parseInt(activeTabIndex));
     }
-
-
     tabs.forEach((tab, index) => {
         tab.addEventListener('click', () => {
             switchTab(index);
@@ -340,7 +292,6 @@ function handleTabSwitching() {
 }
 
 document.addEventListener('DOMContentLoaded', handleTabSwitching);
-
 </script>
 
 
