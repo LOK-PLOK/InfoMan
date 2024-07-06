@@ -165,7 +165,6 @@ class BillingsModel extends dbcreds {
     
         return true;
     }
-    
 
     public static function query_billing_data($billRefNo){
         $conn = self::get_connection();
@@ -281,7 +280,6 @@ class BillingsModel extends dbcreds {
     
         return true;
     }
-    
 
     public static function query_get_payment_billing_info($billRefNo){
         $conn = self::get_connection();
@@ -312,7 +310,6 @@ class BillingsModel extends dbcreds {
         
         return $results;
     }
-     
 
     public static function query_create_billings($new_billing){
         $conn = self::get_connection();
@@ -366,7 +363,6 @@ class BillingsModel extends dbcreds {
     
         return true;
     }
-    
 
     public static function query_delete_billings($billing_id) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -462,6 +458,59 @@ class BillingsModel extends dbcreds {
     
         return $results;
     } 
+
+    public static function query_all_occupancy() {
+        $conn = self::get_connection();
+    
+        $query = "SELECT * FROM occupancy";
+        
+        $stmt = $conn->query($query);
+    
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+    
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $results;
+    }
+
+    // Automated Billing Model
+    public static function query_billing_notice_checker($occupancyID){
+        $conn = self::get_connection();
+        $query = "SELECT COUNT(*) AS count
+                    FROM occupancy
+                    WHERE occupancyID = ? AND occDateEnd BETWEEN CURDATE() 
+                    AND DATE_ADD(CURDATE(), INTERVAL 7 DAY);";
+        $stmt = $conn->prepare($query);
+        
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+    
+        $stmt->bind_param("i", $occupancyID); 
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result === false) {
+            die("Error executing query: " . $stmt->error);
+        }
+        
+        $row = $result->fetch_assoc();
+        $count = $row['count'];
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $count > 0 ? true : false;
+    }
 }
 
 ?>

@@ -145,16 +145,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <script src="../js/roomLogsGeneral.js"></script>
 
-<script>
-
-    function delRoomID(roomID){
-        document.getElementById('delete-room-id').value = roomID;
-    }
-
-</script>
-
 <?php 
-
 ob_end_flush();
 html_end(); 
 ?>

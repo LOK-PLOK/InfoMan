@@ -15,57 +15,21 @@ html_start('maintenance.css');
 // Sidebar
 require '../php/navbar.php';
 MaintenanceViews::burger_sidebar();
+
+// Modals
 MaintenanceViews::create_maintenance_modal();
 MaintenanceViews::delete_maintenance_modal();
 MaintenanceViews::edit_maintenance_modal();
 
-if (isset($_GET["edit-maintenance-submit"])) {
-    $edit_maintenance = array(
-        "Edit-maintID" => $_GET["Edit-maintID"],
-        "Edit-roomID" => $_GET["Edit-roomID"],
-        "Edit-maintDate" => $_GET["Edit-maintDate"],
-        "Edit-maintStatus" => $_GET["Edit-maintStatus"],
-        "Edit-maintDesc" => $_GET["Edit-maintDesc"],
-        "Edit-maintCost" => $_GET["Edit-maintCost"],
-    );
-
-    // JSON encode the array and log it to the console
-    // echo '<script>console.log("Editing maintenance:", ' . json_encode($edit_maintenance) . ');</script>';
-    $result = MaintenanceController::edit_maintenance($edit_maintenance);
-
-    header("Location: /pages/maintenance.php");
-    exit();
-}
-?>
-
-<!-- Header -->
-<?php
+// Headers
 MaintenanceViews::maintenance_header();
 MaintenanceViews::maintenance_content();
-?>
-    
-<?php
-html_end();
-ob_end_flush(); // End output buffering and flush the buffer
 
-if (isset($_GET['delete-maintenance-submit'])) {
-    $maintenanceID = $_GET['deleteMaintID'] ?? '';
-
-    // Handle your deletion logic here using MaintenanceController::deleteMaintenanceById($maintenanceID);
-    $result = MaintenanceController::deleteMaintenanceById($maintenanceID);
-
-    // Example response based on your controller logic
-    if ($result) {
-        header("Location: /pages/maintenance.php?deleteStatus=success");
-        exit();
-    } else {
-        header("Location: /pages/maintenance.php?deleteStatus=error");
-        exit();
-    }
-}
-
+// POST Requests handling
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+
+    // Handle the create new maintenance form submission
     if (isset($_POST['create-new-maintenance'])) {
         $create_maintenance = array(
             "roomID" => htmlspecialchars($_POST['maintenance-room-code']),
@@ -75,22 +39,64 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             "maintCost" => htmlspecialchars($_POST['maintCost'])
             
         );
-        echo '<script>console.log(' . json_encode($create_maintenance) . ');</script>';
+
         $result = MaintenanceController::create_new_maintenance($create_maintenance);
+
         if ($result) {
-            echo '<script>console.log("New maintenance added successfully")</script>';
+            echo '<script>alert("New maintenance added successfully");</script>';
+            header("Location: /pages/maintenance.php?createStatus=success");
+            exit();
         } else {
-            echo '<script>console.log("Error")</script>';
+            echo '<script>alert("Failed to add new maintenance");</script>';
+            header("Location: /pages/maintenance.php?createStatus=error");
+            exit();
         }
-
-        // Output the contents of $create_rent for debugging
-        echo '<script>console.log(' . json_encode($create_maintenance) . ');</script>';
     }
-    
-    // After handling the form submission, redirect to avoid form resubmission
-    header("Location: " . $_SERVER['REQUEST_URI']);
-    exit(); // Make sure to exit after redirect
 
+
+    // Handle the edit maintenance form submission
+    if (isset($_POST["edit-maintenance-submit"])) {
+        $edit_maintenance = array(
+            "Edit-maintID" => $_POST["Edit-maintID"],
+            "Edit-roomID" => $_POST["Edit-roomID"],
+            "Edit-maintDate" => $_POST["Edit-maintDate"],
+            "Edit-maintStatus" => $_POST["Edit-maintStatus"],
+            "Edit-maintDesc" => $_POST["Edit-maintDesc"],
+            "Edit-maintCost" => $_POST["Edit-maintCost"],
+        );
+    
+        $result = MaintenanceController::edit_maintenance($edit_maintenance);
+        if ($result) {
+            echo '<script>alert("Maintenance edited successfully");</script>';
+            header("Location: /pages/maintenance.php?editStatus=success");
+            exit();
+        } else {
+            echo '<script>alert("Failed to edit maintenance");</script>';
+            header("Location: /pages/maintenance.php?editStatus=error");
+            exit();
+        }
+    }
+
+
+    // Handle the delete maintenance form submission
+    if (isset($_POST['delete-maintenance-submit'])) {
+        $maintenanceID = $_POST['deleteMaintID'] ?? '';
+    
+        // Handle your deletion logic here using MaintenanceController::deleteMaintenanceById($maintenanceID);
+        $result = MaintenanceController::deleteMaintenanceById($maintenanceID);
+    
+        // Example response based on your controller logic
+        if ($result) {
+            header("Location: /pages/maintenance.php?deleteStatus=success");
+            exit();
+        } else {
+            header("Location: /pages/maintenance.php?deleteStatus=error");
+            exit();
+        }
+    }
 }
+
+html_end();
+ob_end_flush(); // End output buffering and flush the buffer
 
 ?>

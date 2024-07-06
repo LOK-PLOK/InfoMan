@@ -336,7 +336,7 @@ class MaintenanceViews extends GeneralViews{
                             <button type="button" class="btn-close" id="editCloseButton" aria-label="Close"></button>
                         </div>
                         <div class="modal-body bg-custom">
-                            <form method="GET" class="modalcolumn">
+                            <form method="POST" class="modalcolumn">
                                 <!-- Hidden field for maintenance ID -->
                                 <input type="hidden" id="Edit-maintID" name="Edit-maintID" value="">
     
@@ -423,7 +423,7 @@ class MaintenanceViews extends GeneralViews{
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body bg-custom">
-                            <form id="deleteMaintenanceForm"  method="GET">
+                            <form id="deleteMaintenanceForm" method="POST">
                                 <!-- Hidden input to store the maintenance ID -->
                                 <input type="hidden" id="deleteMaintID" name="deleteMaintID" value="">
                                 

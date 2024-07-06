@@ -21,6 +21,10 @@ function setValuesEditRoom(roomID, roomCapacity) {
     console.log('Room Capacity: ' + roomCapacity);
 }
 
+function delRoomID(roomID){
+    document.getElementById('delete-room-id').value = roomID;
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
 

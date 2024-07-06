@@ -85,11 +85,6 @@
                             ?>
                         </div>
 
-    
-                        <span class="table-section-footer" >
-                            Showing 1 page to 3 of 3 entries
-                            
-                        </span>
                     </div>
                     
                 </div>

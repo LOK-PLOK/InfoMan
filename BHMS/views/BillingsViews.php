@@ -431,10 +431,15 @@ class BillingsViews extends GeneralViews{
                     $payment_billing_info = BillingsController::get_payment_billing_info($billingId);
                     $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
                 }
+
+                // Converts the date to a more readable format
+                $billDateIssuedReadable = date('F j, Y', strtotime($billDateIssued));
+                $billDueDateReadable = date('F j, Y', strtotime($billDueDate));
+
                 echo <<<HTML
                     <tr>
-                        <td>$billDateIssued</td>
-                        <td>$billDueDate</td>
+                        <td>$billDateIssuedReadable</td>
+                        <td>$billDueDateReadable</td>
                         <td>$tenantFullName</td>
                         <td>$billTotal</td>
                         <td class="action-buttons">
