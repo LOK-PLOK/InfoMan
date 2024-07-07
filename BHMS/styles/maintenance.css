@@ -39,6 +39,61 @@
     gap: 3px;
     font-size: clamp(0.65rem, 2.5vw, 1rem);
 }
+.blue{
+    background-color: #344799 !important; 
+}
+
+.no-design1{
+    border: none;
+    background-color: #344799;
+    color: white;
+    padding-left: 50px; 
+    padding-right: 50px; 
+    margin-bottom: 3px;
+}
+.no-design2{
+    border: none;
+    background-color: #344799;
+    color: white;
+    padding-left: 73.5px; 
+    padding-right: 73.5px; 
+    margin-bottom: 3px;
+}
+.no-design3{
+    border: none;
+    background-color: #344799;
+    color: white;
+    padding-left: 73.5px; 
+    padding-right: 73.5px; 
+    margin-bottom: 3px;
+}
+
+.no-design1:hover, .no-design2:hover, .no-design3:hover{
+    background-color: white;
+    color: #344799;;
+}
+
+/* CSS */
+.input-icon-container {
+position: relative;
+display: inline-block;
+}
+
+.searchclass {
+padding: 5px 10px 5px 10px; /* Adjust based on the size of the icon */
+border-radius: 5px;
+color: white;
+}
+.searchclass::placeholder {
+color: white;
+}
+.search-icon {
+position: absolute;
+right: 10px; /* Adjust based on desired position */
+top: 50%;
+transform: translateY(-50%);
+color: white; /* Adjust the color as needed */
+}
 
 .billings-content{
     margin-top: 35px;
@@ -101,6 +156,15 @@
 
 .search img{
     height: 20px;
+}
+
+.searchclass{
+    background-color: #344799; 
+    color: white;
+    border: none;
+}
+.searchclass input[type="text"]::placeholder{
+    color: white;
 }
 
 /* Table Styles */

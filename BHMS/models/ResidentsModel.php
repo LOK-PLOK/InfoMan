@@ -205,7 +205,7 @@ class ResidentsModel extends dbcreds{
             }
     
             // SQL query to select all tenants
-            $query = "SELECT * FROM tenant";
+            $query = "SELECT * FROM tenant ORDER BY isRenting=1 DESC";
     
             // Execute the query
             $result = $conn->query($query);
@@ -518,6 +518,91 @@ class ResidentsModel extends dbcreds{
 
         return true;
    }
+
+   public static function residents_data_Active(){
+    $conn = self::get_connection();
+    $query = "SELECT * FROM tenant WHERE isRenting = 1 ORDER BY isRenting DESC ";
+    $stmt = $conn->query($query);
+
+    if ($stmt === false) {
+        die("Error executing query: " . $conn->error);
+    }
+
+    // Fetch the result
+    $results = [];
+    while ($row = $stmt->fetch_assoc()) {
+        $results[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $results;
+   }
+
+   public static function residents_data_Inactive(){
+    $conn = self::get_connection();
+    $query = "SELECT * FROM tenant WHERE isRenting = 0 ORDER BY isRenting DESC";
+    $stmt = $conn->query($query);
+
+    if ($stmt === false) {
+        die("Error executing query: " . $conn->error);
+    }
+
+    // Fetch the result
+    $results = [];
+    while ($row = $stmt->fetch_assoc()) {
+        $results[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $results;
+   }
+
+   public static function residents_data_Name(){
+    $conn = self::get_connection();
+    $query = "SELECT * FROM tenant ORDER BY tenLname ASC";
+    $stmt = $conn->query($query);
+
+    if ($stmt === false) {
+        die("Error executing query: " . $conn->error);
+    }
+
+    // Fetch the result
+    $results = [];
+    while ($row = $stmt->fetch_assoc()) {
+        $results[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $results;
+   }
+
+   public static function residents_data_Search($search){
+    $conn = self::get_connection();
+    $query = "SELECT * FROM tenant WHERE LOWER(CONCAT(tenFname,tenLname,tenMI)) LIKE LOWER('%$search%') ORDER BY tenLname ASC";
+    $stmt = $conn->query($query);
+
+    if ($stmt === false) {
+        die("Error executing query: " . $conn->error);
+    }
+
+    // Fetch the result
+    $results = [];
+    while ($row = $stmt->fetch_assoc()) {
+        $results[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $results;
+   }
+
 }
 
 ?>

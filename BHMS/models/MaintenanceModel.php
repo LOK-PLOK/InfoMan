@@ -113,12 +113,12 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
-    public static function get_canceled_data(){
+    public static function query_cancelled_data(){
         // Get the database connection
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Canceled'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled'";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -216,6 +216,294 @@ class MaintenanceModel extends dbcreds {
             // Return false to indicate failure
             return false;
         }
+    }
+
+    public static function query_On_going_data_RoomCode(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' ORDER BY roomID ASC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_On_going_data_Cost(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' ORDER BY maintCost DESC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_On_going_data_Date(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' ORDER BY maintDate DESC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_completed_data_RoomCode(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' ORDER BY roomID ASC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_completed_data_Cost(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' ORDER BY maintCost DESC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_completed_data_Date(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' ORDER BY maintDate DESC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_cancelled_data_RoomCode(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' ORDER BY roomID ASC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_cancelled_data_Cost(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' ORDER BY maintCost DESC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_cancelled_data_Date(){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' ORDER BY maintDate DESC";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_On_going_data_search($search){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND roomID LIKE '%$search%'";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_completed_data_search($search){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND roomID LIKE '%$search%'";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
+    }
+
+    public static function query_cancelled_data_search($search){
+        // Get the database connection
+        $conn = self::get_connection();
+
+        // The SQL query to select "On-going" maintenance data
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND roomID LIKE '%$search%'";
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Check for errors
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        // Fetch all rows as an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        // Close the connection
+        $conn->close();
+
+        return $data;
     }
  
 }

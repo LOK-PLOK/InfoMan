@@ -25,14 +25,28 @@ ResidentsViews::add_tenant_modal_view();
 ResidentsViews::edit_tenant_modal_view();
 
 // Fetch and display tenants
-$tenant_list = ResidentsController::residents_table_data();
+if(isset($_GET['Active'])){
+    $tenant_list = ResidentsController::residents_table_data_Active();
+}elseif(isset($_GET['Inactive'])){
+    $tenant_list = ResidentsController::residents_table_data_Inactive();
+}elseif(isset($_POST['Name'])){
+    $tenant_list = ResidentsController::residents_table_data_Name();
+}else{
+    $tenant_list = ResidentsController::residents_table_data();
+}
+if(isset($_GET['search']) && $_GET['search']!=""){
+    $search = $_GET['search'];
+    $tenant_list = ResidentsController::residents_table_data_Search($search);
+}
 ResidentsViews::residents_table_display($tenant_list);
 
-if ($tenant_list) {
-    echo '<script>console.log("Tenant list fetched successfully")</script>';
-} else {
-    echo '<script>console.log("Error fetching tenant list")</script>';
-}
+
+
+// if ($tenant_list) {
+//     echo '<script>console.log("Tenant list fetched successfully")</script>';
+// } else {
+//     echo '<script>console.log("Error fetching tenant list")</script>';
+// }
 
 // C.U.D Operations
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -170,8 +184,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             exit();
         }
     }
-    
+
 }
+
 
 echo '<script src="../js/residents_edit&delete_modal.js"></script>';
 

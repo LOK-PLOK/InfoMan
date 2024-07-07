@@ -11,7 +11,7 @@ class ResidentsViews extends GeneralViews{
         
         $total_current_residents = ResidentsController::total_current_residents();
 
-        echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
+        // echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
         
         echo <<<HTML
             <div class="header-container">
@@ -171,21 +171,26 @@ class ResidentsViews extends GeneralViews{
                     <!-- Leftside Area header -->
                     <div class="leftside-content">
                         <span class="text-color">Sort by:</span>
-                        <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="pe-5 fs-6">Category...</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                Testing
-                            </ul>
-                        </div>
+                        <form method="GET">
+                            <div class="btn-group">
+                                <button class="btn btn-primary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="pe-5 fs-6">Category...</span>
+                                </button>
+                                <ul class="dropdown-menu" style="background-color: #344799;">
+                                    <li class="d-flex justify-content-center"><input type="submit"  name="ALL"value="ALL" class="no-design1"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"  name="Active"value="Active" class="no-design1"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"   name="Inactive" value="Inactive"class="no-design2"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"   name="Name" value="Name"class="no-design2"></li>
+                                </ul>
+                            </div>
+                        </form>
                     </div>
     
                     <!-- Rightside Area header -->
                     <div class="rigthside-content">
                         <form>
                             <div class="search-container shadow">
-                                <input type="text" id="search" name="search" placeholder="Search">
+                                <input type="text" id="search" name="search" placeholder="Search" value>
                                 <span class="search-icon"><i class="fas fa-search"></i></span>
                             </div>
                         </form>
@@ -218,14 +223,14 @@ HTML;
             $occupancyDataJson = json_encode($occupancy);
 
             // Echoing the JavaScript to log each variable in the console
-            echo '<script>
-            // console.log("Tenant Data:", ('.(json_encode($tenantDataJson)).'));
-            // console.log("Appliances Data:", ('.json_encode($appliancesDataJson).'));
-            console.log("Occupancy Data:", ('.json_encode($occupancyDataJson).'));
-            // console.log("Appliance Data:", ('.json_encode($appliances).'));
-            console.log("Occupancy Data:", ('.json_encode($occupancy).'));
+            // echo '<script>
+            // // console.log("Tenant Data:", ('.(json_encode($tenantDataJson)).'));
+            // // console.log("Appliances Data:", ('.json_encode($appliancesDataJson).'));
+            // console.log("Occupancy Data:", ('.json_encode($occupancyDataJson).'));
+            // // console.log("Appliance Data:", ('.json_encode($appliances).'));
+            // console.log("Occupancy Data:", ('.json_encode($occupancy).'));
 
-            </script>';
+            // </script>';
             
             echo '
                             <tr>
@@ -305,7 +310,7 @@ HTML;
                     <div class="header">Rent History</div>
                     <section class="table-data">
                         <div class="table-responsive">
-                            <table class="table table-bordered styling rounded-top rounded-bottom">
+                            <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799">
                                 <thead>
                                     <tr>
                                         <th>Room Code</th>
@@ -339,7 +344,7 @@ HTML;
                 var tenantData = JSON.parse(this.getAttribute("data-tenant"));
                 var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
                 var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
-                console.log("Occupancy data infoModal", occupancyData);
+                // console.log("Occupancy data infoModal", occupancyData);
 
                 // Update tenant information section
                 tenantInfoModalBody.innerHTML = `

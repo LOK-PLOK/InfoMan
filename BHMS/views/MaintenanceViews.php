@@ -122,41 +122,76 @@ class MaintenanceViews extends GeneralViews{
                 ';
                     self::On_going_table_data();
                     self::Completed_table_data();
-                    self::Canceled_table_data();
+                    self::Cancelled_table_data();
                     
                 
     }
 
     public static function On_going_table_data() {
-        // Fetch the "On-going" maintenance data.
-        $On_going = MaintenanceController::get_On_going_data();
+        // Fetch the "On-going" maintenance data. 
+        if(isset($_GET['On-going-RoomCode']) && !empty($_GET['On-going-RoomCode'])){
+            $On_going = MaintenanceController::get_On_going_data_RoomCode();
+        }elseif(isset($_GET['On-going-Cost']) && !empty($_GET['On-going-Cost'])){
+            $On_going = MaintenanceController::get_On_going_data_Cost();
+        }elseif(isset($_GET['On-going-Date']) && !empty($_GET['On-going-Date'])){
+            $On_going = MaintenanceController::get_On_going_data_Date();
+        }else{
+            if(isset($_GET['On-going-search']) && !empty($_GET['On-going-search'])){
+                $search = $_GET['On-going-search'];
+                $On_going = MaintenanceController::get_On_going_data_search($search);
+
+            }else{
+                $On_going = MaintenanceController::get_On_going_data();
+            }
+            
+        }
     
         // Begin the HTML output.
-        echo '
+        echo <<<HTML
         <!-- On-going -->
         <div class="content active">
             <div class="table-section styled-table">
-                <div class="table-cont-1">
-                    <div class="table-cont-1-1">
-                        <span>Sort By</span>
-                        <button class="blue-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
-                    </div>
-    
-                    <button class="search">Search <span class="search-icon"><i class="fas fa-search"></i></span></button>
+            <div class="table-cont-1">
+                <div class="table-cont-1-1">
+                <span>Sort By</span>
+                <form action="" method="GET">
+
+                    <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="pe-5 fs-6">Category...</span>
+                    </button>
+                            <ul class="dropdown-menu" style="background-color: #344799;">
+                                <li class="d-flex justify-content-center"><input type="submit"  name="On-going-RoomCode"value="RoomCode" class="no-design1"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="On-going-Cost"value="Cost" class="no-design2"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="On-going-Date" value="Date"class="no-design3"></li>
+                            </ul>
+                </form>
+                
                 </div>
-    
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Room Code</th>
-                            <th>Cost</th>
-                            <th>More</th>
-                            <th>Reason</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+
+                <!-- HTML -->
+                 <form >
+                    <div class="input-icon-container">
+                        <input type="text" class="searchclass" name="On-going-search" placeholder="Search">
+                        <i class="fa fa-search search-icon"></i>
+                    </div>
+                 </form>
+                
+                
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Room Code</th>
+                    <th>Cost</th>
+                    <th>More</th>
+                    <th>Reason</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+    HTML;
     
         // Loop through the fetched data and create a table row for each record.
         foreach ($On_going as $maintenance) {
@@ -195,33 +230,65 @@ class MaintenanceViews extends GeneralViews{
 
     public static function Completed_table_data() {
         // Fetch the "Completed" maintenance data.
-        $completed = MaintenanceController::get_completed_data();
+        if(isset($_GET['Completed-RoomCode']) && !empty($_GET['Completed-RoomCode'])){
+            $completed = MaintenanceController::get_completed_data_RoomCode();
+        }elseif(isset($_GET['Completed-Cost']) && !empty($_GET['Completed-Cost'])){
+            $completed = MaintenanceController::get_completed_data_Cost();
+        }elseif(isset($_GET['Completed-Date']) && !empty($_GET['Completed-Date'])){
+            $completed = MaintenanceController::get_completed_data_Date();
+        }else{
+            if(isset($_GET['Completed-search']) && !empty($_GET['Completed-search'])){
+            $search = $_GET['Completed-search'];
+            $completed = MaintenanceController::get_completed_data_search($search);
+
+            }else{
+            $completed = MaintenanceController::get_completed_data();
+            }
+        }
     
         // Begin the HTML output.
-        echo '
+        echo <<<HTML
         <!-- Completed -->
         <div class="content">
             <div class="table-section styled-table">
-                <div class="table-cont-1">
-                    <div class="table-cont-1-1">
-                        <span>Sort By</span>
-                        <button class="blue-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
-                    </div>
-                    <button class="search">Search <span class="search-icon"><i class="fas fa-search"></i></span></button>
+            <div class="table-cont-1">
+                <div class="table-cont-1-1">
+                <span>Sort By</span>
+                <form action="" method="GET">
+
+                    <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="pe-5 fs-6">Category...</span>
+                    </button>
+                            <ul class="dropdown-menu" style="background-color: #344799;">
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-RoomCode"value="RoomCode" class="no-design1"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-Cost"value="Cost" class="no-design2"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="Completed-Date" value="Date"class="no-design3"></li>
+                            </ul>
+                </form>
                 </div>
-    
-                <table>
-                    <thead>
-                        <tr class ="completed">
-                            <th>Room Code</th>
-                            <th>Cost</th>
-                            <th>More</th>
-                            <th>Reason</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+                <!-- HTML -->
+                <form>
+                    <div class="input-icon-container">
+                        <input type="text" class="searchclass" name="Completed-search" placeholder="Search">
+                        <i class="fa fa-search search-icon"></i>
+                    </div>
+                 </form>
+
+            </div>
+
+            <table>
+                <thead>
+                <tr class ="completed">
+                    <th>Room Code</th>
+                    <th>Cost</th>
+                    <th>More</th>
+                    <th>Reason</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+    HTML;
     
         // Loop through the fetched data and create a table row for each record.
         foreach ($completed as $maintenance) {
@@ -258,35 +325,66 @@ class MaintenanceViews extends GeneralViews{
         </div>';
     }
 
-    public static function Canceled_table_data() {
-        // Fetch the "Canceled" maintenance data.
-        $cancelled = MaintenanceController::get_canceled_data();
+    public static function Cancelled_table_data() {
+        // Fetch the "Cancelled" maintenance data.
+        if(isset($_GET['Cancelled-RoomCode']) && !empty($_GET['Cancelled-RoomCode'])){
+            $cancelled = MaintenanceController::get_cancelled_data_RoomCode();
+        }elseif(isset($_GET['Cancelled-Cost']) && !empty($_GET['Cancelled-Cost'])){
+            $cancelled = MaintenanceController::get_cancelled_data_Cost();
+        }elseif(isset($_GET['Cancelled-Date']) && !empty($_GET['Cancelled-Date'])){
+            $cancelled = MaintenanceController::get_cancelled_data_Date();
+        }else{
+            if(isset($_GET['Cancelled-search']) && !empty($_GET['Cancelled-search'])){
+            $search = $_GET['Cancelled-search'];
+            $cancelled = MaintenanceController::get_cancelled_data_search($search);
+        
+            }else{
+            $cancelled = MaintenanceController::get_cancelled_data();
+            }
+        }
     
         // Begin the HTML output.
-        echo '
-        <!-- Canceled -->
+        echo <<<HTML
+        <!-- Cancelled -->
         <div class="content">
             <div class="table-section styled-table">
-                <div class="table-cont-1">
-                    <div class="table-cont-1-1">
-                        <span>Sort By</span>
-                        <button class="blue-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Category</button>
-                    </div>
-                    <button class="search">Search <span class="search-icon"><i class="fas fa-search"></i></span></button>
+            <div class="table-cont-1">
+                <div class="table-cont-1-1">
+                <span>Sort By</span>
+                <form action="" method="GET">
+
+                    <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="pe-5 fs-6">Category...</span>
+                    </button>
+                            <ul class="dropdown-menu" style="background-color: #344799;">
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-RoomCode"value="RoomCode" class="no-design1"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-Cost"value="Cost" class="no-design2"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="Cancelled-Date" value="Date"class="no-design3"></li>
+                            </ul>
+                </form>
                 </div>
-    
-                <table>
-                    <thead>
-                        <tr class="canceled">
-                            <th>Room Code</th>
-                            <th>Cost</th>
-                            <th>More</th>
-                            <th>Reason</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+                <form>
+                    <div class="input-icon-container">
+                        <input type="text" class="searchclass" name="Cancelled-search" placeholder="Search">
+                        <i class="fa fa-search search-icon"></i>
+                    </div>
+                 </form>
+
+            </div>
+
+            <table>
+                <thead>
+                <tr class="canceled">
+                    <th>Room Code</th>
+                    <th>Cost</th>
+                    <th>More</th>
+                    <th>Reason</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+    HTML;
     
         // Loop through the fetched data and create a table row for each record.
         foreach ($cancelled as $maintenance) {
@@ -384,7 +482,7 @@ class MaintenanceViews extends GeneralViews{
                                             <option value="" disabled selected>Choose the status...</option>
                                             <option value="On-going">On-going</option>
                                             <option value="Completed">Completed</option>
-                                            <option value="Canceled">Cancelled</option>
+                                            <option value="Cancelled">Cancelled</option>
                                         </select>
                                     </div>
                                 </div>

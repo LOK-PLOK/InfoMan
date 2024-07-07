@@ -33,6 +33,13 @@ class ResidentsController extends GeneralController{
         return ResidentsModel::residents_data();
     }
 
+    public static function residents_table_data_Active(){
+        return ResidentsModel::residents_data_Active();
+    }
+    public static function residents_table_data_Inactive(){
+        return ResidentsModel::residents_data_Inactive();
+    }
+
     public static function deleteTenantById($tenantIdToDelete){
         return ResidentsModel::deleteTenantById($tenantIdToDelete);
     }
@@ -59,6 +66,14 @@ class ResidentsController extends GeneralController{
 
     public static function delete_occupancy($delOccInfo){
         return ResidentsModel::delete_occupancy($delOccInfo);
+    }
+
+    public static function residents_table_data_Name(){
+        return ResidentsModel::residents_data_Name();
+    }
+
+    public static function residents_table_data_Search($search){
+        return ResidentsModel::residents_data_Search($search);
     }
 
 }
