@@ -62,18 +62,18 @@ class ResidentsViews extends GeneralViews{
                                     <!-- tenFname -->
                                     <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
                                     <!-- tenMI -->
-                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" required>
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow">
                                     <!-- tenLname -->
                                     <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
                                 </div>
                                 <!-- tenGender -->
-                                <select id="tenGender" name="tenGender" class="shadow">
+                                <select id="tenGender" name="tenGender" class="shadow" required>
                                     <option value="" disabled selected>...</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
                                 </select>
                                 <!-- tenBdate -->
-                                <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
+                                <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow" required>
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>
@@ -109,7 +109,7 @@ class ResidentsViews extends GeneralViews{
                             <div>
                                 <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" required>
+                                <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" >
                             </div>
                             <!-- Emergency Contact -->
                             <div class="header label-position">
@@ -165,7 +165,7 @@ class ResidentsViews extends GeneralViews{
         // Start echoing the HTML content
         echo <<<HTML
             <div class="data-container">
-    
+
                 <!-- Table Header -->
                 <header class="upper">
                     <!-- Leftside Area header -->
@@ -185,7 +185,7 @@ class ResidentsViews extends GeneralViews{
                             </div>
                         </form>
                     </div>
-    
+
                     <!-- Rightside Area header -->
                     <div class="rigthside-content">
                         <form>
@@ -196,11 +196,11 @@ class ResidentsViews extends GeneralViews{
                         </form>
                     </div>
                 </header>
-    
+
                 <!-- Table Actual -->
-                <section class="table-data">
+                <section class="table-data overflow-auto" style="max-height: 500px;">
                     <table class="table styled-table">
-                        <thead>
+                        <thead class="sticky-top">
                             <tr>
                                 <th>Residents Info</th>
                                 <th>Status</th>
@@ -221,16 +221,6 @@ HTML;
             $appliancesDataJson = htmlspecialchars(json_encode($appliances));
             $occupancy = ResidentsController::get_occupancy($tenant['tenID']);
             $occupancyDataJson = json_encode($occupancy);
-
-            // Echoing the JavaScript to log each variable in the console
-            // echo '<script>
-            // // console.log("Tenant Data:", ('.(json_encode($tenantDataJson)).'));
-            // // console.log("Appliances Data:", ('.json_encode($appliancesDataJson).'));
-            // console.log("Occupancy Data:", ('.json_encode($occupancyDataJson).'));
-            // // console.log("Appliance Data:", ('.json_encode($appliances).'));
-            // console.log("Occupancy Data:", ('.json_encode($occupancy).'));
-
-            // </script>';
             
             echo '
                             <tr>
@@ -319,7 +309,7 @@ HTML;
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="rentHistoryTableBody">
+                                <tbody id="rentHistoryTableBody scrollable-tbody">
                                     <!-- Rent history will be loaded here dynamically -->
                                 </tbody>
                             </table>
@@ -333,113 +323,109 @@ HTML;
 
     // JavaScript for handling the click event and loading data into modal
     echo '
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
-        var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
-        var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
+    var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
+    var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
 
-        tenantInfoButtons.forEach(function(btn) {
-            btn.addEventListener("click", function() {
-                var tenantData = JSON.parse(this.getAttribute("data-tenant"));
-                var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
-                var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
-                // console.log("Occupancy data infoModal", occupancyData);
+    tenantInfoButtons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            var tenantData = JSON.parse(this.getAttribute("data-tenant"));
+            var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
+            var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
 
-                // Update tenant information section
-                tenantInfoModalBody.innerHTML = `
-                    <div class="split-left">
-                        <div>
-                            <span class="label">Name:</span>
-                            <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
-                        </div>
-                        <div>
-                            <span class="label">Contact Number:</span>
-                            <span>${tenantData.tenContact}</span>
-                        </div>
-                        <div>
-                            <span class="label">Address:</span>
-                            <span>${tenantData.tenHouseNum} ${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
-                        </div>
-                        <div>
-                            <span class="label">Gender:</span>
-                            <span>${tenantData.tenGender}</span>
-                        </div>
-                        <div>
-                            <span class="label">Birth Date:</span>
-                            <span>${formatDate(tenantData.tenBdate)}</span>
-                        </div>
-                        <div>
-                            <span class="label">Appliances:</span>
-                            <ul id="appliancesList"></ul>
-                        </div>
+            // Update tenant information section
+            tenantInfoModalBody.innerHTML = `
+                <div class="split-left">
+                    <div>
+                        <span class="label">Name:</span>
+                        <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
                     </div>
-                    <div class="split-right">
-                        <div>
-                            <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
-                        </div>
-                        <div>
-                            <span class="label">Name:</span>
-                            <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
-                        </div>
-                        <div>
-                            <span class="label">Contact Number:</span>
-                            <span>${tenantData.emContactNum}</span>
-                        </div>
+                    <div>
+                        <span class="label">Contact Number:</span>
+                        <span>${tenantData.tenContact}</span>
                     </div>
+                    <div>
+                        <span class="label">Address:</span>
+                        <span>${tenantData.tenHouseNum !== "0" ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
+                    </div>
+                    <div>
+                        <span class="label">Gender:</span>
+                        <span>${tenantData.tenGender}</span>
+                    </div>
+                    <div>
+                        <span class="label">Birth Date:</span>
+                        <span>${formatDate(tenantData.tenBdate)}</span>
+                    </div>
+                    <div>
+                        <span class="label">Appliances:</span>
+                        <ul id="appliancesList"></ul>
+                    </div>
+                </div>
+                <div class="split-right">
+                    <div>
+                        <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
+                    </div>
+                    <div>
+                        <span class="label">Name:</span>
+                        <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
+                    </div>
+                    <div>
+                        <span class="label">Contact Number:</span>
+                        <span>${tenantData.emContactNum}</span>
+                    </div>
+                </div>
+            `;
+
+            // Update appliances list
+            var appliancesList = document.getElementById("appliancesList");
+            appliancesList.innerHTML = ""; // Clear previous content
+            appliancesData.forEach(function(appliance) {
+                var li = document.createElement("li");
+                li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
+                appliancesList.appendChild(li);
+            });
+
+            // Update rent history table with occupancy data
+            rentHistoryTableBody.innerHTML = ""; // Clear previous content
+            occupancyData.forEach(function(occupancy) {
+                var tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${occupancy.roomID}</td>
+                    <td>${formatDate(occupancy.occDateStart)}</td>
+                    <td>${formatDate(occupancy.occDateEnd)}</td>
+                    <td>
+                        <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
+                            value=${occupancy.roomID}
+                            onclick="setValuesTenantInfo(
+                                ${occupancy.occupancyID},
+                                \'${occupancy.tenFname}\',
+                                \'${occupancy.tenMI}\',
+                                \'${occupancy.tenLname}\',
+                                \'${occupancy.roomID}\',
+                                \'${occupancy.occTypeName}\',
+                                \'${occupancy.occDateStart}\',
+                                \'${occupancy.occDateEnd}\',
+                                ${occupancy.occupancyRate}
+                            );"
+                        >
+                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                        </button>
+
+                        <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
+                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
+                        </button>
+                    </td>
                 `;
-
-                // Update appliances list
-                var appliancesList = document.getElementById("appliancesList");
-                appliancesList.innerHTML = ""; // Clear previous content
-                appliancesData.forEach(function(appliance) {
-                    var li = document.createElement("li");
-                    li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
-                    appliancesList.appendChild(li);
-                });
-
-                // Update rent history table with occupancy data
-                rentHistoryTableBody.innerHTML = ""; // Clear previous content
-                occupancyData.forEach(function(occupancy) {
-                
-                    var tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${occupancy.roomID}</td>
-                        <td>${formatDate(occupancy.occDateStart)}</td>
-                        <td>${formatDate(occupancy.occDateEnd)}</td>
-                        <td>
-                            <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
-                                value=${occupancy.roomID}
-                                        onclick="setValuesTenantInfo(
-                                                        ${occupancy.occupancyID},
-                                                        \'${occupancy.tenFname}\',
-                                                        \'${occupancy.tenMI}\',
-                                                        \'${occupancy.tenLname}\',
-                                                        \'${occupancy.roomID}\',
-                                                        \'${occupancy.occTypeName}\',
-                                                        \'${occupancy.occDateStart}\',
-                                                        \'${occupancy.occDateEnd}\',
-                                                        ${occupancy.occupancyRate}
-                                                    );"
-                            >
-                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                            </button>
-
-                            <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
-                                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
-                            </button>
-                        
-                        </td>
-                    `;
-                    rentHistoryTableBody.appendChild(tr);
-                });
+                rentHistoryTableBody.appendChild(tr);
             });
         });
     });
-    </script>
+});
+</script>
+';
 
-
-    ';
 }
 
     public static function  editOccupancyModal(){
@@ -579,7 +565,7 @@ HTML;
                                     <!-- Edit tenFname -->
                                     <input type="text" id="Edit-tenFname" name="Edit-tenFname" placeholder="First Name" class="FNclass shadow" required>
                                     <!-- Edit tenMI -->
-                                    <input type="text" id="Edit-tenMI" name="Edit-tenMI" placeholder="MI" class="MIclass shadow" required>
+                                    <input type="text" id="Edit-tenMI" name="Edit-tenMI" placeholder="MI" class="MIclass shadow">
                                     <!-- Edit tenLname -->
                                     <input type="text" id="Edit-tenLname" name="Edit-tenLname" placeholder="Last Name" class="LNclass shadow" required>
                                 </div>
@@ -603,15 +589,15 @@ HTML;
                             </div>
                             <div>
                                 <!-- Edit-tenHouseNum -->
-                                <input type="text" id="Edit-tenHouseNum" name="Edit-tenHouseNum" placeholder="House Number" class="houseno shadow" required>
+                                <input type="text" id="Edit-tenHouseNum" name="Edit-tenHouseNum" placeholder="House Number" class="houseno shadow" >
                                 <!-- Edit-tenSt -->
-                                <input type="text" id="Edit-tenSt" name="Edit-tenSt" placeholder="Street" class="street shadow" required>
+                                <input type="text" id="Edit-tenSt" name="Edit-tenSt" placeholder="Street" class="street shadow" >
                                 <!-- Edit-tenBrgy -->
                                 <input type="text" id="Edit-tenBrgy" name="Edit-tenBrgy" placeholder="" class="barangay shadow">
                                 <!-- Edit-tenCityMun -->
-                                <input type="text" id="Edit-tenCityMun" name="Edit-tenCityMun" placeholder="City/Municipality" class="city shadow" required>
+                                <input type="text" id="Edit-tenCityMun" name="Edit-tenCityMun" placeholder="City/Municipality" class="city shadow" >
                                 <!-- Edit-tenProvince -->
-                                <input type="text" id="Edit-tenProvince" name="Edit-tenProvince" placeholder="Province" class="province shadow" required>
+                                <input type="text" id="Edit-tenProvince" name="Edit-tenProvince" placeholder="Province" class="province shadow" >
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-houseno">House No.</div>
@@ -627,7 +613,7 @@ HTML;
                             <div>
                             <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- Edit-tenContact -->
-                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="Contact Number" class="number shadow" required>
+                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="Contact Number" class="number shadow">
                             </div>
                             
                             <div class="header label-position">
@@ -640,14 +626,14 @@ HTML;
                             <div style="display: flex; justify-content:left;">
                                 <div class="NameInput">
                                     <!-- Edit-emContactFname -->
-                                    <input type="text" id="Edit-emContactFname" name="Edit-emContactFname" placeholder="First Name" class="FNclass shadow" required>
+                                    <input type="text" id="Edit-emContactFname" name="Edit-emContactFname" placeholder="First Name" class="FNclass shadow">
                                     <!-- Edit-emContactMI -->
-                                    <input type="text" id="Edit-emContactMI" name="Edit-emContactMI" placeholder="MI" class="MIclass shadow" required>
+                                    <input type="text" id="Edit-emContactMI" name="Edit-emContactMI" placeholder="MI" class="MIclass shadow">
                                     <!-- Edit-emContactLname -->
-                                    <input type="text" id="Edit-emContactLname" name="Edit-emContactLname" placeholder="Last Name" class="LNclass shadow" required>
+                                    <input type="text" id="Edit-emContactLname" name="Edit-emContactLname" placeholder="Last Name" class="LNclass shadow">
                                 </div>
                                     <!-- Edit-emContactNum -->
-                                    <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="Contact Number" class="number shadow" required>
+                                    <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="Contact Number" class="number shadow">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>

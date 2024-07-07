@@ -6,10 +6,7 @@ session_start();
 require '../php/templates.php';
 require '../views/MaintenanceViews.php';
 
-echo '<script src="../js/maintenance_edit&delete_modal.js"></script>';
-echo'<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-';
+
 html_start('maintenance.css');
 
 // Sidebar
@@ -24,6 +21,9 @@ MaintenanceViews::edit_maintenance_modal();
 // Headers
 MaintenanceViews::maintenance_header();
 MaintenanceViews::maintenance_content();
+
+
+
 
 // POST Requests handling
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -96,6 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
+echo '<script src="../js/maintenance_edit&delete_modal.js"></script>';
+echo'<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+';
 html_end();
 ob_end_flush(); // End output buffering and flush the buffer
 
