@@ -1,4 +1,4 @@
-<?php
+ <?php
 // Start output buffering at the beginning of your script
 ob_start();
 session_start();

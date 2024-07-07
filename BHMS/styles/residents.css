@@ -120,6 +120,34 @@
 .leftside-content button{
     background: #344799;
 }
+.no-design1{
+    border: none;
+    background-color: #344799;
+    color: white;
+    padding-left: 57.5px; 
+    padding-right: 57.5px; 
+    margin-bottom: 3px;
+}
+.no-design2{
+    border: none;
+    background-color: #344799;
+    color: white;
+    padding-left: 52.5px; 
+    padding-right: 52.5px; 
+    margin-bottom: 3px;
+}
+.no-design3{
+    border: none;
+    background-color: #344799;
+    color: white;
+    padding-left: 48px; 
+    padding-right: 48px; 
+    margin-bottom: 3px;
+}
+.no-design1:hover, .no-design2:hover, .no-design3:hover{
+    background-color: white;
+    color: #344799;;
+}
 
 .text-color{
     color: rgba(2, 67, 154, 0.50);
