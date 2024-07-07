@@ -176,7 +176,7 @@ class ResidentsViews extends GeneralViews{
                                 <button class="btn btn-primary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="pe-5 fs-6">Category...</span>
                                 </button>
-                                <ul class="dropdown-menu" style="background-color: #344799;">
+                                <ul class="dropdown-menu" style="background-color: #344799; z-index:1050;">
                                     <li class="d-flex justify-content-center"><input type="submit"  name="ALL"value="ALL" class="no-design1"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"  name="Active"value="Active" class="no-design1"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"   name="Inactive" value="Inactive"class="no-design2"></li>
