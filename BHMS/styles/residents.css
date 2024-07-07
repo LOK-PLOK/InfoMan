@@ -209,7 +209,21 @@
 }
 
 /*---------------Table Actual---------------*/
+.table-data .scrollable-tbody {
+    display: block;
+    max-height: 300px; /* Adjust based on your needs */
+    overflow-y: auto;
+}
 
+.table.styled-table {
+    width: 100%;
+}
+
+.table.styled-table thead, .table.styled-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* This ensures the columns stay aligned */
+}
 
 
 /* Table css */
@@ -220,7 +234,11 @@
 
 .styled-table thead tr th {
     background-color: #344799;
+    position: sticky;
+    top: 0; /* This is necessary for sticky positioning to work */
+    z-index: 1; /* Ensures the header is above other content when scrolling */
 }
+
 .styling thead tr th{
     background-color: #344799;
     color: white;

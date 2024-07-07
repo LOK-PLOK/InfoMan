@@ -174,3 +174,5 @@ document.getElementById('edit-rent-start').addEventListener('change', function()
         console.log('Invalid start date');
     }
 });
+
+

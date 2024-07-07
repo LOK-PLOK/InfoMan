@@ -44,3 +44,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup closing for EditModal
     setupModalClose('edit-modal-info', 'editCloseButton');
 });    
+
+
+function handleTabSwitching() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const allContent = document.querySelectorAll('.content');
+    const slider = document.querySelector('.line');
+
+    function switchTab(tabIndex) {
+        tabs.forEach((tab, index) => {
+            if (index === tabIndex) {
+                tab.classList.add('active');
+                slider.style.width = tab.offsetWidth + "px";
+                slider.style.left = tab.offsetLeft + "px";
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        allContent.forEach((content, index) => {
+            if (index === tabIndex) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
+            }
+        });
+        localStorage.setItem('activeTabIndex', tabIndex);
+    }
+const activeTabIndex = localStorage.getItem('activeTabIndex');
+if (activeTabIndex !== null) {
+    switchTab(parseInt(activeTabIndex));
+}
+tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+        switchTab(index);
+    });
+});
+}
+
+document.addEventListener('DOMContentLoaded', handleTabSwitching);

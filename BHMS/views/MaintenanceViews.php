@@ -39,7 +39,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="roomcode" class="form-label">Room Code:</label>
                                 </div>
                                 <div class="col-md-8">
-                                     <select name="maintenance-room-code" id="maintenance-room-code" class="form-control shadow">
+                                     <select name="maintenance-room-code" id="maintenance-room-code" class="form-control shadow" required>
                                         <option value="" disabled selected>Select a Room...</option>
                         ';
                                     foreach ($rooms as $room){
