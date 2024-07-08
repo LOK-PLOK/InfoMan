@@ -24,6 +24,7 @@ class BillingsViews extends GeneralViews{
     public static function create_billing_modal(){
         $tenants = BillingsController::get_tenants();
         $occupancy_types = BillingsController::get_occupancy_types();
+        $appliance_rates =  htmlspecialchars(json_encode(BillingsController::getApplianceRate()));
         echo <<<HTML
             <div class="modal fade" id="createBillingModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -54,7 +55,7 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select onchange="amountCalculator()" id="payment-occupancyType" class=" shadow" style="width: 75%">
+                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%">
                                         <option value="0" disabled selected>Select Occupancy Type...</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
@@ -67,7 +68,7 @@ class BillingsViews extends GeneralViews{
             echo <<<HTML
                                     </select>
                                     <!-- no. of appliances -->
-                                    <input type="number" onchange="amountCalculator()" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
+                                    <input type="number" onchange="amountCalculator($appliance_rates)" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
 
                                     <!-- appliance rate -->
                                     <!-- <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled> -->
