@@ -7,21 +7,47 @@ DashboardController::updateTenantRentStatus();
 DashboardController::updateRoomTenantCount();
 DashboardController::updateRoomAvailability();
 
+
+/**
+ * Dashboard related views
+ *
+ * @method dashboard_header
+ * @method ov_total_residents
+ * @method ov_bedsOcc_bedsAvail
+ * @method ov_available_rooms
+ * @method add_tenant_model_view
+ * @method create_new_rent_modal
+ * @class DashboardViews
+ * @extends GeneralViews
+ */
 class DashboardViews extends GeneralViews{
 
+    /**
+     * Displays the dashboard header
+     * 
+     * @method dashboard_header
+     * @param none
+     * @return void
+     */
     public static function dashboard_header() {
-
         echo <<<HTML
             <div class="header-container">
                 <div>
                     <span class="page-header">Welcome Back, {$_SESSION['First-Name']}</span><br>
-                    <span class="page-sub-header">Here\'s what we have for you today!</span>
+                    <span class="page-sub-header">Here's what we have for you today!</span>
                 </div>
             </div>
         HTML;
-
     }
 
+
+    /**
+     * Displays the total residents in the dashboard
+     * 
+     * @method ov_total_residents
+     * @param none
+     * @return void
+     */
     public static function ov_total_residents() {
 
         $total_current_residents = DashboardController::total_current_residents();
@@ -39,6 +65,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the occupied beds and available beds in the dashboard
+     * 
+     * @method ov_bedsOcc_bedsAvail
+     * @param none
+     * @return void
+     */
     public static function ov_bedsOcc_bedsAvail() {
 
         $result = DashboardController::total_occupied_beds_and_available_beds();
@@ -69,6 +103,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the available rooms in the dashboard
+     * 
+     * @method ov_available_rooms
+     * @param none
+     * @return void
+     */
     public static function ov_available_rooms() {
 
         $available_rooms = DashboardController::available_rooms();
@@ -86,6 +128,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the add tenant modal
+     * 
+     * @method add_tenant_model_view
+     * @param none
+     * @return void
+     */
     public static function add_tenant_model_view() {
 
         echo <<<HTML
@@ -207,6 +257,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the create new rent modal
+     * 
+     * @method create_new_rent_modal
+     * @param none
+     * @return void
+     */
     public static function create_new_rent_modal() {
         $tenants = DashboardController::get_tenants();
         $rooms = DashboardController::get_rooms();

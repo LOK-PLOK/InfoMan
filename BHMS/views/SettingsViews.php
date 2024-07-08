@@ -3,8 +3,28 @@
 require 'GeneralViews.php';
 require '../controllers/SettingsController.php';
 
+
+/**
+ * This class contains all the views that are used in the settings page.
+ * 
+ * @method settings_header
+ * @method user_info_section
+ * @method rates_and_pricing_model_view
+ * @method user_information_model_view
+ * @method create_user_info_model_view
+ * @method edit_user_info
+ * @method delete_user_info
+ * @class SettingsViews
+ */
 class SettingsViews extends GeneralViews {
-    //settings header
+
+    /**
+     * This method is used to display the settings header.
+     * 
+     * @method settings_header
+     * @param none
+     * @return void
+     */
     public static function settings_header(){
         echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
         echo '<script>console.log('.json_encode($_SESSION['Middle-Name']).')</script>';
@@ -19,7 +39,13 @@ class SettingsViews extends GeneralViews {
         HTML;
     }
 
-    //user's info section
+    /**
+     * This method is used to display the user information section.
+     * 
+     * @method user_info_section
+     * @param none
+     * @return void
+     */
     public static function user_info_section(){
         echo '
         <div class="user-profile shadow">
@@ -34,7 +60,14 @@ class SettingsViews extends GeneralViews {
         ';
     }
 
-    //rates and pricing modal
+
+    /**
+     * This method is used to display the rates and pricing modal.
+     * 
+     * @method rates_and_pricing_model_view
+     * @param none
+     * @return void
+     */
     public static function rates_and_pricing_model_view() {
 
         $applianceRate = SettingsController::getApplianceRate();
@@ -126,7 +159,14 @@ class SettingsViews extends GeneralViews {
         HTML;
     }
     
-    //user information modal
+
+    /**
+     * This method is used to display the user information model view.
+     * 
+     * @method user_information_model_view
+     * @param array $user_list - list of users
+     * @return void
+     */
     public static function user_information_model_view($user_list){
         echo <<<HTML
         <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
@@ -199,7 +239,14 @@ class SettingsViews extends GeneralViews {
         HTML;
     }
 
-    //create user modal
+
+    /**
+     * This method is used to display the create user information model view.
+     * 
+     * @method create_user_info_model_view
+     * @param none
+     * @return void
+     */
     public static function create_user_info_model_view(){
         echo <<<HTML
         <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
@@ -216,7 +263,7 @@ class SettingsViews extends GeneralViews {
                         <!-- userFName -->
                         <input type="text" id="userFname" name="userFname" placeholder="First Name" class="FNclass shadow" onkeyup="checkFields();" required>
                         <!-- userMname -->
-                        <input type="text" id="userMname" name="userMname" placeholder="Middle Initial" class="MIclass shadow" onkeyup="checkFields();" required>
+                        <input type="text" id="userMname" name="userMname" placeholder="MI" class="MIclass shadow" onkeyup="checkFields();" required>
                         <!-- userLName -->
                         <input type="text" id="userLname" name="userLname" placeholder="Last Name" class="LNclass shadow" onkeyup="checkFields();" required>
                     </div>
@@ -262,7 +309,14 @@ class SettingsViews extends GeneralViews {
         HTML;
     }
 
-    //edit (user information modal)
+
+    /**
+     * This method is used to display the edit user information model view.
+     * 
+     * @method edit_user_info
+     * @param none
+     * @return void
+     */
     public static function edit_user_info(){
         echo <<< HTML
         <div class="modal fade" id="editUserInfoModal" tabindex="-1" aria-labelledby="editUserInfoModalLabel" aria-hidden="true">
@@ -330,10 +384,17 @@ class SettingsViews extends GeneralViews {
                 </div>
             </div>
         </div>
-    HTML;
+        HTML;
     }
 
-    //delete (user information modal)
+
+    /**
+     * This method is used to display the delete user information model view.
+     * 
+     * @method delete_user_info
+     * @param none
+     * @return void
+     */
     public static function delete_user_info() {
         echo <<<HTML
         <div class="modal fade" id="deleteUserInfoModal" tabindex="-1" aria-labelledby="deleteUserInfoModalLabel" aria-hidden="true">

@@ -1,5 +1,4 @@
 const tabs = document.querySelectorAll('.tab-btn');
-
 const all_content = document.querySelectorAll('.content');
 
 tabs.forEach((tab, index)=>{

@@ -7,16 +7,45 @@ RoomlogsController::updateTenantRentStatus();
 RoomlogsController::updateRoomTenantCount();
 RoomlogsController::updateRoomAvailability();
 
+
+/**
+ * This class contains all the views that are used in the room logs page.
+ * 
+ * @method room_logs_header
+ * @method room_info_cards
+ * @method room_info_modal
+ * @method editOccupancyModal
+ * @method deleteOccupancyModal
+ * @method addNewRoomModal
+ * @method editRoomModal
+ * @method deleteRoomModal
+ * @class RoomlogsViews
+ */
 class RoomlogsViews extends GeneralViews{
 
+
+    /**
+     * This method is used to display the header of the room logs page.
+     * 
+     * @method room_logs_header
+     * @return void
+     */
     public static function room_logs_header() {
         echo <<<HTML
-            <div class="header-container" >
+            <div>
                 <span class="page-header">Room Logs</span><br>
+                <span class="page-sub-header">Keep track of room assignments and tenant activities.</span>
             </div>
         HTML;
     }
 
+
+    /**
+     * This method is used to display the room information cards.
+     * 
+     * @method room_info_cards
+     * @return void
+     */
     public static function room_info_cards() {
 
         $rooms = RoomlogsController::all_rooms();
@@ -63,6 +92,13 @@ class RoomlogsViews extends GeneralViews{
         }
     }
     
+
+    /**
+     * This method is used to display the room information modal.
+     * 
+     * @method room_info_modal
+     * @return void
+     */
     public static function room_info_modal() {
         $rooms = RoomlogsController::all_rooms();
     
@@ -178,6 +214,13 @@ class RoomlogsViews extends GeneralViews{
         }
     }
 
+
+    /**
+     * This method is used to display the edit occupancy modal.
+     * 
+     * @method editOccupancyModal
+     * @return void
+     */
     public static function editOccupancyModal() {
     
             $rooms = RoomlogsController::get_rooms();
@@ -262,6 +305,13 @@ class RoomlogsViews extends GeneralViews{
             HTML;
     }
 
+
+    /**
+     * This method is used to display the delete occupancy modal.
+     * 
+     * @method deleteOccupancyModal
+     * @return void
+     */
     public static function deleteOccupancyModal(){
         echo <<<HTML
             <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">
@@ -290,6 +340,13 @@ class RoomlogsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * This method is used to display the add new room modal.
+     * 
+     * @method addNewRoomModal
+     * @return void
+     */
     public static function addNewRoomModal(){
         echo <<<HTML
         <div class="modal fade" id="add-new-rm" tabindex="-1" aria-labelledby="add-new-rm-modal" aria-hidden="true">
@@ -324,6 +381,13 @@ class RoomlogsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * This method is used to display the edit room modal.
+     * 
+     * @method editRoomModal
+     * @return void
+     */
     public static function editRoomModal(){
         echo <<<HTML
         <div class="modal fade" id="edit-rm" tabindex="-1" aria-labelledby="edit-rm" aria-hidden="true">
@@ -359,6 +423,13 @@ class RoomlogsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * This method is used to display the delete room modal.
+     * 
+     * @method deleteRoomModal
+     * @return void
+     */
     public static function deleteRoomModal(){
         echo <<<HTML
             <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-labelledby="deleteRoomModal" aria-hidden="true">
