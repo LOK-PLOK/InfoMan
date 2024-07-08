@@ -199,16 +199,17 @@ class SettingsViews extends GeneralViews {
             // para edit og delete
             $userID = $user['userID'];
             $userFname = $user['userFname'];
-            $userMname = $user['userMname'];
+            $userMname = $user['userMI'];
             $userLname = $user['userLname'];
             $isActive = $user['isActive'];
             $userType = $user['userType'];
             $username = $user['username'];
             $password = $user['password'];
             
+            $userMIFormatted = ($user['userMI'] != NULL) ? $user['userMI'] . '.' : '';
             echo <<<HTML
             <tr class="userInfoRow" data-user="$userDataJson">
-                <td>{$userFname} {$userMname}. {$userLname}</td>
+                <td>{$userFname} {$userMIFormatted} {$userLname}</td>
                 <td>
                     <div class="resize">
                         <img src="/images/icons/Residents/$statusImage">
@@ -280,7 +281,11 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3">
                         <label for="userPosition" class="form-label">Position:</label>
                         <!-- userType -->
-                        <input type="text" class="form-control shadow" id="userType" name="userType" placeholder="Enter position" onkeyup="checkFields();" required>
+                        <select class="form-select shadow" id="userType" name="userType" onkeyup="checkFields();" required>
+                            <option value="choose a status" selected>Choose a user type</option>
+                            <option value="staff"><strong>Staff</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <!-- username -->
@@ -335,7 +340,7 @@ class SettingsViews extends GeneralViews {
                         <!-- Edit-userFname -->
                         <input type="text" id="Edit-userFname" name="Edit-userFname" placeholder="Juan Jihyo" class="FNclass shadow" onkeyup="editcheckFields();" required>
                         <!-- Edit-userMname -->
-                        <input type="text" id="Edit-userMname" name="Edit-userMname" placeholder="D." class="MIclass shadow" onkeyup="editcheckFields();" required>
+                        <input type="text" id="Edit-userMname" name="Edit-userMname" placeholder="D." class="MIclass shadow" onkeyup="editcheckFields();">
                         <!-- Edit-userLname -->
                         <input type="text" id="Edit-userLname" name="Edit-userLname" placeholder="Santos" class="LNclass shadow" onkeyup="editcheckFields();" required>
                     </div>

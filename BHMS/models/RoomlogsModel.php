@@ -328,13 +328,13 @@ class RoomlogsModel extends dbcreds {
     public static function editRoom($editRoomInfo) {
         try {
             $conn = self::get_connection();
-            $query = $conn->prepare("UPDATE room SET capacity = ? WHERE roomID = ?");
+            $query = $conn->prepare("UPDATE room SET roomID = ? ,capacity = ? WHERE roomID = ?");
 
             if ($query === false) {
                 throw new Exception("Prepare failed: " . $conn->error);
             }
 
-            $query->bind_param('is', $editRoomInfo['capacity'], $editRoomInfo['roomID']);
+            $query->bind_param('sis', $editRoomInfo['newRoomID'], $editRoomInfo['capacity'], $editRoomInfo['roomID']);
 
             if (!$query->execute()) {
                 throw new Exception("Execute failed: " . $query->error);
@@ -375,6 +375,101 @@ class RoomlogsModel extends dbcreds {
             echo "Error: " . $e->getMessage();
             return false;
         }
+    }
+
+    public static function query_room_info($roomID){
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
+        $query->bind_param('s', $roomID);
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        return $result;
+    }
+
+    public static function is_tenant_available($tenID, $startDate, $endDate){
+
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT COUNT(*) AS no_of_conflicts 
+                                    FROM occupancy 
+                                    WHERE tenID = ? 
+                                    AND (
+                                        (occDateStart <= ? AND occDateEnd >= ?) OR
+                                        (occDateEnd >= ? AND occDateStart <= ?)
+                                    );");
+        $query->bind_param(
+            'issss', 
+            $tenID, 
+            $startDate, $endDate, 
+            $startDate, $endDate
+        );
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        // Return true if no_of_conflicts is 0, meaning tenant is available
+        return $result['no_of_conflicts'] == 0;
+    }
+
+    public static function query_add_new_rent($create_rent) {
+        try {
+
+            $conn = self::get_connection();
+            $query = $conn->prepare("INSERT INTO occupancy (
+                tenID, 
+                roomID, 
+                occDateStart, 
+                occDateEnd, 
+                occTypeID, 
+                occupancyRate
+            ) VALUES (?, ?, ?, ?, ?, ?);");
+    
+            if ($query === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+    
+            // Bind parameters
+            $query->bind_param(
+                'isssid',  
+                $create_rent['tenID'], 
+                $create_rent['roomID'], 
+                $create_rent['occDateStart'],
+                $create_rent['occDateEnd'], 
+                $create_rent['occTypeID'], 
+                $create_rent['occupancyRate']
+            );
+    
+            if (!$query->execute()) {
+                throw new Exception("Execute failed: " . $query->error);
+            }
+    
+            $query->close();
+            $conn->close();
+    
+            return true;
+        } catch (Exception $e) {
+            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+            return false;
+        }
+    }
+
+
+    public static function check_shared_room($check_rent) {
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT COUNT(*) FROM occupancy WHERE roomID = ?
+                                AND tenID = ? AND occDateStart = ? AND occDateEnd = ?");
+
+        $query->bind_param('siss', $check_rent['roomID'], $check_rent['shareTenID'], $check_rent['occDateStart'], $check_rent['occDateEnd']);
+        
+        $query->execute();
+        
+        $result = $query->get_result()->fetch_assoc();
+        
+        $query->close();
+        
+        $conn->close();
+        return $result['COUNT(*)'] > 0;
     }
 
 }

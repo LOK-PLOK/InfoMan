@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password' => $_POST['password'],
             'userFname' => $_POST['userFname'],
             'userLname' => $_POST['userLname'],
-            'userMname' => $_POST['userMname'],
+            'userMI' => $_POST['userMname'],
             'userType' => $_POST['userType'],
             'isActive' => $_POST['isActive']
         ];
@@ -50,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve the tenant ID to delete
         $tenantIdToDelete = $_POST['deleteUserID'];
 
-        echo '<script>console.log("Deleting user with ID(POST): ", '.$tenantIdToDelete.')</script>';
         $result = SettingsController::delete_user_by_id($tenantIdToDelete);
 
         if ($result) {
@@ -78,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Call create_user method from settingsmodel.php
         $result = SettingsController::edit_user($edit_user);
-        echo '<script>console.log('.json_encode($result).')</script>';
+
         if ($result) {
             // Return success response (if using AJAX)
             header('Location: /pages/settings.php?editUser=success');
@@ -160,7 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Test: Log user list to console
     $json_user_list = json_encode($user_list);
-    echo '<script>console.log("User List:", ' . $json_user_list . ')</script>';
 
     if ($user_list) {
       echo '<script>console.log("User list fetched successfully")</script>';
@@ -177,12 +175,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //delete user info
     SettingsViews::delete_user_info();
 ?>
-   
+
 </div>
 
-<script src="/js/general.js"></script>
 <script src="../js/settings.js"></script>
-
 
 <?php 
 ob_end_flush();

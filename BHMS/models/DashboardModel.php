@@ -264,10 +264,6 @@ class DashboardModel extends dbcreds {
 
     public static function is_tenant_available($tenID, $startDate, $endDate){
 
-        echo'<script>console.log('.json_encode($tenID).')</script>';
-        echo'<script>console.log('.json_encode($startDate).')</script>';
-        echo'<script>console.log('.json_encode($endDate).')</script>';
-
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) AS no_of_conflicts 
                                     FROM occupancy 
@@ -288,6 +284,23 @@ class DashboardModel extends dbcreds {
         $conn->close();
         // Return true if no_of_conflicts is 0, meaning tenant is available
         return $result['no_of_conflicts'] == 0;
+    }
+
+    public static function check_shared_room($check_rent) {
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT COUNT(*) FROM occupancy WHERE roomID = ?
+                                AND tenID = ? AND occDateStart = ? AND occDateEnd = ?");
+
+        $query->bind_param('siss', $check_rent['roomID'], $check_rent['shareTenID'], $check_rent['occDateStart'], $check_rent['occDateEnd']);
+        
+        $query->execute();
+        
+        $result = $query->get_result()->fetch_assoc();
+        
+        $query->close();
+        
+        $conn->close();
+        return $result['COUNT(*)'] > 0;
     }
     
 }

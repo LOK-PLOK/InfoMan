@@ -16,9 +16,6 @@ function setValuesEditRoom(roomID, roomCapacity) {
     document.getElementById('edit-rm-code').value = roomID;
     document.getElementById('edit-rm-code-hidden').value = roomID;
     document.getElementById('edit-rm-cap').value = roomCapacity;
-
-    console.log('Room ID: ' + roomID);
-    console.log('Room Capacity: ' + roomCapacity);
 }
 
 function delRoomID(roomID){
@@ -31,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.editOccupancyBtn').forEach(button => {
         button.addEventListener('click', function() {
             const editOccInfo = this.value;
-            console.log(`Edit Occ ID: ${editOccInfo}`);
         });
     });
 
@@ -68,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.deleteOccupancyBtn').forEach(button => {
         button.addEventListener('click', function() {
             const delOccInfo = this.value;
-            console.log(`Delete Occ ID: ${delOccInfo}`);
             document.getElementById('delete-occupancy-id').value = delOccInfo;
         });
     });
@@ -84,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			const endDateString = endDate.toISOString().split('T')[0];
 			document.getElementById('edit-rent-end').value = endDateString;
 		} else {
-			console.log('Invalid start date');
+			alert('Invalid start date');
 		}
 	});
 
@@ -98,3 +93,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
+

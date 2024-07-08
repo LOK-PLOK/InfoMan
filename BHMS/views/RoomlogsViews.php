@@ -10,7 +10,7 @@ RoomlogsController::updateRoomAvailability();
 
 /**
  * This class contains all the views that are used in the room logs page.
- * 
+ *  
  * @method room_logs_header
  * @method room_info_cards
  * @method room_info_modal
@@ -60,6 +60,10 @@ class RoomlogsViews extends GeneralViews{
                 $avail_color = '#ff0000';
                 $availability = 'Not Available';
                 $avail_info = 'FULLY OCCUPIED';
+            } else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0 && $room['isAvailable'] == 0) {
+                $avail_color = '#ff0000';
+                $availability = 'Room Rented (Shared Only)';
+                $avail_info = htmlspecialchars($room['rentCount']) . '/' . htmlspecialchars($room['capacity']);
             } 
             else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0) {
                 $avail_color = '#ff8d23';
@@ -109,10 +113,13 @@ class RoomlogsViews extends GeneralViews{
             if (intval($room['rentCount']) == intval($room['capacity'])) {
                 $availability = 'Not Available';
                 $avail_info = 'FULLY OCCUPIED';
-            } 
+            } else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0 && $room['isAvailable'] == 0) {
+                $availability = 'Room Rented (Shared Only)';
+                $avail_info = htmlspecialchars($room['rentCount']) . ' / ' . htmlspecialchars($room['capacity']);
+            }
             else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0) {
                 $availability = 'Available (BS only)';
-                $avail_info = htmlspecialchars($room['rentCount']) . '/' . htmlspecialchars($room['capacity']);
+                $avail_info = htmlspecialchars($room['rentCount']) . ' / ' . htmlspecialchars($room['capacity']);
             } 
             else {
                 $availability = 'Available';
@@ -136,6 +143,7 @@ class RoomlogsViews extends GeneralViews{
                                         <p class="rm-modal-info">Room Code: <span>{$roomID}</span> </p>
                                         <p class="rm-modal-info">Availability: <span>{$availability}</span></p>
                                         <p class="rm-modal-info">Status: <span>{$avail_info}</span></p>
+                                        <p class="rm-modal-info">Capacity: <span>{$room['rentCount']} / <span>{$room['capacity']}</span></p>
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
                                         <button type="button" class="btn-var-5 my-1 bg-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
@@ -152,6 +160,7 @@ class RoomlogsViews extends GeneralViews{
                                                 <th>Tenant Name</th>
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
+                                                <th>Rent Type</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -165,20 +174,18 @@ class RoomlogsViews extends GeneralViews{
                 $rm_tenLname = htmlspecialchars($rm_tenant_info['tenLname']);
                 $rm_tenMI = htmlspecialchars($rm_tenant_info['tenMI']);
 
-                $name = $rm_tenFname . ' ' . $rm_tenMI . '. ' . $rm_tenLname;
+                $name = $rm_tenFname . ' ' . (($rm_tenMI != NULL) ? $rm_tenMI . '. ' : '') . $rm_tenLname;
                 $start_date = date('F j, Y', strtotime($room_tenant['occDateStart']));
                 $end_date = date('F j, Y', strtotime($room_tenant['occDateEnd']));
 
                 $occType = RoomlogsController::get_occ_type($room_tenant['occTypeID']);
-
-                echo '<script>console.log('.json_encode($occType['occTypeName']).');</script>';
-                echo '<script>console.log('.json_encode($room_tenant['occupancyRate']).');</script>';
 
                 echo '
                         <tr>
                             <td>'.$name.'</td>
                             <td>'.$start_date.'</td>
                             <td>'.$end_date.'</td>
+                            <td style="max-width: 150px">'.$occType['occTypeName'].'</td>
                             <td>
                                 <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
                                     onclick="setValuesTenantInfo(
@@ -406,7 +413,7 @@ class RoomlogsViews extends GeneralViews{
                                 </div>
                                 <div class="d-flex flex-column justify-content-evenly w-50">
                                     <!-- roomID -->
-                                    <input type="text" name="edit-rm-code" id="edit-rm-code" placeholder="Enter room code..." class="my-3 shadow w-100" disabled><br>
+                                    <input type="text" name="edit-rm-code" id="edit-rm-code" placeholder="Enter room code..." class="my-3 shadow w-100"><br>
                                     <input type="hidden" name="edit-rm-code-hidden" id="edit-rm-code-hidden">
                                     <!-- capacity -->
                                     <input type="number" name="edit-rm-cap" id="edit-rm-cap" placeholder="Enter room capacity..." class="my-3 shadow w-100">
@@ -454,6 +461,158 @@ class RoomlogsViews extends GeneralViews{
                         <div class="modal-footer"></div>
                     </div>
                 </div>
+            </div>
+        HTML;
+    }
+
+    /**
+     * Displays the create new rent modal
+     * 
+     * @method create_new_rent_modal
+     * @param none
+     * @return void
+     */
+    public static function create_new_rent_modal() {
+        $tenants = RoomlogsController::get_tenants();
+        $rooms = RoomlogsController::get_rooms();
+        $rent_types = RoomlogsController::get_types();
+
+        echo <<<HTML
+            <div class="modal fade" id="addNewRent" tabindex="-1" aria-labelledby="addNewRent" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center align-items-center">
+            <form method="POST">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewRent">Add New Rent</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div>
+                            <label for="new-rent-tenant" class="input-label">Tenant Assigned:</label>
+                            <!-- Tenant -->
+                            <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow">
+                                <option value="" disabled selected>Select a tenant...</option>
+        HTML;
+                                foreach ($tenants as $tenant){
+                                    $tenant_id = $tenant['tenID'];
+                                    $tenant_fName = $tenant['tenFname'];
+                                    $tenant_MI = $tenant['tenMI'];
+                                    $tenant_lName = $tenant['tenLname'];
+                                    $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                    echo<<<HTML
+                                        <option value="$tenant_id">$tenant_fullName</option>
+                                    HTML;
+                                }                         
+        echo <<<HTML
+                            </select>
+                            <div id="shared-tenant" style="display: none;">
+                                <label for="share-new-rent-tenant" class="input-label">Choose a tenant to share with:</label>
+                                <!-- Shared Tenant -->
+                                <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow">
+                                    <option value="" disabled selected>Select a tenant...</option>
+            HTML;
+                                    foreach ($tenants as $tenant){
+                                        $tenant_id = $tenant['tenID'];
+                                        $tenant_fName = $tenant['tenFname'];
+                                        $tenant_MI = $tenant['tenMI'];
+                                        $tenant_lName = $tenant['tenLname'];
+                                        $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                        echo<<<HTML
+                                            <option value="$tenant_id">$tenant_fullName</option>
+                                        HTML;
+                                    }                         
+            echo <<<HTML
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-center input-sub-label">Name</div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <label for="new-rent-room" class="input-label">Room Details:</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-sm-5">
+                                    <!-- Room -->
+                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow">
+                                        <option value="" disabled selected>Select a Room...</option>
+        HTML;
+                                        foreach ($rooms as $room){
+                                            $room_id = $room['roomID'];
+                                            $room_cap = $room['capacity'];
+                                            $room_count = $room['rentCount'];
+                                            $room_avail = $room['isAvailable'];
+
+                                            if($room_avail != 0){
+                                                echo<<<HTML
+                                                    <option value="$room_id">$room_id: Capacity - $room_cap</option>
+                                                HTML;
+                                            } else if ($room_avail == 0 && $room_count < $room_cap) {
+                                                echo<<<HTML
+                                                    <option value="$room_id">$room_id: Capacity - $room_cap - Shared Only</option>
+                                                HTML;
+                                            } else {
+                                                echo<<<HTML
+                                                    <option value="$room_id" disabled>$room_id: Capacity - $room_cap - Full</option>
+                                                HTML;
+                                            }
+                                        }       
+
+        echo <<<HTML
+                                    </select>
+                                    <div class="d-flex justify-content-center input-sub-label">Room Code</div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <!-- Occupancy Type -->
+                                    <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
+                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow">
+                                            <option value="" disabled selected>Select a Type...</option>
+        HTML;
+                                            foreach ($rent_types as $rent_type){
+                                                $occTypeID = $rent_type['occTypeID'];
+                                                $occTypeName = $rent_type['occTypeName'];
+                                                $occRate = $rent_type['occRate'];
+                                                $combinedValue = $occTypeID . '|' . $occRate;
+                                                echo<<<HTML
+                                                    <option value="$combinedValue">$occTypeName</option>
+                                                HTML;
+                                            }
+        echo <<<HTML
+                                    </select>
+                                    
+                                    <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-12">
+                                <label for="new-rent-start" class="input-label">Additional Information:</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="col-sm-5">
+                                    <!-- Start Date -->
+                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow">
+                                    <!-- End Date -->
+                                    <input type="date" name="new-rent-end" id="new-rent-end" class="w-100 shadow" style="display: none">
+                                    <div class="d-flex justify-content-center input-sub-label">Starting Date</div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="number" id="new-rent-rate" class="w-100 shadow" disabled>
+                                    <!-- Rent Rate -->
+                                    <input type="hidden" name="new-rent-rate" id="actual-new-rent-rate">
+                                    <div class="d-flex justify-content-center input-sub-label">Monthly Payment</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <!-- Submit Button -->
+                    <button type="submit" name="create-new-rent" class="btn-var-3 add-button">Add</button>
+                </div>
+                </div>
+            </form>
+            </div>
             </div>
         HTML;
     }

@@ -32,7 +32,16 @@ class DashboardController extends GeneralController{
         $checkTenant = DashboardModel::is_tenant_available($tenID, $startDate, $endDate);
         if($checkTenant){
             $bedSpacerID = 1;
-            if($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0){
+            $sharedRoomID = 6;
+            if ($create_rent['occTypeID'] == $sharedRoomID) {
+                $checkValidity = DashboardModel::check_shared_room($create_rent);
+                if ($checkValidity == 1 && $tenant_count < $roomInfo['capacity']) {
+                    DashboardModel::query_add_new_rent($create_rent);
+                    return "Room can be shared! Tenant Count: ".$tenant_count." Room Capacity: ".$roomInfo['capacity'];
+                } else {
+                    return "Room cannot be shared!";
+                }
+            } else if ($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0) {
                 return "Room can only be occupied for bedspacers!";
             } else if ($roomInfo['isAvailable'] == 0) {
                 return "Room is already in Full Capacity!";
@@ -43,7 +52,6 @@ class DashboardController extends GeneralController{
         } else {
             return "Tenant is already occupied on the selected date!";
         }
-
     }
 
     public static function get_tenants() {

@@ -54,9 +54,6 @@ function editUser(UserID,userFname,userMname,userLname,isActive,userType,usernam
     document.getElementById('Edit-password').value = password;
     document.getElementById('Edit-userType').value = userType;
     document.getElementById('Edit-isActive').value = isActive;
-    
-    console.log('Editing user with ID:', UserID);   
-    console.log('Value:', document.getElementById('Edit-userID').value);
 }
 
 function PasswordMatchEdit(){
@@ -90,7 +87,5 @@ editcheckFields();
 const createUserForm = document.getElementById('createUserForm');
 
 function deleteUser(userID) {
-    console.log('Deleting user with ID:', userID);
     document.getElementById('Delete-userID').value = userID;
-    console.log('Value:', document.getElementById('Delete-userID').value);
 }
