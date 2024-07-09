@@ -127,6 +127,7 @@ color: white; /* Adjust the color as needed */
     display: flex;
     justify-content: space-between;
     height: 35px;
+    margin-bottom: 30px;
 }
 
 .table-cont-1-1{
@@ -169,7 +170,7 @@ color: white; /* Adjust the color as needed */
 
 /* Table Styles */
 table {
-    margin: 30px 0 0 0;
+    /* margin: 30px 0 0 0; */
     border-collapse: collapse;
     width: 100%;
     background-color: #F4F6FF;
@@ -308,3 +309,10 @@ label{
     color: rgba(2, 67, 154, 0.50);
 }
 
+
+.overflow-auto::-webkit-scrollbar {
+    width: 0 !important; /* Remove scrollbar width */
+}
+.overflow-auto {
+    scrollbar-width: none; /* Firefox specific */
+}

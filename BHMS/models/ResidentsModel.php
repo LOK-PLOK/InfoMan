@@ -563,7 +563,7 @@ class ResidentsModel extends dbcreds{
 
    public static function residents_data_Name(){
     $conn = self::get_connection();
-    $query = "SELECT * FROM tenant ORDER BY tenLname ASC";
+    $query = "SELECT * FROM tenant ORDER BY tenFname ASC";
     $stmt = $conn->query($query);
 
     if ($stmt === false) {
