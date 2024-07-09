@@ -5,6 +5,10 @@ require 'GeneralController.php';
 
 class BillingsController extends GeneralController{
 
+    public static function getApplianceRate() {
+        return BillingsModel::fetchApplianceRate();
+    }
+
     public static function get_appliances($tenID){
         return BillingsModel::query_get_appliances($tenID);
     }

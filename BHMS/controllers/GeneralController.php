@@ -27,8 +27,11 @@ class GeneralController {
             $roomID = $room['roomID'];
             $roomCount = $room['rentCount'];
             $roomCapacity = $room['capacity'];
+            $tenants = GeneralModel::query_current_room_tenants($room['roomID']);
 
-            if($roomCount === $roomCapacity) {
+            $bedSpacerID = 1;
+
+            if($roomCount === $roomCapacity || ($roomCount > 0 && $tenants[0]['occTypeID'] != $bedSpacerID)) {
                 $status = 0;
             } else {
                 $status = 1;
@@ -45,10 +48,6 @@ class GeneralController {
             $bedSpacerID = 1;
             $tenants = GeneralModel::query_current_room_tenants($room['roomID']);
             $tenant_count = count($tenants);
-
-            if($tenant_count === 1 && $tenants[0]['occTypeID'] !== $bedSpacerID){
-                $tenant_count = $room['capacity'];
-            }
             
             GeneralModel::update_room_count($room['roomID'], $tenant_count);
         }

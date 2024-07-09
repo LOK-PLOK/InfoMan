@@ -5,19 +5,38 @@ require '../controllers/ResidentsController.php';
 
 ResidentsController::updateTenantRentStatus();
 
+
+/**
+ * This class contains all the views that are used in the residents page.
+ * 
+ * @method residents_header
+ * @method add_tenant_modal_view
+ * @method residents_table_display
+ * @method residents_info_model_view
+ * @method editOccupancyModal
+ * @method deleteOccupancyModal
+ * @method edit_tenant_modal_view
+ * @method delete_tenant_model_view
+ * @class ResidentsViews
+ */
 class ResidentsViews extends GeneralViews{
 
+    /**
+     * This method is used to display the header of the residents page.
+     * 
+     * @method residents_header
+     * @return void
+     */
     public static function residents_header(){
         
         $total_current_residents = ResidentsController::total_current_residents();
-
-        // echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
         
         echo <<<HTML
             <div class="header-container">
             <div class="left-content">
                 <div>
                         <span class="page-header">Residents</span><br>
+                        <span class="page-sub-header">Manage all the residents in the boarding house</span>
                 </div>
                 <div class="left-content-button">
                         <!-- Button to open Modal -->
@@ -40,6 +59,13 @@ class ResidentsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * This method is used to display the modal for adding a new tenant.
+     * 
+     * @method add_tenant_modal_view
+     * @return void
+     */
     public static function add_tenant_modal_view() {
         echo <<<HTML
         <!-- Modal -->
@@ -160,6 +186,14 @@ class ResidentsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * This method is used to display the table of residents.
+     * 
+     * @method residents_table_display
+     * @param array $tenant_list -  The list of tenants to be displayed in the table
+     * @return void
+     */
     public static function residents_table_display($tenant_list){
 
         // Start echoing the HTML content
@@ -172,7 +206,7 @@ class ResidentsViews extends GeneralViews{
                     <div class="leftside-content">
                         <span class="text-color">Sort by:</span>
                         <form method="GET">
-                            <div class="btn-group">
+                            <div class="btn-group" style="z-index: 1000;">
                                 <button class="btn btn-primary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="pe-5 fs-6">Category...</span>
                                 </button>
@@ -200,7 +234,7 @@ class ResidentsViews extends GeneralViews{
                 <!-- Table Actual -->
                 <section class="table-data overflow-auto" style="max-height: 500px;">
                     <table class="table styled-table">
-                        <thead class="sticky-top">
+                        <thead>
                             <tr>
                                 <th>Residents Info</th>
                                 <th>Status</th>
@@ -212,7 +246,7 @@ class ResidentsViews extends GeneralViews{
                             </tr>
                         </thead>
                         <tbody>
-HTML;
+        HTML;
     
         // Loop through each tenant in the list
         foreach ($tenant_list as $tenant) {
@@ -245,7 +279,7 @@ HTML;
                                     </div>
                                 </td>
                                 <td>See more...</td>
-                                <td>' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
+                                <td style="max-width: 200px">' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
                                 <td>' . htmlspecialchars($occupancy[0]['roomID'] ?? 'N/A') . '</td>
                                 <td>' . (empty($occupancy) ? 'N/A' : htmlspecialchars(date("F j, Y", strtotime($occupancy[0]['occDateEnd'])))) . '</td>
                                 <td>
@@ -282,152 +316,166 @@ HTML;
         
     }
 
+
+    /**
+     * This method is used to display the modal for viewing tenant information.
+     * 
+     * @method residents_info_model_view
+     * @return void
+     */
     public static function residents_info_model_view() {
         
-    echo <<<HTML
-    <!-- Tenant Info Modal -->
-    <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content bg-custom">
-                <div class="modal-header bg-custom">
-                    <span style="font-size: 25px;" class="header">Tenant Information</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
-                    <!-- Tenant information will be loaded here dynamically -->
-                </div>
-                <div class="modal-footer-custom bg-custom overflow-auto" style="max-height: 200px;">
-                    <div class="header">Rent History</div>
-                    <section class="table-data">
-                        <div class="table-responsive">
-                            <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799">
-                                <thead>
-                                    <tr>
-                                        <th>Room Code</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="rentHistoryTableBody scrollable-tbody">
-                                    <!-- Rent history will be loaded here dynamically -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
+        echo <<<HTML
+        <!-- Tenant Info Modal -->
+        <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-custom">
+                    <div class="modal-header bg-custom">
+                        <span style="font-size: 25px;" class="header">Tenant Information</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
+                        <!-- Tenant information will be loaded here dynamically -->
+                    </div>
+                    <div class="modal-footer-custom bg-custom overflow-auto" style="max-height: 200px;">
+                        <div class="header">Rent History</div>
+                        <section class="table-data">
+                            <div class="table-responsive">
+                                <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799">
+                                    <thead>
+                                        <tr>
+                                            <th>Room Code</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rentHistoryTableBody scrollable-tbody">
+                                        <!-- Rent history will be loaded here dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    HTML;
+        HTML;
 
-    // JavaScript for handling the click event and loading data into modal
-    echo '
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
-    var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
-    var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
+        // JavaScript for handling the click event and loading data into modal
+        echo '
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
+            var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
+            var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
 
-    tenantInfoButtons.forEach(function(btn) {
-        btn.addEventListener("click", function() {
-            var tenantData = JSON.parse(this.getAttribute("data-tenant"));
-            var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
-            var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
+            tenantInfoButtons.forEach(function(btn) {
+                btn.addEventListener("click", function() {
+                    var tenantData = JSON.parse(this.getAttribute("data-tenant"));
+                    var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
+                    var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
 
-            // Update tenant information section
-            tenantInfoModalBody.innerHTML = `
-                <div class="split-left">
-                    <div>
-                        <span class="label">Name:</span>
-                        <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
-                    </div>
-                    <div>
-                        <span class="label">Contact Number:</span>
-                        <span>${tenantData.tenContact}</span>
-                    </div>
-                    <div>
-                        <span class="label">Address:</span>
-                        <span>${tenantData.tenHouseNum !== "0" ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
-                    </div>
-                    <div>
-                        <span class="label">Gender:</span>
-                        <span>${tenantData.tenGender}</span>
-                    </div>
-                    <div>
-                        <span class="label">Birth Date:</span>
-                        <span>${formatDate(tenantData.tenBdate)}</span>
-                    </div>
-                    <div>
-                        <span class="label">Appliances:</span>
-                        <ul id="appliancesList"></ul>
-                    </div>
-                </div>
-                <div class="split-right">
-                    <div>
-                        <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
-                    </div>
-                    <div>
-                        <span class="label">Name:</span>
-                        <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
-                    </div>
-                    <div>
-                        <span class="label">Contact Number:</span>
-                        <span>${tenantData.emContactNum}</span>
-                    </div>
-                </div>
-            `;
+                    // Update tenant information section
+                    tenantInfoModalBody.innerHTML = `
+                        <div class="split-left">
+                            <div>
+                                <span class="label">Name:</span>
+                                <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
+                            </div>
+                            <div>
+                                <span class="label">Contact Number:</span>
+                                <span>${tenantData.tenContact}</span>
+                            </div>
+                            <div>
+                                <span class="label">Address:</span>
+                                <span>${tenantData.tenHouseNum !== "0" ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
+                            </div>
+                            <div>
+                                <span class="label">Gender:</span>
+                                <span>${tenantData.tenGender}</span>
+                            </div>
+                            <div>
+                                <span class="label">Birth Date:</span>
+                                <span>${formatDate(tenantData.tenBdate)}</span>
+                            </div>
+                            <div>
+                                <span class="label">Appliances:</span>
+                                <ul id="appliancesList"></ul>
+                            </div>
+                        </div>
+                        <div class="split-right">
+                            <div>
+                                <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
+                            </div>
+                            <div>
+                                <span class="label">Name:</span>
+                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
+                            </div>
+                            <div>
+                                <span class="label">Contact Number:</span>
+                                <span>${tenantData.emContactNum}</span>
+                            </div>
+                        </div>
+                    `;
 
-            // Update appliances list
-            var appliancesList = document.getElementById("appliancesList");
-            appliancesList.innerHTML = ""; // Clear previous content
-            appliancesData.forEach(function(appliance) {
-                var li = document.createElement("li");
-                li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
-                appliancesList.appendChild(li);
-            });
+                    // Update appliances list
+                    var appliancesList = document.getElementById("appliancesList");
+                    appliancesList.innerHTML = ""; // Clear previous content
+                    appliancesData.forEach(function(appliance) {
+                        var li = document.createElement("li");
+                        li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
+                        appliancesList.appendChild(li);
+                    });
 
-            // Update rent history table with occupancy data
-            rentHistoryTableBody.innerHTML = ""; // Clear previous content
-            occupancyData.forEach(function(occupancy) {
-                var tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${occupancy.roomID}</td>
-                    <td>${formatDate(occupancy.occDateStart)}</td>
-                    <td>${formatDate(occupancy.occDateEnd)}</td>
-                    <td>
-                        <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
-                            value=${occupancy.roomID}
-                            onclick="setValuesTenantInfo(
-                                ${occupancy.occupancyID},
-                                \'${occupancy.tenFname}\',
-                                \'${occupancy.tenMI}\',
-                                \'${occupancy.tenLname}\',
-                                \'${occupancy.roomID}\',
-                                \'${occupancy.occTypeName}\',
-                                \'${occupancy.occDateStart}\',
-                                \'${occupancy.occDateEnd}\',
-                                ${occupancy.occupancyRate}
-                            );"
-                        >
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                        </button>
+                    // Update rent history table with occupancy data
+                    rentHistoryTableBody.innerHTML = ""; // Clear previous content
+                    occupancyData.forEach(function(occupancy) {
+                        var tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${occupancy.roomID}</td>
+                            <td>${formatDate(occupancy.occDateStart)}</td>
+                            <td>${formatDate(occupancy.occDateEnd)}</td>
+                            <td>
+                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
+                                    value=${occupancy.roomID}
+                                    onclick="setValuesTenantInfo(
+                                        ${occupancy.occupancyID},
+                                        \'${occupancy.tenFname}\',
+                                        \'${occupancy.tenMI}\',
+                                        \'${occupancy.tenLname}\',
+                                        \'${occupancy.roomID}\',
+                                        \'${occupancy.occTypeName}\',
+                                        \'${occupancy.occDateStart}\',
+                                        \'${occupancy.occDateEnd}\',
+                                        ${occupancy.occupancyRate}
+                                    );"
+                                >
+                                    <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                                </button>
 
-                        <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
-                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
-                        </button>
-                    </td>
-                `;
-                rentHistoryTableBody.appendChild(tr);
+                                <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
+                                    <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
+                                </button>
+                            </td>
+                        `;
+                        rentHistoryTableBody.appendChild(tr);
+                    });
+                });
             });
         });
-    });
-});
-</script>
-';
+        </script>
+        ';
 
-}
+    }
 
+
+    /**
+     * This method is used to display the modal for editing the occupancy of a tenant.
+     * 
+     * @method editOccupancyModal
+     * @return void
+     */
     public static function  editOccupancyModal(){
         $rooms = ResidentsController::get_rooms();
     
@@ -511,6 +559,13 @@ document.addEventListener("DOMContentLoaded", function() {
         HTML;
     }
 
+
+    /**
+     * This method is used to display the modal for deleting an occupancy.
+     * 
+     * @method deleteOccupancyModal
+     * @return void
+     */
     public static function deleteOccupancyModal(){
         echo <<<HTML
             <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">
@@ -539,6 +594,13 @@ document.addEventListener("DOMContentLoaded", function() {
         HTML;
     }
 
+
+    /**
+     * This method is used to display the modal for editing a tenant.
+     * 
+     * @method edit_tenant_modal_view
+     * @return void
+     */
     public static function edit_tenant_modal_view(){
         echo <<<HTML
         <!-- Edit Tenant Modal -->
@@ -668,37 +730,43 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
 
+    /**
+     * This method is used to display the modal for deleting a tenant.
+     * 
+     * @method delete_tenant_model_view
+     * @return void
+     */
     public static function delete_tenant_model_view(){
         echo '<div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-custom">
-                <div class="modal-header bg-custom border-0">
-                    <div class="displayflex header bg-custom">
-                        <span style="font-size: 25px;" id="deleteTenantMessage">Are you sure you want to delete this tenant?</span>
-                    </div>
-                    <div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                </div>
-                <div class="modal-body bg-custom">
-                    <form id="deleteTenantForm" action="../pages/residents.php" method="POST">
-                        <div class="displayflex">
-                            <!-- Hidden input field to hold tenant ID -->
-                            <input type="hidden" name="deleteTenantId" id="deleteTenantId" value="">
-                            <!-- Buttons to confirm or cancel deletion -->
-                            <input type="submit" name="delete-tenant-submit" id="Yesdelete" class="btn-var-6" value="Yes">
-                            <button type="button" name="No" id="Nodelete" class="btn-var-6" data-bs-dismiss="modal" aria-label="Close">No</button>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-custom">
+                    <div class="modal-header bg-custom border-0">
+                        <div class="displayflex header bg-custom">
+                            <span style="font-size: 25px;" id="deleteTenantMessage">Are you sure you want to delete this tenant?</span>
                         </div>
-                    </form>
-                </div>
-                <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                    <span>Note: Once you have clicked \'Yes\', this cannot be undone</span>
-                </div>
-                <div class="modal-footer">
+                        <div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="modal-body bg-custom">
+                        <form id="deleteTenantForm" action="../pages/residents.php" method="POST">
+                            <div class="displayflex">
+                                <!-- Hidden input field to hold tenant ID -->
+                                <input type="hidden" name="deleteTenantId" id="deleteTenantId" value="">
+                                <!-- Buttons to confirm or cancel deletion -->
+                                <input type="submit" name="delete-tenant-submit" id="Yesdelete" class="btn-var-6" value="Yes">
+                                <button type="button" name="No" id="Nodelete" class="btn-var-6" data-bs-dismiss="modal" aria-label="Close">No</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="displayflex bg-custom label" style="border-radius: 10px;">
+                        <span>Note: Once you have clicked \'Yes\', this cannot be undone</span>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>';
+        </div>';
     }
 
 

@@ -67,6 +67,7 @@ DashboardViews::create_new_rent_modal();
 	$(document).ready(function() {
         $("#tenantName").selectize();
         $("#new-rent-tenant").selectize();
+		$("#share-new-rent-tenant").selectize();
     });
 
 	document.getElementById('new-rent-type').addEventListener('change', function () {
@@ -86,6 +87,15 @@ DashboardViews::create_new_rent_modal();
 			actualOccupancyRate.value = occRate;
 
 			console.log(actualOccupancyRate.value, inputOccTypeID.value);
+
+			if (inputOccTypeID.value == 6) {
+				// Show the share tenant input
+				document.getElementById('shared-tenant').style.display = 'block';
+			} else {
+				// Hide the share tenant input
+				document.getElementById('shared-tenant').style.display = 'none';
+			}
+
 			
 		}
 	});
@@ -160,12 +170,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 	if (isset($_POST['create-new-rent'])) {
 		$create_rent = array(
 			"tenID" => htmlspecialchars($_POST['new-rent-tenant']),
+			"shareTenID" => htmlspecialchars($_POST['share-new-rent-tenant']) ?? '',
 			"roomID" => htmlspecialchars($_POST['new-rent-room']),
 			"occTypeID" => htmlspecialchars($_POST['new-rent-occTypeID']),
 			"occDateStart" => htmlspecialchars($_POST['new-rent-start']),
 			"occDateEnd" => htmlspecialchars($_POST['new-rent-end']),
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
+
+		echo '<script>console.log("create_rent:", ' . json_encode($create_rent) . ');</script>';
 
 		$result = DashboardController::create_new_rent($create_rent);
         if ($result === true) {

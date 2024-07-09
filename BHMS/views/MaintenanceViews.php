@@ -3,22 +3,50 @@
 require 'GeneralViews.php';
 require '../controllers/MaintenanceController.php';
 
+/**
+ * This class contains all the views that are used in the maintenance page.
+ * 
+ * @method maintenance_header
+ * @method create_maintenance_modal
+ * @method maintenance_content
+ * @method On_going_table_data
+ * @method Completed_table_data
+ * @method Cancelled_table_data
+ * @method edit_maintenance_modal
+ * @method delete_maintenance_modal
+ * @class MaintenanceViews
+ */
 class MaintenanceViews extends GeneralViews{
 
+
+    /**
+     * This method is used to display the maintenance header.
+     * 
+     * @method maintenance_header
+     * @return void
+     */
     public static function maintenance_header(){
-        echo '
+        echo <<<HTML
         <div class="container-fluid">
-            <div class="billings-header" >
-        <div>
-            <span class="page-header">Maintenance</span><br>
+            <div class="billings-header">
+            <div>
+                <span class="page-header">Maintenance</span><br>
+                <span class="page-sub-header>">View and manage maintenance information</span>
+            </div>
+            <button type="button" class="btn-var-1 bg-btn" data-bs-toggle="modal" data-bs-target="#add-modal-info">
+                <img src="/images/icons/Residents/add_new_light.png" alt=""> Add Maintenance
+            </button>
         </div>
-        <button type="button" class="btn-var-1 bg-btn" data-bs-toggle="modal" data-bs-target="#add-modal-info">
-            <img src="/images/icons/Residents/add_new_light.png" alt=""> Add Maintenance
-        </button>
-        </div>
-        ';
+        HTML;
     }
 
+
+    /**
+     * This method is used to display the create maintenance modal.
+     * 
+     * @method create_maintenance_modal
+     * @return void
+     */
     public static function create_maintenance_modal(){
         $rooms = MaintenanceController::get_room();
 
@@ -106,6 +134,13 @@ class MaintenanceViews extends GeneralViews{
                 ';
     }
 
+
+    /**
+     * This method is used to display the maintenance content.
+     * 
+     * @method maintenance_content
+     * @return void
+     */
     public static function maintenance_content(){
         echo '
         
@@ -127,6 +162,13 @@ class MaintenanceViews extends GeneralViews{
                 
     }
 
+
+    /**
+     * This method is used to display the "On-going" maintenance data.
+     * 
+     * @method On_going_table_data
+     * @return void
+     */
     public static function On_going_table_data() {
         // Fetch the "On-going" maintenance data. 
         if(isset($_GET['On-going-RoomCode']) && !empty($_GET['On-going-RoomCode'])){
@@ -191,43 +233,50 @@ class MaintenanceViews extends GeneralViews{
                 </tr>
                 </thead>
                 <tbody>
-    HTML;
+        HTML;
     
-        // Loop through the fetched data and create a table row for each record.
-        foreach ($On_going as $maintenance) {
+            // Loop through the fetched data and create a table row for each record.
+            foreach ($On_going as $maintenance) {
+                echo '
+                <tr>
+                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                    <td>See more...</td>
+                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                    <td class="action-buttons">
+                        <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                            onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                    \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                            data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                        </button>
+                        <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
+                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                        </button>
+                    </td>
+                </tr>';
+            }
+        
+            // Close the HTML tags.
             echo '
-            <tr>
-                <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                <td>See more...</td>
-                <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                <td class="action-buttons">
-                    <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                        onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                  \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                        data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                    </button>
-                    <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
-                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                    </button>
-                </td>
-            </tr>';
-        }
-    
-        // Close the HTML tags.
-        echo '
-                </tbody>
-            </table>
-        </div>
-    </div>';
+                    </tbody>
+                </table>
+            </div>
+        </div>';
     }
 
+
+    /**
+     * This method is used to display the "Completed" maintenance data.
+     * 
+     * @method Completed_table_data
+     * @return void
+     */
     public static function Completed_table_data() {
         // Fetch the "Completed" maintenance data.
         if(isset($_GET['Completed-RoomCode']) && !empty($_GET['Completed-RoomCode'])){
@@ -288,43 +337,50 @@ class MaintenanceViews extends GeneralViews{
                 </tr>
                 </thead>
                 <tbody>
-    HTML;
+        HTML;
     
-        // Loop through the fetched data and create a table row for each record.
-        foreach ($completed as $maintenance) {
+            // Loop through the fetched data and create a table row for each record.
+            foreach ($completed as $maintenance) {
+                echo '
+                <tr>
+                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                    <td>See more...</td>
+                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                    <td class="action-buttons">
+                        <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                            onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                    \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                            data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                        </button>
+                        <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
+                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                        </button>
+                    </td>
+                </tr>';
+            }
+        
+            // Close the HTML tags.
             echo '
-            <tr>
-                <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                <td>See more...</td>
-                <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                <td class="action-buttons">
-                    <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                        onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                  \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                        data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                    </button>
-                    <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
-                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                    </button>
-                </td>
-            </tr>';
-        }
-    
-        // Close the HTML tags.
-        echo '
-                    </tbody>
-                </table>
-            </div>
-        </div>';
+                        </tbody>
+                    </table>
+                </div>
+            </div>';
     }
 
+
+    /**
+     * This method is used to display the "Cancelled" maintenance data.
+     * 
+     * @method Cancelled_table_data
+     * @return void
+     */
     public static function Cancelled_table_data() {
         // Fetch the "Cancelled" maintenance data.
         if(isset($_GET['Cancelled-RoomCode']) && !empty($_GET['Cancelled-RoomCode'])){
@@ -384,7 +440,7 @@ class MaintenanceViews extends GeneralViews{
                 </tr>
                 </thead>
                 <tbody>
-    HTML;
+        HTML;
     
         // Loop through the fetched data and create a table row for each record.
         foreach ($cancelled as $maintenance) {
@@ -421,6 +477,13 @@ class MaintenanceViews extends GeneralViews{
         </div>';
     }
 
+
+    /**
+     * This method is used to display the edit maintenance modal.
+     * 
+     * @method edit_maintenance_modal
+     * @return void
+     */
     public static function edit_maintenance_modal(){
         $rooms = MaintenanceController::get_room(); // Fetch rooms data from database
     
@@ -507,6 +570,13 @@ class MaintenanceViews extends GeneralViews{
         ';
     }
 
+
+    /**
+     * This method is used to display the delete maintenance modal.
+     * 
+     * @method delete_maintenance_modal
+     * @return void
+     */
     public static function delete_maintenance_modal(){
         echo '
         

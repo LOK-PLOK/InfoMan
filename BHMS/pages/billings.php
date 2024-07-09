@@ -79,7 +79,7 @@
                         </div>
 
                         <!-- OVERDUE TABLE -->
-                        <div class="content">
+                        <div class="content overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('paid');
                             ?>

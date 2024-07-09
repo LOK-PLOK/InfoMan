@@ -5,7 +5,11 @@ ob_start();
 require '../php/templates.php';
 require '../views/RoomlogsViews.php';
 
-html_start('room_logs.css');
+$more_links = '
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" 
+integrity="sha512-wCrId7bUEl7j1H60Jcn4imkkiIYRcoyq5Gcu3bpKAZYBJXHVMmkL4rhtyhelxSFuPMIoQjiVsanrHxcs2euu/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>';
+
+html_start('room_logs.css', $more_links);
 
 // Sidebar
 require '../php/navbar.php';
@@ -25,6 +29,7 @@ RoomlogsViews::burger_sidebar();
     <div class="rm-log-button">
         <button class="show-avail-rm-btn">Show Available Rooms</button>
         <button type="button" data-bs-toggle="modal" data-bs-target="#add-new-rm">Add New Room</button>
+        <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#addNewRent"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
     </div>
 
     <!-- Room Information -->
@@ -45,6 +50,7 @@ RoomlogsViews::editOccupancyModal();
 RoomlogsViews::addNewRoomModal();
 RoomlogsViews::editRoomModal();
 RoomlogsViews::deleteRoomModal();
+RoomlogsViews::create_new_rent_modal();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -67,10 +73,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    // Add New Rent Handler
+	if (isset($_POST['create-new-rent'])) {
+		$create_rent = array(
+			"tenID" => htmlspecialchars($_POST['new-rent-tenant']),
+			"shareTenID" => htmlspecialchars($_POST['share-new-rent-tenant']) ?? '',
+			"roomID" => htmlspecialchars($_POST['new-rent-room']),
+			"occTypeID" => htmlspecialchars($_POST['new-rent-occTypeID']),
+			"occDateStart" => htmlspecialchars($_POST['new-rent-start']),
+			"occDateEnd" => htmlspecialchars($_POST['new-rent-end']),
+			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
+		);
+
+		$result = RoomlogsController::create_new_rent($create_rent);
+        if ($result === true) {
+            // Redirect to avoid form resubmission
+            header('Location: room_logs.php?addRentStatus=success');
+            exit();
+        } else {
+            // Redirect with an error message
+            header('Location: room_logs.php?addRentStatus='.$result);
+            exit();
+        }
+	}
+
     // Editing Room
     if(isset($_POST['edit-room-submit'])){
         $editRoomInfo = array(
             'roomID' => $_POST['edit-rm-code-hidden'],
+            'newRoomID' => $_POST['edit-rm-code'], // 'newRoomID' is the new room code, 'roomID' is the old room code
             'capacity' => $_POST['edit-rm-cap'],
         );
 
@@ -144,6 +175,59 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <script src="../js/roomLogsGeneral.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+	$(document).ready(function() {
+        $("#new-rent-tenant").selectize();
+		$("#share-new-rent-tenant").selectize();
+    });
+
+	document.getElementById('new-rent-type').addEventListener('change', function () {
+		const selectedValue = this.value;
+    
+		if (selectedValue) {
+			const [occTypeID, occRate] = selectedValue.split('|');
+
+			const inputOccTypeID = document.getElementById('new-rent-occ-typeID');
+			inputOccTypeID.value = occTypeID;
+			
+			// Example: Update elements based on occTypeID and occRate
+			const viewOccupancyRate = document.getElementById('new-rent-rate');
+			const actualOccupancyRate = document.getElementById('actual-new-rent-rate');
+			
+			viewOccupancyRate.value = occRate;
+			actualOccupancyRate.value = occRate;
+
+			if (inputOccTypeID.value == 6) {
+				// Show the share tenant input
+				document.getElementById('shared-tenant').style.display = 'block';
+			} else {
+				// Hide the share tenant input
+				document.getElementById('shared-tenant').style.display = 'none';
+			}
+
+			
+		}
+	});
+
+
+	// End Date Setter for Add New Rent
+	document.getElementById('new-rent-start').addEventListener('change', function() {
+		const startDate = new Date(this.value);
+
+		if(!isNaN(startDate.getTime())) {
+			const endDate = new Date(startDate);
+			endDate.setDate(endDate.getDate() + 30);
+
+			const endDateString = endDate.toISOString().split('T')[0];
+			document.getElementById('new-rent-end').value = endDateString;
+		} else {
+			alert("Invalid start date");
+		}
+	});
+</script>
 
 <?php 
 ob_end_flush();

@@ -41,13 +41,6 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 ResidentsViews::residents_table_display($tenant_list);
 
 
-
-// if ($tenant_list) {
-//     echo '<script>console.log("Tenant list fetched successfully")</script>';
-// } else {
-//     echo '<script>console.log("Error fetching tenant list")</script>';
-// }
-
 // C.U.D Operations
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 

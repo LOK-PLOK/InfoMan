@@ -57,6 +57,40 @@ class RoomlogsController extends GeneralController{
         return RoomlogsModel::deleteRoom($roomCode);
     }
 
+    public static function create_new_rent($create_rent) {
+        $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
+        $roomInfo = RoomlogsModel::query_room_info($create_rent['roomID']);
+
+        $tenID = $create_rent['tenID'];
+        $startDate = $create_rent['occDateStart'];
+        $endDate = $create_rent['occDateEnd'];
+
+        $checkTenant = RoomlogsModel::is_tenant_available($tenID, $startDate, $endDate);
+        if($checkTenant){
+            $bedSpacerID = 1;
+            $sharedRoomID = 6;
+            if ($create_rent['occTypeID'] == $sharedRoomID) {
+                $checkValidity = RoomlogsModel::check_shared_room($create_rent);
+                if ($checkValidity == 1 && $tenant_count < $roomInfo['capacity']) {
+                    RoomlogsModel::query_add_new_rent($create_rent);
+                } else {
+                    return "Room cannot be shared!";
+                }
+            } else if ($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0) {
+                return "Room can only be occupied for bedspacers!";
+            } else if($roomInfo['isAvailable'] == 0 && $tenant_count < $roomInfo['capacity']){
+                return "Room can only be shared!";
+            } else if ($roomInfo['isAvailable'] == 0) {
+                return "Room is already in Full Capacity!";
+            } else {
+                RoomlogsModel::query_add_new_rent($create_rent);
+                return true;
+            }
+        } else {
+            return "Tenant is already occupied on the selected date!";
+        }
+    }
+
 }
 
 ?>

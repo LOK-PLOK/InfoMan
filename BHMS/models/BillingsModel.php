@@ -4,6 +4,53 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+    public static function fetchApplianceRate(){
+        try {
+            // Create a connection to the database
+            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+            
+            if ($conn->connect_error) {
+                throw new Exception("Connection failed: " . $conn->connect_error);
+            }
+
+            // Prepare the SQL query to get the default value of the appRate column
+            $stmt = $conn->prepare("
+                SELECT COLUMN_DEFAULT 
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_NAME = 'appliance' 
+                AND COLUMN_NAME = 'appRate'
+            ");
+
+            // Execute the statement
+            $stmt->execute();
+
+            // Get the result
+            $result = $stmt->get_result();
+
+            // Fetch the row as an associative array
+            $row = $result->fetch_assoc();
+            $default_value = $row['COLUMN_DEFAULT'];
+
+            // Free the result
+            $result->free();
+
+            // Close the statement
+            $stmt->close();
+
+            // Close the connection
+            $conn->close();
+
+            // Return the default value
+            return $default_value;
+        } catch (Exception $e) {
+            // Log the error to a file or handle it as needed
+            error_log("Error getting appliance rate default value: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+
+            // Return null to indicate failure
+            return null;
+        }
+    }
+
     public static function query_get_appliances($tenID){
         $conn = self::get_connection();
         $query = "SELECT COUNT(*) AS count

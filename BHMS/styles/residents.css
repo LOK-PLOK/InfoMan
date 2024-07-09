@@ -34,10 +34,6 @@
 /*====================Heading Section====================*/
 
 /*---------------Left Container---------------*/
-.left-content {
-    margin-top: 5px;
-}
-
 .current-residents {
     margin-bottom: 5px;
 }
@@ -209,21 +205,7 @@
 }
 
 /*---------------Table Actual---------------*/
-.table-data .scrollable-tbody {
-    display: block;
-    max-height: 300px; /* Adjust based on your needs */
-    overflow-y: auto;
-}
 
-.table.styled-table {
-    width: 100%;
-}
-
-.table.styled-table thead, .table.styled-table tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed; /* This ensures the columns stay aligned */
-}
 
 
 /* Table css */

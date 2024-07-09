@@ -9,11 +9,6 @@ class SettingsController {
     public static function getRates() {
         return SettingsModel::fetchRates();
     }
-    
-    // Methos to update rates and pricing
-    public function updateRates($new_rates) {
-        return SettingsModel::updateRates($new_rates);
-    }
 
     // Method to create a new user
     public static function create_new_user($new_user) {
@@ -39,19 +34,10 @@ class SettingsController {
     public static function getApplianceRate() {
         return SettingsModel::fetchApplianceRate();
     }
-    
-
-    public static function updateApplianceRate($new_rate) {
-        return SettingsModel::updateApplianceRate($new_rate);
-    }
-
-    public static function updateOccupancyRates($new_rates) {
-        return SettingsModel::updateOccupancyRates($new_rates);
-    }
 
     public static function edit_rates_and_pricing($appRate, $occRates) {
-        $result1 = self::updateApplianceRate($appRate);
-        $result2 = self::updateOccupancyRates($occRates);
+        $result1 = SettingsModel::updateApplianceRate($appRate);
+        $result2 = SettingsModel::updateOccupancyRates($occRates);
         if($result1 && $result2) {
             return true;
         } else {

@@ -7,21 +7,47 @@ DashboardController::updateTenantRentStatus();
 DashboardController::updateRoomTenantCount();
 DashboardController::updateRoomAvailability();
 
+
+/**
+ * Dashboard related views
+ *
+ * @method dashboard_header
+ * @method ov_total_residents
+ * @method ov_bedsOcc_bedsAvail
+ * @method ov_available_rooms
+ * @method add_tenant_model_view
+ * @method create_new_rent_modal
+ * @class DashboardViews
+ * @extends GeneralViews
+ */
 class DashboardViews extends GeneralViews{
 
+    /**
+     * Displays the dashboard header
+     * 
+     * @method dashboard_header
+     * @param none
+     * @return void
+     */
     public static function dashboard_header() {
-
         echo <<<HTML
             <div class="header-container">
                 <div>
                     <span class="page-header">Welcome Back, {$_SESSION['First-Name']}</span><br>
-                    <span class="page-sub-header">Here\'s what we have for you today!</span>
+                    <span class="page-sub-header">Here's what we have for you today!</span>
                 </div>
             </div>
         HTML;
-
     }
 
+
+    /**
+     * Displays the total residents in the dashboard
+     * 
+     * @method ov_total_residents
+     * @param none
+     * @return void
+     */
     public static function ov_total_residents() {
 
         $total_current_residents = DashboardController::total_current_residents();
@@ -39,6 +65,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the occupied beds and available beds in the dashboard
+     * 
+     * @method ov_bedsOcc_bedsAvail
+     * @param none
+     * @return void
+     */
     public static function ov_bedsOcc_bedsAvail() {
 
         $result = DashboardController::total_occupied_beds_and_available_beds();
@@ -69,6 +103,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the available rooms in the dashboard
+     * 
+     * @method ov_available_rooms
+     * @param none
+     * @return void
+     */
     public static function ov_available_rooms() {
 
         $available_rooms = DashboardController::available_rooms();
@@ -86,6 +128,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the add tenant modal
+     * 
+     * @method add_tenant_model_view
+     * @param none
+     * @return void
+     */
     public static function add_tenant_model_view() {
 
         echo <<<HTML
@@ -107,11 +157,11 @@ class DashboardViews extends GeneralViews{
                             <div class="positioning">
                                 <div class="NameInput">
                                     <!-- tenFname -->
-                                    <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
+                                    <input type="text" id="tenFname" name="tenFname" placeholder="Juan" class="FNclass shadow" required>
                                     <!-- tenMI -->
-                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" required>
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" maxlength="1">
                                     <!-- tenLname -->
-                                    <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
+                                    <input type="text" id="tenLname" name="tenLname" placeholder="Dela Cruz" class="LNclass shadow" required>
                                 </div>
                                 <!-- tenGender -->
                                 <select id="tenGender" name="tenGender" class="shadow">
@@ -133,15 +183,15 @@ class DashboardViews extends GeneralViews{
                             </div>
                             <div>
                                 <!-- tenHouseNum -->
-                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
+                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="1024" class="houseno shadow">
                                 <!-- tenSt-->
-                                <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
+                                <input type="text" id="tenSt" name="tenSt" placeholder="R. Palma Street" class="street shadow">
                                 <!-- tenBrgy -->
-                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
+                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="Adlaon" class="barangay shadow">
                                 <!-- tenCityMun -->
-                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
+                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Cebu City" class="city shadow">
                                 <!-- tenProvince -->
-                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
+                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Cebu" class="province shadow">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-houseno">House No.</div>
@@ -156,7 +206,7 @@ class DashboardViews extends GeneralViews{
                             <div>
                                 <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" required>
+                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" required>
                             </div>
                             <!-- Emergency Contact -->
                             <div class="header label-position">
@@ -169,15 +219,15 @@ class DashboardViews extends GeneralViews{
                             <div style="display: flex; justify-content:left;">
                                 <div class="NameInput">
                                     <!-- emContactFname -->
-                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
+                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Glydel" class="FNclass shadow">
                                     <!-- emContactMI -->
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="L" class="MIclass shadow">
                                     <!-- emContactLname -->
-                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
+                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Dela Cruz" class="LNclass shadow">
                                 </div>
                                 <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
                                 <!-- emContactNum -->
-                                <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
+                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>
@@ -207,6 +257,14 @@ class DashboardViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the create new rent modal
+     * 
+     * @method create_new_rent_modal
+     * @param none
+     * @return void
+     */
     public static function create_new_rent_modal() {
         $tenants = DashboardController::get_tenants();
         $rooms = DashboardController::get_rooms();
@@ -242,6 +300,25 @@ class DashboardViews extends GeneralViews{
                                 }                         
         echo <<<HTML
                             </select>
+                            <div id="shared-tenant" style="display: none;">
+                                <label for="share-new-rent-tenant" class="input-label">Choose a tenant to share with:</label>
+                                <!-- Shared Tenant -->
+                                <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow">
+                                    <option value="" disabled selected>Select a tenant...</option>
+            HTML;
+                                    foreach ($tenants as $tenant){
+                                        $tenant_id = $tenant['tenID'];
+                                        $tenant_fName = $tenant['tenFname'];
+                                        $tenant_MI = $tenant['tenMI'];
+                                        $tenant_lName = $tenant['tenLname'];
+                                        $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                        echo<<<HTML
+                                            <option value="$tenant_id">$tenant_fullName</option>
+                                        HTML;
+                                    }                         
+            echo <<<HTML
+                                </select>
+                            </div>
                             <div class="d-flex justify-content-center input-sub-label">Name</div>
                         </div>
                         <div class="row-fluid">
@@ -255,11 +332,22 @@ class DashboardViews extends GeneralViews{
                                         <option value="" disabled selected>Select a Room...</option>
         HTML;
                                         foreach ($rooms as $room){
-                                            if($room['isAvailable'] !== 0){
-                                                $room_id = $room['roomID'];
-                                                $room_cap = $room['capacity'];
+                                            $room_id = $room['roomID'];
+                                            $room_cap = $room['capacity'];
+                                            $room_count = $room['rentCount'];
+                                            $room_avail = $room['isAvailable'];
+
+                                            if($room_avail != 0){
                                                 echo<<<HTML
                                                     <option value="$room_id">$room_id: Capacity - $room_cap</option>
+                                                HTML;
+                                            } else if ($room_avail == 0 && $room_count < $room_cap) {
+                                                echo<<<HTML
+                                                    <option value="$room_id">$room_id: Capacity - $room_cap - Shared Only</option>
+                                                HTML;
+                                            } else {
+                                                echo<<<HTML
+                                                    <option value="$room_id" disabled>$room_id: Capacity - $room_cap - Full</option>
                                                 HTML;
                                             }
                                         }       

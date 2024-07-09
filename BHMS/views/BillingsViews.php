@@ -3,10 +3,30 @@
 require 'GeneralViews.php';
 require '../controllers/BillingsController.php';
 
+
+/**
+ * Class for displaying billings-related views
+ * 
+ * @method billings_header
+ * @method create_billing_modal
+ * @method delete_billing_modal
+ * @method add_payment_modal
+ * @method edit_billing_modal
+ * @method edit_paid_billing_modal
+ * @method generate_billing_table
+ * @class BillingsViews
+ * @extends GeneralViews
+ */
 class BillingsViews extends GeneralViews{
 
+    /**
+     * Displays the billings header
+     * 
+     * @method billings_header
+     * @param none
+     * @return void
+     */
     public static function billings_header() {
-    
         echo <<<HTML
             <div class="billings-header">
                 <div>
@@ -21,9 +41,18 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the modal for creating a billing
+     * 
+     * @method create_billing_modal
+     * @param none
+     * @return void
+     */
     public static function create_billing_modal(){
         $tenants = BillingsController::get_tenants();
         $occupancy_types = BillingsController::get_occupancy_types();
+        $appliance_rates =  htmlspecialchars(json_encode(BillingsController::getApplianceRate()));
         echo <<<HTML
             <div class="modal fade" id="createBillingModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -54,7 +83,7 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select onchange="amountCalculator()" id="payment-occupancyType" class=" shadow" style="width: 75%">
+                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%">
                                         <option value="0" disabled selected>Select Occupancy Type...</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
@@ -67,7 +96,7 @@ class BillingsViews extends GeneralViews{
             echo <<<HTML
                                     </select>
                                     <!-- no. of appliances -->
-                                    <input type="number" onchange="amountCalculator()" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
+                                    <input type="number" onchange="amountCalculator($appliance_rates)" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
 
                                     <!-- appliance rate -->
                                     <!-- <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled> -->
@@ -119,6 +148,14 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the modal for deleting a billing
+     * 
+     * @method delete_billing_modal
+     * @param none
+     * @return void
+     */
     public static function delete_billing_modal(){
         echo <<<HTML
             <div class="modal fade" id="deleteBillingsModal" tabindex="-1" aria-labelledby="deleteBillingsLabel" aria-hidden="true">
@@ -133,7 +170,6 @@ class BillingsViews extends GeneralViews{
                     </div>
                     <div class="modal-body bg-custom">
                             <div class="displayflex">
-                                <!-- <input type="hidden" name="billingID" id="billingID" value=""> -->
                                 <input type="hidden" name="billing_id" id="billing_id">
                                 <input type="submit" name="delete-billing-submit" class="btn-var-2 ms-4 me-4" value="Yes">
                                 <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
@@ -150,6 +186,14 @@ class BillingsViews extends GeneralViews{
         HTML;
     }    
 
+
+    /**
+     * Displays the modal for adding a payment
+     * 
+     * @method add_payment_modal
+     * @param none
+     * @return void
+     */
     public static function add_payment_modal(){
         $tenants = BillingsController::get_tenants();
 
@@ -230,6 +274,14 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the modal for editing an unpaid billing
+     * 
+     * @method edit_billing_modal
+     * @param none
+     * @return void
+     */
     public static function edit_billing_modal() {
         $occupancy_types = BillingsController::get_occupancy_types();
         echo <<<HTML
@@ -282,6 +334,14 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the modal for editing a paid billing
+     * 
+     * @method edit_paid_billing_modal
+     * @param none
+     * @return void
+     */
     public static function edit_paid_billing_modal(){
         echo <<<HTML
             <div class="modal fade" id="editPaidBillingsModal" tabindex="-1" aria-labelledby="editBillingsLabel" aria-hidden="true">
@@ -369,6 +429,14 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+
+    /**
+     * Displays the billings table
+     * 
+     * @method generate_billing_table
+     * @param string $billingType - the type of billing to display (paid, unpaid, overdue)
+     * @return void
+     */
     public static function generate_billing_table($billingType) {
         $billings = [];
         switch ($billingType) {
