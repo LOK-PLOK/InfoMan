@@ -11,6 +11,16 @@ body {
     height: 100vh;
 }
 
+.label{
+    color: rgba(2, 67, 154, 0.50);
+}
+
+.header{
+    color: #344799;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
 /*==================== CONTENT ====================*/
 
 @media only screen and (min-width: 1130px) {

@@ -86,11 +86,11 @@ class ResidentsViews extends GeneralViews{
                             <div class="positioning">
                                 <div class="NameInput">
                                     <!-- tenFname -->
-                                    <input type="text" id="tenFname" name="tenFname" placeholder="Maria" class="FNclass shadow" required>
+                                    <input type="text" id="tenFname" name="tenFname" placeholder="Juan" class="FNclass shadow" required>
                                     <!-- tenMI -->
-                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow">
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" maxlength="1">
                                     <!-- tenLname -->
-                                    <input type="text" id="tenLname" name="tenLname" placeholder="Detablurs" class="LNclass shadow" required>
+                                    <input type="text" id="tenLname" name="tenLname" placeholder="Dela Cruz" class="LNclass shadow" required>
                                 </div>
                                 <!-- tenGender -->
                                 <select id="tenGender" name="tenGender" class="shadow" required>
@@ -112,15 +112,15 @@ class ResidentsViews extends GeneralViews{
                             </div>
                             <div>
                                 <!-- tenHouseNum -->
-                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="houseno shadow">
+                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="1024" class="houseno shadow">
                                 <!-- tenSt-->
-                                <input type="text" id="tenSt" name="tenSt" placeholder="Mabini Street" class="street shadow">
+                                <input type="text" id="tenSt" name="tenSt" placeholder="R.Palma Street" class="street shadow">
                                 <!-- tenBrgy -->
-                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="" class="barangay shadow">
+                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="Adlaon" class="barangay shadow">
                                 <!-- tenCityMun -->
-                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Quezon City" class="city shadow">
+                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Cebu City" class="city shadow">
                                 <!-- tenProvince -->
-                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Quezon" class="province shadow">
+                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Cebu" class="province shadow">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-houseno">House No.</div>
@@ -135,7 +135,7 @@ class ResidentsViews extends GeneralViews{
                             <div>
                                 <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="123456789" class="number shadow" >
+                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" >
                             </div>
                             <!-- Emergency Contact -->
                             <div class="header label-position">
@@ -148,15 +148,15 @@ class ResidentsViews extends GeneralViews{
                             <div style="display: flex; justify-content:left;">
                                 <div class="NameInput">
                                     <!-- emContactFname -->
-                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="FNclass shadow">
+                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Glydel" class="FNclass shadow">
                                     <!-- emContactMI -->
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="P" class="MIclass shadow">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="L" class="MIclass shadow" maxlength="1">
                                     <!-- emContactLname -->
-                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Detablurs" class="LNclass shadow">
+                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Dela Cruz" class="LNclass shadow">
                                 </div>
                                 <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
                                 <!-- emContactNum -->
-                                <input type="text" id="emContactNum" name="emContactNum" placeholder="123456789" class="number shadow">
+                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>
@@ -210,7 +210,7 @@ class ResidentsViews extends GeneralViews{
                                 <button class="btn btn-primary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="pe-5 fs-6">Category...</span>
                                 </button>
-                                <ul class="dropdown-menu" style="background-color: #344799;">
+                                <ul class="dropdown-menu" style="background-color: #344799; z-index:1050;">
                                     <li class="d-flex justify-content-center"><input type="submit"  name="ALL"value="ALL" class="no-design1"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"  name="Active"value="Active" class="no-design1"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"   name="Inactive" value="Inactive"class="no-design2"></li>
@@ -262,7 +262,7 @@ class ResidentsViews extends GeneralViews{
                                     <button style="float: left; width: 100%;" class="tenant-info-btn" data-bs-toggle="modal" data-bs-target="#TenantInfo" data-tenant=\'' . $tenantDataJson . '\'
                                                                  data-appliances = \'' . $appliancesDataJson . '\' data-occupancy=\'' . $occupancyDataJson . '\'>
                                         <div class="alignleft">
-                                            <span class="residenttile textstyle0">' . htmlspecialchars($tenant['tenFname'] . ' ' . $tenant['tenMI'] . '. ' . $tenant['tenLname']) . '</span>
+                                            <span class="residenttile textstyle0">' . htmlspecialchars($tenant['tenFname'] . ($tenant['tenMI'] ? ' ' . $tenant['tenMI'] . '.' : '') . ' ' . $tenant['tenLname']) . '</span>
                                         </div>
                                         <div class="alignleft">
                                             <span class="textstyle1">' . htmlspecialchars($tenant['tenContact']) . '</span>
@@ -337,21 +337,25 @@ class ResidentsViews extends GeneralViews{
                     <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
                         <!-- Tenant information will be loaded here dynamically -->
                     </div>
-                    <div class="modal-footer-custom bg-custom overflow-auto" style="max-height: 200px;">
+                    <div class="modal-footer-custom bg-custom " >
                         <div class="header">Rent History</div>
                         <section class="table-data">
-                            <div class="table-responsive">
+                            <div class="table-responsive overflow-auto" style="max-height: 200px;">
                                 <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799">
                                     <thead>
                                         <tr>
                                             <th>Room Code</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
+                                            <th>Rent Type</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="rentHistoryTableBody scrollable-tbody">
+                                    <tbody id="rentHistoryTableBody">
                                         <!-- Rent history will be loaded here dynamically -->
+                                        <tr>
+                                            <td colspan="5" style="text-align: center;color: rgb(118, 118, 118);">No data available</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -369,19 +373,19 @@ class ResidentsViews extends GeneralViews{
             var tenantInfoModalBody = document.getElementById("tenantInfoModalBody");
             var rentHistoryTableBody = document.getElementById("rentHistoryTableBody");
             var tenantInfoButtons = document.querySelectorAll(".tenant-info-btn");
-
+        
             tenantInfoButtons.forEach(function(btn) {
                 btn.addEventListener("click", function() {
                     var tenantData = JSON.parse(this.getAttribute("data-tenant"));
                     var appliancesData = JSON.parse(this.getAttribute("data-appliances"));
                     var occupancyData = JSON.parse(this.getAttribute("data-occupancy"));
-
+        
                     // Update tenant information section
                     tenantInfoModalBody.innerHTML = `
                         <div class="split-left">
                             <div>
                                 <span class="label">Name:</span>
-                                <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI}. ${tenantData.tenLname}</span>
+                                <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI ? tenantData.tenMI + "." : ""} ${tenantData.tenLname}</span>
                             </div>
                             <div>
                                 <span class="label">Contact Number:</span>
@@ -389,7 +393,7 @@ class ResidentsViews extends GeneralViews{
                             </div>
                             <div>
                                 <span class="label">Address:</span>
-                                <span>${tenantData.tenHouseNum !== "0" ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt}, ${tenantData.tenCityMun}</span>
+                                <span>${tenantData.tenHouseNum !== "0" ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt} ${tenantData.tenCityMun}</span>
                             </div>
                             <div>
                                 <span class="label">Gender:</span>
@@ -410,7 +414,7 @@ class ResidentsViews extends GeneralViews{
                             </div>
                             <div>
                                 <span class="label">Name:</span>
-                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI}. ${tenantData.emContactLname}</span>
+                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI ? tenantData.emContactMI + "." : ""} ${tenantData.emContactLname}</span>
                             </div>
                             <div>
                                 <span class="label">Contact Number:</span>
@@ -418,7 +422,7 @@ class ResidentsViews extends GeneralViews{
                             </div>
                         </div>
                     `;
-
+        
                     // Update appliances list
                     var appliancesList = document.getElementById("appliancesList");
                     appliancesList.innerHTML = ""; // Clear previous content
@@ -427,45 +431,58 @@ class ResidentsViews extends GeneralViews{
                         li.textContent = appliance.appInfo.concat(" - ₱", appliance.appRate);
                         appliancesList.appendChild(li);
                     });
-
+        
                     // Update rent history table with occupancy data
                     rentHistoryTableBody.innerHTML = ""; // Clear previous content
-                    occupancyData.forEach(function(occupancy) {
+                    if (occupancyData.length === 0) {
                         var tr = document.createElement("tr");
-                        tr.innerHTML = `
-                            <td>${occupancy.roomID}</td>
-                            <td>${formatDate(occupancy.occDateStart)}</td>
-                            <td>${formatDate(occupancy.occDateEnd)}</td>
-                            <td>
-                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
-                                    value=${occupancy.roomID}
-                                    onclick="setValuesTenantInfo(
-                                        ${occupancy.occupancyID},
-                                        \'${occupancy.tenFname}\',
-                                        \'${occupancy.tenMI}\',
-                                        \'${occupancy.tenLname}\',
-                                        \'${occupancy.roomID}\',
-                                        \'${occupancy.occTypeName}\',
-                                        \'${occupancy.occDateStart}\',
-                                        \'${occupancy.occDateEnd}\',
-                                        ${occupancy.occupancyRate}
-                                    );"
-                                >
-                                    <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                                </button>
-
-                                <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
-                                    <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
-                                </button>
-                            </td>
-                        `;
+                        var td = document.createElement("td");
+                        td.colSpan = 5;
+                        td.style.textAlign = "center";
+                        td.style.color = "rgb(118, 118, 118)";
+                        td.textContent = "No data available";
+                        tr.appendChild(td);
                         rentHistoryTableBody.appendChild(tr);
-                    });
+                    } else {
+                        occupancyData.forEach(function(occupancy) {
+                            var tr = document.createElement("tr");
+                            tr.innerHTML = `
+                                <td>${occupancy.roomID}</td>
+                                <td>${formatDate(occupancy.occDateStart)}</td>
+                                <td>${formatDate(occupancy.occDateEnd)}</td>
+                                <td style="max-width:200px;">${occupancy.occTypeName}</td>
+                                <td>
+                                    <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal"
+                                        value=${occupancy.roomID}
+                                        onclick="setValuesTenantInfo(
+                                            ${occupancy.occupancyID},
+                                            \'${occupancy.tenFname}\',
+                                            \'${occupancy.tenMI}\',
+                                            \'${occupancy.tenLname}\',
+                                            \'${occupancy.roomID}\',
+                                            \'${occupancy.occTypeName}\',
+                                            \'${occupancy.occDateStart}\',
+                                            \'${occupancy.occDateEnd}\',
+                                            ${occupancy.occupancyRate}
+                                        );"
+                                    >
+                                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                                    </button>
+        
+                                    <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" onclick="deleteOccupancy(${occupancy.occupancyID})">
+                                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
+                                    </button>
+                                </td>
+                            `;
+                            rentHistoryTableBody.appendChild(tr);
+                        });
+                    }
                 });
             });
         });
         </script>
         ';
+        
 
     }
 
@@ -627,7 +644,7 @@ class ResidentsViews extends GeneralViews{
                                     <!-- Edit tenFname -->
                                     <input type="text" id="Edit-tenFname" name="Edit-tenFname" placeholder="First Name" class="FNclass shadow" required>
                                     <!-- Edit tenMI -->
-                                    <input type="text" id="Edit-tenMI" name="Edit-tenMI" placeholder="MI" class="MIclass shadow">
+                                    <input type="text" id="Edit-tenMI" name="Edit-tenMI" placeholder="MI" class="MIclass shadow" maxlength="1">
                                     <!-- Edit tenLname -->
                                     <input type="text" id="Edit-tenLname" name="Edit-tenLname" placeholder="Last Name" class="LNclass shadow" required>
                                 </div>
@@ -690,7 +707,7 @@ class ResidentsViews extends GeneralViews{
                                     <!-- Edit-emContactFname -->
                                     <input type="text" id="Edit-emContactFname" name="Edit-emContactFname" placeholder="First Name" class="FNclass shadow">
                                     <!-- Edit-emContactMI -->
-                                    <input type="text" id="Edit-emContactMI" name="Edit-emContactMI" placeholder="MI" class="MIclass shadow">
+                                    <input type="text" id="Edit-emContactMI" name="Edit-emContactMI" placeholder="MI" class="MIclass shadow" maxlength="1">
                                     <!-- Edit-emContactLname -->
                                     <input type="text" id="Edit-emContactLname" name="Edit-emContactLname" placeholder="Last Name" class="LNclass shadow">
                                 </div>

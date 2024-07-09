@@ -221,8 +221,9 @@ class MaintenanceViews extends GeneralViews{
                 
             </div>
 
+            <section class="overflow-auto" style="max-height: 400px;">
             <table>
-                <thead>
+                <thead class="sticky-top">
                 <tr>
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -234,38 +235,47 @@ class MaintenanceViews extends GeneralViews{
                 </thead>
                 <tbody>
         HTML;
-    
-            // Loop through the fetched data and create a table row for each record.
-            foreach ($On_going as $maintenance) {
+
+            if (empty($On_going)) {
                 echo '
                 <tr>
-                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                    <td>See more...</td>
-                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                    <td class="action-buttons">
-                        <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                            onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                    \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                            data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                        </button>
-                        <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
-                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                        </button>
-                    </td>
+                    <td colspan="5" style="text-align: center;color: rgb(118, 118, 118);">No data available</td>
                 </tr>';
+            }else{
+                // Loop through the fetched data and create a table row for each record.
+                foreach ($On_going as $maintenance) {
+                    echo '
+                    <tr>
+                        <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                        <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                        <td>See more...</td>
+                        <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                        <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                        <td class="action-buttons">
+                            <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                                onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                        \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                                data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                            </button>
+                            <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
+                                <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                            </button>
+                        </td>
+                    </tr>';
+                }
             }
+            
         
             // Close the HTML tags.
             echo '
                     </tbody>
                 </table>
+                </section>
             </div>
         </div>';
     }
@@ -324,9 +334,11 @@ class MaintenanceViews extends GeneralViews{
                  </form>
 
             </div>
+            <section class="overflow-auto" style="max-height: 400px;">
 
+            
             <table>
-                <thead>
+                <thead class="sticky-top">
                 <tr class ="completed">
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -338,38 +350,49 @@ class MaintenanceViews extends GeneralViews{
                 </thead>
                 <tbody>
         HTML;
-    
-            // Loop through the fetched data and create a table row for each record.
-            foreach ($completed as $maintenance) {
+            
+            if(empty($completed)){
                 echo '
                 <tr>
-                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                    <td>See more...</td>
-                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                    <td class="action-buttons">
-                        <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                            onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                    \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                            data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                        </button>
-                        <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
-                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                        </button>
-                    </td>
+                    <td colspan="5" style="text-align: center;color: rgb(118, 118, 118);">No data available</td>
                 </tr>';
+            }else{
+
+                    // Loop through the fetched data and create a table row for each record.
+                foreach ($completed as $maintenance) {
+                    echo '
+                    <tr>
+                        <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                        <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                        <td>See more...</td>
+                        <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                        <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                        <td class="action-buttons">
+                            <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                                onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                        \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                        \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                                data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                            </button>
+                            <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
+                                <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                            </button>
+                        </td>
+                    </tr>';
+                }
             }
+                
+            
         
             // Close the HTML tags.
             echo '
                         </tbody>
                     </table>
+                    </section>
                 </div>
             </div>';
     }
@@ -427,9 +450,10 @@ class MaintenanceViews extends GeneralViews{
                  </form>
 
             </div>
-
+            <section class="overflow-auto" style="max-height: 400px;">
+            
             <table>
-                <thead>
+                <thead class="sticky-top">
                 <tr class="canceled">
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -441,38 +465,48 @@ class MaintenanceViews extends GeneralViews{
                 </thead>
                 <tbody>
         HTML;
-    
-        // Loop through the fetched data and create a table row for each record.
-        foreach ($cancelled as $maintenance) {
+        
+        if(empty($cancelled)){
             echo '
             <tr>
-                <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                <td>See more...</td>
-                <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                <td class="action-buttons">
-                    <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                        onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                  \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                  \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                        data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                    </button>
-                    <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
-                        <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
-                    </button>
-                </td>
+                <td colspan="5" style="text-align: center;color: rgb(118, 118, 118);">No data available</td>
             </tr>';
+        }else{
+            // Loop through the fetched data and create a table row for each record.
+            foreach ($cancelled as $maintenance) {
+                echo '
+                <tr>
+                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                    <td>See more...</td>
+                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                    <td class="action-buttons">
+                        <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                            onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                    \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                    \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                            data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                        </button>
+                        <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
+                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
+                        </button>
+                    </td>
+                </tr>';
+            }
         }
+
+
     
         // Close the HTML tags.
         echo '
                     </tbody>
                 </table>
+                </section>
             </div>
         </div>';
     }
