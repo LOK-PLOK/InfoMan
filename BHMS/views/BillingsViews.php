@@ -461,22 +461,20 @@ class BillingsViews extends GeneralViews{
         $billings = [];
         switch ($billingType) {
             case 'paid':
-                // if 2nd param == 'oldest-to-newest'
-                // billings = BillingsController:: get_sortedBy_oldestNewest_paidBillings()
                 $billings = BillingsController::get_paid_billings();
-                $tableHeader = '<tr><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editPaidBillingsModal';
                 $prepBool = 0;
                 break;
             case 'unpaid':
                 $billings = BillingsController::get_unpaid_billings();
-                $tableHeader = '<tr class="orange-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;" class="orange-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editBillingsModal';
                 $prepBool = 1;
                 break;
             case 'overdue':
                 $billings = BillingsController::get_overdue_billings();
-                $tableHeader = '<tr class="red-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;" class="red-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editBillingsModal';
                 $prepBool = 1;
                 break;

@@ -90,8 +90,8 @@
                             }
                         ?>
 
-                        <!-- Paid -->
-                        <div class="content active">
+                        <!-- OVERDUE -->
+                        <div class="content active overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('overdue', $sortType); 
                                 echo'<script>console.log("inside overdue")</script>';
@@ -100,14 +100,14 @@
                         
 
 						<!-- UNPAID TABLE -->
-                        <div class="content">
+                        <div class="content overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('unpaid', $sortType);
                                 echo'<script>console.log("inside unpaid")</script>';
                             ?>
                         </div>
 
-                        <!-- OVERDUE TABLE -->
+                        <!-- PAID TABLE -->
                         <div class="content overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('paid', $sortType);
