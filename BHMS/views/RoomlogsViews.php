@@ -116,12 +116,10 @@ class RoomlogsViews extends GeneralViews{
             } else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0 && $room['isAvailable'] == 0) {
                 $availability = 'Room Rented (Shared Only)';
                 $avail_info = htmlspecialchars($room['rentCount']) . ' / ' . htmlspecialchars($room['capacity']);
-            }
-            else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0) {
+            } else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0) {
                 $availability = 'Available (BS only)';
                 $avail_info = htmlspecialchars($room['rentCount']) . ' / ' . htmlspecialchars($room['capacity']);
-            } 
-            else {
+            } else {
                 $availability = 'Available';
                 $avail_info = 'NOT OCCUPIED';
             }

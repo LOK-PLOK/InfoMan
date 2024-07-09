@@ -279,7 +279,7 @@ class ResidentsViews extends GeneralViews{
                                     </div>
                                 </td>
                                 <td>See more...</td>
-                                <td>' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
+                                <td style="max-width: 200px">' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
                                 <td>' . htmlspecialchars($occupancy[0]['roomID'] ?? 'N/A') . '</td>
                                 <td>' . (empty($occupancy) ? 'N/A' : htmlspecialchars(date("F j, Y", strtotime($occupancy[0]['occDateEnd'])))) . '</td>
                                 <td>
