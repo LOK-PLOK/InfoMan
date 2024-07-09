@@ -5,6 +5,10 @@ require 'GeneralController.php';
 
 class BillingsController extends GeneralController{
 
+    // public static function get_sortedBy_oldestNewest_paidBillings(){
+    //     return BillingsModel::query_sortedBy_oldestNewest_paidBillings();
+    // }
+
     public static function getApplianceRate() {
         return BillingsModel::fetchApplianceRate();
     }

@@ -429,7 +429,27 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+    public static function sortByAmount($a, $b) {
+        return $b['billTotal'] <=> $a['billTotal'];
+    
+    }
 
+    public static function sortByBillDueDate($a, $b) {
+        $dateA = strtotime($a['billDueDate']);
+        $dateB = strtotime($b['billDueDate']);
+        return $dateB - $dateA;
+    }
+
+    public static function sortByTenantFirstName($a, $b) {
+        return strcmp($a['tenant_first_name'], $b['tenant_first_name']);
+    }
+
+    public static function searchByFirstName($billings, $keyword) {
+        return array_filter($billings, function($billing) use ($keyword) {
+            return stripos($billing['tenant_first_name'], $keyword) === 0;
+        });
+    }
+    
     /**
      * Displays the billings table
      * 
@@ -437,31 +457,44 @@ class BillingsViews extends GeneralViews{
      * @param string $billingType - the type of billing to display (paid, unpaid, overdue)
      * @return void
      */
-    public static function generate_billing_table($billingType) {
+    public static function generate_billing_table($billingType, $sortType) {
         $billings = [];
         switch ($billingType) {
             case 'paid':
                 $billings = BillingsController::get_paid_billings();
-                $tableHeader = '<tr><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editPaidBillingsModal';
                 $prepBool = 0;
                 break;
             case 'unpaid':
                 $billings = BillingsController::get_unpaid_billings();
-                $tableHeader = '<tr class="orange-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;" class="orange-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editBillingsModal';
                 $prepBool = 1;
                 break;
             case 'overdue':
                 $billings = BillingsController::get_overdue_billings();
-                $tableHeader = '<tr class="red-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;" class="red-th"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editBillingsModal';
                 $prepBool = 1;
                 break;
             default:
                 break;
         }
-    
+        
+        if($sortType == 'amount'){
+            usort($billings, 'self::sortByAmount');
+        }else if($sortType == 'n-t-o'){
+            usort($billings, 'self::sortByBillDueDate');
+        }else if($sortType == 'name'){
+            usort($billings, 'self::sortByTenantFirstName');
+        }
+
+        if(isset($_GET['search'])){
+            $keyword = isset($_GET['search']) ? $_GET['search'] : '';
+            $billings = self::searchByFirstName($billings, $keyword);
+        }
+        
         echo <<<HTML
             <table>
                 <thead>
@@ -482,7 +515,7 @@ class BillingsViews extends GeneralViews{
                 $billingId = $billing['billRefNo'];
                 $billDateIssued = $billing['billDateIssued'];
                 $billDueDate = $billing['billDueDate'];
-                $tenantFullName = $billing['tenant_first_name'] . ' ' . $billing['tenMI'] . '. ' . $billing['tenant_last_name'];
+                $tenantFullName = $billing['tenant_first_name'] . ' ' . ($billing['tenMI'] ? $billing['tenMI'] . '.' : '') . ' ' . $billing['tenant_last_name'];
                 $billTotal = $billing['billTotal'];
                 $isPaid = $billing['isPaid'];
 
