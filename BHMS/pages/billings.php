@@ -94,7 +94,6 @@
                         <div class="content active overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('overdue', $sortType); 
-                                echo'<script>console.log("inside overdue")</script>';
                             ?>
                         </div>
                         
@@ -103,7 +102,6 @@
                         <div class="content overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('unpaid', $sortType);
-                                echo'<script>console.log("inside unpaid")</script>';
                             ?>
                         </div>
 
@@ -111,7 +109,6 @@
                         <div class="content overflow-auto" style="max-height: 500px;">
                             <?php
                                 BillingsViews::generate_billing_table('paid', $sortType);
-                                echo'<script>console.log("inside here")</script>';
                             ?>
                         </div>
 
@@ -125,7 +122,6 @@
 </div>
 
 <?php
-    echo'<script>console.log("Reached here")</script>';
     BillingsViews::add_payment_modal();
     BillingsViews::edit_billing_modal();
     BillingsViews::edit_paid_billing_modal();
@@ -136,23 +132,16 @@
         
         // LISTEN TO POST REQUEST FROM CREATE PAYMENT MODAL
         if(isset($_POST['add-payment-submit'])){
-            echo '<script>console.log(' . json_encode($_POST['billRefNo']) . ');</script>';
-
             $new_payment = array(
                 "billRefNo" => $_POST['billRefNo'],
                 "tenID" => $_POST['paymentTenantID'],
                 "payAmount" => $_POST['actualPaymentAmount'],
                 "payMethod" => $_POST['paymentMethod'],
-
                 "payerFname" => isset($_POST['payer-fname']) ? $_POST['payer-fname'] : '',
-
                 "payerLname" => isset($_POST['payer-lname']) ? $_POST['payer-lname'] : '',
-
                 "payerMI" => isset($_POST['payer-MI']) ? $_POST['payer-MI'] : ''
             );
-
             $result = BillingsController::create_payment($new_payment);
-
             $status = BillingsController::update_billing_status($new_payment);            
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit();
@@ -160,7 +149,6 @@
 
         // LISTEN TO POST REQUEST FROM CREATE MODAL
         if (isset($_POST['create-billing-submit'])){
-
                 $new_billing = array(
                     "tenID" => $_POST['create-billing-tenant'],
                     "billTotal" => $_POST['create-billing-billTotal'],
@@ -168,7 +156,6 @@
                     "billDateIssued" => $_POST['create-billing-billDateIssued'],
                     "endDate" => $_POST['create-billing-end-date'],
                     "billDueDate" => $_POST['create-billing-billDueDate'],
-                    // set billing to unpaid as default
                 );
 
             $result = BillingsController::create_billings($new_billing);
@@ -214,7 +201,6 @@
                 "payerMI" => $_POST['edit-payer-MI']
             );
 
-            echo'<script>console.log( '.json_encode($updated_bp).');</script>';
             $result = BillingsController::update_billing_payment($updated_bp);
 
             if ($result) {
