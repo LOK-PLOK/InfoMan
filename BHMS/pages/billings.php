@@ -42,31 +42,59 @@
                             <!-- Leftside Area header -->
                             <div class="leftside-content">
                                 <span class="text-color">Sort by:</span>
+                                <form method="GET">
                                 <div class="btn-group " style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
                                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                       <span class="pe-5 fs-6">Category...</span>
                                     </button>
-                                    <ul class="dropdown-menu">
-                                      I Love you wehhhh
+
+                                    <ul class="dropdown-menu" style="background-color: #344799;">
+                                        <li class="d-flex justify-content-center">
+                                            <input type="submit"  name="" value="Oldest to Newest" class="no-design1">
+                                        </li>
+                                        <li class="d-flex justify-content-center">
+                                            <input type="submit"  name="sort-newest-to-oldest"value="Newest to Oldest" class="no-design1">
+                                        </li>
+                                        <li class="d-flex justify-content-center">
+                                            <input type="submit"   name="sort-order-by-name" value="Order by Name" class="no-design2">
+                                        </li>
+                                        <li class="d-flex justify-content-center">
+                                            <input type="submit" name="sort-order-by-amount" value="Order by Amount" class="no-design2">
+                                        </li>
                                     </ul>
-                                  </div>
+                                </div>
+                                </form>
                             </div>
             
                             <!-- Rightside Area header -->
                             <div class="rigthside-content">
-                                <form>
+                                <form method="GET">
                                     <div class="search-container" style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
-                                        <input type="text" id="search" name="search" placeholder="Search">
-                                        <span class="search-icon"><i class="fas fa-search"></i></span>
+                                            <input id="search" type="text" value="" name="search" placeholder="Search">
+                                            <span class="search-icon"><i class="fas fa-search"></i></span>
                                     </div>
                                 </form>
                             </div>
                         </header>
-            
+                        
+                        <?php
+                            // if isset GET oldest to newest
+                            // 2ndparam = oldest-to-newest
+                            $sortType = '';
+                            if(isset($_GET['sort-order-by-amount'])){
+                                $sortType = 'amount';
+                            }else if(isset($_GET['sort-newest-to-oldest'])){
+                                $sortType = 'n-t-o';
+                            }else if(isset($_GET['sort-order-by-name'])){
+                                $sortType = 'name';
+                            }
+                        ?>
+
                         <!-- Paid -->
                         <div class="content active">
                             <?php
-                                BillingsViews::generate_billing_table('overdue');  
+                                BillingsViews::generate_billing_table('overdue', $sortType); 
+                                echo'<script>console.log("inside overdue")</script>';
                             ?>
                         </div>
                         
@@ -74,14 +102,16 @@
 						<!-- UNPAID TABLE -->
                         <div class="content">
                             <?php
-                                BillingsViews::generate_billing_table('unpaid');
+                                BillingsViews::generate_billing_table('unpaid', $sortType);
+                                echo'<script>console.log("inside unpaid")</script>';
                             ?>
                         </div>
 
                         <!-- OVERDUE TABLE -->
                         <div class="content overflow-auto" style="max-height: 500px;">
                             <?php
-                                BillingsViews::generate_billing_table('paid');
+                                BillingsViews::generate_billing_table('paid', $sortType);
+                                echo'<script>console.log("inside here")</script>';
                             ?>
                         </div>
 
@@ -95,7 +125,7 @@
 </div>
 
 <?php
-
+    echo'<script>console.log("Reached here")</script>';
     BillingsViews::add_payment_modal();
     BillingsViews::edit_billing_modal();
     BillingsViews::edit_paid_billing_modal();
@@ -196,6 +226,10 @@
             exit();
         }
 
+    }else if($_SERVER['REQUEST_METHOD'] == 'GET'){
+        if(isset($_GET['sort-oldest-to-newest'])){
+
+        }
     }
     
 ?>
