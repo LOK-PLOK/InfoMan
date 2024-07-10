@@ -115,7 +115,7 @@ class BillingsModel extends dbcreds {
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
                   WHERE b.billDueDate < CURRENT_DATE AND b.isPaid = 0
-                  ORDER BY b.billDueDate ASC";
+                  ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
     
@@ -307,7 +307,8 @@ class BillingsModel extends dbcreds {
                           SET payMethod = ?, 
                               payerFname = ?,
                               payerMI = ?,
-                              payerLname = ?
+                              payerLname = ?,
+                              payAmnt = ?
                           WHERE billRefNo = ?";
     
         $stmt_payment = $conn->prepare($query_payment);
@@ -316,7 +317,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters for payment update
-        $stmt_payment->bind_param("ssssi", $payMethod, $payerFname, $payerMI, $payerLname, $billRefNo);
+        $stmt_payment->bind_param("ssssdi", $payMethod, $payerFname, $payerMI, $payerLname, $billTotal, $billRefNo);
     
         // Execute payment statement
         if ($stmt_payment->execute() === false) {
@@ -462,7 +463,7 @@ class BillingsModel extends dbcreds {
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
                   WHERE b.isPaid = 1
-                  ORDER BY b.billDueDate ASC";
+                  ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
     
@@ -492,7 +493,7 @@ class BillingsModel extends dbcreds {
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
                   WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE
-                  ORDER BY b.billDueDate ASC";
+                  ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
     

@@ -437,7 +437,7 @@ class BillingsViews extends GeneralViews{
     public static function sortByBillDueDate($a, $b) {
         $dateA = strtotime($a['billDueDate']);
         $dateB = strtotime($b['billDueDate']);
-        return $dateB - $dateA;
+        return $dateA - $dateB;
     }
 
     public static function sortByTenantFirstName($a, $b) {
@@ -446,7 +446,7 @@ class BillingsViews extends GeneralViews{
 
     public static function searchByFirstName($billings, $keyword) {
         return array_filter($billings, function($billing) use ($keyword) {
-            return stripos($billing['tenant_first_name'], $keyword) === 0;
+            return stripos($billing['tenant_first_name'], $keyword) === 0 || stripos($billing['tenant_last_name'], $keyword) === 0;
         });
     }
     
@@ -484,7 +484,7 @@ class BillingsViews extends GeneralViews{
         
         if($sortType == 'amount'){
             usort($billings, 'self::sortByAmount');
-        }else if($sortType == 'n-t-o'){
+        }else if($sortType == 'o-t-n'){
             usort($billings, 'self::sortByBillDueDate');
         }else if($sortType == 'name'){
             usort($billings, 'self::sortByTenantFirstName');
