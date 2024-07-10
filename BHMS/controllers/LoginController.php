@@ -10,10 +10,6 @@ class LoginController {
 
         if($result !== NULL && $result['password'] === $password) {
             $_SESSION['userID'] = $result['userID'];
-            $_SESSION['First-Name'] = $result['userFname'];
-            $_SESSION['Middle-Name'] = $result['userMI'];
-            $_SESSION['Last-Name'] = $result['userLname'];
-            $_SESSION['Position'] = $result['userType'];
             header('Location: pages/dashboard.php');
             exit();
         } else {

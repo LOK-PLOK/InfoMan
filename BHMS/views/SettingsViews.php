@@ -26,10 +26,6 @@ class SettingsViews extends GeneralViews {
      * @return void
      */
     public static function settings_header(){
-        echo '<script>console.log('.json_encode($_SESSION['First-Name']).')</script>';
-        echo '<script>console.log('.json_encode($_SESSION['Middle-Name']).')</script>';
-        echo '<script>console.log('.json_encode($_SESSION['Last-Name']).')</script>';
-
         echo <<<HTML
         <div class="settings-header" >
         <span class="page-header">Settings</span><br>
@@ -47,15 +43,16 @@ class SettingsViews extends GeneralViews {
      * @return void
      */
     public static function user_info_section(){
+        $userData = SettingsController::fetch_user_info($_SESSION['userID']);
         echo '
         <div class="user-profile shadow">
             <span class="user-name">'
-                . (isset($_SESSION['First-Name']) ? $_SESSION['First-Name'] : '') . ' ' 
-                . (isset($_SESSION['Middle-Name']) ? $_SESSION['Middle-Name'] : '') . ' ' 
-                . (isset($_SESSION['Last-Name']) ? $_SESSION['Last-Name'] : '') . 
+                . (isset($userData['userFname']) ?? '') . ' ' 
+                . (isset($userData['userMI']) ? $userData['userMI'] . '.' : '') . ' ' 
+                . (isset($userData['userLname']) ?? '') . 
             '</span><br>
             <span class="user-type">'
-                . (isset($_SESSION['Position']) ? $_SESSION['Position'] : '') . '</span>
+                . (isset($userData['userType']) ?? '') . '</span>
         </div>
         ';
     }

@@ -57,6 +57,10 @@ class GeneralController {
         return GeneralModel::query_current_room_tenants($roomID);
     }
 
+    public static function fetch_user_info($userID) {
+        return GeneralModel::query_user_info($userID);
+    }
+
 }
 
 ?>

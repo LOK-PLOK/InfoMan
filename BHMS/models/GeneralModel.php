@@ -180,6 +180,29 @@ class GeneralModel extends dbcreds {
         $conn->close();
     }
 
+    public static function query_user_info($userID){
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT * FROM user WHERE userID = ?");
+
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        $query->bind_param('i', $userID);
+
+        if (!$query->execute()) {
+            throw new Exception("Execute failed: " . $query->error);
+        }
+
+        $result = $query->get_result();
+        $userInfo = $result->fetch_assoc();
+
+        $query->close();
+        $conn->close();
+
+        return $userInfo;
+    }
+
 }
 
 ?>

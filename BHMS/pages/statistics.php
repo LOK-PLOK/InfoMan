@@ -94,7 +94,7 @@
 <!-- In Progress -->
 <?php
     // Getting data from the database
-    // $data = StatisticsController::fetch_all_data();
+    $data = StatisticsController::fetch_all_data();
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

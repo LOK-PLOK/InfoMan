@@ -1,5 +1,4 @@
 <?php
-
 require_once 'GeneralViews.php';
 require_once '../controllers/DashboardController.php';
 
@@ -30,10 +29,11 @@ class DashboardViews extends GeneralViews{
      * @return void
      */
     public static function dashboard_header() {
+        $userData = DashboardController::fetch_user_info($_SESSION['userID']);
         echo <<<HTML
             <div class="header-container">
                 <div>
-                    <span class="page-header">Welcome Back, {$_SESSION['First-Name']}</span><br>
+                    <span class="page-header">Welcome Back, {$userData['userFname']}</span><br>
                     <span class="page-sub-header">Here's what we have for you today!</span>
                 </div>
             </div>
