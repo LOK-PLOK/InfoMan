@@ -151,9 +151,25 @@ nav {
 .navigation-tabs a:hover .class-align-tabs,
 .class-align-tabs-active {
     background-color: #ff8500;
-    border-left: white solid 10px;
     color: white;
-}   
+    position: relative;
+    padding-left: 30px;
+    transition: all 0.3s ease;
+}
+
+.navigation-tabs a:active .class-align-tabs::before,
+.navigation-tabs a:hover .class-align-tabs::before,
+.class-align-tabs-active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background-color: white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
 .navigation-tabs a, 
 .sign-out a {
@@ -169,10 +185,24 @@ nav {
     cursor: pointer;
 }
 
-.sign-out a:hover .class-align-tabs{
+.sign-out a:hover .class-align-tabs {
     background-color: #ff0800;
-    border-left: white solid 10px;
     color: white;
+    position: relative;
+    padding-left: 30px;
+    transition: all 0.3s ease;
+}
+
+.sign-out a:hover .class-align-tabs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background-color: white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 /*====================Hamburger Styles====================*/
