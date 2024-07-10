@@ -40,7 +40,7 @@ class ResidentsViews extends GeneralViews{
                 </div>
                 <div class="left-content-button">
                         <!-- Button to open Modal -->
-                        <button class="btn-var-1" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
                             <img src="/images/icons/Residents/add_new_light.png" alt=""> Add New
                         </button>
                 </div>
@@ -268,7 +268,7 @@ class ResidentsViews extends GeneralViews{
                                             <span class="textstyle1">' . htmlspecialchars($tenant['tenContact']) . '</span>
                                         </div>
                                         <div class="alignleft">
-                                            <span class="textstyle1">' . htmlspecialchars($tenant['tenHouseNum'] . ' ' . $tenant['tenSt'] . ', ' . $tenant['tenCityMun']) . '...</span>
+                                            <span class="textstyle1">' . htmlspecialchars($tenant['tenHouseNum'] . ' ' . $tenant['tenSt'] . ' ' . $tenant['tenCityMun']) . '...</span>
                                         </div>
                                     </button>
                                 </td>
