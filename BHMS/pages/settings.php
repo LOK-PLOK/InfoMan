@@ -176,9 +176,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="login-sett-cont">
-        <div class="settings-sub-header">
-            <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
-        </div>
+        <a href="?logout=1">
+            <div class="settings-sub-header">
+                <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
+            </div>
+        </a>
     </div>
 
 <?php

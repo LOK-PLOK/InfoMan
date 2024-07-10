@@ -56,20 +56,20 @@ function editUser(UserID,userFname,userMname,userLname,isActive,userType,usernam
     document.getElementById('Edit-isActive').value = isActive;
 }
 
-function PasswordMatchEdit(){
-    var pass = document.getElementById('Edit-password').value;
-    var confPass = document.getElementById('Edit-confirmPassword').value;
-    var errorSpan = document.getElementById('Edit-confirmPassWarning');
-    var submitBtn = document.getElementById('edit-confirm');
+// function PasswordMatchEdit(){
+//     var pass = document.getElementById('Edit-password').value;
+//     var confPass = document.getElementById('Edit-confirmPassword').value;
+//     var errorSpan = document.getElementById('Edit-confirmPassWarning');
+//     var submitBtn = document.getElementById('edit-confirm');
 
-    if(pass !== confPass) {
-        errorSpan.textContent = "*Passwords do not match.";
-        submitBtn.disabled = true;
-    } else {
-        errorSpan.textContent = "";
-        editcheckFields();
-    }   
-}
+//     if(pass !== confPass) {
+//         errorSpan.textContent = "*Passwords do not match.";
+//         submitBtn.disabled = true;
+//     } else {
+//         errorSpan.textContent = "";
+//         editcheckFields();
+//     }   
+// }
 
 function editcheckFields() {
     var confirmPassword = document.getElementById('Edit-confirmPassword').value;

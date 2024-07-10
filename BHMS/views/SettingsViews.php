@@ -47,12 +47,12 @@ class SettingsViews extends GeneralViews {
         echo '
         <div class="user-profile shadow">
             <span class="user-name">'
-                . (isset($userData['userFname']) ?? '') . ' ' 
+                . ($userData['userFname'] ?? '') . ' ' 
                 . (isset($userData['userMI']) ? $userData['userMI'] . '.' : '') . ' ' 
-                . (isset($userData['userLname']) ?? '') . 
+                . ($userData['userLname'] ?? '') . 
             '</span><br>
             <span class="user-type">'
-                . (isset($userData['userType']) ?? '') . '</span>
+                . ($userData['userType'] ?? '') . '</span>
         </div>
         ';
     }

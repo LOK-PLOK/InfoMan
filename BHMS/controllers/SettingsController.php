@@ -1,9 +1,9 @@
 <?php
 
 require '../models/SettingsModel.php'; 
+require 'GeneralController.php';
 
-
-class SettingsController {
+class SettingsController extends GeneralController{
 
     // Method to handle rates and pricing
     public static function getRates() {

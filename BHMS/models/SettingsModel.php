@@ -55,10 +55,7 @@ class SettingsModel extends dbcreds{
     //create user modal
     public static function create_user($new_user) {
         try {
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
 
             $query = $conn->prepare("INSERT INTO user (
                 username, 
@@ -74,11 +71,14 @@ class SettingsModel extends dbcreds{
                 throw new Exception("Prepare failed: " . $conn->error);
             }
 
+            // Hash Password
+            $hashed_password = password_hash($new_user['password'], PASSWORD_DEFAULT);
+
             // Bind the parameters
             $query->bind_param(
                 'ssssssi', // 'i' for integer (isActive)
                 $new_user['username'], 
-                $new_user['password'], 
+                $hashed_password, 
                 $new_user['userFname'], 
                 $new_user['userLname'], 
                 $new_user['userMI'], 

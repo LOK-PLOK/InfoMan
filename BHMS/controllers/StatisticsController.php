@@ -5,9 +5,20 @@ require 'GeneralController.php';
 
 class StatisticsController extends GeneralController {
 
-    public static function fetch_all_data() {
-        $data = json_encode(StatisticsModel::fetch_all_data());
-        return $data;
+    public static function fetchDataMonthly() {
+        return StatisticsModel::fetchDataMonthly();
+    }
+
+    public static function fetchDataQuarterly() {
+        return StatisticsModel::fetchDataQuarterly();
+    }
+
+    public static function fetchDataYearly() {
+        return StatisticsModel::fetchDataYearly();
+    }
+
+    public static function total_current_residents(){
+        return StatisticsModel::residents_counter();
     }
 
 }

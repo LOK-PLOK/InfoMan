@@ -1,0 +1,16 @@
+/* Responsive chart container */
+.chart-container {
+    width: 100%; /* Full width of the parent */
+    /* Optional: Set a max-width if necessary */
+    overflow-x: scroll;
+    max-width: 100vw; /* Prevents the container from exceeding the viewport width */
+    /* Height control */
+    height: 35vh; /* Adjust based on content, or set a specific value/ratio */
+    position: relative; /* For aspect ratio to work */
+}
+
+/* Ensure canvas fills its container */
+.chart-container canvas {
+    width: 100% !important; /* Full width of the container */
+    height: 100% !important; /* Full height of the container */
+}

@@ -446,7 +446,7 @@ class BillingsViews extends GeneralViews{
 
     public static function searchByFirstName($billings, $keyword) {
         return array_filter($billings, function($billing) use ($keyword) {
-            return stripos($billing['tenant_first_name'], $keyword) === 0 || stripos($billing['tenant_last_name'], $keyword) === 0;
+            return stripos($billing['tenant_first_name'], $keyword) !== false || stripos($billing['tenant_last_name'], $keyword) !== false;
         });
     }
     
