@@ -50,10 +50,10 @@
 
                                     <ul class="dropdown-menu" style="background-color: #344799;">
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"  name="" value="Oldest to Newest" class="no-design1">
+                                            <input type="submit"  name="" value="Newest to Oldest" class="no-design1">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"  name="sort-newest-to-oldest"value="Newest to Oldest" class="no-design1">
+                                            <input type="submit"  name="sort-oldest-to-newest" value="Oldest to Newest" class="no-design1">
                                         </li>
                                         <li class="d-flex justify-content-center">
                                             <input type="submit"   name="sort-order-by-name" value="Order by Name" class="no-design2">
@@ -83,8 +83,8 @@
                             $sortType = '';
                             if(isset($_GET['sort-order-by-amount'])){
                                 $sortType = 'amount';
-                            }else if(isset($_GET['sort-newest-to-oldest'])){
-                                $sortType = 'n-t-o';
+                            }else if(isset($_GET['sort-oldest-to-newest'])){
+                                $sortType = 'o-t-n';
                             }else if(isset($_GET['sort-order-by-name'])){
                                 $sortType = 'name';
                             }

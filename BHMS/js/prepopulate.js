@@ -21,6 +21,7 @@ function prepopulateValues(payment, billingData, prepBool) {
         document.getElementById('edit-payer-fname').value = payment[0].payerFname;
         document.getElementById('edit-payer-lname').value = payment[0].payerLname;
         document.getElementById('edit-payer-MI').value = payment[0].payerMI;
+        console.log(payment[0].payAmnt);
     }
 }
 
