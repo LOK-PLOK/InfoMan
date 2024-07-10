@@ -41,6 +41,47 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 ResidentsViews::residents_table_display($tenant_list);
 
 
+
+if(isset($_GET['addTenantStatus'])){
+	if($_GET['addTenantStatus'] === 'success'){
+		echo '<script>showSuccessAlert("Tenant Added Successfully!");</script>';
+	} else if($_GET['addTenantStatus'] === 'error'){
+		echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+	}
+}
+
+if(isset($_GET['editTenantStatus'])){
+    if($_GET['editTenantStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Tenant Edited Successfully!");</script>';
+    } else if($_GET['editTenantStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['deleteTenantStatus'])){
+    if($_GET['deleteTenantStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Tenant Deleted Successfully!");</script>';
+    } else if($_GET['deleteTenantStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['editOccStatus'])){
+    if($_GET['editOccStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Occupancy Edited Successfully!");</script>';
+    } else if($_GET['editOccStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['deleteOccStatus'])){
+    if($_GET['deleteOccStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Occupancy Deleted Successfully!");</script>';
+    } else if($_GET['deleteOccStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
 // C.U.D Operations
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -51,13 +92,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $result = ResidentsController::deleteTenantById($tenantIdToDelete);
         
         if ($result) {
-            echo '<script>console.log("Deleted successfully")</script>';
+            // Redirect to the same page or to a confirmation page after successful deletion
+            header('Location: residents.php?deleteTenantStatus=success');
+            exit();
         } else {
-            echo '<script>console.log("Error")</script>';
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: residents.php?deleteTenantStatus=error');
+            exit();
         }
-    
-        header("Location: /pages/residents.php");
-        exit();
     }
 
 
@@ -86,17 +128,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $appliances[] = ['appInfo' => $appliance];
         }
 
-        echo '<script>console.log("newTenant:", ' . json_encode($newTenant) . ');</script>';
-        echo '<script>console.log("appliances:", ' . json_encode($appliances) . ');</script>';
+
+        echo '<script>console.log("POSTnewTenant:", ' . json_encode($newTenant) . ');</script>';
+        echo '<script>console.log("POSTappliances:", ' . json_encode($appliances) . ');</script>';
         
         $result = ResidentsController::create_new_tenant($newTenant, $appliances);
         if($result){
-            echo '<script>console.log("Tenant added successfully")</script>';
+            // Redirect to the same page or to a confirmation page after successful form submission
+            header('Location: residents.php?addTenantStatus=success');
+            exit();
         } else {
-            echo '<script>console.log("Error adding tenant")</script>';
+           // Handle the error case, potentially redirecting with an error flag or displaying an error message
+           header('Location: residents.php?addTenantStatus=error');
+           exit();
         }
-        header("Location: /pages/residents.php");
-        exit();
     }
 
 
@@ -127,16 +172,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         
         $result = ResidentsController::edit_tenant($edit_tenant,$editAppliances);
-    
         if ($result) {
-            echo '<script>console.log("Tenant edited successfully")</script>';
+            // Redirect to the same page or to a confirmation page after successful edit
+            header('Location: residents.php?editTenantStatus=success');
+            exit();
         } else {
-            echo '<script>console.log("Error")</script>';
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: residents.php?editTenantStatus=error');
+            exit();
         }
-    
-        // Redirect to avoid form resubmission and duplicate entries
-        header("Location: /pages/residents.php");
-        exit();
     
     }
 
@@ -162,9 +206,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if(isset($_POST['delete-occupancy-submit'])) {
 
-
         $delOccInfo = $_GET['occID'];
-        echo'<script>console.log("delOccInfo:", ' . json_encode($delOccInfo) . ');</script>';
 
         $result = ResidentsController::delete_occupancy($delOccInfo);
         if ($result) {
@@ -177,11 +219,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             exit();
         }
     }
-
 }
 
+?>
 
-echo '<script src="../js/residents_edit&delete_modal.js"></script>';
+<script src="../js/residents_edit&delete_modal.js"></script>
+
+<?php
 
 // End output buffering and flush the buffer
 ob_end_flush();

@@ -22,8 +22,29 @@ MaintenanceViews::edit_maintenance_modal();
 MaintenanceViews::maintenance_header();
 MaintenanceViews::maintenance_content();
 
+if(isset($_GET['createStatus'])) {
+    if ($_GET['createStatus'] == 'success') {
+        echo '<script>showSuccessAlert("Maintenance record created successfully!")</script>';
+    } else if ($_GET['createStatus'] == 'error') {
+        echo '<script>showFailAlert("Failed to create maintenance record!")</script>';
+    }
+}
 
+if(isset($_GET['editStatus'])) {
+    if ($_GET['editStatus'] == 'success') {
+        echo '<script>showSuccessAlert("Maintenance record updated successfully!")</script>';
+    } else if ($_GET['editStatus'] == 'error') {
+        echo '<script>showFailAlert("Failed to update maintenance record!")</script>';
+    }
+}
 
+if(isset($_GET['deleteStatus'])) {
+    if ($_GET['deleteStatus'] == 'success') {
+        echo '<script>showSuccessAlert("Maintenance record deleted successfully!")</script>';
+    } else if ($_GET['deleteStatus'] == 'error') {
+        echo '<script>showFailAlert("Failed to delete maintenance record!")</script>';
+    }
+}
 
 // POST Requests handling
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -43,11 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $result = MaintenanceController::create_new_maintenance($create_maintenance);
 
         if ($result) {
-            echo '<script>alert("New maintenance added successfully");</script>';
             header("Location: /pages/maintenance.php?createStatus=success");
             exit();
         } else {
-            echo '<script>alert("Failed to add new maintenance");</script>';
             header("Location: /pages/maintenance.php?createStatus=error");
             exit();
         }
@@ -67,11 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     
         $result = MaintenanceController::edit_maintenance($edit_maintenance);
         if ($result) {
-            echo '<script>alert("Maintenance edited successfully");</script>';
             header("Location: /pages/maintenance.php?editStatus=success");
             exit();
         } else {
-            echo '<script>alert("Failed to edit maintenance");</script>';
             header("Location: /pages/maintenance.php?editStatus=error");
             exit();
         }

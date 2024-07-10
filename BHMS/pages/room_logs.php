@@ -52,6 +52,62 @@ RoomlogsViews::editRoomModal();
 RoomlogsViews::deleteRoomModal();
 RoomlogsViews::create_new_rent_modal();
 
+if(isset($_GET['addRoomStatus'])){
+    if($_GET['addRoomStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Room Added Successfully!");</script>';
+    } else if($_GET['addRoomStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['editRoomStatus'])){
+    if($_GET['editRoomStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Room Edited Successfully!");</script>';
+    } else if($_GET['editRoomStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['deleteRoomStatus'])){
+    if($_GET['deleteRoomStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Room Deleted Successfully!");</script>';
+    } else if($_GET['deleteRoomStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['addRentStatus'])){
+	if($_GET['addRentStatus'] === 'Success - Shared'){
+		echo '<script>showSuccessAlert("Shared Room Rent Added Successfully!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Shared'){
+		echo '<script>showFailAlert("Shared Room Rent Error!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Bed Spacer only'){
+		echo '<script>showFailAlert("Bed Spacer only!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Room Full'){
+		echo '<script>showFailAlert("Room is in Full Capacity!");</script>';
+	} else if($_GET['addRentStatus'] === 'Success - Rent'){
+		echo '<script>showSuccessAlert("Rent Added Successfully!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Tenant Rent Error'){
+		echo '<script>showFailAlert("Tenant is already occupied on the selected date!");</script>';
+	}
+}
+
+if(isset($_GET['editOccStatus'])){
+    if($_GET['editOccStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Occupancy Edited Successfully!");</script>';
+    } else if($_GET['editOccStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['deleteOccStatus'])){
+    if($_GET['deleteOccStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Occupancy Deleted Successfully!");</script>';
+    } else if($_GET['deleteOccStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Adding New Room

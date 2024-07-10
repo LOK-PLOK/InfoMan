@@ -103,11 +103,7 @@ class SettingsModel extends dbcreds{
     //edit user (user information modal)
     public static function edit_user($edit_user) {
         try {
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
     
             $query = "UPDATE user SET 
                 username = ?, 

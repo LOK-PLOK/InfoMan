@@ -327,7 +327,7 @@ class ResidentsViews extends GeneralViews{
         
         echo <<<HTML
         <!-- Tenant Info Modal -->
-        <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="TenantInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">   
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content bg-custom">
                     <div class="modal-header bg-custom">
@@ -393,7 +393,7 @@ class ResidentsViews extends GeneralViews{
                             </div>
                             <div>
                                 <span class="label">Address:</span>
-                                <span>${tenantData.tenHouseNum !== "0" ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt} ${tenantData.tenCityMun}</span>
+                                <span>${tenantData.tenHouseNum ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt ? tenantData.tenSt + " " : ""} ${tenantData.tenCityMun ? tenantData.tenCityMun : ""}</span>
                             </div>
                             <div>
                                 <span class="label">Gender:</span>
@@ -414,11 +414,11 @@ class ResidentsViews extends GeneralViews{
                             </div>
                             <div>
                                 <span class="label">Name:</span>
-                                <span style="font-size: 18px;">${tenantData.emContactFname} ${tenantData.emContactMI ? tenantData.emContactMI + "." : ""} ${tenantData.emContactLname}</span>
+                                <span style="font-size: 18px;">${tenantData.emContactFname ? tenantData.emContactFname + " " : ""} ${tenantData.emContactMI ? tenantData.emContactMI + "." : ""} ${tenantData.emContactLname ? tenantData.emContactLname : ""}</span>
                             </div>
                             <div>
                                 <span class="label">Contact Number:</span>
-                                <span>${tenantData.emContactNum}</span>
+                                <span>${tenantData.emContactNum ? tenantData.emContactNum : ""}</span>
                             </div>
                         </div>
                     `;
