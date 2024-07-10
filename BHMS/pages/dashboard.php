@@ -121,6 +121,30 @@ DashboardViews::create_new_rent_modal();
 
 <?php 
 
+if(isset($_GET['addTenantStatus'])){
+	if($_GET['addTenantStatus'] === 'success'){
+		echo '<script>showSuccessAlert("Tenant Added Successfully!");</script>';
+	} else if($_GET['addTenantStatus'] === 'error'){
+		echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+	}
+}
+
+if(isset($_GET['addRentStatus'])){
+	if($_GET['addRentStatus'] === 'Success - Shared'){
+		echo '<script>showSuccessAlert("Shared Room Rent Added Successfully!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Shared'){
+		echo '<script>showFailAlert("Shared Room Rent Error!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Bed Spacer only'){
+		echo '<script>showFailAlert("Bed Spacer only!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Room Full'){
+		echo '<script>showFailAlert("Room is in Full Capacity!");</script>';
+	} else if($_GET['addRentStatus'] === 'Success - Rent'){
+		echo '<script>showSuccessAlert("Rent Added Successfully!");</script>';
+	} else if($_GET['addRentStatus'] === 'Error - Tenant Rent Error'){
+		echo '<script>showFailAlert("Tenant is already occupied on the selected date!");</script>';
+	}
+}
+
 // Form Submission Handlers
 if($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -149,9 +173,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			foreach($_POST['appliances'] as $appliance){
 				$appliances[] = ['appInfo' => $appliance];
 			}
-
-			echo '<script>console.log("newTenant:", ' . json_encode($newTenant) . ');</script>';
-			echo '<script>console.log("appliances:", ' . json_encode($appliances) . ');</script>';
 		}
 	
 		$result = DashboardController::create_new_tenant($newTenant,$appliances);
@@ -178,18 +199,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
 
-		echo '<script>console.log("create_rent:", ' . json_encode($create_rent) . ');</script>';
-
 		$result = DashboardController::create_new_rent($create_rent);
-        if ($result === true) {
-            // Redirect to avoid form resubmission
-            header('Location: dashboard.php?addRentStatus=success');
-            exit();
-        } else {
-            // Redirect with an error message
-            header('Location: dashboard.php?addRentStatus='.$result);
-            exit();
-        }
+        header('Location: dashboard.php?addRentStatus='.$result);
+        exit();
 	}
 }
 

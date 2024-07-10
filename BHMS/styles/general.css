@@ -9,7 +9,7 @@
 
  @import url('https://fonts.googleapis.com/css2?family=Mallanna&display=swap');  /* Importing Mallanna Font */
 
-nav, div, img,header,section,footer, tbody,thead{
+nav, div, img,header,section,footer, tbody,thead, canvas{
     border: red 0.5px solid;
 }
 
@@ -310,4 +310,38 @@ table th,
 
 table td {
     background-color: white;
+}
+
+
+/*====================Alert Toast Styles====================*/
+
+/*alert's container/box*/
+.custom-toast {
+    width: 400px !important;
+    min-height: 80px !important;
+    background-color: #EDF6F7 !important;
+    border-radius: 8px;
+    padding: 16px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    z-index: 1050;
+}
+
+.alert-success {
+    color: green;
+    font-family: 'Mallanna';
+}
+
+.alert-error {
+    color: red;
+    font-family: 'Mallanna';
+}
+
+.alert-warning {
+    color: orangered;
+    font-family: 'Mallanna';
+}
+
+.alert-close-button:hover {
+    color: black !important;
 }

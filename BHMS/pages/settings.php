@@ -16,6 +16,38 @@
 
 <?php 
 
+if(isset($_GET['addUser'])){
+    if ($_GET['addUser'] == 'success') {
+        echo '<script>showSuccessAlert("User created successfully!")</script>';
+    } else if ($_GET['addUser'] == 'error') {
+        echo '<script>showFailAlert("Failed to create user!")</script>';
+    }
+}
+
+if(isset($_GET['deleteUser'])){
+    if ($_GET['deleteUser'] == 'success') {
+        echo '<script>showSuccessAlert("User deleted successfully!")</script>';
+    } else if ($_GET['deleteUser'] == 'error') {
+        echo '<script>showFailAlert("Failed to delete user!")</script>';
+    }
+}
+
+if(isset($_GET['editUser'])){
+    if ($_GET['editUser'] == 'success') {
+        echo '<script>showSuccessAlert("User updated successfully!")</script>';
+    } else if ($_GET['editUser'] == 'error') {
+        echo '<script>showFailAlert("Failed to update user!")</script>';
+    }
+}
+
+if(isset($_GET['editRate'])){
+    if ($_GET['editRate'] == 'success') {
+        echo '<script>showSuccessAlert("Rates and Pricing updated successfully!")</script>';
+    } else if ($_GET['editRate'] == 'error') {
+        echo '<script>showFailAlert("Failed to update Rates and Pricing!")</script>';
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Prepare data for insertion into database
@@ -156,15 +188,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //user information modal
     $user_list = SettingsController::users_table_data();
     SettingsViews::user_information_model_view($user_list);
-
-    // Test: Log user list to console
-    $json_user_list = json_encode($user_list);
-
-    if ($user_list) {
-      echo '<script>console.log("User list fetched successfully")</script>';
-    } else {
-      echo '<script>console.log("Error fetching user list")</script>';
-    }
 
     //create user info modal
     SettingsViews::create_user_info_model_view();

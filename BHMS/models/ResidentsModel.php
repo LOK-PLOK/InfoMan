@@ -35,6 +35,7 @@ class ResidentsModel extends dbcreds{
     }
 
     public static function add_new_tenant($new_tenant, $appliances) {
+
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
         if ($conn->connect_error) {

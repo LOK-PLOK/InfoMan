@@ -10,6 +10,9 @@ class ResidentsController extends GeneralController{
     }
 
     public static function create_new_tenant($new_tenant, $appliances) {
+        foreach($new_tenant as $key => $value) {
+            $new_tenant[$key] = $value === "" ? NULL : $value;
+        }
         return ResidentsModel::add_new_tenant($new_tenant, $appliances);
     }
 
@@ -45,6 +48,9 @@ class ResidentsController extends GeneralController{
     }
 
     public static function edit_tenant($editTenantData, $editAppliances){
+        foreach($editTenantData as $key => $value) {
+            $editTenantData[$key] = $value === "" ? NULL : $value;
+        }
         return ResidentsModel::edit_tenant($editTenantData, $editAppliances);
     }
 

@@ -128,6 +128,47 @@
     BillingsViews::delete_billing_modal();
     BillingsViews::create_billing_modal();
 
+    if(isset($_GET['addPaymentStatus'])){
+        if($_GET['addPaymentStatus'] == 'success'){
+            echo '<script>showSuccessAlert("Payment added successfully")</script>';
+        }else if($_GET['addPaymentStatus'] == 'error'){
+            echo '<script>showFailAlert("Error adding payment")</script>';
+        }
+    }
+
+    if(isset($_GET['addBillingStatus'])){
+        if($_GET['addBillingStatus'] == 'success'){
+            echo '<script>showSuccessAlert("Billing added successfully")</script>';
+        }else if($_GET['addBillingStatus'] == 'error'){
+            echo '<script>showFailAlert("Error adding billing")</script>';
+        }
+    }
+
+    if(isset($_GET['deleteBillingStatus'])){
+        if($_GET['deleteBillingStatus'] == 'success'){
+            echo '<script>showSuccessAlert("Billing deleted successfully")</script>';
+        }else if($_GET['deleteBillingStatus'] == 'error'){
+            echo '<script>showFailAlert("Error deleting billing")</script>';
+        }
+    }
+
+    if(isset($_GET['editBillingStatus'])){
+        if($_GET['editBillingStatus'] == 'success'){
+            echo '<script>showSuccessAlert("Billing updated successfully")</script>';
+        }else if($_GET['editBillingStatus'] == 'error'){
+            echo '<script>showFailAlert("Error updating billing")</script>';
+        }
+    }
+
+    if(isset($_GET['editPaidBillingStatus'])){
+        if($_GET['editPaidBillingStatus'] == 'success'){
+            echo '<script>showSuccessAlert("Billing updated successfully")</script>';
+        }else if($_GET['editPaidBillingStatus'] == 'error'){
+            echo '<script>showFailAlert("Error updating billing")</script>';
+        }
+    }
+    
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         // LISTEN TO POST REQUEST FROM CREATE PAYMENT MODAL
@@ -143,8 +184,15 @@
             );
             $result = BillingsController::create_payment($new_payment);
             $status = BillingsController::update_billing_status($new_payment);            
-            header("Location: " . $_SERVER['REQUEST_URI']);
-            exit();
+            // Redirect to the same page or to a confirmation page after successful form submission
+            if ($result) {
+                header('Location: billings.php?addPaymentStatus=success');
+                exit();
+            } else {
+                // Handle the error case, potentially redirecting with an error flag or displaying an error message
+                header('Location: billings.php?addPaymentStatus=error');
+                exit();
+            }
         }
 
         // LISTEN TO POST REQUEST FROM CREATE MODAL
@@ -159,9 +207,13 @@
                 );
 
             $result = BillingsController::create_billings($new_billing);
-
-            header("Location: " . $_SERVER['REQUEST_URI']);
-            exit();
+            if($result){
+                header('Location: billings.php?addBillingStatus=success');
+                exit();
+            } else {
+                header('Location: billings.php?addBillingStatus=error');
+                exit();
+            }
         }
 
         // LISTEN TO POST REQUEST FROM DELETE MODAL
@@ -169,12 +221,12 @@
             $billing_id = $_POST['billing_id'];
             $result = BillingsController::delete_billings($billing_id);
             if ($result) {
-                echo '<script>console.log("Billing deleted successfully")</script>';
+                header('Location: billings.php?deleteBillingStatus=success');
+                exit();
             } else {
-                echo '<script>console.log("Error deleting billing")</script>';
+                header('Location: billings.php?deleteBillingStatus=error');
+                exit();
             }
-            header("Location: " . $_SERVER['REQUEST_URI']);
-            exit();
         }
 
         // LISTEN TO POST REQUEST FROM EDIT MODAL
@@ -185,8 +237,13 @@
             );
             
             $result = BillingsController::update_billing($updated_billing);
-            header("Location: " . $_SERVER['REQUEST_URI']);
-            exit();
+            if($result){
+                header('Location: billings.php?editBillingStatus=success');
+                exit();
+            } else {
+                header('Location: billings.php?editBillingStatus=error');
+                exit();
+            }
         }
 
         //LISTEN TO POST REQUEST FROM EDIT PAID BILLING
@@ -203,21 +260,15 @@
 
             $result = BillingsController::update_billing_payment($updated_bp);
 
-            if ($result) {
-                echo '<script>console.log("Billing created successfully")</script>';
+            if($result) {
+                header('Location: billings.php?editPaidBillingStatus=success');
+                exit();
             } else {
-                echo '<script>console.log("Error created billing")</script>';
+                header('Location: billings.php?editPaidBillingStatus=error');
+                exit();
             }
-            header("Location: " . $_SERVER['REQUEST_URI']);
-            exit();
-        }
-
-    }else if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if(isset($_GET['sort-oldest-to-newest'])){
-
         }
     }
-    
 ?>
 
 
