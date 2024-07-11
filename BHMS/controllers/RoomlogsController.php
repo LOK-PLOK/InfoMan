@@ -2,7 +2,7 @@
 
 require_once '../models/RoomlogsModel.php';
 require_once 'GeneralController.php';
-
+ 
 class RoomlogsController extends GeneralController{
 
     public static function all_rooms() {

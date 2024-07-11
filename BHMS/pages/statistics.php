@@ -4,7 +4,9 @@
     require '../php/templates.php';
     require '../views/StatisticsViews.php';
 
-    html_start('statistics.css');
+    $more_links = '<script src="https://cdn.jsdelivr.net/npm/progressbar.js@1.0.0/dist/progressbar.min.js"></script>';
+
+    html_start('statistics.css', $more_links);
 
     // Sidebar
     require '../php/navbar.php';
@@ -185,10 +187,12 @@
                         }
                     ?>
                     <div>
-                        <span style="font-size: 0.9rem">Current number of tenants</span>
+                        <span style="font-size: 0.9rem">Monthly Occupancy Goal (<?php echo date('F') ?>)</span>
                     </div>
                     <div>
-                        <span class="page-header" style="font-size: 1.8rem"><?php echo $currentTenants ?> tenants</span>
+                        <div id="progress-container">
+                            <span id="progress-value"></span>
+                        </div>
                     </div>
                     <div>
                         <span style="font-size: 0.9rem; color: <?php echo $color ?>;"><img src="/images/icons/Statistics/<?php echo $tenantRateIcon ?>" style="width: 18px"> %<?php echo $occPercentChange . ' from ' . $lastMonth ?> </span>
@@ -197,8 +201,6 @@
             </div>
     </div>
 </div>
-
-<div id="chartDiv" style="width: 640px;height: 280px;margin: 0px auto;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
@@ -210,6 +212,8 @@
     const monthlyData = <?php echo json_encode($monthlyData); ?>;
     const quarterlyData = <?php echo json_encode($quarterlyData); ?>;
     const yearlyData = <?php echo json_encode($yearlyData); ?>;
+
+    const container = document.getElementById('container');
 
     Chart.register(ChartDataLabels);
 
@@ -435,6 +439,46 @@
                 }
             }
         }
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var container = document.getElementById('progress-container');
+        if (!container) {
+            console.error('Container not found');
+            return;
+        }
+
+        var max = 35;
+        var value = <?php echo json_encode($currentTenants) ?>; // Example value, you can set this dynamically
+        
+        var bar = new ProgressBar.Circle(container, {
+            color: '#1199E6',
+            trailColor: '#eee',
+            trailWidth: 15,
+            duration: 1400,
+            easing: 'bounce',
+            strokeWidth: 15,
+            from: {color: '#1199E6', a:0},
+            to: {color: '#1199E6', a:1},
+            // Set default step function for all animate calls
+            step: function(state, circle) {
+                circle.path.setAttribute('stroke', state.color);
+                circle.path.setAttribute('stroke-linecap', 'round'); // Makes the stroke ends rounded
+                circle.path.setAttribute('stroke-linejoin', 'round'); // Makes the stroke joins rounded
+            }
+        });
+        
+        var progressValue = document.getElementById('progress-value');
+        if (!progressValue) {
+            console.error('Progress value span not found');
+            return;
+        }
+        
+        progressValue.textContent = `${value}/${max}`;
+
+        var progress = value / max;
+        bar.animate(progress); // Number from 0.0 to 1.0
     });
 
 </script> 

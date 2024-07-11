@@ -125,7 +125,7 @@ class RoomlogsViews extends GeneralViews{
             }
 
             $roomID = htmlspecialchars($room['roomID']);
-            $room_tenants = RoomlogsController::room_tenants($roomID);
+            $room_tenants = RoomlogsController::room_tenants($roomID); 
     
             echo <<<HTML
                 <div class="modal fade" id="rm-info-modal-{$roomID}" tabindex="-1" aria-labelledby="room-information" aria-hidden="true">
@@ -151,7 +151,7 @@ class RoomlogsViews extends GeneralViews{
                                     </div>
                                 </div>
                                 <div class="rm-occupants">
-                                    <p class="rm-modal-info">Occupants: </p>
+                                    <p class="rm-modal-info">Occupants (Current/Old): </p>
                                     <table>
                                         <thead>
                                             <tr>
@@ -178,7 +178,16 @@ class RoomlogsViews extends GeneralViews{
 
                 $occType = RoomlogsController::get_occ_type($room_tenant['occTypeID']);
 
-                $rm_cell_color = '#00ba00';
+                // Convert occDateStart and occDateEnd to DateTime objects
+                $occDateStart = new DateTime($room_tenant['occDateStart']);
+                $occDateEnd = new DateTime($room_tenant['occDateEnd']);
+                $currentDate = new DateTime(date('Y-m-d'));
+
+                // Calculate the difference between occDateEnd and occDateStart
+                $diff = $occDateStart->diff($occDateEnd)->days;
+
+                // Check if occDateEnd is less than the current date and the difference is less than 30
+                $rm_cell_color = ($occDateEnd < $currentDate || $diff < 30) ? '#edf6f7' : '#00ba00';
 
                 echo '
                         <tr>
