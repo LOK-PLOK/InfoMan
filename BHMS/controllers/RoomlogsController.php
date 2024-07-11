@@ -73,21 +73,20 @@ class RoomlogsController extends GeneralController{
                 $checkValidity = RoomlogsModel::check_shared_room($create_rent);
                 if ($checkValidity == 1 && $tenant_count < $roomInfo['capacity']) {
                     RoomlogsModel::query_add_new_rent($create_rent);
+                    return "Success - Shared";
                 } else {
-                    return "Room cannot be shared!";
+                    return "Error - Shared";
                 }
             } else if ($create_rent['occTypeID'] != $bedSpacerID && $tenant_count > 0) {
-                return "Room can only be occupied for bedspacers!";
-            } else if($roomInfo['isAvailable'] == 0 && $tenant_count < $roomInfo['capacity']){
-                return "Room can only be shared!";
+                return "Error - Bed Spacer only";
             } else if ($roomInfo['isAvailable'] == 0) {
-                return "Room is already in Full Capacity!";
+                return "Error - Room Full";
             } else {
                 RoomlogsModel::query_add_new_rent($create_rent);
-                return true;
+                return "Success - Rent";
             }
         } else {
-            return "Tenant is already occupied on the selected date!";
+            return "Error - Tenant Rent Error";
         }
     }
 

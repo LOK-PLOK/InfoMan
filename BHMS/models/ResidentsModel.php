@@ -501,7 +501,7 @@ class ResidentsModel extends dbcreds{
    }
 
    public static function delete_occupancy($delOccInfo){
-    $conn = self::get_connection();
+        $conn = self::get_connection();
         $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
 
         if ($query === false) {
@@ -521,88 +521,110 @@ class ResidentsModel extends dbcreds{
    }
 
    public static function residents_data_Active(){
-    $conn = self::get_connection();
-    $query = "SELECT * FROM tenant WHERE isRenting = 1 ORDER BY isRenting DESC ";
-    $stmt = $conn->query($query);
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant WHERE isRenting = 1 ORDER BY isRenting DESC ";
+        $stmt = $conn->query($query);
 
-    if ($stmt === false) {
-        die("Error executing query: " . $conn->error);
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+
+        // Fetch the result
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $results;
     }
 
-    // Fetch the result
-    $results = [];
-    while ($row = $stmt->fetch_assoc()) {
-        $results[] = $row;
+    public static function residents_data_Inactive(){
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant WHERE isRenting = 0 ORDER BY isRenting DESC";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+
+        // Fetch the result
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $results;
     }
 
-    $stmt->close();
-    $conn->close();
+    public static function residents_data_Name(){
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant ORDER BY tenFname ASC";
+        $stmt = $conn->query($query);
 
-    return $results;
-   }
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
 
-   public static function residents_data_Inactive(){
-    $conn = self::get_connection();
-    $query = "SELECT * FROM tenant WHERE isRenting = 0 ORDER BY isRenting DESC";
-    $stmt = $conn->query($query);
+        // Fetch the result
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
 
-    if ($stmt === false) {
-        die("Error executing query: " . $conn->error);
-    }
+        $stmt->close();
+        $conn->close();
 
-    // Fetch the result
-    $results = [];
-    while ($row = $stmt->fetch_assoc()) {
-        $results[] = $row;
-    }
-
-    $stmt->close();
-    $conn->close();
-
-    return $results;
-   }
-
-   public static function residents_data_Name(){
-    $conn = self::get_connection();
-    $query = "SELECT * FROM tenant ORDER BY tenFname ASC";
-    $stmt = $conn->query($query);
-
-    if ($stmt === false) {
-        die("Error executing query: " . $conn->error);
-    }
-
-    // Fetch the result
-    $results = [];
-    while ($row = $stmt->fetch_assoc()) {
-        $results[] = $row;
-    }
-
-    $stmt->close();
-    $conn->close();
-
-    return $results;
+        return $results;
    }
 
    public static function residents_data_Search($search){
-    $conn = self::get_connection();
-    $query = "SELECT * FROM tenant WHERE LOWER(CONCAT(tenFname,tenLname,tenMI)) LIKE LOWER('%$search%') ORDER BY tenLname ASC";
-    $stmt = $conn->query($query);
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant WHERE LOWER(CONCAT(tenFname,tenLname,tenMI)) LIKE LOWER('%$search%') ORDER BY tenLname ASC";
+        $stmt = $conn->query($query);
 
-    if ($stmt === false) {
-        die("Error executing query: " . $conn->error);
-    }
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
 
-    // Fetch the result
-    $results = [];
-    while ($row = $stmt->fetch_assoc()) {
-        $results[] = $row;
-    }
+        // Fetch the result
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
 
-    $stmt->close();
-    $conn->close();
+        $stmt->close();
+        $conn->close();
 
-    return $results;
+        return $results;
    }
+
+       public static function evictTenant($evictInfo) {
+            $conn = self::get_connection();
+            $query = $conn->prepare("UPDATE occupancy SET occDateEnd = CURRENT_DATE() WHERE tenID = ? AND occDateStart = ( SELECT occDateStart FROM occupancy WHERE tenID = ? ORDER BY occDateStart DESC LIMIT 1 ); ");
+
+            if ($query === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+
+            $query->bind_param('ii', $evictInfo, $evictInfo);
+
+            if (!$query->execute()) {
+                $query->close();
+                $conn->close();
+                throw new Exception("Execute failed: " . $query->error);
+                return false;
+            } else {
+                $query->close();
+                $conn->close();
+                return true;
+            }
+       }
 
 }
 

@@ -176,3 +176,9 @@ document.getElementById('edit-rent-start').addEventListener('change', function()
 });
 
 
+function evictTenant(tenantID) {
+    console.log('Tenant ID:', tenantID);
+    // Populate the modal fields with the passed data
+    document.getElementById('evictTenID').value = tenantID;
+}
+

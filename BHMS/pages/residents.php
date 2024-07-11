@@ -23,6 +23,7 @@ ResidentsViews::burger_sidebar();
 ResidentsViews::residents_header();
 ResidentsViews::add_tenant_modal_view();
 ResidentsViews::edit_tenant_modal_view();
+ResidentsViews::evictTenantModal();
 
 // Fetch and display tenants
 if(isset($_GET['Active'])){
@@ -78,6 +79,14 @@ if(isset($_GET['deleteOccStatus'])){
     if($_GET['deleteOccStatus'] === 'success'){
         echo '<script>showSuccessAlert("Occupancy Deleted Successfully!");</script>';
     } else if($_GET['deleteOccStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['evictTenantStatus'])){
+    if($_GET['evictTenantStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Tenant Evicted Successfully!");</script>';
+    } else if($_GET['evictTenantStatus'] === 'error'){
         echo '<script>showFailAlert("An unexpected error has happened!");</script>';
     }
 }
@@ -216,6 +225,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         } else {
             // Handle the error case, potentially redirecting with an error flag or displaying an error message
             header('Location: residents.php?deleteOccStatus=error');
+            exit();
+        }
+    }
+
+    if(isset($_POST['evict-tenant-submit'])) {
+        $evictInfo = $_POST['evictTenID'];
+
+        $result = ResidentsController::evictTenant($evictInfo);
+        if ($result) {
+            // Redirect to the same page or to a confirmation page after successful eviction
+            header('Location: residents.php?evictTenantStatus=success');
+            exit();
+        } else {
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: residents.php?evictTenantStatus=error');
             exit();
         }
     }

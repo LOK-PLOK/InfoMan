@@ -36,7 +36,6 @@
     // Existing code to fetch quarterly data
     $quarterlyData = StatisticsController::fetchDataQuarterly();
 
-    echo '<script>console.log("Quarterly Data: ", ' . json_encode($quarterlyData) . ')</script>'; // Output: 'Quarterly Data: [Object, Object, Object, ...]'
 
     // Determine last month's year and month
     $lastMonthTimestamp = strtotime("-1 month");
@@ -65,40 +64,27 @@
         $previousQuarter = 3;
         $previousYear = $currentYear;
     }
-
-    echo '<script>console.log("Current Quarter: ' . json_encode($currentQuarter) . '")</script>'; // Output: 'Current Quarter: 1'
-    echo '<script>console.log("Previous Quarter: ' . json_encode($previousQuarter) . '")</script>'; // Output: 'Previous Quarter: 4'
-    echo '<script>console.log("Current Year: ",' . json_encode($currentYear) . ')</script>'; // Output: 'Current Year: 2022'
-    echo '<script>console.log("Previous Year: ",' . json_encode($previousYear) . ')</script>'; // Output: 'Previous Year: 2021'
     
     // Filter $quarterlyData to find the matching entry for the current quarter
     $currentQuarterString = 'Q' . $currentQuarter;
-    echo '<script>console.log("Current Quarter String: ", ' . json_encode($currentQuarterString) . ')</script>'; // Output: 'Current Quarter String: Q1'
-    $currentQuarterData = array_values(array_filter($quarterlyData, function($entry) use ($currentQuarter, $currentYear) {
-        return $entry['quarter'] === $currentQuarter && $entry['year'] === $currentYear;
+    $currentQuarterData = array_values(array_filter($quarterlyData, function($entry) use ($currentQuarterString, $currentYear) {
+        return $entry['quarter'] === $currentQuarterString && $entry['year'] === $currentYear;
     }));
 
     // Extract the total_payments from the current quarter's matching entry
-    $totalPaymentsCurrentQuarter = !empty($currentQuarterData) ? $currentQuarterData['total_payments'] : 0;
+    $totalPaymentsCurrentQuarter = !empty($currentQuarterData) ? $currentQuarterData[0]['total_payments'] : 0;
 
     // Filter $quarterlyData to find the matching entry for the previous quarter
     $previousQuarterString = 'Q' . $previousQuarter;
-    echo '<script>console.log("Previous Quarter String: ", ' . json_encode($previousQuarterString) . ')</script>'; // Output: 'Previous Quarter String: Q4'
-    $previousQuarterData = array_values(array_filter($quarterlyData, function($entry) use ($previousQuarter, $previousYear) {
-        return $entry['quarter'] === $previousQuarter && $entry['year'] === $previousYear;
+    $previousQuarterData = array_values(array_filter($quarterlyData, function($entry) use ($previousQuarterString, $previousYear) {
+        return $entry['quarter'] === $previousQuarterString && $entry['year'] === $previousYear;
     }));
 
-    echo '<script>console.log("Previous Quarter Data: ", ' . json_encode($previousQuarterData) . ')</script>'; // Output: 'Previous Quarter Data: [Object]
-    echo '<script>console.log("Current Quarter Data: ", ' . json_encode($currentQuarterData) . ')</script>'; // Output: 'Current Quarter Data: [Object]
-
     // Extract the total_payments from the previous quarter's matching entry
-    $totalPaymentsPreviousQuarter = !empty($previousQuarterData) ? $previousQuarterData['total_payments'] : 0;
-
-    // Output the results'
-    echo '<script>console.log("Current Quarter Payments: ' . json_encode($totalPaymentsCurrentQuarter) . '")</script>';
-    echo '<script>console.log("Previous Quarter Payments: ' . json_encode($totalPaymentsPreviousQuarter) . '")</script>';
+    $totalPaymentsPreviousQuarter = !empty($previousQuarterData) ? $previousQuarterData[0]['total_payments'] : 0;
 
 
+    // Assuming $yearlyData is fetched and structured as described
     $yearlyData = StatisticsController::fetchDataYearly();
 
 
@@ -146,16 +132,32 @@
 
         <div class="d-flex flex-column align-items-center col-sm-4 px-5 py-4" >
                 <span class="page-header" style="font-size: 1.5rem">Performance Overview</span>
+                <?php
+                    // Assuming $totalPaymentsCurrentQuarter and $totalPaymentsPreviousQuarter are calculated
+                    $revenueChange = $totalPaymentsCurrentQuarter - $totalPaymentsPreviousQuarter;
+                    $revenueChangePercent = $totalPaymentsPreviousQuarter === 0 ? 0 : $revenueChange / $totalPaymentsPreviousQuarter * 100;
+                    $revenueChangePercent = number_format($revenueChangePercent, 2);
+
+                    if ($revenueChange > 0) {
+                        $revenueIcon = 'up.png';
+                        $color = '#00BA00';
+                        $revenueChange = $revenueChange;
+                    } else {
+                        $revenueIcon = 'down.png';
+                        $color = '#FF0000';
+                        $revenueChange = $revenueChange * -1;
+                    }
+                ?>
                 <!-- Gross Revenue -->
                 <div class="w-100 my-2 py-4 px-3 shadow" style="background-color: #EDF6F7; border-radius: 16px">
                     <div>
-                        <span style="font-size: 0.9rem">Gross Revenue</span>
+                        <span style="font-size: 0.9rem">Gross Revenue (<?php echo "Q" . $currentQuarter . " - " . $currentYear ?>)</span>
                     </div>
                     <div>
-                        <span class="page-header" style="font-size: 1.8rem">Php 1,000,000.00</span>
+                        <span class="page-header" style="font-size: 1.8rem">Php <?php echo $totalPaymentsCurrentQuarter ?></span>
                     </div>
                     <div>
-                        <span style="font-size: 0.9rem">8% from March</span>
+                        <span style="font-size: 0.9rem; color: <?php echo $color ?>;"><img src="/images/icons/Statistics/<?php echo $revenueIcon ?>" style="width: 18px"> %<?php echo $revenueChangePercent . ' from Q' . $previousQuarter . ' - ' . $previousYear?></span>
                     </div>
                 </div>
                 <!-- Current Number of Tenants -->
@@ -165,7 +167,7 @@
 
                         if ($lastMonthOccupancy == 0) {
                             // Decide how to handle this case. Example: set to 100% if currentTenants > 0, or 0 if no change.
-                            $occPercentChange = $currentTenants * 100;
+                            $occPercentChange = $currentTenants > 0 ? 100 : 0;
                         } else {
                             $occPercentChange = ($currentTenants - $lastMonthOccupancy) / $lastMonthOccupancy * 100;
                         }
@@ -173,10 +175,12 @@
                         $occPercentChange = number_format($occPercentChange, 2);
 
                         if ($occPercentChange > 0) {
-                            $color = 'green';
+                            $tenantRateIcon = 'up.png';
+                            $color = '#00BA00';
                             $occPercentChange = $occPercentChange;
                         } else {
-                            $color = 'red';
+                            $tenantRateIcon = 'down.png';
+                            $color = '#FF0000';
                             $occPercentChange = $occPercentChange * -1;
                         }
                     ?>
@@ -187,28 +191,18 @@
                         <span class="page-header" style="font-size: 1.8rem"><?php echo $currentTenants ?> tenants</span>
                     </div>
                     <div>
-                        <span style="font-size: 0.9rem; color: <?php echo $color ?>;">%<?php echo $occPercentChange . ' from ' . $lastMonth ?> </span>
+                        <span style="font-size: 0.9rem; color: <?php echo $color ?>;"><img src="/images/icons/Statistics/<?php echo $tenantRateIcon ?>" style="width: 18px"> %<?php echo $occPercentChange . ' from ' . $lastMonth ?> </span>
                     </div>
                 </div>
-
-                <!-- <div class="w-100 my-2 py-4 px-3 shadow" style="background-color: #EDF6F7; border-radius: 16px">
-                    <div>
-                        <span style="font-size: 0.7rem">Occupied Rooms</span>
-                    </div>
-                    <div>
-                        <span class="page-header" style="font-size: 1.8rem">5 rooms</span>
-                    </div>
-                    <div>
-                        <span style="font-size: 0.7rem">18% from March</span>
-                    </div>
-                </div> -->
             </div>
     </div>
 </div>
 
+<div id="chartDiv" style="width: 640px;height: 280px;margin: 0px auto;"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<!-- In Progress -->
+
 <script>
     const ctx1 = document.getElementById('occupancyChart');
     const ctx2 = document.getElementById('revenueChart');

@@ -82,6 +82,10 @@ class ResidentsController extends GeneralController{
         return ResidentsModel::residents_data_Search($search);
     }
 
+    public static function evictTenant($evictInfo) {
+        return ResidentsModel::evictTenant($evictInfo);
+    }
+
 }
 
 ?>

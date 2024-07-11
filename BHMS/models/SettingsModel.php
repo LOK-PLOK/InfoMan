@@ -107,7 +107,6 @@ class SettingsModel extends dbcreds{
     
             $query = "UPDATE user SET 
                 username = ?, 
-                password = ?, 
                 userFname = ?, 
                 userLname = ?, 
                 userMI = ?, 
@@ -122,9 +121,8 @@ class SettingsModel extends dbcreds{
             }
     
             $stmt->bind_param(
-                'ssssssii', 
+                'sssssii', 
                 $edit_user['username'],
-                $edit_user['password'],
                 $edit_user['userFname'],
                 $edit_user['userLname'],
                 $edit_user['userMI'],
@@ -349,5 +347,70 @@ class SettingsModel extends dbcreds{
             return false;
         }
     }
+
+    public static function verify_credentials($userID) {
+
+        $conn = self::get_connection();
+
+        // Prepare the SQL statement
+        $query = $conn->prepare("SELECT * FROM user WHERE userID = ?");
+
+        // Check if the statement was prepared successfully
+        if ($query === false) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        // Bind the parameter
+        $query->bind_param('i', $userID);
+
+        // Execute the statement
+        $query->execute();
+
+        // Fetch the result
+        $result = $query->get_result()->fetch_assoc();
+
+        // Close the statement and connection
+        $query->close();
+        $conn->close();
+
+        return $result;
+    }
+
+    public static function changePassword($newData) {
+        try {
+            $conn = self::get_connection();
+
+            // Prepare the SQL statement
+            $stmt = $conn->prepare("UPDATE user SET password = ? WHERE userID = ?");
+
+            // Check if the statement was prepared successfully
+            if ($stmt === false) {
+                throw new Exception("Prepare failed: " . $conn->error);
+            }
+
+            // Hash the new password
+            $hashed_password = password_hash($newData['newPassword'], PASSWORD_DEFAULT);
+
+            // Bind the parameters
+            $stmt->bind_param('si', $hashed_password, $newData['edit-pass-userID']);
+
+            // Execute the statement
+            $stmt->execute();
+
+            // Check if the statement was executed successfully
+            if ($stmt->affected_rows === 0) {
+                throw new Exception("No records updated. Please check if the user ID exists.");
+            }
+
+            // Close the statement and connection
+            $stmt->close();
+            $conn->close();
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
 }
 ?>

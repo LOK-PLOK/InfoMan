@@ -15,7 +15,16 @@ class GeneralController {
             $tenant_id = $tenant['tenID'];
             
             $check_rent = GeneralModel::check_recent_rent($tenant_id);
-            GeneralModel::update_rent_status($tenant_id, $check_rent ? 1 : 0);
+            $checkEviction = GeneralModel::check_recent_eviction($tenant_id);        
+            if($checkEviction === true) {
+                $isRent = 2;
+            } else if ($check_rent === true) {
+                $isRent = 1;
+            } else {
+                $isRent = 0;
+            }
+
+            GeneralModel::update_rent_status($tenant_id, $isRent);
         }
     }
 

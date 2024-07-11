@@ -45,5 +45,20 @@ class SettingsController extends GeneralController{
         }
     }
 
+    public static function changeUserPassword($newData) {
+        $result = SettingsModel::verify_credentials($newData['edit-pass-userID']);
+
+        if($result !== NULL && password_verify($newData['oldPassword'], $result['password'])) {
+            $changePassResult = SettingsModel::changePassword($newData);
+            if($changePassResult) {
+                return true;
+            } else {
+                return "Error - 1";
+            }
+        } else {
+            return "Error - 2";
+        }
+    }
+
 }
 ?>

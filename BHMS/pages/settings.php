@@ -48,6 +48,16 @@ if(isset($_GET['editRate'])){
     }
 }
 
+if(isset($_GET['editPass'])){
+    if ($_GET['editPass'] == 'success') {
+        echo '<script>showSuccessAlert("Password updated successfully!")</script>';
+    } else if ($_GET['editPass'] == 'Error - 1') {
+        echo '<script>showFailAlert("Failed to update password!")</script>';
+    } else if ($_GET['editPass'] == 'Error - 2') {
+        echo '<script>showFailAlert("Incorrect password!")</script>';
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Prepare data for insertion into database
@@ -98,14 +108,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $edit_user = [
             'userID' => $_POST['Edit-userID'],
             'username' => $_POST['Edit-userName'],
-            'password' => $_POST['Edit-password'],
             'userFname' => $_POST['Edit-userFname'],
             'userLname' => $_POST['Edit-userLname'],
-            'userMname' => $_POST['Edit-userMname'],
+            'userMI' => $_POST['Edit-userMname'],
             'userType' => $_POST['Edit-userType'],
             'isActive' => $_POST['Edit-isActive']
         ];
-        
 
         // Call create_user method from settingsmodel.php
         $result = SettingsController::edit_user($edit_user);
@@ -144,6 +152,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
+    if(isset($_POST['change-pass-confirm'])){
+        $newData = [
+            'edit-pass-userID' => $_POST['edit-pass-userID'], // 'userID' => '1
+            'oldPassword' => $_POST['oldPassword'],
+            'newPassword' => $_POST['newPassword']
+        ];
+
+        $result = SettingsController::changeUserPassword($newData);
+
+        if ($result === true)  {
+            header('Location: /pages/settings.php?editPass=success');
+            exit();
+        } else {
+            header('Location: /pages/settings.php?editPass='.$result);
+            exit();
+        }
+    }
 }
 ?> 
 
@@ -199,6 +224,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //delete user info
     SettingsViews::delete_user_info();
+
+    //change password modal
+    SettingsViews::change_password_modal();
 ?>
 
 </div>

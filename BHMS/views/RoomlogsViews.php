@@ -178,13 +178,15 @@ class RoomlogsViews extends GeneralViews{
 
                 $occType = RoomlogsController::get_occ_type($room_tenant['occTypeID']);
 
+                $rm_cell_color = '#00ba00';
+
                 echo '
                         <tr>
-                            <td>'.$name.'</td>
-                            <td>'.$start_date.'</td>
-                            <td>'.$end_date.'</td>
-                            <td style="max-width: 150px">'.$occType['occTypeName'].'</td>
-                            <td>
+                            <td style="background-color: '.$rm_cell_color.'">'.$name.'</td>
+                            <td style="background-color: '.$rm_cell_color.'">'.$start_date.'</td>
+                            <td style="background-color: '.$rm_cell_color.'">'.$end_date.'</td>
+                            <td style="max-width: 150px; background-color: '.$rm_cell_color.'">'.$occType['occTypeName'].'</td>
+                            <td style="background-color:'.$rm_cell_color.'">
                                 <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
                                     onclick="setValuesTenantInfo(
                                                         '.$room_tenant['occupancyID'].', 
@@ -497,7 +499,7 @@ class RoomlogsViews extends GeneralViews{
                                     $tenant_fName = $tenant['tenFname'];
                                     $tenant_MI = $tenant['tenMI'];
                                     $tenant_lName = $tenant['tenLname'];
-                                    $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                    $tenant_fullName = $tenant_fName.' '. ($tenant_MI != '' ? $tenant_MI . '. ' : '' ) .$tenant_lName;
                                     echo<<<HTML
                                         <option value="$tenant_id">$tenant_fullName</option>
                                     HTML;
@@ -515,7 +517,7 @@ class RoomlogsViews extends GeneralViews{
                                         $tenant_fName = $tenant['tenFname'];
                                         $tenant_MI = $tenant['tenMI'];
                                         $tenant_lName = $tenant['tenLname'];
-                                        $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                        $tenant_fullName = $tenant_fName.' '. ($tenant_MI != '' ? $tenant_MI . '. ' : '' ) . $tenant_lName;
                                         echo<<<HTML
                                             <option value="$tenant_id">$tenant_fullName</option>
                                         HTML;

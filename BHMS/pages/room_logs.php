@@ -28,7 +28,7 @@ RoomlogsViews::burger_sidebar();
     <!-- Room Log Actions -->
     <div class="rm-log-button">
         <button class="show-avail-rm-btn">Show Available Rooms</button>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#add-new-rm">Add New Room</button>
+        <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#add-new-rm"><img src="/images/icons/Room Logs/add_new_room_light.png" alt="">Add New Room</button>
         <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#addNewRent"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
     </div>
 

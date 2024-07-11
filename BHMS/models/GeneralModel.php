@@ -56,7 +56,7 @@ class GeneralModel extends dbcreds {
     public static function query_current_room_tenants($room_code) {
         $conn = self::get_connection();
 
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
+        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30;");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -119,7 +119,7 @@ class GeneralModel extends dbcreds {
 
     public static function check_recent_rent($tenant_id) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM occupancy WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
+        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM occupancy WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30;");
     
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -201,6 +201,30 @@ class GeneralModel extends dbcreds {
         $conn->close();
 
         return $userInfo;
+    }
+
+    public static function check_recent_eviction($tenant_id) {
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT COUNT(*) AS eviction_count FROM occupancy WHERE tenID = ? AND DATEDIFF(occDateEnd, occDateStart) < 30;");
+    
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+    
+        $query->bind_param('i', $tenant_id);
+    
+        if (!$query->execute()) {
+            throw new Exception("Execute failed: " . $query->error);
+        }
+    
+        $result = $query->get_result();
+        $row = $result->fetch_assoc();
+        $eviction_count = $row['eviction_count'];
+    
+        $query->close();
+        $conn->close();
+    
+        return $eviction_count > 0; // Return true if there are recent evictions, false otherwise
     }
 
 }

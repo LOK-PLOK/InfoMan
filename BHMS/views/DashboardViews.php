@@ -293,7 +293,7 @@ class DashboardViews extends GeneralViews{
                                     $tenant_fName = $tenant['tenFname'];
                                     $tenant_MI = $tenant['tenMI'];
                                     $tenant_lName = $tenant['tenLname'];
-                                    $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                    $tenant_fullName = $tenant_fName.' '. ($tenant_MI != '' ? $tenant_MI . '. ' : '' ) .$tenant_lName;
                                     echo<<<HTML
                                         <option value="$tenant_id">$tenant_fullName</option>
                                     HTML;
@@ -311,7 +311,7 @@ class DashboardViews extends GeneralViews{
                                         $tenant_fName = $tenant['tenFname'];
                                         $tenant_MI = $tenant['tenMI'];
                                         $tenant_lName = $tenant['tenLname'];
-                                        $tenant_fullName = $tenant_fName.' '.$tenant_MI.'. '.$tenant_lName;
+                                        $tenant_fullName = $tenant_fName.' '. ($tenant_MI != '' ? $tenant_MI . '. ' : '' ) . $tenant_lName;
                                         echo<<<HTML
                                             <option value="$tenant_id">$tenant_fullName</option>
                                         HTML;

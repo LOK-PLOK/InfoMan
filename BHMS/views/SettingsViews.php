@@ -201,7 +201,6 @@ class SettingsViews extends GeneralViews {
             $isActive = $user['isActive'];
             $userType = $user['userType'];
             $username = $user['username'];
-            $password = $user['password'];
             
             $userMIFormatted = ($user['userMI'] != NULL) ? $user['userMI'] . '.' : '';
             echo <<<HTML
@@ -215,6 +214,10 @@ class SettingsViews extends GeneralViews {
                 </td>
                 <td>{$userType}</td>
                 <td>
+                    <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#editUserPass" style="border: none;"
+                    onclick="changeUserPassword($userID)">
+                        <img src="/images/icons/Settings/password.png" alt="Change Password" class="action">
+                    </button>
                     <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#editUserInfoModal" style="border: none;" 
                     onclick="editUser('$userID', '$userFname', '$userMname', '$userLname','$isActive','$userType','$username','$password')">
                         <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
@@ -335,17 +338,17 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3">
                         <label for="userName" class="form-label">Name:</label>
                         <!-- Edit-userFname -->
-                        <input type="text" id="Edit-userFname" name="Edit-userFname" placeholder="Juan Jihyo" class="FNclass shadow" onkeyup="editcheckFields();" required>
+                        <input type="text" id="Edit-userFname" name="Edit-userFname" placeholder="Juan Jihyo" class="FNclass shadow" required>
                         <!-- Edit-userMname -->
-                        <input type="text" id="Edit-userMname" name="Edit-userMname" placeholder="D." class="MIclass shadow" onkeyup="editcheckFields();">
+                        <input type="text" id="Edit-userMname" name="Edit-userMname" placeholder="D." class="MIclass shadow">
                         <!-- Edit-userLname -->
-                        <input type="text" id="Edit-userLname" name="Edit-userLname" placeholder="Santos" class="LNclass shadow" onkeyup="editcheckFields();" required>
+                        <input type="text" id="Edit-userLname" name="Edit-userLname" placeholder="Santos" class="LNclass shadow" required>
                     </div>
                     <p class="monthly-cost">First Name, Middle Initial, Last Name</p>
                     <div class="mb-3">
                         <!-- Edit-userStatus -->
                         <label for="userStatus" class="form-label">Status:</label>
-                        <select class="form-select shadow" id="Edit-isActive" name="Edit-isActive" onkeyup="editcheckFields();" required>
+                        <select class="form-select shadow" id="Edit-isActive" name="Edit-isActive" required>
                         <option value="1">Active</option>
                         <option value="0">Inactive</option>
                         </select>
@@ -353,36 +356,20 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3">
                         <!-- Edit-userType -->
                         <label for="userPosition" class="form-label">Position:</label>
-                        <input type="text" class="form-control shadow" id="Edit-userType" name="Edit-userType" placeholder="Admin" onkeyup="editcheckFields();" required>
+                        <input type="text" class="form-control shadow" id="Edit-userType" name="Edit-userType" placeholder="Admin" required>
                     </div>
                     
                     <div class="mb-3">
                         <!-- Edit-userName -->
                         <label for="userPosition" class="form-label">Username:</label>
-                        <input type="text" class="form-control shadow" id="Edit-userName" name="Edit-userName" placeholder="Admin" onkeyup="editcheckFields();" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <!-- Edit-password -->
-                        <label for="Edit-password" class="form-label">Password:</label>
-                        <input type="password" class="form-control shadow" id="Edit-password" name="Edit-password" placeholder="Admin" onkeyup="editcheckFields();" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <!-- Edit-confirmpassword -->
-                        <label for="Edit-confirmPassword" class="form-label">Confirm password:</label>
-                        <input type="password" class="form-control shadow" id="Edit-confirmPassword" name="Edit-confirmPassword" placeholder="" onkeyup="PasswordMatchEdit();" required>
-                    </div>
-                    <div class="mb-3">
-                        <span id="Edit-confirmPassWarning" style="color: red;"></span>
+                        <input type="text" class="form-control shadow" id="Edit-userName" name="Edit-userName" placeholder="Admin" required>
                     </div>
 
                     <div class="modal-footer border-0">
-                    <button type="submit" class="btn-create-save shadow" data-bs-dismiss="modal" id="edit-confirm" name = "edit-confirm">Save</button>
+                        <button type="submit" class="btn-create-save shadow" data-bs-dismiss="modal" id="edit-confirm" name ="edit-confirm">Save</button>
                     </div>
                 </form>
                 </div>
-                
                 </div>
             </div>
         </div>
@@ -417,6 +404,77 @@ class SettingsViews extends GeneralViews {
                     <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                 </div>
             </div>
+            </div>
+        </div>
+        HTML;
+    }
+
+
+    /**
+     * This method is used to display the change password model view.
+     * 
+     * @method change_password
+     * @param none
+     * @return void
+     */
+    public static function change_password_modal(){
+        echo <<<HTML
+        <div class="modal fade" id="editUserPass" tabindex="-1" aria-labelledby="editUserPassLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserPassLabel">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form id="editUserPassForm" method="POST">
+                    <input type="hidden" id="edit-pass-userID" name="edit-pass-userID">
+                    <div class="mb-3 row">
+                        <div class="col-sm-4">
+                            <label for="oldPassword" class="input-label" style="font-size: 0.9rem;">Old Password:</label>
+                        </div>
+                        <div class="col-sm-8 p-0">
+                            <input type="password" class="w-100 shadow" id="oldPassword" name="oldPassword" onkeyup="changePassCheckFields()" required>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="d-flex p-0 col-sm-12 input-sub-label text-center">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">Input your old password</div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-4">
+                            <label for="newPassword" class="input-label" style="font-size: 0.9rem;">New Password:</label>
+                        </div>
+                        <div class="col-sm-8 p-0">
+                            <input type="password" class="w-100 shadow" id="newPassword" name="newPassword" onkeyup="changePassCheckFields()" required>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="d-flex p-0 col-sm-12 input-sub-label text-center">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">Input a new password</div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-4">
+                            <label for="confirmNewPassword" class="input-label" style="font-size: 0.9rem;">Confirm New Password:</label>
+                        </div>
+                        <div class="col-sm-8 p-0">
+                            <input type="password" class="w-100 shadow" id="confirmNewPassword" name="confirmNewPassword" onkeyup="checkPasswordMatchChangePass()" required>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="d-flex p-0 col-sm-12 input-sub-label text-center">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">Confirm your new password</div>
+                        </div>
+                        <span id="changePass-confirmPassWarning" style="color: #FF0000; font-size: 0.78rem"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-create-save shadow" data-bs-dismiss="modal" id="change-pass-confirm" name ="change-pass-confirm">Save</button>
+                </div>
+                </form>
+                </div>
             </div>
         </div>
         HTML;

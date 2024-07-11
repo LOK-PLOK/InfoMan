@@ -255,7 +255,27 @@ class ResidentsViews extends GeneralViews{
             $appliancesDataJson = htmlspecialchars(json_encode($appliances));
             $occupancy = ResidentsController::get_occupancy($tenant['tenID']);
             $occupancyDataJson = json_encode($occupancy);
-            
+
+            $evictButton = '
+                <button class="openEditModalBtn" style="margin-right: 10px;" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#evictTenantModal" 
+                    onclick="evictTenant( \'' . htmlspecialchars($tenant['tenID']) . '\')">
+                    <img src="/images/icons/Residents/eviction.png" alt="Edit" class="action" >
+                </button>
+            ';
+
+            if($tenant['isRenting'] == 0){
+                $statusImg = 'inactive';
+                $statusText = 'Inactive';
+            } else if ($tenant['isRenting'] == 1){
+                $statusImg = 'active';
+                $statusText = 'Active';
+            } else {
+                $statusImg = 'inactive';
+                $statusText = 'Evicted';
+            }
+
             echo '
                             <tr>
                                 <td>
@@ -274,15 +294,18 @@ class ResidentsViews extends GeneralViews{
                                 </td>
                                 <td>
                                     <div class="resize">
-                                        <img src="/images/icons/Residents/' . ($tenant['isRenting'] ? 'active' : 'inactive') . '.jpg">
-                                        <span>' . ($tenant['isRenting'] ? 'Active' : 'Inactive') . '</span>
+                                        <img src="/images/icons/Residents/' . $statusImg . '.jpg">
+                                        <span>' . $statusText . '</span>
                                     </div>
                                 </td>
                                 <td>See more...</td>
                                 <td style="max-width: 200px">' . htmlspecialchars($occupancy[0]['occTypeName'] ?? 'N/A') . '</td>
                                 <td>' . htmlspecialchars($occupancy[0]['roomID'] ?? 'N/A') . '</td>
                                 <td>' . (empty($occupancy) ? 'N/A' : htmlspecialchars(date("F j, Y", strtotime($occupancy[0]['occDateEnd'])))) . '</td>
-                                <td>
+                                <td>' .
+
+                                    ($tenant['isRenting'] == 1 ? $evictButton : '') .
+                                '
                                     <button class="openEditModalBtn" style="margin-right: 10px;" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#editmyModal" 
@@ -784,6 +807,35 @@ class ResidentsViews extends GeneralViews{
                 </div>
             </div>
         </div>';
+    }
+
+
+    public static function evictTenantModal(){
+        echo <<<HTML
+            <div class="modal fade" id="evictTenantModal" tabindex="-1" aria-labelledby="evictTenantModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <span style="font-size: 25px;" class="header">Are you sure you want to evict this tenant?</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                        <form method="POST">
+                            <div class="displayflex">
+                                <input type="hidden" name="evictTenID" id="evictTenID">
+                                <input type="submit" name="evict-tenant-submit" class="btn-var-2 ms-4 me-4" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No" style="background: red;">
+                            </div>
+                        </form>
+                        </div>
+                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
+                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+        HTML;
     }
 
 

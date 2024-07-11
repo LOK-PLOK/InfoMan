@@ -51,38 +51,43 @@ function editUser(UserID,userFname,userMname,userLname,isActive,userType,usernam
     document.getElementById('Edit-userMname').value = userMname;
     document.getElementById('Edit-userLname').value = userLname;
     document.getElementById('Edit-userName').value = username;
-    document.getElementById('Edit-password').value = password;
     document.getElementById('Edit-userType').value = userType;
     document.getElementById('Edit-isActive').value = isActive;
 }
 
-// function PasswordMatchEdit(){
-//     var pass = document.getElementById('Edit-password').value;
-//     var confPass = document.getElementById('Edit-confirmPassword').value;
-//     var errorSpan = document.getElementById('Edit-confirmPassWarning');
-//     var submitBtn = document.getElementById('edit-confirm');
+function changePassCheckFields() {
+    var oldPassword = document.getElementById('oldPassword').value;
+    var password = document.getElementById('newPassword').value;
+    var confirmPassword = document.getElementById('confirmNewPassword').value;
+    var submitBtn = document.getElementById('change-pass-confirm');
 
-//     if(pass !== confPass) {
-//         errorSpan.textContent = "*Passwords do not match.";
-//         submitBtn.disabled = true;
-//     } else {
-//         errorSpan.textContent = "";
-//         editcheckFields();
-//     }   
-// }
-
-function editcheckFields() {
-    var confirmPassword = document.getElementById('Edit-confirmPassword').value;
-    var submitBtn = document.getElementById('edit-confirm');
-
-    if (confirmPassword === "") {
+    if (password === "" || confirmPassword === "" || oldPassword === "" || password !== confirmPassword) {
         submitBtn.disabled = true;
     } else {
         submitBtn.disabled = false;
     }   
 }
 
-editcheckFields();
+function checkPasswordMatchChangePass() {
+    var pass = document.getElementById('newPassword').value;
+    var confPass = document.getElementById('confirmNewPassword').value;
+    var errorSpan = document.getElementById('changePass-confirmPassWarning');
+    var submitBtn = document.getElementById('change-pass-confirm');
+
+    if(pass !== confPass) {
+        errorSpan.textContent = "*Passwords do not match.";
+        submitBtn.disabled = true;
+    } else {
+        errorSpan.textContent = "";
+        changePassCheckFields();
+    }
+}
+
+changePassCheckFields();
+
+function changeUserPassword(UserID){
+    document.getElementById('edit-pass-userID').value = UserID;
+}
 
 const createUserForm = document.getElementById('createUserForm');
 

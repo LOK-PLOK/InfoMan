@@ -1,6 +1,6 @@
 <?php
 
-require '../models/DashboardModel.php';
+require '../models/DashboardModel.php'; 
 require 'GeneralController.php';
 
 class DashboardController extends GeneralController{
