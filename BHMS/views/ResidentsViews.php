@@ -273,7 +273,7 @@ class ResidentsViews extends GeneralViews{
                 $statusImg = 'active';
                 $statusText = 'Active';
             } else {
-                $statusImg = 'inactive';
+                $statusImg = 'evicted';
                 $statusText = 'Evicted';
             }
 

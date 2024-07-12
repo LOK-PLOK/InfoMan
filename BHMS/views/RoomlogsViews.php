@@ -206,8 +206,8 @@ class RoomlogsViews extends GeneralViews{
                     $deactBtn = '';
                 } else {
                     $color = 'background-color: #E4A11B;';
-                    $deactBtn = '<button class="deactOccupancyBtn" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal" value="'.$room_tenant['occupancyID'].'">
-                                    Deactivate
+                    $deactBtn = '<button class="deactOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;">
+                                    <img src="/images/icons/Residents/deactivate.png" alt="deactivate" class="action" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal" value="'.$room_tenant['occupancyID'].'">
                                 </button>';
                 }
 

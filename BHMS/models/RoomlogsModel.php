@@ -26,33 +26,6 @@ class RoomlogsModel extends dbcreds {
         return $results;
     }
 
-    // public static function query_room_tenants($room_code) {
-    //     $conn = self::get_connection();
-    //     $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE() BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30 ORDER BY occDateStart DESC;");
-        
-    //     if ($query === false) {
-    //         throw new Exception("Prepare failed: " . $conn->error);
-    //     }
-    
-    //     $query->bind_param('s', $room_code);
-    
-    //     if (!$query->execute()) {
-    //         throw new Exception("Execute failed: " . $query->error);
-    //     }
-    
-    //     $result = $query->get_result();
-    //     $results = [];
-    
-    //     while ($row = $result->fetch_assoc()) {
-    //         $results[] = $row;
-    //     }
-    
-    //     $query->close();
-    //     $conn->close();
-    
-    //     return $results;
-    // }
-
     public static function query_room_tenants($room_code) {
         $conn = self::get_connection();
         $query = $conn->prepare("
