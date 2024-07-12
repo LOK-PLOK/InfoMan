@@ -28,7 +28,13 @@ RoomlogsViews::burger_sidebar();
     <!-- Room Log Actions -->
     <div class="rm-log-button">
         <button class="show-avail-rm-btn">Show Available Rooms</button>
-        <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#add-new-rm"><img src="/images/icons/Room Logs/add_new_room_light.png" alt="">Add New Room</button>
+        <?php 
+            if($_SESSION['sessionType'] === 'admin'){
+                ?> 
+                <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#add-new-rm"><img src="/images/icons/Room Logs/add_new_room_light.png" alt="">Add New Room</button>
+                <?php
+            }
+        ?>
         <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#addNewRent"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
     </div>
 
@@ -51,6 +57,7 @@ RoomlogsViews::addNewRoomModal();
 RoomlogsViews::editRoomModal();
 RoomlogsViews::deleteRoomModal();
 RoomlogsViews::create_new_rent_modal();
+RoomlogsViews::deactOccupancyModal();
 
 if(isset($_GET['addRoomStatus'])){
     if($_GET['addRoomStatus'] === 'success'){
@@ -104,6 +111,14 @@ if(isset($_GET['deleteOccStatus'])){
     if($_GET['deleteOccStatus'] === 'success'){
         echo '<script>showSuccessAlert("Occupancy Deleted Successfully!");</script>';
     } else if($_GET['deleteOccStatus'] === 'error'){
+        echo '<script>showFailAlert("An unexpected error has happened!");</script>';
+    }
+}
+
+if(isset($_GET['deactOccStatus'])){
+    if($_GET['deactOccStatus'] === 'success'){
+        echo '<script>showSuccessAlert("Occupancy Deactivated Successfully!");</script>';
+    } else if($_GET['deactOccStatus'] === 'error'){
         echo '<script>showFailAlert("An unexpected error has happened!");</script>';
     }
 }
@@ -223,6 +238,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Handle the error case, potentially redirecting with an error flag or displaying an error message
             header('Location: room_logs.php?deleteOccStatus=error');
+            exit();
+        }
+    }
+
+    // Deactivate Occupancy
+    if (isset($_POST['deact-occupancy-id'])) {
+
+        $deactOccInfo = $_POST['deact-occupancy-id'];
+
+        $result = RoomlogsController::deact_occupancy($deactOccInfo);
+        if ($result) {
+            // Redirect to the same page or to a confirmation page after successful deletion
+            header('Location: room_logs.php?deactOccStatus=success');
+            exit();
+        } else {
+            // Handle the error case, potentially redirecting with an error flag or displaying an error message
+            header('Location: room_logs.php?deactOccStatus=error');
             exit();
         }
     }

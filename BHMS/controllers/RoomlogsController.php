@@ -11,7 +11,7 @@ class RoomlogsController extends GeneralController{
 
     public static function room_tenants($room_code) {
         return RoomlogsModel::query_room_tenants($room_code);
-    } 
+    }  
 
     public static function editOccupancy($editInfo) {
         return RoomlogsModel::updateOccupancy($editInfo);
@@ -88,6 +88,14 @@ class RoomlogsController extends GeneralController{
         } else {
             return "Error - Tenant Rent Error";
         }
+    }
+
+    public static function deact_occupancy($deactOccInfo) {
+        return RoomlogsModel::query_deact_occupancy($deactOccInfo);
+    }
+
+    public static function is_room_has_overdue($room_code) {
+        return RoomlogsModel::query_overdue_occupancy($room_code);
     }
 
 }

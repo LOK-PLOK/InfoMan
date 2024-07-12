@@ -247,7 +247,7 @@ class ResidentsViews extends GeneralViews{
                         </thead>
                         <tbody>
         HTML;
-    
+
         // Loop through each tenant in the list
         foreach ($tenant_list as $tenant) {
             $tenantDataJson = htmlspecialchars(json_encode($tenant));

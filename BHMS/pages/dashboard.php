@@ -145,6 +145,12 @@ if(isset($_GET['addRentStatus'])){
 	}
 }
 
+if(isset($_GET['AccessError'])){
+	if($_GET['AccessError'] === 'unauthorizedPageAttempt'){
+		echo '<script>showFailAlert("Accessing Unauthorized Page!");</script>';
+	} 
+}
+
 // Form Submission Handlers
 if($_SERVER['REQUEST_METHOD'] == "POST") {
 

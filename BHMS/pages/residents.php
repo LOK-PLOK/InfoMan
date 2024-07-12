@@ -6,6 +6,11 @@ session_start();
 require '../php/templates.php';
 require '../views/ResidentsViews.php';
 
+if($_SESSION['sessionType'] !== 'admin'){
+    header('Location: dashboard.php?AccessError=unauthorizedPageAttempt');    
+    exit();
+}
+
 html_start('residents.css');
 
 // Sidebar

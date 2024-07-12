@@ -189,20 +189,62 @@ class SettingsViews extends GeneralViews {
         HTML; 
     
         // Loop for user info in the list
-        foreach ($user_list as $user) {
-            $userDataJson = htmlspecialchars(json_encode($user));
-            $statusImage = $user['isActive'] ? 'active.jpg' : 'inactive.jpg';
-            $statusText = $user['isActive'] ? 'active' : 'inactive';
+        if($_SESSION['sessionType'] === 'admin') {
+            foreach ($user_list as $user) {
+                $userDataJson = htmlspecialchars(json_encode($user));
+                $statusImage = $user['isActive'] ? 'active.jpg' : 'inactive.jpg';
+                $statusText = $user['isActive'] ? 'active' : 'inactive';
+                // para edit og delete
+                $userID = $user['userID'];
+                $userFname = $user['userFname'];
+                $userMname = $user['userMI'];
+                $userLname = $user['userLname'];
+                $isActive = $user['isActive'];
+                $userType = $user['userType'];
+                $username = $user['username'];
+                
+                $userMIFormatted = ($user['userMI'] != NULL) ? $user['userMI'] . '.' : '';
+                echo <<<HTML
+                <tr class="userInfoRow" data-user="$userDataJson">
+                    <td>{$userFname} {$userMIFormatted} {$userLname}</td>
+                    <td>
+                        <div class="resize">
+                            <img src="/images/icons/Residents/$statusImage">
+                            <span>$statusText</span>
+                        </div>
+                    </td>
+                    <td>{$userType}</td>
+                    <td>
+                        <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#editUserPass" style="border: none;"
+                        onclick="changeUserPassword($userID)">
+                            <img src="/images/icons/Settings/password.png" alt="Change Password" class="action">
+                        </button>
+                        <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#editUserInfoModal" style="border: none;" 
+                        onclick="editUser('$userID', '$userFname', '$userMname', '$userLname','$isActive','$userType','$username','$password')">
+                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                        </button>
+                        <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#deleteUserInfoModal" onclick="deleteUser($userID)" style="border: none">
+                            <img src="/images/icons/Residents/delete.png" alt="Delete" class="action">
+                        </button>
+                    </td>
+                </tr>
+                HTML;
+            }
+        } else {
+            $userInfo = SettingsModel::verify_credentials($_SESSION['userID']);
+            $userDataJson = htmlspecialchars(json_encode($userInfo));
+            $statusImage = $userInfo['isActive'] ? 'active.jpg' : 'inactive.jpg';
+            $statusText = $userInfo['isActive'] ? 'active' : 'inactive';
             // para edit og delete
-            $userID = $user['userID'];
-            $userFname = $user['userFname'];
-            $userMname = $user['userMI'];
-            $userLname = $user['userLname'];
-            $isActive = $user['isActive'];
-            $userType = $user['userType'];
-            $username = $user['username'];
+            $userID = $userInfo['userID'];
+            $userFname = $userInfo['userFname'];
+            $userMname = $userInfo['userMI'];
+            $userLname = $userInfo['userLname'];
+            $isActive = $userInfo['isActive'];
+            $userType = $userInfo['userType'];
+            $username = $userInfo['username'];
             
-            $userMIFormatted = ($user['userMI'] != NULL) ? $user['userMI'] . '.' : '';
+            $userMIFormatted = ($userInfo['userMI'] != NULL) ? $userInfo['userMI'] . '.' : '';
             echo <<<HTML
             <tr class="userInfoRow" data-user="$userDataJson">
                 <td>{$userFname} {$userMIFormatted} {$userLname}</td>
@@ -264,7 +306,7 @@ class SettingsViews extends GeneralViews {
                         <!-- userFName -->
                         <input type="text" id="userFname" name="userFname" placeholder="First Name" class="FNclass shadow" onkeyup="checkFields();" required>
                         <!-- userMname -->
-                        <input type="text" id="userMname" name="userMname" placeholder="MI" class="MIclass shadow" onkeyup="checkFields();" required>
+                        <input type="text" id="userMname" name="userMname" placeholder="MI" class="MIclass shadow" onkeyup="checkFields();" maxlength="1" required>
                         <!-- userLName -->
                         <input type="text" id="userLname" name="userLname" placeholder="Last Name" class="LNclass shadow" onkeyup="checkFields();" required>
                     </div>
@@ -282,8 +324,7 @@ class SettingsViews extends GeneralViews {
                         <label for="userPosition" class="form-label">Position:</label>
                         <!-- userType -->
                         <select class="form-select shadow" id="userType" name="userType" onkeyup="checkFields();" required>
-                            <option value="choose a status" selected>Choose a user type</option>
-                            <option value="staff"><strong>Staff</option>
+                            <option value="staff">Staff</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>
@@ -349,14 +390,17 @@ class SettingsViews extends GeneralViews {
                         <!-- Edit-userStatus -->
                         <label for="userStatus" class="form-label">Status:</label>
                         <select class="form-select shadow" id="Edit-isActive" name="Edit-isActive" required>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <!-- Edit-userType -->
                         <label for="userPosition" class="form-label">Position:</label>
-                        <input type="text" class="form-control shadow" id="Edit-userType" name="Edit-userType" placeholder="Admin" required>
+                        <select class="form-select shadow" id="Edit-userType" name="Edit-userType" required>
+                            <option value="staff">Staff</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
                     
                     <div class="mb-3">

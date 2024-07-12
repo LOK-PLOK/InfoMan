@@ -9,6 +9,7 @@ class LoginController {
 
         if($result !== NULL && password_verify($password, $result['password'])) {
             $_SESSION['userID'] = $result['userID'];
+            $_SESSION['sessionType'] = $result['userType'];
             header('Location: pages/dashboard.php');
             exit();
         } else {

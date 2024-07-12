@@ -31,7 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Looks for the button with the class 'deleteOccupancyBtn' and sets the value of the delete-occupancy-id input field
+    document.querySelectorAll('.deleteOccupancyBtn').forEach(button => {
+        button.addEventListener('click', function() {
+            const delOccInfo = this.value;
+            document.getElementById('delete-occupancy-id').value = delOccInfo;
+        });
+    });
 
+    document.querySelectorAll('.deactOccupancyBtn').forEach(button => {
+        button.addEventListener('click', function() {
+            const deactOccInfo = this.value;
+            document.getElementById('deact-occupancy-id').value = deactOccInfo;
+            console.log(document.getElementById('deact-occupancy-id').value);
+        });
+    });
 
     const showAvailRmBtn = document.querySelector('.show-avail-rm-btn');
     const roomInfo = document.querySelectorAll('.rm-info-container');
@@ -58,14 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update button text based on the count of visible rooms
         showAvailRmBtn.textContent = visibleRoomsCount === roomInfo.length ? 
             'Show Available Rooms' : 'Show All Rooms';
-    });
-
-    // Looks for the button with the class 'deleteOccupancyBtn' and sets the value of the delete-occupancy-id input field
-    document.querySelectorAll('.deleteOccupancyBtn').forEach(button => {
-        button.addEventListener('click', function() {
-            const delOccInfo = this.value;
-            document.getElementById('delete-occupancy-id').value = delOccInfo;
-        });
     });
 
     // End Date Setter for Edit Rent

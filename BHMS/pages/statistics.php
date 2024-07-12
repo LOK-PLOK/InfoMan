@@ -1,8 +1,13 @@
-<?php
+<?php   
     session_start();
     ob_start();
     require '../php/templates.php';
     require '../views/StatisticsViews.php';
+
+    if($_SESSION['sessionType'] !== 'admin'){
+        header('Location: dashboard.php?AccessError=unauthorizedPageAttempt');    
+        exit();
+    }
 
     $more_links = '<script src="https://cdn.jsdelivr.net/npm/progressbar.js@1.0.0/dist/progressbar.min.js"></script>';
 

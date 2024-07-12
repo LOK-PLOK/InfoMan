@@ -77,19 +77,28 @@ class RoomlogsViews extends GeneralViews{
             }
     
             $roomID = htmlspecialchars($room['roomID']);
+
+            if(RoomlogsController::is_room_has_overdue($room['roomID'])) {
+                $overdue_gif = '<img src="/images/icons/Room Logs/warning.gif" alt="Warning" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 50px;">';
+                $ellipsis = '';
+            } else {
+                $overdue_gif = '';
+                $ellipsis = '<i type="button" class="fa-solid fa-ellipsis" style="color: #c7d5dd"></i>';
+            }
     
             echo '
                 <div class="col-auto" data-bs-toggle="modal" data-bs-target="#rm-info-modal-'.$roomID.'">
-                    <div class="rm-info-container" style="cursor: pointer;">
+                    <div class="rm-info-container" style="cursor: pointer; position: relative;">
                         <div class="rm-info-head">
                             <span class="rm-info-code">'.$roomID.'</span>
                             <i class="fa-solid fa-circle" style="color: '.$avail_color.';"></i>
-                            <i type="button" class="fa-solid fa-ellipsis" style="color: #c7d5dd"></i>
+                            '. $ellipsis .'
                         </div>
                         <div>
                             <span class="rm-info-avail">'.$availability.'</span><br>
                             <span class="rm-info-status" style="color: '.$avail_color.'">'.$avail_info.'</span> 
                         </div>
+                        '. $overdue_gif .'
                     </div>
                 </div>
             ';
@@ -129,7 +138,7 @@ class RoomlogsViews extends GeneralViews{
     
             echo <<<HTML
                 <div class="modal fade" id="rm-info-modal-{$roomID}" tabindex="-1" aria-labelledby="room-information" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h3 class="rm-modal-title" id="room-information">Room Information</h3>
@@ -143,15 +152,27 @@ class RoomlogsViews extends GeneralViews{
                                         <p class="rm-modal-info">Status: <span>{$avail_info}</span></p>
                                         <p class="rm-modal-info">Capacity: <span>{$room['rentCount']} / <span>{$room['capacity']}</span></p>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-around">
-                                        <button type="button" class="btn-var-5 my-1 bg-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
-                                        onclick="delRoomID('{$roomID}')">Delete Room</button>
-                                        <button type="button" class="btn-var-5 my-1" data-bs-toggle="modal" data-bs-target="#edit-rm"
-                                        onclick="setValuesEditRoom('{$roomID}', '{$room['capacity']}')">Edit Room</button>
-                                    </div>
+            HTML;
+                                    if($_SESSION['sessionType'] == 'admin'){
+                                        echo <<<HTML
+                                            <div class="d-flex flex-column justify-content-around">
+                                                <button type="button" class="btn-var-5 my-1 bg-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
+                                                onclick="delRoomID('{$roomID}')">Delete Room</button>
+                                                <button type="button" class="btn-var-5 my-1" data-bs-toggle="modal" data-bs-target="#edit-rm"
+                                                onclick="setValuesEditRoom('{$roomID}', '{$room['capacity']}')">Edit Room</button>
+                                            </div>
+                                        HTML;
+                                    }
+            echo <<<HTML
                                 </div>
                                 <div class="rm-occupants">
-                                    <p class="rm-modal-info">Occupants (Current/Old): </p>
+                                    <p class="rm-modal-info">Occupants: </p>
+                                    <div class="mb-2">
+                                        <i class="fa-solid fa-square" style="color: #00ba00"></i>
+                                        <span>Current</span><br>
+                                        <i class="fa-solid fa-square" style="color: #E4A11B"></i>
+                                        <span>Overdue</span>
+                                    </div>
                                     <table>
                                         <thead>
                                             <tr>
@@ -159,11 +180,11 @@ class RoomlogsViews extends GeneralViews{
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
                                                 <th>Rent Type</th>
-                                                <th>Actions</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-            HTML;
+                HTML;
     
             foreach ($room_tenants as $room_tenant) {
                 $rm_tenant_info = RoomlogsController::room_tenant_info($room_tenant['tenID']);
@@ -178,40 +199,56 @@ class RoomlogsViews extends GeneralViews{
 
                 $occType = RoomlogsController::get_occ_type($room_tenant['occTypeID']);
 
-                // Convert occDateStart and occDateEnd to DateTime objects
-                $occDateStart = new DateTime($room_tenant['occDateStart']);
-                $occDateEnd = new DateTime($room_tenant['occDateEnd']);
-                $currentDate = new DateTime(date('Y-m-d'));
+                $current_date = date('F j, Y'); // Get the current date
+                
+                if(strtotime($end_date) >= strtotime($current_date)) {
+                    $color = 'background-color: #00ba00;';
+                    $deactBtn = '';
+                } else {
+                    $color = 'background-color: #E4A11B;';
+                    $deactBtn = '<button class="deactOccupancyBtn" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal" value="'.$room_tenant['occupancyID'].'">
+                                    Deactivate
+                                </button>';
+                }
 
-                // Calculate the difference between occDateEnd and occDateStart
-                $diff = $occDateStart->diff($occDateEnd)->days;
+                if($_SESSION['sessionType'] == 'admin') {
+                    $edit_delete = '
+                            <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
+                                onclick="setValuesTenantInfo(
+                                                    '.$room_tenant['occupancyID'].', 
+                                                    \''.$name.'\', 
+                                                    \''.$room_tenant['roomID'].'\', 
+                                                    \''.$occType['occTypeName'].'\', 
+                                                    \''.$room_tenant['occDateStart'].'\', 
+                                                    \''.$room_tenant['occDateEnd'].'\', 
+                                                    '.number_format($room_tenant['occupancyRate'], 2, '.', '').'
+                                                )"
+                            >
+                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                            </button>
+                            <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" value="'.$room_tenant['occupancyID'].'">
+                                <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
+                            </button>
+                    ';
+                } else {
+                    $edit_delete = '';
+                }
 
-                // Check if occDateEnd is less than the current date and the difference is less than 30
-                $rm_cell_color = ($occDateEnd < $currentDate || $diff < 30) ? '#edf6f7' : '#00ba00';
+                if ($edit_delete == '' && $deactBtn == '') {
+                    $action_buttons = 'No actions available.';
+                } else {
+                    $action_buttons = $edit_delete . $deactBtn;
+                }
+
 
                 echo '
                         <tr>
-                            <td style="background-color: '.$rm_cell_color.'">'.$name.'</td>
-                            <td style="background-color: '.$rm_cell_color.'">'.$start_date.'</td>
-                            <td style="background-color: '.$rm_cell_color.'">'.$end_date.'</td>
-                            <td style="max-width: 150px; background-color: '.$rm_cell_color.'">'.$occType['occTypeName'].'</td>
-                            <td style="background-color:'.$rm_cell_color.'">
-                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
-                                    onclick="setValuesTenantInfo(
-                                                        '.$room_tenant['occupancyID'].', 
-                                                        \''.$name.'\', 
-                                                        \''.$room_tenant['roomID'].'\', 
-                                                        \''.$occType['occTypeName'].'\', 
-                                                        \''.$room_tenant['occDateStart'].'\', 
-                                                        \''.$room_tenant['occDateEnd'].'\', 
-                                                        '.number_format($room_tenant['occupancyRate'], 2, '.', '').'
-                                                    )"
-                                >
-                                    <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                                </button>
-                                <button class="deleteOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" value="'.$room_tenant['occupancyID'].'">
-                                    <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteOccupancyModal">
-                                </button>
+                            <td style="'.$color.'">'.$name.'</td>
+                            <td style="'.$color.'">'.$start_date.'</td>
+                            <td style="'.$color.'">'.$end_date.'</td>
+                            <td style="max-width: 150px; '.$color.'">'.$occType['occTypeName'].'</td>
+                            <td style="'.$color.'">
+                            '. $action_buttons .'
                             </td>
                         </tr>
                     ';
@@ -625,6 +662,36 @@ class RoomlogsViews extends GeneralViews{
             </div>
         HTML;
     }
+    
+    // Deactivate Occupancy Modal
+    public static function deactOccupancyModal(){
+        echo <<<HTML
+            <div class="modal fade" id="deactOccupancyModal" tabindex="-1" aria-labelledby="deactOccupancyModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-custom">
+                        <div class="modal-header bg-custom">
+                            <span style="font-size: 25px;">Are you sure you want to deactivate this occupancy?</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-custom">
+                        <form method="POST">
+                            <div class="displayflex">
+                                <input type="hidden" name="deact-occupancy-id" id="deact-occupancy-id">
+                                <input type="submit" name="deact-occupancy-submit" class="bg-danger btn-var-2 ms-4 me-4" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                            </div>
+                        </form>
+                        </div>
+                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
+                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+        HTML;
+    }
+
 }
 
 ?>
