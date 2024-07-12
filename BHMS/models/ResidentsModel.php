@@ -2,8 +2,40 @@
 
 require 'dbcreds.php';
 
+
+/**
+ * This class contains all the queries that will be returned to the ResidentsController file.
+ *
+ * @method residents_counter
+ * @method add_new_tenant
+ * @method get_last_inserted_tenant_id
+ * @method appliance_tenID
+ * @method residents_data
+ * @method edit_tenant
+ * @method deleteTenantById
+ * @method get_appliances
+ * @method get_occupancy
+ * @method get_rooms
+ * @method editOccupancy
+ * @method delete_occupancy
+ * @method residents_data_Active
+ * @method residents_data_Inactive
+ * @method residents_data_Evicted
+ * @method residents_data_Name
+ * @method residents_data_Search
+ * @method evictTenant
+ * @class ResidentsModel
+ * @extends dbcreds
+ */
 class ResidentsModel extends dbcreds{
 
+    /**
+     * Get data for total number of residents
+     * 
+     * @method residents_counter
+     * @param none
+     * @return $result
+     */
     public static function residents_counter() {
         // Use self to access static variables within the static method
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -13,7 +45,6 @@ class ResidentsModel extends dbcreds{
             die("Connection failed: " . $conn->connect_error);
         }
     
-        // Prepare the SQL statement with a parameter placeholder
         $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1";
         $stmt = $conn->query($query);
     
@@ -21,19 +52,23 @@ class ResidentsModel extends dbcreds{
             die("Error executing query: " . $conn->error);
         }
     
-        // Fetch the result
         $row = $stmt->fetch_assoc();
         $result = $row['count'];
     
-        // Close the statement and connection
         $stmt->close();
         $conn->close();
     
-        // Return the result
         return $result;
         
     }
 
+    /**
+     * Add a new tenant to the database
+     * 
+     * @method add_new_tenant
+     * @param $new_tenant, $appliances
+     * @return true
+     */
     public static function add_new_tenant($new_tenant, $appliances) {
 
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -107,40 +142,36 @@ class ResidentsModel extends dbcreds{
         }
     }
     
+    /**
+     * Get the last inserted tenant ID
+     * 
+     * @method get_last_inserted_tenant_id
+     * @param none
+     * @return $last_id
+     */
     public static function get_last_inserted_tenant_id() {
+        // Use self to access static variables within the static method
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
-        // Check connection
+        
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
     
         try {
-            // Prepare the SQL query to get the maximum tenID
             $sql = "SELECT MAX(tenID) AS last_id FROM tenant";
             $stmt = $conn->prepare($sql);
     
-            // Check if preparation was successful
             if (!$stmt) {
                 throw new Exception("Prepare statement failed: " . $conn->error);
             }
     
-            // Execute the query
             $stmt->execute();
-    
-            // Bind the result to a variable
             $stmt->bind_result($last_id);
-    
-            // Fetch the result
             $stmt->fetch();
-    
-            // Close the statement
             $stmt->close();
-    
-            // Close the connection
             $conn->close();
     
-            // Return the last inserted tenant ID
             return $last_id;
         } catch (Exception $e) {
             // Handle any errors
@@ -149,41 +180,38 @@ class ResidentsModel extends dbcreds{
         }
     }
 
+    /**
+     * Insert appliances into the database
+     * 
+     * @method appliance_tenID
+     * @param $appliances, $last_id
+     * @return true
+     */
     public static function appliance_tenID($appliances, $last_id) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
-        // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
     
         try {
-            // Prepare the SQL insert statement with placeholders
             $sql = "INSERT INTO appliance (tenID, appInfo) VALUES (?, ?)";
     
-            // Prepare the statement
             $stmt = $conn->prepare($sql);
             
-            // Check if preparation was successful
             if (!$stmt) {
                 throw new Exception("Prepare statement failed: " . $conn->error);
             }
     
-            // Loop through each appliance and insert it into the appliance table
             foreach ($appliances as $applianceInfo) {
-                // Bind the parameters to the statement
                 $stmt->bind_param("is", $last_id, $applianceInfo);
-    
-                // Execute the statement
+
                 if (!$stmt->execute()) {
                     throw new Exception("Execution failed: " . $stmt->error);
                 }
             }
     
-            // Close the statement
             $stmt->close();
-    
-            // Close the connection
             $conn->close();
     
             return true; // Return true if insertion is successful
@@ -191,13 +219,20 @@ class ResidentsModel extends dbcreds{
         } catch (Exception $e) {
             // Handle any errors
             echo "Error: " . $e->getMessage();
-            return false; // Return false if an error occurs
+            return false;
         }
     }
 
+    /**
+     * Get all tenants from the database
+     * 
+     * @method residents_data
+     * @param none
+     * @return $tenants
+     */
     public static function residents_data(){
         try {
-            //connection 
+            // Use self to access static variables within the static method
             $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
             
@@ -205,32 +240,24 @@ class ResidentsModel extends dbcreds{
                 throw new Exception("Connection failed: " . $conn->connect_error);
             }
     
-            // SQL query to select all tenants
             $query = "SELECT * FROM tenant ORDER BY isRenting=1 DESC";
-    
-            // Execute the query
             $result = $conn->query($query);
-    
+
             if ($result === false) {
                 throw new Exception("Query failed: " . $conn->error);
             }
     
-            // Fetch all rows as an associative array
             $tenants = [];
             while ($row = $result->fetch_assoc()) {
                 $tenants[] = $row;
             }
     
-            
             $result->free();
-    
-            // Close the connection
             $conn->close();
     
             // Return the array of tenants
             return $tenants;
         } catch (Exception $e) {
-            
             error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
     
             // Return an empty array to indicate failure
@@ -238,11 +265,18 @@ class ResidentsModel extends dbcreds{
         }
     }
 
+    /**
+     * Edit tenant information
+     * 
+     * @method edit_tenant
+     * @param $editTenantData, $editAppliances
+     * @return true
+     */
     public static function edit_tenant($editTenantData, $editAppliances) {
         // Extract tenant ID from the tenant data
         $tenantID = $editTenantData['Edit-tenID'];
 
-        // Establish database connection
+        // Use self to access static variables within the static method
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
 
         if ($conn->connect_error) {
@@ -283,7 +317,6 @@ class ResidentsModel extends dbcreds{
             $tenantID
         );
 
-        // Execute the update query
         if (!$query->execute()) {
             throw new Exception("Execution failed: " . $query->error);
         }
@@ -326,23 +359,26 @@ class ResidentsModel extends dbcreds{
         return true;
     }
 
+    /**
+     * Delete a tenant by ID
+     * 
+     * @method deleteTenantById
+     * @param $tenantIdToDelete
+     * @return true
+     */
     public static function deleteTenantById($tenantIdToDelete) {
         try {
             // Create a connection to the database
             $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
-            // Check for connection errors
             if ($conn->connect_error) {
                 throw new Exception("Connection failed: " . $conn->connect_error);
             }
     
             // Prepare the DELETE statement with a parameterized query to prevent SQL injection
             $stmt = $conn->prepare("DELETE FROM tenant WHERE tenID = ?");
-    
-            // Bind the parameter to the statement
             $stmt->bind_param("s", $tenantIdToDelete);
     
-            // Execute the statement
             if ($stmt->execute()) {
                 // Return true if deletion was successful
                 return true;
@@ -351,10 +387,7 @@ class ResidentsModel extends dbcreds{
                 return false;
             }
     
-            // Close the statement
             $stmt->close();
-    
-            // Close the connection
             $conn->close();
     
         } catch (Exception $e) {
@@ -366,36 +399,32 @@ class ResidentsModel extends dbcreds{
         }
     }
 
+    /**
+     * get appliances of a tenant by tenantID
+     * 
+     * @method get_appliances
+     * @param $tenantID
+     * @return $appliancesrue
+     */
     public static function get_appliances($tenantID){
         try {
-            // Create a connection to the database
+            // Use self to access static variables within the static method
             $conn = self::get_connection();
     
             // Prepare the SQL query to get all appliances for a specific tenant
             $stmt = $conn->prepare("SELECT * FROM appliance WHERE tenID = ?");
-    
-            // Bind the tenant ID to the statement
             $stmt->bind_param("i", $tenantID);
-    
-            // Execute the statement
             $stmt->execute();
     
-            // Get the result
             $result = $stmt->get_result();
     
-            // Fetch all rows as an associative array
             $appliances = [];
             while ($row = $result->fetch_assoc()) {
                 $appliances[] = $row;
             }
     
-            // Free the result
             $result->free();
-    
-            // Close the statement
             $stmt->close();
-    
-            // Close the connection
             $conn->close();
     
             // Return the array of appliances
@@ -409,21 +438,22 @@ class ResidentsModel extends dbcreds{
         }
     }
 
+    /**
+     * Get occupancy of a tenant by tenantID
+     * 
+     * @method get_occupancy
+     * @param $tenantID
+     * @return $occupancy
+     */
     public static function get_occupancy($tenantID){
         try {
-            // Create a connection to the database
+            // Use self to access static variables within the static method
             $conn = self::get_connection();
     
             // Prepare the SQL query to get all appliances for a specific tenant
             $stmt = $conn->prepare("SELECT occTypeName ,roomID,occDateStart,occDateEnd,occupancy.tenID,occupancyID, tenFname, tenMI, tenLname,occupancyRate FROM tenant,occupancy,occupancy_type WHERE tenant.tenID = occupancy.tenID AND tenant.tenID = ? AND occupancy.occTypeID = occupancy_type.occTypeID ORDER BY occupancy.occDateStart DESC");
-    
-            // Bind the tenant ID to the statement
             $stmt->bind_param("i", $tenantID);
-    
-            // Execute the statement
             $stmt->execute();
-    
-            // Get the result
             $result = $stmt->get_result();
     
             // Fetch all rows as an associative array
@@ -434,11 +464,7 @@ class ResidentsModel extends dbcreds{
     
             // Free the result
             $result->free();
-    
-            // Close the statement
             $stmt->close();
-    
-            // Close the connection
             $conn->close();
     
             // Return the array of appliances
@@ -452,6 +478,13 @@ class ResidentsModel extends dbcreds{
         }
     }
 
+    /**
+     * Get all rooms from the database
+     * 
+     * @method get_rooms
+     * @param none
+     * @return $results
+     */
     public static function get_rooms(){
         
         $conn = self::get_connection();
@@ -462,7 +495,6 @@ class ResidentsModel extends dbcreds{
             die("Error executing query: " . $conn->error);
         }
 
-        // Fetch the result
         $results = [];
         while ($row = $stmt->fetch_assoc()) {
             $results[] = $row;
@@ -474,6 +506,13 @@ class ResidentsModel extends dbcreds{
         return $results;
     }
 
+    /**
+     * Edit occupancy information
+     * 
+     * @method editOccupancy
+     * @param $editInfo
+     * @return true
+     */
    public static function editOccupancy($editInfo){
     $conn = self::get_connection();
         $query = $conn->prepare("UPDATE occupancy SET roomID = ?, occDateStart = ?, occDateEnd = ? WHERE occupancyID = ?");
@@ -500,6 +539,13 @@ class ResidentsModel extends dbcreds{
         }
    }
 
+    /**
+      * Delete an occupancy by occupancyID
+      * 
+      * @method delete_occupancy
+      * @param $delOccInfo
+      * @return true
+      */
    public static function delete_occupancy($delOccInfo){
         $conn = self::get_connection();
         $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
@@ -520,6 +566,13 @@ class ResidentsModel extends dbcreds{
         return true;
    }
 
+    /**
+     * Get all active residents from the database
+     * 
+     * @method residents_data_Active
+     * @param none
+     * @return $results
+     */
    public static function residents_data_Active(){
         $conn = self::get_connection();
         $query = "SELECT * FROM tenant WHERE isRenting = 1 ORDER BY isRenting DESC ";
@@ -529,7 +582,6 @@ class ResidentsModel extends dbcreds{
             die("Error executing query: " . $conn->error);
         }
 
-        // Fetch the result
         $results = [];
         while ($row = $stmt->fetch_assoc()) {
             $results[] = $row;
@@ -541,6 +593,13 @@ class ResidentsModel extends dbcreds{
         return $results;
     }
 
+    /**
+     * Get all inactive residents from the database
+     * 
+     * @method residents_data_Inactive
+     * @param none
+     * @return $results
+     */
     public static function residents_data_Inactive(){
         $conn = self::get_connection();
         $query = "SELECT * FROM tenant WHERE isRenting = 0 ORDER BY isRenting DESC";
@@ -550,7 +609,6 @@ class ResidentsModel extends dbcreds{
             die("Error executing query: " . $conn->error);
         }
 
-        // Fetch the result
         $results = [];
         while ($row = $stmt->fetch_assoc()) {
             $results[] = $row;
@@ -562,6 +620,40 @@ class ResidentsModel extends dbcreds{
         return $results;
     }
 
+    /**
+     * Get all evicted residents from the database
+     * 
+     * @method residents_data_Evicted
+     * @param none
+     * @return $results
+     */
+    public static function residents_data_Evicted(){
+        $conn = self::get_connection();
+        $query = "SELECT * FROM tenant WHERE isRenting = 2 ORDER BY isRenting DESC";
+        $stmt = $conn->query($query);
+
+        if ($stmt === false) {
+            die("Error executing query: " . $conn->error);
+        }
+
+        $results = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $results;
+    }
+    
+    /**
+     * Get all residents from the database sorted by name
+     * 
+     * @method residents_data_Name
+     * @param none
+     * @return $results
+     */
     public static function residents_data_Name(){
         $conn = self::get_connection();
         $query = "SELECT * FROM tenant ORDER BY tenFname ASC";
@@ -571,7 +663,6 @@ class ResidentsModel extends dbcreds{
             die("Error executing query: " . $conn->error);
         }
 
-        // Fetch the result
         $results = [];
         while ($row = $stmt->fetch_assoc()) {
             $results[] = $row;
@@ -583,6 +674,13 @@ class ResidentsModel extends dbcreds{
         return $results;
    }
 
+    /**
+     * Get all residents from the database sorted by search
+     * 
+     * @method residents_data_Search
+     * @param $search
+     * @return $results
+     */
    public static function residents_data_Search($search){
         $conn = self::get_connection();
         $query = "SELECT * FROM tenant WHERE LOWER(CONCAT(tenFname,tenLname,tenMI)) LIKE LOWER('%$search%') ORDER BY tenLname ASC";
@@ -592,7 +690,6 @@ class ResidentsModel extends dbcreds{
             die("Error executing query: " . $conn->error);
         }
 
-        // Fetch the result
         $results = [];
         while ($row = $stmt->fetch_assoc()) {
             $results[] = $row;
@@ -604,27 +701,34 @@ class ResidentsModel extends dbcreds{
         return $results;
    }
 
-       public static function evictTenant($evictInfo) {
-            $conn = self::get_connection();
-            $query = $conn->prepare("UPDATE occupancy SET occDateEnd = CURRENT_DATE() WHERE tenID = ? AND occDateStart = ( SELECT occDateStart FROM occupancy WHERE tenID = ? ORDER BY occDateStart DESC LIMIT 1 ); ");
+    /**
+     * Evict a tenant
+     * 
+     * @method evictTenant
+     * @param $evictInfo
+     * @return true
+     */
+    public static function evictTenant($evictInfo) {
+        $conn = self::get_connection();
+        $query = $conn->prepare("UPDATE occupancy SET occDateEnd = CURRENT_DATE() WHERE tenID = ? AND occDateStart = ( SELECT occDateStart FROM occupancy WHERE tenID = ? ORDER BY occDateStart DESC LIMIT 1 ); ");
 
-            if ($query === false) {
-                throw new Exception("Prepare failed: " . $conn->error);
-            }
+        if ($query === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
 
-            $query->bind_param('ii', $evictInfo, $evictInfo);
+        $query->bind_param('ii', $evictInfo, $evictInfo);
 
-            if (!$query->execute()) {
-                $query->close();
-                $conn->close();
-                throw new Exception("Execute failed: " . $query->error);
-                return false;
-            } else {
-                $query->close();
-                $conn->close();
-                return true;
-            }
-       }
+        if (!$query->execute()) {
+            $query->close();
+            $conn->close();
+            throw new Exception("Execute failed: " . $query->error);
+            return false;
+        } else {
+            $query->close();
+            $conn->close();
+            return true;
+        }
+    }
 
 }
 

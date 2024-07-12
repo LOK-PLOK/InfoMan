@@ -35,6 +35,8 @@ if(isset($_GET['Active'])){
     $tenant_list = ResidentsController::residents_table_data_Active();
 }elseif(isset($_GET['Inactive'])){
     $tenant_list = ResidentsController::residents_table_data_Inactive();
+}elseif(isset($_GET['Evicted'])){
+    $tenant_list = ResidentsController::residents_table_data_Evicted();
 }elseif(isset($_GET['Name'])){
     $tenant_list = ResidentsController::residents_table_data_Name();
 }else{

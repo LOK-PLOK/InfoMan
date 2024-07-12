@@ -214,6 +214,7 @@ class ResidentsViews extends GeneralViews{
                                     <li class="d-flex justify-content-center"><input type="submit"  name="ALL"value="ALL" class="no-design1"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"  name="Active"value="Active" class="no-design1"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"   name="Inactive" value="Inactive"class="no-design2"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"   name="Evicted" value="Evicted"class="no-design2"></li>
                                     <li class="d-flex justify-content-center"><input type="submit"   name="Name" value="Name"class="no-design2"></li>
                                 </ul>
                             </div>
@@ -809,7 +810,12 @@ class ResidentsViews extends GeneralViews{
         </div>';
     }
 
-
+    /**
+     * This method is used to display the modal for evicting a tenant.
+     * 
+     * @method evictTenantModal
+     * @return void
+     */
     public static function evictTenantModal(){
         echo <<<HTML
             <div class="modal fade" id="evictTenantModal" tabindex="-1" aria-labelledby="evictTenantModal" aria-hidden="true">

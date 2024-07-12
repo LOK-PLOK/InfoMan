@@ -2,8 +2,41 @@
 
 require 'dbcreds.php';
 
+/**
+ * This class contains all the controllers/methods that are used in the maintenance page and MaintenanceViews File.
+ * 
+ * @method query_rooms
+ * @method query_new_maintenance
+ * @method query_On_going_data
+ * @method query_completed_data
+ * @method query_cancelled_data
+ * @method edit_maintenance
+ * @method deleteMaintenanceById
+ * @method query_On_going_data_RoomCode 
+ * @method query_On_going_data_Cost
+ * @method query_On_going_data_Date
+ * @method query_completed_data_RoomCode
+ * @method query_completed_data_Cost
+ * @method query_completed_data_Date
+ * @method query_cancelled_data_RoomCode
+ * @method query_cancelled_data_Cost
+ * @method query_cancelled_data_Date
+ * @method query_On_going_data_search
+ * @method query_completed_data_search
+ * @method query_cancelled_data_search
+ * @class MaintenanceModel
+ * @extends dbcreds
+ */
+
 class MaintenanceModel extends dbcreds {
 
+    /**
+     * Gets the room data
+     * 
+     * @method query_rooms
+     * @param none
+     * @return array
+     */
     public static function query_rooms(){
         $conn = self::get_connection();
         $query = "SELECT * FROM room";
@@ -25,6 +58,13 @@ class MaintenanceModel extends dbcreds {
         return $results;
     }
 
+    /**
+     * Adds a new maintenance to the database
+     * 
+     * @method query_new_maintenance
+     * @param $create_maintenance
+     * @return boolean
+     */
     public static function query_new_maintenance($create_maintenance){
         try {
 
@@ -65,6 +105,13 @@ class MaintenanceModel extends dbcreds {
         }
     }
 
+    /**
+     * Gets the ongoing maintenance data
+     * 
+     * @method query_On_going_data
+     * @param none
+     * @return array
+     */
     public static function query_On_going_data() {
         // Get the database connection
         $conn = self::get_connection();
@@ -89,6 +136,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Gets the completed maintenance data
+     * 
+     * @method query_completed_data
+     * @param none
+     * @return array
+     */
     public static function query_completed_data(){
         // Get the database connection
         $conn = self::get_connection();
@@ -113,6 +167,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Gets the cancelled maintenance data
+     * 
+     * @method query_cancelled_data
+     * @param none
+     * @return array
+     */
     public static function query_cancelled_data(){
         // Get the database connection
         $conn = self::get_connection();
@@ -137,6 +198,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
     
+    /**
+     * Edits a maintenance record in the database
+     * 
+     * @method edit_maintenance
+     * @param $edit_maintenance
+     * @return boolean
+     */
     public static function edit_maintenance($edit_maintenance){
         // Extract values from $edit_maintenance array
         $maintID = $edit_maintenance['Edit-maintID'];
@@ -178,6 +246,13 @@ class MaintenanceModel extends dbcreds {
         }
     }
 
+    /**
+     * Deletes a maintenance record from the database
+     * 
+     * @method deleteMaintenanceById
+     * @param $maintenanceID
+     * @return boolean
+     */
     public static function deleteMaintenanceById($maintenanceID){
         try {
             // Create a connection to the database
@@ -218,6 +293,13 @@ class MaintenanceModel extends dbcreds {
         }
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "On-going" and orders it by roomID
+     * 
+     * @method query_On_going_data_RoomCode
+     * @param none
+     * @return array
+     */
     public static function query_On_going_data_RoomCode(){
         // Get the database connection
         $conn = self::get_connection();
@@ -241,7 +323,14 @@ class MaintenanceModel extends dbcreds {
 
         return $data;
     }
-
+    
+    /**
+     * Fethces the data from the database where the maintStatus is "On-going" and orders it by maintCost
+     * 
+     * @method query_On_going_data_Cost
+     * @param none
+     * @return array
+     */
     public static function query_On_going_data_Cost(){
         // Get the database connection
         $conn = self::get_connection();
@@ -266,6 +355,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "On-going" and orders it by maintDate
+     * 
+     * @method query_On_going_data_Date
+     * @param none
+     * @return array
+     */
     public static function query_On_going_data_Date(){
         // Get the database connection
         $conn = self::get_connection();
@@ -290,6 +386,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Completed" and orders it by roomID
+     * 
+     * @method query_completed_data_RoomCode
+     * @param none
+     * @return array
+     */
     public static function query_completed_data_RoomCode(){
         // Get the database connection
         $conn = self::get_connection();
@@ -314,6 +417,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Completed" and orders it by maintCost
+     * 
+     * @method query_completed_data_Cost
+     * @param none
+     * @return array
+     */
     public static function query_completed_data_Cost(){
         // Get the database connection
         $conn = self::get_connection();
@@ -338,6 +448,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Completed" and orders it by maintDate
+     * 
+     * @method query_completed_data_Date
+     * @param none
+     * @return array
+     */
     public static function query_completed_data_Date(){
         // Get the database connection
         $conn = self::get_connection();
@@ -362,6 +479,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Cancelled" and orders it by roomID
+     * 
+     * @method query_cancelled_data_RoomCode
+     * @param none
+     * @return array
+     */
     public static function query_cancelled_data_RoomCode(){
         // Get the database connection
         $conn = self::get_connection();
@@ -386,6 +510,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Cancelled" and orders it by maintCost
+     * 
+     * @method query_cancelled_data_Cost
+     * @param none
+     * @return array
+     */
     public static function query_cancelled_data_Cost(){
         // Get the database connection
         $conn = self::get_connection();
@@ -410,6 +541,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Cancelled" and orders it by maintDate
+     * 
+     * @method query_cancelled_data_Date
+     * @param none
+     * @return array
+     */
     public static function query_cancelled_data_Date(){
         // Get the database connection
         $conn = self::get_connection();
@@ -434,6 +572,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "On-going" and orders it by roomID
+     * 
+     * @method query_On_going_data_search
+     * @param none
+     * @return array
+     */
     public static function query_On_going_data_search($search){
         // Get the database connection
         $conn = self::get_connection();
@@ -458,6 +603,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Completed" and orders it by roomID
+     * 
+     * @method query_completed_data_search
+     * @param none
+     * @return array
+     */
     public static function query_completed_data_search($search){
         // Get the database connection
         $conn = self::get_connection();
@@ -482,6 +634,13 @@ class MaintenanceModel extends dbcreds {
         return $data;
     }
 
+    /**
+     * Fethces the data from the database where the maintStatus is "Cancelled" and orders it by roomID
+     * 
+     * @method query_cancelled_data_search
+     * @param none
+     * @return array
+     */
     public static function query_cancelled_data_search($search){
         // Get the database connection
         $conn = self::get_connection();
