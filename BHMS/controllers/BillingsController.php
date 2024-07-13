@@ -3,6 +3,32 @@
 require '../models/BillingsModel.php';
 require 'GeneralController.php';
 
+/**
+ * Class for all controllers for Billings page
+ * 
+ * @method getApplianceRate
+ * @method get_appliances
+ * @method get_specific_occupancy_type - unused
+ * @method get_overdue_billings
+ * @method get_paid_billings
+ * @method get_unpaid_billings
+ * @method get_tenants
+ * @method get_payment_billing_info
+ * @method create_billings
+ * @method delete_billings
+ * @method update_billing
+ * @method update_billing_payment
+ * @method get_occupancy_types
+ * @method create_payment
+ * @method get_billing_data
+ * @method get_specific_tenant - unused
+ * @method update_billing_status
+ * @method auto_generate_billing
+ * 
+ * @class BillingsViews
+ * @extends GeneralViews
+ */
+
 class BillingsController extends GeneralController{
 
     public static function getApplianceRate() {

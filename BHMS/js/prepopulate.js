@@ -13,7 +13,6 @@ function prepopulateValues(payment, billingData, prepBool) {
         document.getElementById('edit-create-billing-billTotal').value = billingData.billTotal
     } else {
         document.getElementById('editPaidBillingId').value = billingData.billRefNo;
-        
         document.getElementById('editPaidTenantName').value = billingData.full_name;
         document.getElementById('editPaidBillDueDate').value = billingData.billDueDate;
         document.getElementById('edit-datePaid').value = payment[0].payDate;
@@ -21,7 +20,7 @@ function prepopulateValues(payment, billingData, prepBool) {
         document.getElementById('edit-payer-fname').value = payment[0].payerFname;
         document.getElementById('edit-payer-lname').value = payment[0].payerLname;
         document.getElementById('edit-payer-MI').value = payment[0].payerMI;
-        console.log(payment[0].payAmnt);
+        document.getElementById('edit-payMethod').value = payment[0].payMethod;
     }
 }
 

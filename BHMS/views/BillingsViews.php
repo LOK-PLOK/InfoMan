@@ -64,7 +64,7 @@ class BillingsViews extends GeneralViews{
                         <div class="modal-body bg-custom">
                             <form method="POST">
                                 <label class="billings-modal-labels" for="create-billing-tenant">Tenant Information</label>
-                                <select name="create-billing-tenant" id="create-billing-tenant">
+                                <select name="create-billing-tenant" id="create-billing-tenant" required>
                                     <option value="">Select Tenant</option>
             HTML;
             foreach ($tenants as $tenant){
@@ -83,8 +83,8 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%">
-                                        <option value="0" disabled selected>Select Occupancy Type...</option>
+                                    <select name="payment-occupancyType" onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class="shadow" style="width: 75%" required>
+                                        <option value="" disabled selected>Select Occupancy Type...</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
                 $rate = $occupancy_type['occRate'];
@@ -96,7 +96,7 @@ class BillingsViews extends GeneralViews{
             echo <<<HTML
                                     </select>
                                     <!-- no. of appliances -->
-                                    <input type="number" onchange="amountCalculator($appliance_rates)" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
+                                    <input type="number" onchange="amountCalculator($appliance_rates)" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5" required>
 
                                     <!-- appliance rate -->
                                     <!-- <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled> -->
@@ -116,7 +116,7 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
                                 <div class="month-allocated-cont">
                                     <div>
-                                        <input type="date" id="create-billing-start-date" name="create-billing-start-date">
+                                        <input type="date" id="create-billing-start-date" name="create-billing-start-date" required>
                                         
                                         <input type="date" id="create-billing-billDateIssued" name="create-billing-billDateIssued" style="display:none">
 
@@ -429,6 +429,15 @@ class BillingsViews extends GeneralViews{
         HTML;
     }
 
+    /**
+     * Helper functions for sorting
+     * @method sortByAmount
+     * @method sortByBillDueDate
+     * @method sortByTenantFirstName
+     * @method searchByFirstName
+     * associated method/s: generate_billing_table()
+     */
+
     public static function sortByAmount($a, $b) {
         return $b['billTotal'] <=> $a['billTotal'];
     
@@ -522,9 +531,6 @@ class BillingsViews extends GeneralViews{
                 $billingData = BillingsController::get_billing_data($billingId);
                 $billingDataJson = htmlspecialchars(json_encode($billingData));
 
-                $occType = BillingsController::get_specific_occupancy_type($tenID);
-                $occTypeJson = htmlspecialchars(json_encode($occType));
-
                 $appliancesCount = BillingsController::get_appliances($tenID);
                 $APCount = htmlspecialchars(json_encode($appliancesCount));
                 $payment_billing_info_json = $APCount;
@@ -533,7 +539,6 @@ class BillingsViews extends GeneralViews{
                     $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
                 }
 
-                // Converts the date to a more readable format
                 $billDateIssuedReadable = date('F j, Y', strtotime($billDateIssued));
                 $billDueDateReadable = date('F j, Y', strtotime($billDueDate));
 
