@@ -143,7 +143,7 @@ class DashboardController extends GeneralController{
     public static function create_billings($new_billing){
         $tenantApplianceCount = self::count_appliances($new_billing['tenID']);
         $appRate = DashboardModel::fetchApplianceRate();
-        $new_billing['billTotal'] = number_format($new_billing['billTotal'] + ($tenantApplianceCount * $appRate), 2);
+        $new_billing['billTotal'] = round($new_billing['billTotal'] + ($tenantApplianceCount * $appRate), 2);
         return DashboardModel::query_create_billings($new_billing);
     }
 

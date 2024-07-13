@@ -61,7 +61,10 @@ class DashboardModel extends dbcreds {
         
         $conn = self::get_connection();
         // Prepare the SQL statement with a parameter placeholder
-        $query = "SELECT SUM(rentCount) AS occupied_beds, (SUM(capacity) - SUM(rentCount)) AS available_beds FROM room;";
+        $query = "SELECT 
+                    SUM(CASE WHEN isAvailable = 0 THEN capacity ELSE rentCount END) AS occupied_beds, 
+                    SUM(CASE WHEN isAvailable = 0 THEN 0 ELSE capacity - rentCount END) AS available_beds 
+                FROM room;";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
@@ -397,8 +400,6 @@ class DashboardModel extends dbcreds {
         return $result['COUNT(*)'] > 0;
     }
 
-    
-
     public static function query_create_billings($new_billing){
         $conn = self::get_connection();
         
@@ -425,7 +426,6 @@ class DashboardModel extends dbcreds {
     
         return true;
     }
-
 
     public static function query_count_appliances($tenID) {
         $conn = self::get_connection();

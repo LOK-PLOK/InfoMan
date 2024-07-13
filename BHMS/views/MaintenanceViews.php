@@ -25,7 +25,7 @@ class MaintenanceViews extends GeneralViews{
      * @method maintenance_header
      * @return void
      */
-    public static function maintenance_header(){
+    public static function maintenance_header(){ 
         echo <<<HTML
         <div class="container-fluid">
             <div class="billings-header">
@@ -201,7 +201,7 @@ class MaintenanceViews extends GeneralViews{
                     <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span class="pe-5 fs-6">Category...</span>
                     </button>
-                            <ul class="dropdown-menu" style="background-color: #344799;">
+                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
                                 <li class="d-flex justify-content-center"><input type="submit"  name="On-going-RoomCode"value="RoomCode" class="no-design1"></li>
                                 <li class="d-flex justify-content-center"><input type="submit"  name="On-going-Cost"value="Cost" class="no-design2"></li>
                                 <li class="d-flex justify-content-center"><input type="submit"   name="On-going-Date" value="Date"class="no-design3"></li>
@@ -223,7 +223,7 @@ class MaintenanceViews extends GeneralViews{
 
             <section class="overflow-auto" style="max-height: 400px;">
             <table>
-                <thead class="sticky-top">
+                <thead class="sticky-top" style="z-index: 50;">
                 <tr>
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -318,7 +318,7 @@ class MaintenanceViews extends GeneralViews{
                     <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span class="pe-5 fs-6">Category...</span>
                     </button>
-                            <ul class="dropdown-menu" style="background-color: #344799;">
+                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
                                 <li class="d-flex justify-content-center"><input type="submit"  name="Completed-RoomCode"value="RoomCode" class="no-design1"></li>
                                 <li class="d-flex justify-content-center"><input type="submit"  name="Completed-Cost"value="Cost" class="no-design2"></li>
                                 <li class="d-flex justify-content-center"><input type="submit"   name="Completed-Date" value="Date"class="no-design3"></li>
@@ -338,7 +338,7 @@ class MaintenanceViews extends GeneralViews{
 
             
             <table>
-                <thead class="sticky-top">
+                <thead class="sticky-top" style="z-index: 50;">
                 <tr class ="completed">
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -435,7 +435,7 @@ class MaintenanceViews extends GeneralViews{
                     <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span class="pe-5 fs-6">Category...</span>
                     </button>
-                            <ul class="dropdown-menu" style="background-color: #344799;">
+                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
                                 <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-RoomCode"value="RoomCode" class="no-design1"></li>
                                 <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-Cost"value="Cost" class="no-design2"></li>
                                 <li class="d-flex justify-content-center"><input type="submit"   name="Cancelled-Date" value="Date"class="no-design3"></li>
@@ -453,7 +453,7 @@ class MaintenanceViews extends GeneralViews{
             <section class="overflow-auto" style="max-height: 400px;">
             
             <table>
-                <thead class="sticky-top">
+                <thead class="sticky-top" style="z-index: 50;">
                 <tr class="canceled">
                     <th>Room Code</th>
                     <th>Cost</th>

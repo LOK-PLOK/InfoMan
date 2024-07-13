@@ -151,8 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 foreach($tenants as $tenant) {
 
                     // Convert dates to a more readable format
-                    $startDate = date('F d, Y', strtotime($tenant['occDateStart']));
-                    $endDate = date('F d, Y', strtotime($tenant['occDateEnd']));
+                    $startDate = date('F j, Y', strtotime($tenant['occDateStart']));
+                    $endDate = date('F j, Y', strtotime($tenant['occDateEnd']));
 
                     $action_buttons = '
                                 <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$tenant['occupancyID'].'"

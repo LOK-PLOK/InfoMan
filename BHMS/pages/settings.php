@@ -203,23 +203,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="login-sett-cont">
-        <a href="?logout=1">
-            <div class="settings-sub-header">
-                <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
-            </div>
-        </a>
+        <div class="settings-sub-header">
+            <a href="?logout=1">
+            <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
+            </a>
+        </div>
     </div>
 
 <?php
     //rates and pricing modal
     SettingsViews::rates_and_pricing_model_view();
 
-    // $user_list = [];
-    // if ($_SESSION['sessionType'] === 'admin') {
-    //     $user_list = SettingsController::users_table_data();
-    // } else {
-    //     $user_list = SettingsController::verify_credentials($_SESSION['userID']);
-    // }
     $user_list = SettingsController::users_table_data();
     SettingsViews::user_information_model_view($user_list);
 
