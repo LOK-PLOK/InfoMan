@@ -22,11 +22,11 @@ require 'dbcreds.php';
 class DashboardModel extends dbcreds {
 
     /**
-     * Gets the total number of current residents
+     * Gets the total number of residents
      * 
      * @method residents_counter
      * @param none
-     * @return $result
+     * @return int The total number of residents
      */
     public static function residents_counter() {
 
@@ -55,7 +55,7 @@ class DashboardModel extends dbcreds {
      * 
      * @method occupied_bed_and_available_bed
      * @param none
-     * @return $result
+     * @return array The total number of occupied beds and available beds
      */
     public static function occupied_bed_and_available_bed() {
         
@@ -88,7 +88,7 @@ class DashboardModel extends dbcreds {
      * 
      * @method total_available_rooms
      * @param none
-     * @return $result
+     * @return int The total number of available rooms
      */
     public static function total_available_rooms() {
         
@@ -117,8 +117,9 @@ class DashboardModel extends dbcreds {
      * Adds a new tenant to the database
      * 
      * @method add_new_tenant
-     * @param $new_tenant, $appliances
-     * @return true
+     * @param array $new_tenant The array of tenant details
+     * @param array $appliances The array of appliances
+     * @return boolean The result of the query
      */
     public static function add_new_tenant($new_tenant,$appliances) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -196,8 +197,8 @@ class DashboardModel extends dbcreds {
      * Adds a new rent to the database
      * 
      * @method query_add_new_rent
-     * @param $create_rent
-     * @return true
+     * @param array $create_rent The array of rent details
+     * @return boolean The result of the query
      */
     public static function query_add_new_rent($create_rent) {
         try {
@@ -242,11 +243,11 @@ class DashboardModel extends dbcreds {
     }
 
     /**
-     * Gets all tenants in the database
+     * Gets all the tenants from the database
      * 
      * @method query_tenants
      * @param none
-     * @return $results
+     * @return array The array of tenants
      */
     public static function query_tenants(){
         
@@ -270,11 +271,11 @@ class DashboardModel extends dbcreds {
     }
 
     /**
-     * Gets all rooms in the database
+     * Gets all the rooms from the database
      * 
      * @method query_rooms
      * @param none
-     * @return $results
+     * @return array The array of rooms
      */
     public static function query_rooms() {
         
@@ -299,11 +300,11 @@ class DashboardModel extends dbcreds {
     }
 
     /**
-     * Gets all types in the database
+     * Gets all the occupancy types from the database
      * 
      * @method query_types
      * @param none
-     * @return $results
+     * @return array The array of occupancy types
      */
     public static function query_types() {
         
@@ -328,11 +329,11 @@ class DashboardModel extends dbcreds {
     }
 
     /**
-     * Gets the room information based on the roomID
+     * Gets the room information
      * 
      * @method query_room_info
-     * @param $roomID
-     * @return $result
+     * @param string $roomID The room ID
+     * @return array The room information
      */
     public static function query_room_info($roomID){
         $conn = self::get_connection();
@@ -346,11 +347,13 @@ class DashboardModel extends dbcreds {
     }
 
     /**
-     * Checks if the tenant is available on the selected date
+     * Checks if a tenant is available
      * 
      * @method is_tenant_available
-     * @param $tenID, $startDate, $endDate
-     * @return true
+     * @param int $tenID The tenant ID
+     * @param string $startDate The start date
+     * @param string $endDate The end date
+     * @return boolean The availability of the tenant
      */
     public static function is_tenant_available($tenID, $startDate, $endDate){
 
@@ -377,11 +380,11 @@ class DashboardModel extends dbcreds {
     }
 
     /**
-     * Checks if the room is shared
+     * Checks if a room is shared
      * 
      * @method check_shared_room
-     * @param $check_rent
-     * @return true
+     * @param array $check_rent The array of rent details
+     * @return boolean The result of the query
      */
     public static function check_shared_room($check_rent) {
         $conn = self::get_connection();
