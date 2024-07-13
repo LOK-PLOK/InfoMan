@@ -18,9 +18,9 @@ class RoomhistoryModel extends dbcreds {
      * Gets the room history of a specific room
      * 
      * @method query_room_history
-     * @param string $roomCode The room code
-     * @param string $searchTerm The search term
-     * @return array The array of room history
+     * @param string $roomCode The code of the room to fetch history for.
+     * @param string $searchTerm The term to search for in the tenant's full name.
+     * @return mysqli_result|bool Returns the result set from the query or false on failure.
      */
     public static function query_room_history($roomCode, $searchTerm) {
         $conn = self::get_connection();

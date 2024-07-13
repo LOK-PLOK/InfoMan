@@ -50,16 +50,16 @@
 
                                     <ul class="dropdown-menu" style="background-color: #344799;">
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"  name="" value="Newest to Oldest" class="no-design1">
+                                            <input type="submit"  name="" value="Due Date: Newest to Oldest" class="no-design1">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"  name="sort-oldest-to-newest" value="Oldest to Newest" class="no-design1">
+                                            <input type="submit"  name="sort-oldest-to-newest" value="Due Date: Oldest to Newest" class="no-design1">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"   name="sort-order-by-name" value="Order by Name" class="no-design2">
+                                            <input type="submit"   name="sort-order-by-name" value="Name: A-Z" class="no-design2">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit" name="sort-order-by-amount" value="Order by Amount" class="no-design2">
+                                            <input type="submit" name="sort-order-by-amount" value="Amount: Highest to Lowest" class="no-design2">
                                         </li>
                                     </ul>
                                 </div>
@@ -314,11 +314,7 @@
 });
 
     // calculateDate handler
-    
     calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
-    // comment this out for the mean time
-    // calculateDate('start-date', 'dummy-end-date','end-date');
-
 
     // tab save even when refreshing handler
     function handleTabSwitching() {

@@ -156,16 +156,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
 
-		$result = RoomlogsController::create_new_rent($create_rent);
-        if ($result === true) {
-            // Redirect to avoid form resubmission
-            header('Location: room_logs.php?addRentStatus=success');
-            exit();
-        } else {
-            // Redirect with an error message
-            header('Location: room_logs.php?addRentStatus='.$result);
-            exit();
-        }
+        $new_billing = array(
+			"tenID" => $_POST['new-rent-tenant'],
+			"billTotal" => $_POST['new-rent-rate'],
+			"endDate" => $_POST['new-rent-end']
+		);
+
+		$result = RoomlogsController::create_new_rent($create_rent, $new_billing);
+        header('Location: room_logs.php?addRentStatus='.$result);
+        exit();
 	}
 
     // Editing Room

@@ -35,6 +35,7 @@ class SettingsViews extends GeneralViews {
         HTML;
     }
 
+    
     /**
      * This method is used to display the user information section.
      * 
