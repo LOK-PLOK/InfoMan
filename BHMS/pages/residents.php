@@ -143,10 +143,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         foreach($_POST['appliances'] as $appliance){
             $appliances[] = ['appInfo' => $appliance];
         }
-
-
-        echo '<script>console.log("POSTnewTenant:", ' . json_encode($newTenant) . ');</script>';
-        echo '<script>console.log("POSTappliances:", ' . json_encode($appliances) . ');</script>';
         
         $result = ResidentsController::create_new_tenant($newTenant, $appliances);
         if($result){
