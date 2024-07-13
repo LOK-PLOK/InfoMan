@@ -314,11 +314,7 @@
 });
 
     // calculateDate handler
-    
     calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
-    // comment this out for the mean time
-    // calculateDate('start-date', 'dummy-end-date','end-date');
-
 
     // tab save even when refreshing handler
     function handleTabSwitching() {
