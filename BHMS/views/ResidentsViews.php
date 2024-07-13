@@ -18,6 +18,7 @@ ResidentsController::updateTenantRentStatus();
  * @method edit_tenant_modal_view
  * @method delete_tenant_model_view
  * @class ResidentsViews
+ * @extends GeneralViews
  */
 class ResidentsViews extends GeneralViews{
 
@@ -196,7 +197,6 @@ class ResidentsViews extends GeneralViews{
      */
     public static function residents_table_display($tenant_list){
 
-        // Start echoing the HTML content
         echo <<<HTML
             <div class="data-container">
 
