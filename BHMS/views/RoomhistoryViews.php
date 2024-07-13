@@ -3,8 +3,25 @@
 require_once 'GeneralViews.php';
 require_once '../controllers/RoomhistoryController.php';
 
+
+/**
+ * This class contains all the views that are used in the room history page.
+ * 
+ * @method room_history_header
+ * @method editOccupancyModal
+ * @method deleteOccupancyModal
+ * @class RoomhistoryViews
+ * @extends GeneralViews
+ */
 class RoomhistoryViews extends GeneralViews {
 
+    /**
+     * Displays the header of the room history page
+     * 
+     * @method room_history_header
+     * @param none
+     * @return none
+     */
     public static function room_history_header() {
         echo <<<HTML
             <div class="d-flex justify-content-between">
@@ -36,7 +53,15 @@ class RoomhistoryViews extends GeneralViews {
         HTML;
     }
 
-    // Edit Occupancy Modal
+    // Edit Occupancy 
+    
+    /**
+     * Displays the modal for editing an occupancy
+     * 
+     * @method editOccupancyModal
+     * @param none
+     * @return none
+     */
     public static function editOccupancyModal() {
     
         $rooms = RoomhistoryController::all_rooms();
@@ -121,6 +146,13 @@ class RoomhistoryViews extends GeneralViews {
         HTML;
     }
 
+    /**
+     * Displays the modal for deleting an occupancy
+     * 
+     * @method deleteOccupancyModal
+     * @param none
+     * @return none
+     */
     public static function deleteOccupancyModal(){
         echo <<<HTML
             <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">

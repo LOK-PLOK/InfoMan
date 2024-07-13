@@ -2,8 +2,32 @@
 
 require 'dbcreds.php';
 
+/**
+ * This class contains all the methods/queries that are used in the dashboard page.
+ *
+ * @method residents_counter
+ * @method occupied_bed_and_available_bed
+ * @method total_available_rooms
+ * @method add_new_tenant
+ * @method query_add_new_rent
+ * @method query_tenants
+ * @method query_rooms
+ * @method query_types
+ * @method query_room_info
+ * @method is_tenant_available
+ * @method check_shared_room
+ * @class DashboardModel
+ * @extends dbcreds
+ */
 class DashboardModel extends dbcreds {
 
+    /**
+     * Gets the total number of current residents
+     * 
+     * @method residents_counter
+     * @param none
+     * @return $result
+     */
     public static function residents_counter() {
 
         $conn = self::get_connection();
@@ -26,6 +50,13 @@ class DashboardModel extends dbcreds {
         return $result; 
     }
 
+    /**
+     * Gets the total number of occupied beds and available beds
+     * 
+     * @method occupied_bed_and_available_bed
+     * @param none
+     * @return $result
+     */
     public static function occupied_bed_and_available_bed() {
         
         $conn = self::get_connection();
@@ -49,6 +80,13 @@ class DashboardModel extends dbcreds {
         
     }
 
+    /**
+     * Gets the total number of available rooms
+     * 
+     * @method total_available_rooms
+     * @param none
+     * @return $result
+     */
     public static function total_available_rooms() {
         
         $conn = self::get_connection();
@@ -72,6 +110,13 @@ class DashboardModel extends dbcreds {
         
     }
     
+    /**
+     * Adds a new tenant to the database
+     * 
+     * @method add_new_tenant
+     * @param $new_tenant, $appliances
+     * @return true
+     */
     public static function add_new_tenant($new_tenant,$appliances) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
     
@@ -144,6 +189,13 @@ class DashboardModel extends dbcreds {
         }
     } 
     
+    /**
+     * Adds a new rent to the database
+     * 
+     * @method query_add_new_rent
+     * @param $create_rent
+     * @return true
+     */
     public static function query_add_new_rent($create_rent) {
         try {
 
@@ -186,6 +238,13 @@ class DashboardModel extends dbcreds {
         }
     }
 
+    /**
+     * Gets all tenants in the database
+     * 
+     * @method query_tenants
+     * @param none
+     * @return $results
+     */
     public static function query_tenants(){
         
         $conn = self::get_connection();
@@ -207,6 +266,13 @@ class DashboardModel extends dbcreds {
         return $results;
     }
 
+    /**
+     * Gets all rooms in the database
+     * 
+     * @method query_rooms
+     * @param none
+     * @return $results
+     */
     public static function query_rooms() {
         
         $conn = self::get_connection();
@@ -229,6 +295,13 @@ class DashboardModel extends dbcreds {
         return $results;
     }
 
+    /**
+     * Gets all types in the database
+     * 
+     * @method query_types
+     * @param none
+     * @return $results
+     */
     public static function query_types() {
         
         $conn = self::get_connection();
@@ -251,6 +324,13 @@ class DashboardModel extends dbcreds {
         return $results;
     }
 
+    /**
+     * Gets the room information based on the roomID
+     * 
+     * @method query_room_info
+     * @param $roomID
+     * @return $result
+     */
     public static function query_room_info($roomID){
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
@@ -262,6 +342,13 @@ class DashboardModel extends dbcreds {
         return $result;
     }
 
+    /**
+     * Checks if the tenant is available on the selected date
+     * 
+     * @method is_tenant_available
+     * @param $tenID, $startDate, $endDate
+     * @return true
+     */
     public static function is_tenant_available($tenID, $startDate, $endDate){
 
         $conn = self::get_connection();
@@ -286,6 +373,13 @@ class DashboardModel extends dbcreds {
         return $result['no_of_conflicts'] == 0;
     }
 
+    /**
+     * Checks if the room is shared
+     * 
+     * @method check_shared_room
+     * @param $check_rent
+     * @return true
+     */
     public static function check_shared_room($check_rent) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) FROM occupancy WHERE roomID = ?

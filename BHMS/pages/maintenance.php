@@ -50,7 +50,7 @@ if(isset($_GET['deleteStatus'])) {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
-    // Handle the create new maintenance form submission
+    //create new maintenance form submission
     if (isset($_POST['create-new-maintenance'])) {
         $create_maintenance = array(
             "roomID" => htmlspecialchars($_POST['maintenance-room-code']),
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
 
-    // Handle the edit maintenance form submission
+    // edit maintenance form submission
     if (isset($_POST["edit-maintenance-submit"])) {
         $edit_maintenance = array(
             "Edit-maintID" => $_POST["Edit-maintID"],
@@ -95,11 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
 
-    // Handle the delete maintenance form submission
+    // delete maintenance form submission
     if (isset($_POST['delete-maintenance-submit'])) {
         $maintenanceID = $_POST['deleteMaintID'] ?? '';
     
-        // Handle your deletion logic here using MaintenanceController::deleteMaintenanceById($maintenanceID);
+        // Handle your deletion logic here
         $result = MaintenanceController::deleteMaintenanceById($maintenanceID);
     
         // Example response based on your controller logic

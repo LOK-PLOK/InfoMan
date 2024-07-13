@@ -519,7 +519,7 @@ class MaintenanceViews extends GeneralViews{
      * @return void
      */
     public static function edit_maintenance_modal(){
-        $rooms = MaintenanceController::get_room(); // Fetch rooms data from database
+        $rooms = MaintenanceController::get_room(); 
     
         echo '
             <!-- Revision Edit MODAL -->

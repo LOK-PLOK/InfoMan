@@ -2,8 +2,25 @@
 
 require 'dbcreds.php';
 
+
+/**
+ * This class contains all the methods/queries that are used in the room history  and Roomhistory Views file.
+ *
+ * @method query_room_history
+ * @method updateOccupancy
+ * @method delete_occupancy
+ * @class RoomhistoryModel
+ * @extends dbcreds
+ */
 class RoomhistoryModel extends dbcreds {
 
+    /**
+     * Fetches the room history of a room
+     * 
+     * @method query_room_history
+     * @param $roomCode, $searchTerm
+     * @return $result
+     */
     public static function query_room_history($roomCode, $searchTerm) {
         $conn = self::get_connection();
         // Base query without the search condition
@@ -41,6 +58,13 @@ class RoomhistoryModel extends dbcreds {
         return $result;
     }
 
+    /**
+     * Edits the occupancy of a room
+     * 
+     * @method updateOccupancy
+     * @param $editInfo
+     * @return true
+     */
     public static function updateOccupancy($editInfo) {
         $conn = self::get_connection();
         $query = $conn->prepare("UPDATE occupancy SET roomID = ?, occDateStart = ?, occDateEnd = ? WHERE occupancyID = ?");
@@ -67,6 +91,13 @@ class RoomhistoryModel extends dbcreds {
         }
     }
 
+    /**
+     * Deletes the occupancy of a room
+     * 
+     * @method delete_occupancy
+     * @param $occupancyID
+     * @return true
+     */
     public static function delete_occupancy($occupancyID) {
         $conn = self::get_connection();
         $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
