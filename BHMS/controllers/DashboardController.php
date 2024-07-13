@@ -24,7 +24,7 @@ class DashboardController extends GeneralController{
      * 
      * @method total_current_residents
      * @param none
-     * @return DashboardModel::residents_counter
+     * @return int The total number of current residents
      */
     public static function total_current_residents(){
         return DashboardModel::residents_counter();
@@ -35,7 +35,7 @@ class DashboardController extends GeneralController{
      * 
      * @method total_occupied_beds_and_available_beds
      * @param none
-     * @return DashboardModel::occupied_bed_and_available_bed
+     * @return array The total number of occupied beds and available beds
      */
     public static function total_occupied_beds_and_available_beds(){
         return DashboardModel::occupied_bed_and_available_bed();
@@ -46,7 +46,7 @@ class DashboardController extends GeneralController{
      * 
      * @method available_rooms
      * @param none
-     * @return DashboardModel::total_available_rooms
+     * @return int The total number of available rooms
      */
     public static function available_rooms() {
         return DashboardModel::total_available_rooms();
@@ -56,8 +56,9 @@ class DashboardController extends GeneralController{
      * Adds a new tenant to the database
      * 
      * @method create_new_tenant
-     * @param $new_tenant, $appliances
-     * @return DashboardModel::add_new_tenant
+     * @param array $new_tenant The array of tenant details
+     * @param array $appliances The array of appliances
+     * @return boolean The result of the query
      */
     public static function create_new_tenant($new_tenant,$appliances) {
         foreach($new_tenant as $key => $value) {
@@ -70,8 +71,8 @@ class DashboardController extends GeneralController{
      * Adds a new rent to the database
      * 
      * @method create_new_rent
-     * @param $create_rent
-     * @return DashboardModel::query_add_new_rent
+     * @param array $create_rent The array of rent details
+     * @return boolean The result of the query
      */
     public static function create_new_rent($create_rent) {
         $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
@@ -107,33 +108,33 @@ class DashboardController extends GeneralController{
     }
 
     /**
-     * Gets all tenants in the database
+     * Gets all the tenants from the database
      * 
      * @method get_tenants
      * @param none
-     * @return DashboardModel::query_tenants
+     * @return array The array of tenants
      */
     public static function get_tenants() {
         return DashboardModel::query_tenants();
     }
 
     /**
-     * Gets all rooms in the database
+     * Gets all the rooms from the database
      * 
      * @method get_rooms
      * @param none
-     * @return DashboardModel::query_rooms
+     * @return array The array of rooms
      */
     public static function get_rooms() {
         return DashboardModel::query_rooms();
     }
 
     /**
-     * Gets all types in the database
+     * Gets all the types from the database
      * 
      * @method get_types
      * @param none
-     * @return DashboardModel::query_types
+     * @return array The array of types
      */
     public static function get_types() {
         return DashboardModel::query_types();

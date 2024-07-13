@@ -31,22 +31,23 @@ require 'GeneralController.php';
 class ResidentsController extends GeneralController{
 
     /**
-     * Gets the total number of current residents
+     * Get data for total number of residents
      * 
      * @method total_current_residents
      * @param none
-     * @return ResidentsModel::residents_counter
+     * @return int The number of tenants who are currently renting.
      */
     public static function total_current_residents(){
         return ResidentsModel::residents_counter();
     }
 
+    
     /**
-     * Adds a new tenant to the database
-     * 
+     * Creates a new tenant with the given data and associated appliances.
      * @method create_new_tenant
-     * @param $new_tenant, $appliances
-     * @return ResidentsModel::add_new_tenant
+     * @param array $new_tenant An array containing the data of the new tenant.
+     * @param array $appliances An array containing the appliances associated with the new tenant.
+     * @return bool The result of adding the new tenant to the database. Returns the 1 if successful, false otherwise.
      */
     public static function create_new_tenant($new_tenant, $appliances) {
         foreach($new_tenant as $key => $value) {
@@ -55,111 +56,105 @@ class ResidentsController extends GeneralController{
         return ResidentsModel::add_new_tenant($new_tenant, $appliances);
     }
 
+    
     /**
-     * Fetches all appliances of a tenant
-     * 
+     * Retrieves the appliances for a specific tenant.
      * @method get_appliances
-     * @param $tenantID
-     * @return ResidentsModel::get_appliances
+     * @param int $tenantID The ID of the tenant.
+     * @return array An array of appliances associated with the tenant.
      */
     public static function get_appliances($tenantID){
         return ResidentsModel::get_appliances($tenantID);
     }
 
     /**
-     * Fetches the occupancy of a tenant
-     * 
+     * Retrieves the occupancy details for a specific tenant.
      * @method get_occupancy
-     * @param $tenantID
-     * @return ResidentsModel::get_occupancy
+     * @param int $tenantID The ID of the tenant.
+     * @return array An array of occupancy details associated with the tenant.
      */
     public static function get_occupancy($tenantID){
         return ResidentsModel::get_occupancy($tenantID);
     }
 
+    
     /**
-     * Fetches the last inserted tenant ID
-     * 
+     * Retrieves the ID of the last inserted tenant.
      * @method get_last_inserted_tenant_id
      * @param none
-     * @return ResidentsModel::get_last_inserted_tenant_id
+     * @return int The ID of the last inserted tenant.
      */
     public static function get_last_inserted_tenant_id(){
         return ResidentsModel::get_last_inserted_tenant_id();
     }
 
     /**
-     * Fetches the appliances of a tenant
-     * 
+     * Retrieves the ID of the last inserted appliance.
      * @method appliance_tenID
-     * @param $appliances, $last_id
-     * @return ResidentsModel::appliance_tenID
+     * @param array $appliances An array of appliances.
+     * @param int $last_id The ID of the last inserted tenant.
+     * @return int The ID of the last inserted appliance.
      */
     public static function appliance_tenID($appliances,$last_id){
         return ResidentsModel::appliance_tenID($appliances,$last_id);
     }
 
     /**
-     * Fetches all tenants
-     * 
+     * Retrieves the data for the residents table.
      * @method residents_table_data
      * @param none
-     * @return ResidentsModel::residents_data
+     * @return array An array of data for the residents table.
      */
     public static function residents_table_data(){
         return ResidentsModel::residents_data();
     }
 
     /**
-     * Fetches all active tenants
-     * 
+     * Retrieves the data for the active residents table.
      * @method residents_table_data_Active
      * @param none
-     * @return ResidentsModel::residents_data_Active
+     * @return array An array of data for the active residents table.
      */
     public static function residents_table_data_Active(){
         return ResidentsModel::residents_data_Active();
     }
 
     /**
-     * Fetches all inactive tenants
-     * 
+     * Retrieves the data for the inactive residents table.
      * @method residents_table_data_Inactive
      * @param none
-     * @return ResidentsModel::residents_data_Inactive
+     * @return array An array of data for the inactive residents table.
      */
     public static function residents_table_data_Inactive(){
         return ResidentsModel::residents_data_Inactive();
     }
 
     /**
-     * Fetches all evicted tenants
-     * 
+     * Retrieves the data for the evicted residents table.
      * @method residents_table_data_Evicted
      * @param none
-     * @return ResidentsModel::residents_data_Evicted
+     * @return array An array of data for the evicted residents table.
      */
     public static function residents_table_data_Evicted(){
         return ResidentsModel::residents_data_Evicted();
     }
 
     /**
-     * Deletes a tenant by ID
-     * 
+     * Deletes a tenant by their ID.
      * @method deleteTenantById
-     * @param $tenantIdToDelete
-     * @return ResidentsModel::deleteTenantById
+     * @param int $tenantIdToDelete The ID of the tenant to delete.
+     * @return bool The result of deleting the tenant. Returns 1 if successful, false otherwise.
      */
     public static function deleteTenantById($tenantIdToDelete){
         return ResidentsModel::deleteTenantById($tenantIdToDelete);
     }
 
     /**
-     * Edits a tenant
-     * 
+     * Edits a tenant with the given data and associated appliances.
      * @method edit_tenant
-     * @param $editTenantData, $editAppliances
-     * @return ResidentsModel::edit_tenant
+     * @param array $editTenantData An array containing the data of the tenant to edit.
+     * @param array $editAppliances An array containing the appliances associated with the tenant.
+     * @return bool The result of editing the tenant in the database. Returns 1 if successful, false otherwise.
      */
     public static function edit_tenant($editTenantData, $editAppliances){
         foreach($editTenantData as $key => $value) {
@@ -169,88 +164,80 @@ class ResidentsController extends GeneralController{
     }
 
     /**
-     * Fetches all rooms
-     * 
+     * Retrieves all rooms.
      * @method all_rooms
      * @param none
-     * @return ResidentsModel::all_rooms
+     * @return array An array of all rooms.
      */
     public static function all_rooms(){
         return ResidentsModel::all_rooms();
     }
 
     /**
-     * Fetches all tenants in a room
-     * 
+     * Retrieves the tenants of a specific room.
      * @method room_tenants
-     * @param $roomID
-     * @return ResidentsModel::room_tenants
+     * @param int $roomID The ID of the room.
+     * @return array An array of tenants in the room.
      */
     public static function room_tenants($roomID){
         return ResidentsModel::room_tenants($roomID);
     }
 
     /**
-     * Fetches all rooms
-     * 
+     * Retrieves all rooms.
      * @method get_rooms
      * @param none
-     * @return ResidentsModel::get_rooms
+     * @return array An array of all rooms.
      */
     public static function get_rooms(){
         return ResidentsModel::get_rooms();
     }
 
     /**
-     * Edits an occupancy
-     * 
+     * Edits the occupancy of a tenant.
      * @method editOccupancy
-     * @param $editInfo
-     * @return ResidentsModel::editOccupancy
+     * @param array $editInfo An array containing the data of the occupancy to edit.
+     * @return bool The result of editing the occupancy in the database. Returns 1 if successful, false otherwise.
      */
     public static function editOccupancy($editInfo){
         return ResidentsModel::editOccupancy($editInfo);
     }
 
     /**
-     * Deletes an occupancy
-     * 
+     * Deletes an occupancy by its ID.
      * @method delete_occupancy
-     * @param $delOccInfo
-     * @return ResidentsModel::delete_occupancy
+     * @param int $delOccInfo The ID of the occupancy to delete.
+     * @return bool The result of deleting the occupancy. Returns 1 if successful, false otherwise.
      */
     public static function delete_occupancy($delOccInfo){
         return ResidentsModel::delete_occupancy($delOccInfo);
     }
 
     /**
-     * Fetches all tenants by name
-     * 
-     * @method residents_data_Name
+     * Retrieves the data for the residents table.
+     * @method residents_table_data_Name
      * @param none
-     * @return ResidentsModel::residents_data_Name
+     * @return array An array of data for the residents table.
      */
     public static function residents_table_data_Name(){
         return ResidentsModel::residents_data_Name();
     }
 
     /**
-     * Fetches all tenants by search
-     * 
-     * @method residents_data_Search
-     * @param $search
-     * @return ResidentsModel::residents_data_Search
+     * Retrieves the data for the residents table.
+     * @method residents_table_data_Search
+     * @param string $search The search query.
+     * @return array An array of data for the residents table.
      */
     public static function residents_table_data_Search($search){
         return ResidentsModel::residents_data_Search($search);
     }
 
     /**
-     * Evicts a tenant
-     * 
+     * Evicts a tenant.
      * @method evictTenant
-     * @param $evictInfo
-     * @return ResidentsModel::evictTenant
+     * @param int $evictInfo The ID of the tenant to evict.
+     * @return bool The result of evicting the tenant. Returns 1 if successful, false otherwise.
      */
     public static function evictTenant($evictInfo) {
         return ResidentsModel::evictTenant($evictInfo);

@@ -34,7 +34,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method residents_counter
      * @param none
-     * @return $result
+     * @return int $result The number of tenants who are currently renting.
      */
     public static function residents_counter() {
         // Use self to access static variables within the static method
@@ -66,8 +66,9 @@ class ResidentsModel extends dbcreds{
      * Add a new tenant to the database
      * 
      * @method add_new_tenant
-     * @param $new_tenant, $appliances
-     * @return true
+     * @param array $new_tenant An associative array containing the tenant's information.
+     * @param array $appliances An array of associative arrays, each containing an appliance's information.
+     * @return bool True on success, otherwise an exception is thrown.
      */
     public static function add_new_tenant($new_tenant, $appliances) {
 
@@ -147,7 +148,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method get_last_inserted_tenant_id
      * @param none
-     * @return $last_id
+     * @return int $last_id The last inserted tenant ID.
      */
     public static function get_last_inserted_tenant_id() {
         // Use self to access static variables within the static method
@@ -184,8 +185,9 @@ class ResidentsModel extends dbcreds{
      * Insert appliances into the database
      * 
      * @method appliance_tenID
-     * @param $appliances, $last_id
-     * @return true
+    * @param array $appliances An array of appliance information.
+    * @param int $last_id The last inserted tenant ID.
+     * @return bool True on success, otherwise an exception is thrown.
      */
     public static function appliance_tenID($appliances, $last_id) {
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -223,12 +225,12 @@ class ResidentsModel extends dbcreds{
         }
     }
 
-    /**
+     /**
      * Get all tenants from the database
      * 
      * @method residents_data
      * @param none
-     * @return $tenants
+     * @return array $tenants An array containing the tenant data.
      */
     public static function residents_data(){
         try {
@@ -269,8 +271,9 @@ class ResidentsModel extends dbcreds{
      * Edit tenant information
      * 
      * @method edit_tenant
-     * @param $editTenantData, $editAppliances
-     * @return true
+     * @param array $editTenantData An array containing the edited tenant data.
+     * @param array $editAppliances An array containing the edited appliance data.
+     * @return bool True on success, otherwise an exception is thrown.
      */
     public static function edit_tenant($editTenantData, $editAppliances) {
         // Extract tenant ID from the tenant data
@@ -360,11 +363,11 @@ class ResidentsModel extends dbcreds{
     }
 
     /**
-     * Delete a tenant by ID
+     * Delete a tenant by tenant ID
      * 
      * @method deleteTenantById
-     * @param $tenantIdToDelete
-     * @return true
+     * @param int $tenantIdToDelete The ID of the tenant to be deleted
+     * @return bool True on success, otherwise an exception is thrown.
      */
     public static function deleteTenantById($tenantIdToDelete) {
         try {
@@ -400,11 +403,11 @@ class ResidentsModel extends dbcreds{
     }
 
     /**
-     * get appliances of a tenant by tenantID
+     * Get all appliances for a tenant by tenant ID
      * 
      * @method get_appliances
-     * @param $tenantID
-     * @return $appliancesrue
+     * @param int $tenantID The ID of the tenant
+     * @return array $appliances An array containing the appliance data.
      */
     public static function get_appliances($tenantID){
         try {
@@ -442,8 +445,8 @@ class ResidentsModel extends dbcreds{
      * Get occupancy of a tenant by tenantID
      * 
      * @method get_occupancy
-     * @param $tenantID
-     * @return $occupancy
+     * @param int $tenantID The ID of the tenant
+     * @return array $occupancy An array containing the occupancy data.
      */
     public static function get_occupancy($tenantID){
         try {
@@ -483,7 +486,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method get_rooms
      * @param none
-     * @return $results
+     * @return array $results An array containing the room data.
      */
     public static function get_rooms(){
         
@@ -507,11 +510,11 @@ class ResidentsModel extends dbcreds{
     }
 
     /**
-     * Edit occupancy information
+     * Edit an occupancy by occupancyID
      * 
      * @method editOccupancy
-     * @param $editInfo
-     * @return true
+     * @param array $editInfo An associative array containing the edited occupancy data.
+     * @return bool True on success, otherwise an exception is thrown.
      */
    public static function editOccupancy($editInfo){
     $conn = self::get_connection();
@@ -540,12 +543,12 @@ class ResidentsModel extends dbcreds{
    }
 
     /**
-      * Delete an occupancy by occupancyID
-      * 
-      * @method delete_occupancy
-      * @param $delOccInfo
-      * @return true
-      */
+     * Delete an occupancy by occupancyID
+     * 
+     * @method delete_occupancy
+     * @param int $delOccInfo The ID of the occupancy to be deleted
+     * @return bool True on success, otherwise an exception is thrown.
+     */
    public static function delete_occupancy($delOccInfo){
         $conn = self::get_connection();
         $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
@@ -571,7 +574,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method residents_data_Active
      * @param none
-     * @return $results
+     * @return array $results An array containing the resident data sorted by name.
      */
    public static function residents_data_Active(){
         $conn = self::get_connection();
@@ -598,7 +601,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method residents_data_Inactive
      * @param none
-     * @return $results
+     * @return array $results An array containing the resident data sorted by search.
      */
     public static function residents_data_Inactive(){
         $conn = self::get_connection();
@@ -625,7 +628,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method residents_data_Evicted
      * @param none
-     * @return $results
+     * @return array $results An array containing the resident data sorted by isRenting.
      */
     public static function residents_data_Evicted(){
         $conn = self::get_connection();
@@ -652,7 +655,7 @@ class ResidentsModel extends dbcreds{
      * 
      * @method residents_data_Name
      * @param none
-     * @return $results
+     * @return array $results An array containing the resident data sorted by tenFname.
      */
     public static function residents_data_Name(){
         $conn = self::get_connection();
@@ -678,8 +681,8 @@ class ResidentsModel extends dbcreds{
      * Get all residents from the database sorted by search
      * 
      * @method residents_data_Search
-     * @param $search
-     * @return $results
+     * @param string $search The search query
+     * @return array $results An array containing the resident data sorted by search.
      */
    public static function residents_data_Search($search){
         $conn = self::get_connection();
@@ -702,11 +705,11 @@ class ResidentsModel extends dbcreds{
    }
 
     /**
-     * Evict a tenant
+     * Evict a tenant by tenant ID
      * 
      * @method evictTenant
-     * @param $evictInfo
-     * @return true
+     * @param int $evictInfo The ID of the tenant to be evicted
+     * @return bool True on success, otherwise an exception is thrown.
      */
     public static function evictTenant($evictInfo) {
         $conn = self::get_connection();
