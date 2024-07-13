@@ -57,7 +57,7 @@ class RoomlogsController extends GeneralController{
         return RoomlogsModel::deleteRoom($roomCode);
     }
 
-    public static function create_new_rent($create_rent) {
+    public static function create_new_rent($create_rent, $new_billing) {
         $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
         $roomInfo = RoomlogsModel::query_room_info($create_rent['roomID']);
 
@@ -82,6 +82,7 @@ class RoomlogsController extends GeneralController{
             } else if ($roomInfo['isAvailable'] == 0) {
                 return "Error - Room Full";
             } else {
+                self::create_billings($new_billing);
                 RoomlogsModel::query_add_new_rent($create_rent);
                 return "Success - Rent";
             }
@@ -96,6 +97,17 @@ class RoomlogsController extends GeneralController{
 
     public static function is_room_has_overdue($room_code) {
         return RoomlogsModel::query_overdue_occupancy($room_code);
+    }
+
+    public static function create_billings($new_billing){
+        $tenantApplianceCount = self::count_appliances($new_billing['tenID']);
+        $appRate = RoomlogsModel::fetchApplianceRate();
+        $new_billing['billTotal'] = number_format($new_billing['billTotal'] + ($tenantApplianceCount * $appRate), 2);
+        return RoomlogsModel::query_create_billings($new_billing);
+    }
+
+    public static function count_appliances($tenID){
+        return RoomlogsModel::query_count_appliances($tenID);
     }
 
 }

@@ -73,7 +73,7 @@ class DashboardController extends GeneralController{
      * @param $create_rent
      * @return DashboardModel::query_add_new_rent
      */
-    public static function create_new_rent($create_rent) {
+    public static function create_new_rent($create_rent, $new_billing) {
         $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
         $roomInfo = DashboardModel::query_room_info($create_rent['roomID']);
 
@@ -98,6 +98,7 @@ class DashboardController extends GeneralController{
             } else if ($roomInfo['isAvailable'] == 0) {
                 return "Error - Room Full";
             } else {
+                self::create_billings($new_billing);
                 DashboardModel::query_add_new_rent($create_rent);
                 return "Success - Rent";
             }
@@ -139,6 +140,16 @@ class DashboardController extends GeneralController{
         return DashboardModel::query_types();
     }
 
+    public static function create_billings($new_billing){
+        $tenantApplianceCount = self::count_appliances($new_billing['tenID']);
+        $appRate = DashboardModel::fetchApplianceRate();
+        $new_billing['billTotal'] = number_format($new_billing['billTotal'] + ($tenantApplianceCount * $appRate), 2);
+        return DashboardModel::query_create_billings($new_billing);
+    }
+
+    public static function count_appliances($tenID){
+        return DashboardModel::query_count_appliances($tenID);
+    }
 }
 
 ?>

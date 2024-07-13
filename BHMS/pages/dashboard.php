@@ -205,8 +205,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
 
-		$result = DashboardController::create_new_rent($create_rent);
-        header('Location: dashboard.php?addRentStatus='.$result);
+		$new_billing = array(
+			"tenID" => $_POST['new-rent-tenant'],
+			"billTotal" => $_POST['new-rent-rate'],
+			"endDate" => $_POST['new-rent-end']
+		);
+		
+		$result = DashboardController::create_new_rent($create_rent, $new_billing);
+		header('Location: room_logs.php?addRentStatus='.$result);
         exit();
 	}
 }
