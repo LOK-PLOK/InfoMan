@@ -533,37 +533,6 @@ class BillingsModel extends dbcreds {
     
         return $results;
     }
-
-    // Automated Billing Model
-    public static function query_billing_notice_checker($occupancyID){
-        $conn = self::get_connection();
-        $query = "SELECT COUNT(*) AS count
-                    FROM occupancy
-                    WHERE occupancyID = ? AND occDateEnd BETWEEN CURDATE() 
-                    AND DATE_ADD(CURDATE(), INTERVAL 7 DAY);";
-        $stmt = $conn->prepare($query);
-        
-        if ($stmt === false) {
-            die("Error preparing statement: " . $conn->error);
-        }
-    
-        $stmt->bind_param("i", $occupancyID); 
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-        
-        if ($result === false) {
-            die("Error executing query: " . $stmt->error);
-        }
-        
-        $row = $result->fetch_assoc();
-        $count = $row['count'];
-        
-        $stmt->close();
-        $conn->close();
-        
-        return $count > 0 ? true : false;
-    }
 }
 
 ?>

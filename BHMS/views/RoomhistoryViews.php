@@ -53,12 +53,11 @@ class RoomhistoryViews extends GeneralViews {
         HTML;
     }
 
-    // Edit Occupancy 
     
     /**
      * Displays the modal for editing an occupancy
      * 
-     * @method editOccupancyModal
+     * @method editOccupancyModal 
      * @param none
      * @return none
      */

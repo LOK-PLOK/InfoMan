@@ -663,7 +663,13 @@ class RoomlogsViews extends GeneralViews{
         HTML;
     }
     
-    // Deactivate Occupancy Modal
+    /**
+     * This method is used to display the deactivate occupancy modal.
+     * 
+     * @method deactOccupancyModal
+     * @param none
+     * @return void
+     */
     public static function deactOccupancyModal(){
         echo <<<HTML
             <div class="modal fade" id="deactOccupancyModal" tabindex="-1" aria-labelledby="deactOccupancyModal" aria-hidden="true">

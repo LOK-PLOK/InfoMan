@@ -5,10 +5,6 @@ require 'GeneralController.php';
 
 class BillingsController extends GeneralController{
 
-    // public static function get_sortedBy_oldestNewest_paidBillings(){
-    //     return BillingsModel::query_sortedBy_oldestNewest_paidBillings();
-    // }
-
     public static function getApplianceRate() {
         return BillingsModel::fetchApplianceRate();
     }
@@ -40,7 +36,7 @@ class BillingsController extends GeneralController{
     public static function get_payment_billing_info($billRefNo){
         return BillingsModel::query_get_payment_billing_info($billRefNo);
     }
-
+    
     public static function create_billings($new_billing){
         return BillingsModel::query_create_billings($new_billing);
     }
@@ -85,27 +81,6 @@ class BillingsController extends GeneralController{
 
     public static function update_billing_status($new_payment){
         return BillingsModel::query_update_billing_status($new_payment);
-    }
-
-    // Function for Automated Billing (In-Progress)
-    public static function auto_generate_billing() {
-        $all_occupancy = BillingsModel::query_all_occupancy();
-
-        foreach($all_occupancy as $occupancy){
-
-            $occupancyID = $occupancy['occupancyID'];
-            $billNotice = '';
-            $check_occupancy = BillingsModel::query_billing_notice_checker($occupancyID);
-
-            if($check_occupancy != 0){
-                $billNotice = 'Billing Notice Created';
-            } else {
-                $billNotice = 'Billing Notice Not Created';
-            }
-
-            echo '<script>console.log("Occupancy ID No. ", "'.$occupancyID.': ", '.$billNotice.')</script>';
-
-        }
     }
 }
 

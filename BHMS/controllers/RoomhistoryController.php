@@ -19,7 +19,7 @@ class RoomhistoryController extends GeneralController {
      * 
      * @method room_history
      * @param $roomCode, $searchTerm
-     * @return RoomhistoryModel::query_room_history
+     * @return mysqli object
      */
     public static function room_history($roomCode, $searchTerm) {
         return RoomhistoryModel::query_room_history($roomCode, $searchTerm);
