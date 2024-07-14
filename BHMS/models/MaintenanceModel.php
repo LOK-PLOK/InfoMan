@@ -611,7 +611,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND roomID LIKE '%$search%'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -642,7 +642,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND roomID LIKE '%$search%'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
 
         // Execute the query
         $result = $conn->query($sql);
