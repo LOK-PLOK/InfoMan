@@ -401,7 +401,7 @@ class BillingsViews extends GeneralViews{
                                     <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
                                         <div class="payer-info">
                                             <div>
-                                                <input class="rounded-inputs" type="text" id="edit-payer-fname" name="edit-payer-fname">
+                                                <input class="rounded-inputs" type="text" id="edit-payer-fname" name="edit-payer-fname" required>
                                                 <p class="small-text">First Name</p>
                                             </div>
                                             
@@ -554,24 +554,20 @@ class BillingsViews extends GeneralViews{
                 HTML;
                 if($prepBool==1){
                     echo<<<HTML
-                            <!-- Add payment -->
-                            <button onclick="prepopulatePayment($billingDataJson)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                        <!-- Add payment -->
+                        <button onclick="prepopulatePayment($billingDataJson)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
                                 <div style="margin-right: 10px;padding:5px;border-radius:100px;background-color: #344799" >
                                     <img style="height:27.5px" src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">
                                 </div>
                             </button>
                     HTML;
                 }
-
-                if($_SESSION['sessionType'] == 'admin'){
-                    echo <<<HTML
+                echo<<<HTML
                             <!-- edit billing -->
-                            <button class="edit-button" data-billing-id="$billingId" data-billing-data='$billingDataJson' data-occ-type='$occTypeJson' data-appliance-count='$APCount' data-payment-billing-info='$payment_billing_info_json' style="margin-right: 10px;">
+                            <button id="openEditBillingsModalBtn" style="margin-right: 10px;" onclick="prepopulateValues($payment_billing_info_json, $billingDataJson, $prepBool)">
                                 <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType">
                             </button>
-                        HTML;
-                }
-                echo<<<HTML
+
                             <!-- delete billing -->
                             <button class="delete-button" data-billing-id="$billingId" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteBillingsModal">
