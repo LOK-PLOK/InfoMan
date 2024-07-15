@@ -311,7 +311,7 @@
         var backdrops = document.querySelectorAll('.modal-backdrop');
         backdrops.forEach(backdrop => backdrop.remove());
     });
-});
+    });
 
     // calculateDate handler
     calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
@@ -351,9 +351,9 @@
             switchTab(index);
         });
     });
-}
+    }
 
-document.addEventListener('DOMContentLoaded', handleTabSwitching);
+    document.addEventListener('DOMContentLoaded', handleTabSwitching);
 </script>
 
 

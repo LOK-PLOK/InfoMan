@@ -96,6 +96,10 @@ class ResidentsModel extends dbcreds{
             emContactNum, 
             isRenting
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);");
+
+        $tenFname = ucwords(strtolower($new_tenant['tenFname']));
+        $tenLname = ucwords(strtolower($new_tenant['tenLname']));
+        $tenMI = strtoupper($new_tenant['tenMI']);
     
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -103,7 +107,7 @@ class ResidentsModel extends dbcreds{
     
         $query->bind_param(
             'sssssssssssssss',
-            $new_tenant['tenFname'], $new_tenant['tenLname'], $new_tenant['tenMI'],
+            $tenFname, $tenLname, $tenMI,
             $new_tenant['tenHouseNum'], $new_tenant['tenSt'], $new_tenant['tenBrgy'],
             $new_tenant['tenCityMun'], $new_tenant['tenProvince'], $new_tenant['tenContact'],
             $new_tenant['tenBdate'], $new_tenant['tenGender'], $new_tenant['emContactFname'],

@@ -118,7 +118,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="maintenancecost" class="form-label">Maintenance Cost:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" id="maintCost" name="maintCost" placeholder="Enter the cost..." class="form-control shadow" required>
+                                    <input type="number" id="maintCost" name="maintCost" placeholder="Enter the cost..." class="form-control shadow" required>
                                 </div>
                             </div>
                             <!-- Submit Button -->

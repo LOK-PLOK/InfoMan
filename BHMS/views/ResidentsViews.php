@@ -136,7 +136,7 @@ class ResidentsViews extends GeneralViews{
                             <div>
                                 <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" >
+                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required>
                             </div>
                             <!-- Emergency Contact -->
                             <div class="header label-position">
@@ -157,7 +157,7 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                                 <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
                                 <!-- emContactNum -->
-                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow">
+                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number.">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>

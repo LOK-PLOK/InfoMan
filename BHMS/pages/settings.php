@@ -89,13 +89,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if form was submitted for deleting a user
     if (isset($_POST['deleteUserInfoSubmit'])) {
         
-        // Retrieve the tenant ID to delete
-        $tenantIdToDelete = $_POST['deleteUserID'];
+        // Retrieve the user ID to delete
+        $userIdToDelete = $_POST['deleteUserID'];
 
-        $result = SettingsController::delete_user_by_id($tenantIdToDelete);
+        $result = SettingsController::delete_user_by_id($userIdToDelete);
 
         if ($result) {
-            header("Location: /pages/settings.php?deleteUser=success");
+            if($_SESSION['userID'] == $userIdToDelete){
+                header("Location: /pages/settings.php?logout=1");
+            } else {
+                header("Location: /pages/settings.php?deleteUser=success");
+            }
             exit();
         } else {
             header("Location: /pages/settings.php?deleteUser=error");

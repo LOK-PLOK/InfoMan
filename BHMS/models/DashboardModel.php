@@ -150,10 +150,14 @@ class DashboardModel extends dbcreds {
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
         }
-    
+
+        $tenFname = ucwords(strtolower($new_tenant['tenFname']));
+        $tenLname = ucwords(strtolower($new_tenant['tenLname']));
+        $tenMI = strtoupper($new_tenant['tenMI']);
+
         $query->bind_param(
             'sssssssssssssss',
-            $new_tenant['tenFname'], $new_tenant['tenLname'], $new_tenant['tenMI'],
+            $tenFname, $tenLname, $tenMI,
             $new_tenant['tenHouseNum'], $new_tenant['tenSt'], $new_tenant['tenBrgy'],
             $new_tenant['tenCityMun'], $new_tenant['tenProvince'], $new_tenant['tenContact'],
             $new_tenant['tenBdate'], $new_tenant['tenGender'], $new_tenant['emContactFname'],
@@ -190,6 +194,7 @@ class DashboardModel extends dbcreds {
             $query->close();
             $conn->close();
             throw new Exception("Execution failed: " . $query->error);
+            return false;
         }
     } 
     
@@ -483,7 +488,7 @@ class DashboardModel extends dbcreds {
             return null;
         }
     }
-    
+
 }
 
 ?>
