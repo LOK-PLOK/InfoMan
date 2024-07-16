@@ -39,7 +39,7 @@ class MaintenanceModel extends dbcreds {
      */
     public static function query_rooms(){
         $conn = self::get_connection();
-        $query = "SELECT * FROM room";
+        $query = "SELECT * FROM room WHERE isDeleted = 0";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
@@ -117,7 +117,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND isDeleted = 0";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -148,7 +148,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND isDeleted = 0";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -179,7 +179,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND isDeleted = 0";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -260,7 +260,7 @@ class MaintenanceModel extends dbcreds {
             }
     
             // Prepare the DELETE statement with a parameterized query to prevent SQL injection
-            $stmt = $conn->prepare("DELETE FROM maintenance WHERE maintID = ?");
+            $stmt = $conn->prepare("UPDATE maintenance SET isDeleted = 1 WHERE maintID = ?");
     
             // Bind the parameter to the statement
             $stmt->bind_param("i", $maintenanceID);
@@ -301,7 +301,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' ORDER BY roomID ASC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND isDeleted = 0 ORDER BY roomID ASC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -332,7 +332,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' ORDER BY maintCost DESC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND isDeleted = 0 ORDER BY maintCost DESC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -363,7 +363,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' ORDER BY maintDate DESC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND isDeleted = 0 ORDER BY maintDate DESC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -394,7 +394,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' ORDER BY roomID ASC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND isDeleted = 0 ORDER BY roomID ASC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -425,7 +425,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' ORDER BY maintCost DESC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND isDeleted = 0 ORDER BY maintCost DESC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -456,7 +456,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' ORDER BY maintDate DESC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND isDeleted = 0 ORDER BY maintDate DESC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -487,7 +487,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' ORDER BY roomID ASC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND isDeleted = 0 ORDER BY roomID ASC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -518,7 +518,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' ORDER BY maintCost DESC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND isDeleted = 0 ORDER BY maintCost DESC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -549,7 +549,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' ORDER BY maintDate DESC";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND isDeleted = 0 ORDER BY maintDate DESC";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -580,7 +580,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'On-going' AND isDeleted = 0 AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -611,7 +611,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Completed' AND isDeleted = 0 AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
 
         // Execute the query
         $result = $conn->query($sql);
@@ -642,7 +642,7 @@ class MaintenanceModel extends dbcreds {
         $conn = self::get_connection();
 
         // The SQL query to select "On-going" maintenance data
-        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
+        $sql = "SELECT * FROM maintenance WHERE maintStatus = 'Cancelled' AND isDeleted = 0 AND roomID LIKE '%$search%' OR maintDesc LIKE '%$search%'";
 
         // Execute the query
         $result = $conn->query($sql);
