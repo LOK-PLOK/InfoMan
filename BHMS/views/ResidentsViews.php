@@ -98,6 +98,7 @@ class ResidentsViews extends GeneralViews{
                                     <option value="" disabled selected>...</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
+                                    <option value="O">Other</option>
                                 </select>
                                 <!-- tenBdate -->
                                 <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow" required>
@@ -136,7 +137,7 @@ class ResidentsViews extends GeneralViews{
                             <div>
                                 <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required>
+                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                             </div>
                             <!-- Emergency Contact -->
                             <div class="header label-position">
@@ -157,7 +158,7 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                                 <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
                                 <!-- emContactNum -->
-                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number.">
+                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>
@@ -716,7 +717,7 @@ class ResidentsViews extends GeneralViews{
                             <div>
                             <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- Edit-tenContact -->
-                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="Contact Number" class="number shadow">
+                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                             </div>
                             
                             <div class="header label-position">
@@ -736,7 +737,7 @@ class ResidentsViews extends GeneralViews{
                                     <input type="text" id="Edit-emContactLname" name="Edit-emContactLname" placeholder="Last Name" class="LNclass shadow">
                                 </div>
                                     <!-- Edit-emContactNum -->
-                                    <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="Contact Number" class="number shadow">
+                                    <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>

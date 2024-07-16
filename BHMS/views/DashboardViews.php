@@ -168,6 +168,7 @@ class DashboardViews extends GeneralViews{
                                     <option value="" disabled selected>...</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
+                                    <option value="O">Other</option>
                                 </select>
                                 <!-- tenBdate -->
                                 <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
@@ -206,7 +207,7 @@ class DashboardViews extends GeneralViews{
                             <div>
                                 <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
                                 <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required>
+                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                             </div>
                             <!-- Emergency Contact -->
                             <div class="header label-position">
@@ -221,13 +222,13 @@ class DashboardViews extends GeneralViews{
                                     <!-- emContactFname -->
                                     <input type="text" id="emContactFname" name="emContactFname" placeholder="Glydel" class="FNclass shadow">
                                     <!-- emContactMI -->
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="L" class="MIclass shadow">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="L" class="MIclass shadow" maxlength="1">
                                     <!-- emContactLname -->
                                     <input type="text" id="emContactLname" name="emContactLname" placeholder="Dela Cruz" class="LNclass shadow">
                                 </div>
                                 <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
                                 <!-- emContactNum -->
-                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number.">
+                                <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                             </div>
                             <div class="label label-position label-under">
                                 <div class="label-fn">First Name</div>
@@ -285,7 +286,7 @@ class DashboardViews extends GeneralViews{
                         <div>
                             <label for="new-rent-tenant" class="input-label">Tenant Assigned:</label>
                             <!-- Tenant -->
-                            <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow" required>
+                            <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow">
                                 <option value="" disabled selected>Select a tenant...</option>
         HTML;
                                 foreach ($tenants as $tenant){
@@ -303,7 +304,7 @@ class DashboardViews extends GeneralViews{
                             <div id="shared-tenant" style="display: none;">
                                 <label for="share-new-rent-tenant" class="input-label">Choose a tenant to share with:</label>
                                 <!-- Shared Tenant -->
-                                <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow" required>
+                                <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow">
                                     <option value="" disabled selected>Select a tenant...</option>
             HTML;
                                     foreach ($tenants as $tenant){
@@ -328,7 +329,7 @@ class DashboardViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Room -->
-                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow" required>
+                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow">
                                         <option value="" disabled selected>Select a Room...</option>
         HTML;
                                         foreach ($rooms as $room){
@@ -359,7 +360,7 @@ class DashboardViews extends GeneralViews{
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
                                     <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
-                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow" required>
+                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow">
                                             <option value="" disabled selected>Select a Type...</option>
         HTML;
                                             foreach ($rent_types as $rent_type){
@@ -385,7 +386,7 @@ class DashboardViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Start Date -->
-                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow" required>
+                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow">
                                     <!-- End Date -->
                                     <input type="date" name="new-rent-end" id="new-rent-end" class="w-100 shadow" style="display: none">
                                     <div class="d-flex justify-content-center input-sub-label">Starting Date</div>

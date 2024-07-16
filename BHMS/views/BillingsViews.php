@@ -305,9 +305,9 @@ class BillingsViews extends GeneralViews{
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Date Issued</p>
 
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssuedDummy" disabled>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued">
 
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued" hidden>
+                                        <!-- <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued" hidden> -->
                                     </div>
                                 
                                     <div class="edit-billings-row">

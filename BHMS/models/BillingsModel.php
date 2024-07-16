@@ -468,10 +468,12 @@ class BillingsModel extends dbcreds {
     
         $billRefNo = $updated_billing['billRefNo'];
         $billTotal = $updated_billing['billTotal'];
+        $billDateIssued = $updated_billing['billDateIssued'];
     
         // Use prepared statements to prevent SQL injection and ensure correct syntax
         $query = "UPDATE billing 
-                  SET billTotal = ? 
+                  SET billTotal = ?, 
+                  billDateIssued = ?
                   WHERE billRefNo = ?";
     
         $stmt = $conn->prepare($query);
@@ -480,7 +482,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters
-        $stmt->bind_param("di", $billTotal, $billRefNo);
+        $stmt->bind_param("dsi", $billTotal, $billDateIssued, $billRefNo);
     
         // Execute statement
         if ($stmt->execute() === false) {
@@ -492,6 +494,7 @@ class BillingsModel extends dbcreds {
     
         return true;
     }
+    
 
     /**
      * Deletes billing instance

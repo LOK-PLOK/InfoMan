@@ -555,7 +555,7 @@ class RoomlogsViews extends GeneralViews{
                             <div id="shared-tenant" style="display: none;">
                                 <label for="share-new-rent-tenant" class="input-label">Choose a tenant to share with:</label>
                                 <!-- Shared Tenant -->
-                                <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow" required>
+                                <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow">
                                     <option value="" disabled selected>Select a tenant...</option>
             HTML;
                                     foreach ($tenants as $tenant){
@@ -580,7 +580,7 @@ class RoomlogsViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Room -->
-                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow" required>
+                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow">
                                         <option value="" disabled selected>Select a Room...</option>
         HTML;
                                         foreach ($rooms as $room){
@@ -611,7 +611,7 @@ class RoomlogsViews extends GeneralViews{
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
                                     <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
-                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow" required>
+                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow">
                                             <option value="" disabled selected>Select a Type...</option>
         HTML;
                                             foreach ($rent_types as $rent_type){
@@ -637,7 +637,7 @@ class RoomlogsViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Start Date -->
-                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow" required>
+                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow">
                                     <!-- End Date -->
                                     <input type="date" name="new-rent-end" id="new-rent-end" class="w-100 shadow" style="display: none">
                                     <div class="d-flex justify-content-center input-sub-label">Starting Date</div>

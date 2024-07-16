@@ -195,7 +195,7 @@
             }
         }
 
-        // LISTEN TO POST REQUEST FROM CREATE MODAL
+        // LISTEN TO POST REQUEST FROM CREATE BILLING MODAL
         if (isset($_POST['create-billing-submit'])){
                 $new_billing = array(
                     "tenID" => $_POST['create-billing-tenant'],
@@ -231,13 +231,17 @@
 
         // LISTEN TO POST REQUEST FROM EDIT MODAL
         if (isset($_POST['edit-billing-submit'])) {
+            echo '<script>console.log("helkoooo")</script>';
             $updated_billing = array(
                 "billRefNo" => $_POST['editBillingId'],
                 "billTotal" => $_POST['editBillTotal'],
+                "billDateIssued" => $_POST['editBillDateIssued'],
             );
+        
+            echo '<script>console.log(' . json_encode($updated_billing) . ')</script>';
             
             $result = BillingsController::update_billing($updated_billing);
-            if($result){
+            if ($result) {
                 header('Location: billings.php?editBillingStatus=success');
                 exit();
             } else {

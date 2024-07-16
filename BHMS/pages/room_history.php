@@ -32,7 +32,7 @@ if (isset($_GET['roomCode'])) {
     $roomCode = $_SESSION['roomCode'];
 } else {
     // Default 'roomCode' if not in GET or session
-    $roomCode = 'B10101';
+    $roomCode = 'B10101';   
 }
 
 if(isset($_GET['editOccStatus'])){

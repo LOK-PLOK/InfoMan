@@ -203,8 +203,8 @@ class MaintenanceViews extends GeneralViews{
                     </button>
                             <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
                                 <li class="d-flex justify-content-center"><input type="submit"  name="On-going-RoomCode"value="RoomCode" class="no-design1"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"  name="On-going-Cost"value="Cost" class="no-design2"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"   name="On-going-Date" value="Date"class="no-design3"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="On-going-Cost"value="Cost (Highest to Lowest)" class="no-design2"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="On-going-Date" value="Date (Newest to Oldest)"class="no-design3"></li>
                             </ul>
                 </form>
                 
@@ -320,8 +320,8 @@ class MaintenanceViews extends GeneralViews{
                     </button>
                             <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
                                 <li class="d-flex justify-content-center"><input type="submit"  name="Completed-RoomCode"value="RoomCode" class="no-design1"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-Cost"value="Cost" class="no-design2"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"   name="Completed-Date" value="Date"class="no-design3"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-Cost"value="Cost (Highest to Lowest)" class="no-design2"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="Completed-Date" value="Date (Newest to Oldest)"class="no-design3"></li>
                             </ul>
                 </form>
                 </div>
@@ -437,8 +437,8 @@ class MaintenanceViews extends GeneralViews{
                     </button>
                             <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
                                 <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-RoomCode"value="RoomCode" class="no-design1"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-Cost"value="Cost" class="no-design2"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"   name="Cancelled-Date" value="Date"class="no-design3"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-Cost"value="Cost (Highest to Lowest)" class="no-design2"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="Cancelled-Date" value="Date (Newest to Oldest"class="no-design3"></li>
                             </ul>
                 </form>
                 </div>
