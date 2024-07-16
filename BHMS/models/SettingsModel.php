@@ -159,7 +159,8 @@ class SettingsModel extends dbcreds{
                 throw new Exception("Connection failed: " . $conn->connect_error);
             }
 
-            $stmt = $conn->prepare("DELETE FROM user WHERE userID = ?");
+            $stmt = $conn->prepare("UPDATE user SET isDeleted = '1' WHERE userID = ?;");
+
 
             if ($stmt === false) {
                 throw new Exception("Prepare failed: " . $conn->error);
@@ -192,7 +193,7 @@ class SettingsModel extends dbcreds{
             }
     
             // SQL query to select all tenants
-            $query = "SELECT * FROM user";
+            $query = "SELECT * FROM user WHERE isDeleted = 0";
     
             // Execute the query
             $result = $conn->query($query);

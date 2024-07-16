@@ -146,7 +146,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.billDueDate < CURRENT_DATE AND b.isPaid = 0
+                  WHERE b.billDueDate < CURRENT_DATE AND b.isPaid = 0 AND b.isDeleted = 0
                   ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
@@ -510,7 +510,7 @@ class BillingsModel extends dbcreds {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $stmt = $conn->prepare("DELETE FROM billing WHERE billRefNo = ?");
+        $stmt = $conn->prepare("UPDATE billing SET isDeleted = '1' WHERE billing.billRefNo = ?;");
         $stmt->bind_param("i", $billing_id);
         return $stmt->execute();
     }
@@ -557,7 +557,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.isPaid = 1
+                  WHERE b.isPaid = 1 AND b.isDeleted = 0
                   ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
@@ -594,7 +594,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE
+                  WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE AND b.isDeleted = 0
                   ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
