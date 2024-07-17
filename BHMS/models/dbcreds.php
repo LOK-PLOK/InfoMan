@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/../config.php';
+
 /**
  * This class contains all the database credentials that are used in the application.
  * 
@@ -11,19 +13,19 @@ class dbcreds {
     /**
      * @var string $servername The server name.
      */
-    protected static $servername = "localhost";
+    protected static $servername;
     /**
      * @var string $username The username.
      */
-    protected static $username = "root";
+    protected static $username;
     /**
      * @var string $password The password.
      */
-    protected static $password = "";
+    protected static $password;
     /**
      * @var string $dbname The database name.
      */
-    protected static $dbname = "Munoz_BHMS";
+    protected static $dbname;
 
 
     /**
@@ -33,6 +35,11 @@ class dbcreds {
      * @return mysqli $conn - The connection to the database.
      */
     protected static function get_connection() {
+        self::$servername = $_ENV['DB_SERVER'];
+        self::$username = $_ENV['DB_USERNAME'];
+        self::$password = $_ENV['DB_PASSWORD'];
+        self::$dbname = $_ENV['DB_NAME'];
+        
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
         if ($conn->connect_error) {
             throw new Exception("Connection failed: " . $conn->connect_error);

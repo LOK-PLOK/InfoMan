@@ -4,9 +4,13 @@ require 'dbcreds.php';
 
 class DashboardModel extends dbcreds {
 
-    public static function residents_counter() {
 
+    /**
+     * 
+     */
+    public static function residents_counter() {
         $conn = self::get_connection();
+
         $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1 AND isDeleted = 0;";
         $stmt = $conn->query($query);
     
@@ -26,6 +30,10 @@ class DashboardModel extends dbcreds {
         return $result; 
     }
 
+
+    /**
+     * 
+     */
     public static function occupied_bed_and_available_bed() {
         
         $conn = self::get_connection();
@@ -54,6 +62,10 @@ class DashboardModel extends dbcreds {
         
     }
 
+
+    /**
+     * 
+     */
     public static function total_available_rooms() {
         
         $conn = self::get_connection();
@@ -76,13 +88,13 @@ class DashboardModel extends dbcreds {
         return $result['available_rooms'];
         
     }
-    
+
+
+    /**
+     * 
+     */
     public static function add_new_tenant($new_tenant,$appliances) {
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
     
         $query = $conn->prepare("INSERT INTO tenant (
             tenFname, 
@@ -148,7 +160,11 @@ class DashboardModel extends dbcreds {
             throw new Exception("Execution failed: " . $query->error);
         }
     } 
-    
+
+
+    /**
+     * 
+     */
     public static function query_add_new_rent($create_rent) {
         try {
 
@@ -191,6 +207,10 @@ class DashboardModel extends dbcreds {
         }
     }
 
+
+    /**
+     * 
+     */
     public static function query_tenants(){
         
         $conn = self::get_connection();
@@ -210,8 +230,12 @@ class DashboardModel extends dbcreds {
         $conn->close();
     
         return $results;
-    }
+    }   
 
+
+    /**
+     * 
+     */
     public static function query_rooms() {
         
         $conn = self::get_connection();
@@ -234,6 +258,10 @@ class DashboardModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function query_types() {
         
         $conn = self::get_connection();
@@ -256,6 +284,11 @@ class DashboardModel extends dbcreds {
         return $results;
     }
 
+
+
+    /**
+     * 
+     */
     public static function query_room_info($roomID){
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT * FROM room WHERE roomID = ? AND isDeleted = 0");
@@ -292,6 +325,10 @@ class DashboardModel extends dbcreds {
         return $result['no_of_conflicts'] == 0;
     }
 
+
+    /**
+     * 
+     */
     public static function check_shared_room($check_rent) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) FROM occupancy WHERE roomID = ?
