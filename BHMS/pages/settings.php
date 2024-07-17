@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!--sections-->
     <div class="section">
-        <?php if ($_SESSION['sessionType'] === 'admin') { ?>
+        <?php if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') { ?>
             <button class="settings-cont shadow" data-bs-toggle="modal" data-bs-target="#ratesAndPricingModal" onmouseover="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_light.png'" onmouseout="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_dark.png'">
                 <img id="rates-and-pricing" src="/images/icons/Settings/rates_and_pricing_dark.png" alt="rates and pricing icon">
                 <span>Rates and Pricing</span>
@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <span>User Information</span>
             <i class="fa-solid fa-angle-right"></i>
         </button>
-        <?php if ($_SESSION['sessionType'] === 'admin') { ?>
+        <?php if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') { ?>
         <button class="settings-cont shadow" data-bs-toggle="modal" data-bs-target="#createUserModal" onmouseover="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_light.png'" onmouseout="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_dark.png'">
             <img id="create-user-icon" src="/images/icons/Settings/add_user_dark.png" alt="add user icon">
             <span>Create User</span>
@@ -212,12 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //rates and pricing modal
     SettingsViews::rates_and_pricing_model_view();
 
-    // $user_list = [];
-    // if ($_SESSION['sessionType'] === 'admin') {
-    //     $user_list = SettingsController::users_table_data();
-    // } else {
-    //     $user_list = SettingsController::verify_credentials($_SESSION['userID']);
-    // }
     $user_list = SettingsController::users_table_data();
     SettingsViews::user_information_model_view($user_list);
 

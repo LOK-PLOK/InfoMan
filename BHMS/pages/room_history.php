@@ -5,7 +5,7 @@ ob_start();
 require '../php/templates.php';
 require '../views/RoomhistoryViews.php';
 
-if($_SESSION['sessionType'] !== 'admin'){
+if($_SESSION['sessionType'] != 'admin' && $_SESSION['sessionType'] != 'dev'){
     header('Location: dashboard.php?AccessError=unauthorizedPageAttempt');    
     exit();
 }

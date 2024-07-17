@@ -153,7 +153,7 @@ class RoomlogsViews extends GeneralViews{
                                         <p class="rm-modal-info">Capacity: <span>{$room['rentCount']} / <span>{$room['capacity']}</span></p>
                                     </div>
             HTML;
-                                    if($_SESSION['sessionType'] == 'admin'){
+                                    if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev'){
                                         echo <<<HTML
                                             <div class="d-flex flex-column justify-content-around">
                                                 <button type="button" class="delete-room-btn" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
@@ -211,7 +211,7 @@ class RoomlogsViews extends GeneralViews{
                                 </button>';
                 }
 
-                if($_SESSION['sessionType'] == 'admin') {
+                if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') {
                     $edit_delete = '
                             <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
                                 onclick="setValuesTenantInfo(

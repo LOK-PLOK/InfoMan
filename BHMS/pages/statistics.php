@@ -7,7 +7,7 @@
     require '../php/templates.php';
     require '../views/StatisticsViews.php';
 
-    if($_SESSION['sessionType'] !== 'admin'){
+    if($_SESSION['sessionType'] != 'admin' && $_SESSION['sessionType'] != 'dev'){
         header('Location: dashboard.php?AccessError=unauthorizedPageAttempt');    
         exit();
     }
