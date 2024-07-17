@@ -1,4 +1,7 @@
 <?php   
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
     session_start();
     ob_start();
     require '../php/templates.php';
@@ -148,9 +151,11 @@
         <div class="d-flex flex-column align-items-center col-sm-4 px-5 py-4" >
                 <span class="page-header" style="font-size: 1.5rem">Performance Overview</span>
                 <?php
-                    // Assuming $totalPaymentsCurrentQuarter and $totalPaymentsPreviousQuarter are calculated
+                    // Ensure both variables are treated as floats to prevent type juggling issues
+                    $totalPaymentsPreviousQuarter = (float) $totalPaymentsPreviousQuarter;
                     $revenueChange = $totalPaymentsCurrentQuarter - $totalPaymentsPreviousQuarter;
-                    $revenueChangePercent = $totalPaymentsPreviousQuarter === 0 ? 0 : $revenueChange / $totalPaymentsPreviousQuarter * 100;
+                    $revenueChange = (float) $revenueChange;
+                    $revenueChangePercent = $totalPaymentsPreviousQuarter == 0 ? 100 : $revenueChange / $totalPaymentsPreviousQuarter * 100;
                     $revenueChangePercent = number_format($revenueChangePercent, 2);
 
                     if ($revenueChange > 0) {

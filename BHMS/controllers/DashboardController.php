@@ -7,7 +7,7 @@ class DashboardController extends GeneralController{
 
     public static function total_current_residents(){
         return DashboardModel::residents_counter();
-    }
+    } 
 
     public static function total_occupied_beds_and_available_beds(){
         return DashboardModel::occupied_bed_and_available_bed();
@@ -24,7 +24,14 @@ class DashboardController extends GeneralController{
         return DashboardModel::add_new_tenant($new_tenant,$appliances);
     }
 
-    public static function create_new_rent($create_rent) {
+    /**
+     * Adds a new rent to the database
+     * 
+     * @method create_new_rent
+     * @param array $create_rent The array of rent details
+     * @return boolean The result of the query
+     */
+    public static function create_new_rent($create_rent, $new_billing) {
         $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
         $roomInfo = DashboardModel::query_room_info($create_rent['roomID']);
 
@@ -55,6 +62,7 @@ class DashboardController extends GeneralController{
         } else {
             return "Error - Tenant Rent Error";
         }
+        return true;
     }
 
     public static function get_tenants() {

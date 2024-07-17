@@ -420,10 +420,21 @@ class BillingsModel extends dbcreds {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $stmt = $conn->prepare("DELETE FROM billing WHERE billRefNo = ?");
+        $billInfoData = self::query_billing_data($billing_id);
+
+        if($billInfoData['isPaid'] == 1){
+            $queryPayment = $conn->prepare("UPDATE payment SET isDeleted = '1' WHERE payment.billRefNo = ?;");
+            $queryPayment->bind_param("i", $billing_id);
+            $queryPayment->execute();
+            $queryPayment->close();
+        }
+
+        $stmt = $conn->prepare("UPDATE billing SET isDeleted = '1' WHERE billing.billRefNo = ?;");
         $stmt->bind_param("i", $billing_id);
+        
         return $stmt->execute();
     }
+    
 
     public static function query_tenants(){
         $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
@@ -461,8 +472,8 @@ class BillingsModel extends dbcreds {
     
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
-                  INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.isPaid = 1
+                  LEFT JOIN tenant t ON b.tenID = t.tenID
+                  WHERE b.isPaid = 1 AND b.isDeleted = 0
                   ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);

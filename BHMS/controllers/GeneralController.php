@@ -45,7 +45,7 @@ class GeneralController {
             } else {
                 $status = 1;
             }
-
+ 
             GeneralModel::update_room_availability($roomID, $status);
         }
     }
