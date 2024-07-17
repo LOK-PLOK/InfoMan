@@ -9,9 +9,9 @@
 
  @import url('https://fonts.googleapis.com/css2?family=Mallanna&display=swap');  /* Importing Mallanna Font */
 
-/* nav, div, img,header,section,footer, tbody,thead, canvas{
+nav, div, img,header,section,footer, tbody,thead, canvas{
     border: red 0.5px solid;
-} */
+}
 
 
 /*====================UNIVERSAL STYLES====================*/
@@ -53,6 +53,7 @@
     height: auto;
     border-radius: 13px;
     padding: 4rem 1rem;
+    width: 100%;
 }
 
 @media only screen and (min-width: 1200px){
@@ -60,7 +61,7 @@
         position: absolute;
         width: 82.5% !important;
         right: 0;
-        overflow: scroll;
+        overflow: auto;
     }
 
     .container-fluid > *, 
@@ -250,8 +251,13 @@ nav {
     font-size: clamp(0.65rem, 2.5vw, 1rem);
 }
 
+.btn-var-2:hover {
+    background-color: #1e2d6d;
+    color: white;
+}
+
 .btn-var-3 { /* Button with Image */
-    width: 140px;
+    width: 170px;
     background-color: #344799; 
     color: white;
     border-radius: 5px;
@@ -267,6 +273,12 @@ nav {
     height: 20px;
 }
 
+.btn-var-3:hover {
+    color: #344799;
+    background-color: white;
+    border: 2px solid #344799;
+}
+
 .btn-var-4 {
     padding: 5px 70px;
     margin-top: 5px;
@@ -274,6 +286,14 @@ nav {
     background-color: #344799;
     border: none;
     border-radius: 2px;
+    width: auto;
+    max-width: 200px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-var-4:hover {
+    color: #344799;
+    background-color: white;
 }
 
 .btn-var-5 {
@@ -283,6 +303,13 @@ nav {
     background-color: #344799;
     border: none;
     border-radius: 2px;
+    width: auto;
+    max-width: 200px;
+}
+
+.btn-var-5:hover {
+    color: #344799;
+    background-color: white;
 }
 
 .btn-var-6 {
@@ -298,6 +325,71 @@ nav {
 .btn-var-6:hover {
     background-color: rgba(0,0,0,0.10);
     color: #344799;
+}
+
+.btn-var-7 {
+    padding: 5px 10px;
+    background-color: #344799; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: clamp(0.65rem, 2.5vw, 1rem);
+}
+
+
+/*⋆ ˚｡⋆୨୧˚ DROPDOWN BUTTON ˚୨୧⋆｡˚⋆*/
+.dropdown-content {
+    border: none;
+    border-radius: 0%;
+    background-color: #EDF6F7;
+    color: #779CC8;
+    text-align: left;
+    padding-left: 30px;
+    box-shadow: none;
+}
+
+.dropdown-content:hover {
+    background-color: #1967d2;
+    color: white;
+}
+
+
+/*⋆ ˚｡⋆୨୧˚ SEARCH BAR ˚୨୧⋆｡˚⋆*/
+.search-container { 
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+}
+
+.search-container input[type="text"]::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.search { 
+    width: 100%;
+    padding: 5px 30px 5px 10px; 
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #344799;
+    color: white;
+    max-width: 200px;
+    min-height: 33px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+    color: white;
+}
+
+.search:focus {
+    outline: none;
+    border-color: none;
 }
 
 /*====================Table Styles====================*/
@@ -330,6 +422,7 @@ table {
 table td,
 table th,
 tbody {
+    background-color: #344799;
     border: 1px solid #344799;
 }
 

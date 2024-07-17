@@ -11,6 +11,7 @@ body {
     display: flex;
     height: 100vh;
     background: url("/images/login_background.png");
+    background-repeat: no-repeat;
 }
 
 .login-header {
@@ -19,35 +20,37 @@ body {
     align-items: center;
     width: 100%;
     margin-bottom: 15px;
+    text-align: center; /* Center the text */
 }
 
-.login-header img{
+.login-header img {
     width: 175px;
     height: auto;
 }
 
 .login-container {
     display: flex;
+    flex-direction: column; /* Ensure the form elements are stacked vertically */
+    align-items: center; /* Center the form elements */
     margin: auto;
     padding: 40px;
     border-radius: 14px;
     height: 4in;
     width: 4in;
-    background:  rgba(52, 71, 153, 0.80);
+    background: rgba(52, 71, 153, 0.80);
     color: white;
 }
 
-input[type=text],
-input[type=password] {
+.login-field {
     border: none;
     border-radius: 8px;
     margin: 8px 0;
     padding: 10px 20px;
-    width: 100%;
+    width: 100%; /* Increase the width to 90% */
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
 }
 
-input[type=submit] {
+.login-submit {
     border-radius: 10px;
     background: #6379AF;
     color: white;
@@ -57,8 +60,18 @@ input[type=submit] {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
 }
 
-.center-login{
+.login-submit:hover {
+    border-radius: 10px;
+    background: white;
+    color: #6379AF;
+    height: 40px;
+    width: 100px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
+}
+
+.center-login {
     display: flex;
     justify-content: center;
     margin-top: 15px;
+    width: 100%; /* Ensure the button container spans the full width */
 }

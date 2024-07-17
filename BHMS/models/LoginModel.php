@@ -15,7 +15,7 @@ class LoginModel extends dbcreds {
         }
 
         // Prepare the SQL statement
-        $query = $conn->prepare("SELECT * FROM user WHERE username = ? AND isDeleted = 0");
+        $query = $conn->prepare("SELECT * FROM user WHERE username = ?");
 
         // Check if the statement was prepared successfully
         if ($query === false) {

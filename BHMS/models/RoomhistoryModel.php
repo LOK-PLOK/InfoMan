@@ -2,26 +2,8 @@
 
 require 'dbcreds.php';
 
-
-/**
- * This class contains all the methods/queries that are used in the room history  and Roomhistory Views file.
- *
- * @method query_room_history
- * @method updateOccupancy
- * @method delete_occupancy
- * @class RoomhistoryModel
- * @extends dbcreds
- */
 class RoomhistoryModel extends dbcreds {
 
-    /**
-     * Gets the room history of a specific room
-     * 
-     * @method query_room_history
-     * @param string $roomCode The code of the room to fetch history for.
-     * @param string $searchTerm The term to search for in the tenant's full name.
-     * @return mysqli_result|bool Returns the result set from the query or false on failure.
-     */
     public static function query_room_history($roomCode, $searchTerm) {
         $conn = self::get_connection();
         // Base query without the search condition
@@ -59,13 +41,6 @@ class RoomhistoryModel extends dbcreds {
         return $result;
     }
 
-    /**
-     * Edits the occupancy of a room
-     * 
-     * @method updateOccupancy
-     * @param array $editInfo The array of occupancy details
-     * @return boolean The result of the query
-     */
     public static function updateOccupancy($editInfo) {
         $conn = self::get_connection();
         $query = $conn->prepare("UPDATE occupancy SET roomID = ?, occDateStart = ?, occDateEnd = ? WHERE occupancyID = ?");
@@ -92,13 +67,6 @@ class RoomhistoryModel extends dbcreds {
         }
     }
 
-    /**
-     * Deletes an occupancy
-     * 
-     * @method delete_occupancy
-     * @param int $occupancyID The occupancy ID
-     * @return boolean The result of the query
-     */
     public static function delete_occupancy($occupancyID) {
         $conn = self::get_connection();
         $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");

@@ -14,15 +14,6 @@
     background-color: white;
 }
 
-.input-label {
-    color: #02449a80;
-}
-
-.input-sub-label {
-    font-size: 9px;
-    color: #02449a80;
-}
-
 .modal-content input:disabled{
     background-color: #D5DDDE;
 }
@@ -36,143 +27,63 @@
     font-size: 30px;
 }
 
-/* Modal Body Area*/
-.label-position{
-    display: flex;
+.add-new-tenant-label {
+    color: #779CC8;
+    font-weight: bold;
+    font-size: 16px;
 }
 
-.label-under{
-    font-size: 9px;
+.add-new-tenant-sup-label  {
+    color: #779CC8;
+    font-weight: bold;
+    font-size: 10px;
+    display: block;
+    text-align: center;
 }
 
-.label-fn{
-    width: 25.3%;
+.form-control.shadow {
+    font-weight: bold;
+    padding: 5px 10px;
 }
 
-.label-mi{
-    width: 7%;
+::placeholder {
+    font-weight: bold; /* Bold placeholder text */
 }
 
-.label-ln{
-    width: 25%;
+/* Appliance Input Styling */
+#applianceContainer input[type="text"],
+#Edit-applianceContainer input[type="text"] {
+    display: inline-block;
+    width: calc(50% - 50px); /* Adjust width to accommodate delete button */
+    margin-right: 10px;
+    font-weight: bold;
+    padding: 5px 10px;
 }
 
-.label-fn,
-.label-mi,
-.label-ln{
-    display: flex;
-    justify-content: center;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 1.75rem auto;
+    }
+
+    .form-control.shadow {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
 }
-
-/* Name */
-.NameInput{
-    width: 60%;
-}
-
-.FNclass{
-    width:43%;
-}
-
-.MIclass{
-    width: 8%;
-}
-
-.LNclass{
-    width: 45%;
-}
-
-.positioning{
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Address */
-.houseno{
-    width: 8%;
-}
-
-.street{
-    width: 25%;
-}
-
-.barangay{
-    width: 25%;
-}
-
-.city{
-    width: 24%;
-}
-
-.province{
-    width: 15%;
-}
-
-.label-houseno{
-    width: 8%;
-}
-
-.label-street{
-    width: 26%;
-}
-
-.label-barangay{
-    width: 25%;
-}
-
-.label-city{
-    width: 25%;
-}
-
-.label-province{
-    width: 15%;
-}
-
-.label-houseno,
-.label-street,
-.label-barangay,
-.label-city,
-.label-province{
-    display: flex;
-    justify-content: center;
-}
-
-/* Contact Number */
-.countrycode{
-    width: 8%;
-}
-
-/* Appliances */
-.deleteappliance{
-    height: 30px;
-    vertical-align: text-bottom;
-}
-
-.displayflex{
-    display: flex;
-    justify-content: center;
-}
-
-/* Tenant Information Modal */
-.split-left{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.split-right{   
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-footer-custom{
-    padding: 0px 15px;
-    border-radius: 10px;
-}
-
- 
-
 /*====================Add Payment Modal====================*/
+.input-label {
+    color: #779CC8;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.input-sub-label {
+    font-size: 10px;
+    color: #779CC8;
+    font-weight: bold;
+}
+
 .action{
     padding: 0%;
     height: 37.5px;  
@@ -214,7 +125,6 @@
 .rounded-inputs{
     width: 100%;
     margin: 8px 0;
-    padding: 5px;
     box-sizing: border-box;
     border: none;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
@@ -266,6 +176,29 @@ div.modal-content.bg-custom {
     background-color: #D5DDDE;
 }
 
+/* Updated padding */
+input, select {
+    padding: 5px 10px; /* 5px padding top and bottom, 10px left and right */
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+    display: block;
+    border-radius: 8px;
+}
+
+/* Placeholder color */
+input::placeholder, select::placeholder {
+    color: #779CC8; /* Match the color of the input labels */
+    opacity: 1; /* Ensure the color is not faded */
+}
+
+/* Specific for select elements */
+select option {
+    color: #779CC8; /* Ensure selected options have the same color */
+}
+
 /* ======== PAYER INFO CSS ======== */
 form .payer-info{
     display: flex;
@@ -300,3 +233,58 @@ form .payer-info #payer-MI{
     margin: 0;
 }
 
+
+/* ======== DELETE MODALS ======== */
+.confirmation-question {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #344799;
+    font-weight: bold;
+  }
+  
+  /* Center the buttons in the footer */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust spacing between buttons */
+    margin-bottom: 20px; /* Add space below buttons */
+  }
+
+  .btn-delete-yes {
+    background-color: #344799 !important; /* Default Bootstrap danger color */
+    color: white !important;
+    width: 150px; /* Increase width */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold; /* Make the text bold */
+  }
+  
+  .btn-delete-yes:hover {
+    background-color: #fff !important;
+    color: #344799 !important;
+  }
+  
+  .btn-delete-no {
+    background-color: #D6DEDF !important; /* Default Bootstrap secondary color */
+    color: #344799 !important;
+    width: 150px; /* Increase width */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold; /* Make the text bold */
+  }
+  
+  .btn-delete-no:hover {
+    background-color: white !important;
+    color: gray !important;
+  }
+  
+  /* Style for the note */
+  .note {
+    font-size: 12px;
+    color: #779CC8;
+    text-align: center;
+  }

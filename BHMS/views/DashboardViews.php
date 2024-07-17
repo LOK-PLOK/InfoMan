@@ -54,9 +54,9 @@ class DashboardViews extends GeneralViews{
 
         echo<<<HTML
             <div class="col-auto">
-                <div class="dashboard-icons shadow" style="background-color: #344799; color: white;">
+                <div class="dashboard-icons shadow" onmouseover="document.getElementById('dashboard-total-residents').src='/images/icons/Dashboard/Overview/user_light.png'" onmouseout="document.getElementById('dashboard-total-residents').src='/images/icons/Dashboard/Overview/user_dark.png'">
                     <div>
-                        <img src="/images/icons/Dashboard/Overview/user_light.png" alt="">
+                        <img id="dashboard-total-residents" src="/images/icons/Dashboard/Overview/user_dark.png" alt="">
                         <div>{$total_current_residents}</div>
                     </div>
                     <p>Total Residents</p>
@@ -79,9 +79,9 @@ class DashboardViews extends GeneralViews{
 
         echo<<<HTML
             <div class="col-auto">
-                <div class="dashboard-icons shadow">
+                <div class="dashboard-icons shadow" onmouseover="document.getElementById('dashboard-occupied-beds').src='/images/icons/Dashboard/Overview/occupied_beds_light.png'" onmouseout="document.getElementById('dashboard-occupied-beds').src='/images/icons/Dashboard/Overview/occupied_beds_dark.png'">
                     <div>
-                        <img src="/images/icons/Dashboard/Overview/occupied_beds_dark.png" alt="">
+                        <img id="dashboard-occupied-beds" src="/images/icons/Dashboard/Overview/occupied_beds_dark.png" alt="">
                         <div>{$result['occupied_beds']}</div>
                     </div>
                     <p>Occupied Beds</p>
@@ -91,9 +91,9 @@ class DashboardViews extends GeneralViews{
 
         echo<<<HTML
             <div class="col-auto">
-                <div class="dashboard-icons shadow">
+                <div class="dashboard-icons shadow" onmouseover="document.getElementById('dashboard-available-beds').src='/images/icons/Dashboard/Overview/available_beds_light.png'" onmouseout="document.getElementById('dashboard-available-beds').src='/images/icons/Dashboard/Overview/available_beds_dark.png'">
                     <div>
-                        <img src="/images/icons/Dashboard/Overview/available_beds_dark.png" alt="">
+                        <img id="dashboard-available-beds" src="/images/icons/Dashboard/Overview/available_beds_dark.png" alt="">
                         <div>{$result['available_beds']}</div>
                     </div>
                     <p>Available Beds</p>
@@ -117,9 +117,9 @@ class DashboardViews extends GeneralViews{
 
         echo<<<HTML
              <div class="col-auto">
-                <div class="dashboard-icons shadow">
+                <div class="dashboard-icons shadow" onmouseover="document.getElementById('dashboard-available-rooms').src='/images/icons/Dashboard/Overview/available_rooms_light.png'" onmouseout="document.getElementById('dashboard-available-rooms').src='/images/icons/Dashboard/Overview/available_rooms_dark.png'">
                     <div>
-                        <img src="/images/icons/Dashboard/Overview/available_rooms_dark.png" alt="">
+                        <img id="dashboard-available-rooms" src="/images/icons/Dashboard/Overview/available_rooms_dark.png" alt="">
                         <div>{$available_rooms}</div>
                     </div>
                     <p>Available Rooms</p>
@@ -149,106 +149,124 @@ class DashboardViews extends GeneralViews{
                     </div>
                     <div class="modal-body bg-custom">
                         <form method="POST">
-                            <div class="label label-position">
-                                <div style="width: 65.9%;">Name:</div>
-                                <div style="width: 17%;">Gender:</div>
-                                <div>Birth Date:</div>
-                            </div>
-                            <div class="positioning">
-                                <div class="NameInput">
-                                    <!-- tenFname -->
-                                    <input type="text" id="tenFname" name="tenFname" placeholder="Juan" class="FNclass shadow" required>
-                                    <!-- tenMI -->
-                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" maxlength="1">
-                                    <!-- tenLname -->
-                                    <input type="text" id="tenLname" name="tenLname" placeholder="Dela Cruz" class="LNclass shadow" required>
+                            <!-- Name, Gender, Birth Date -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Name:</label>
                                 </div>
-                                <!-- tenGender -->
-                                <select id="tenGender" name="tenGender" class="shadow">
-                                    <option value="" disabled selected>...</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="O">Other</option>
-                                </select>
-                                <!-- tenBdate -->
-                                <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow">
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-fn">First Name</div>
-                                <div class="label-mi">Middle Initial</div>
-                                <div class="label-ln">Last Name</div>
+                                <div class="col-md-4">
+                                    <input type="text" id="tenFname" name="tenFname" placeholder="Juan" class="form-control shadow" required>
+                                    <label class="add-new-tenant-sup-label" for="tenFname">First Name</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="D" class="form-control shadow" maxlength="1">
+                                    <label class="add-new-tenant-sup-label" for="tenMI">Middle Initial</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="tenLname" name="tenLname" placeholder="Cruz" class="form-control shadow" required>
+                                    <label class="add-new-tenant-sup-label" for="tenLname">Last Name</label>
+                                </div>
                             </div>
                             <!-- Address -->
-                            <div class="label label-position">
-                                <div>Address:</div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Address:</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenHouseNum">House No.</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="tenSt" name="tenSt" placeholder="45 Street" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenSt">Street</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenBrgy" name="tenBrgy" placeholder="Barangay" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenBrgy">Barangay</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenCityMun" name="tenCityMun" placeholder="City" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenCityMun">City/Municipality</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenProvince" name="tenProvince" placeholder="Cebu" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenProvince">Province</label>
+                                </div>
                             </div>
-                            <div>
-                                <!-- tenHouseNum -->
-                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="1024" class="houseno shadow">
-                                <!-- tenSt-->
-                                <input type="text" id="tenSt" name="tenSt" placeholder="R. Palma Street" class="street shadow">
-                                <!-- tenBrgy -->
-                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="Adlaon" class="barangay shadow">
-                                <!-- tenCityMun -->
-                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Cebu City" class="city shadow">
-                                <!-- tenProvince -->
-                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Cebu" class="province shadow">
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-houseno">House No.</div>
-                                <div class="label-street">Street</div>
-                                <div class="label-barangay">Barangay</div>
-                                <div class="label-city">City/Municipality</div>
-                                <div class="label-province">Province</div> 
-                            </div>
-                            <div class="label label-position">
-                                <div>Contact Number:</div>
-                            </div>
-                            <div>
-                                <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
-                                <!-- tenContact -->
-                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
+                            <!-- Gender, Birth Date, Contact Number -->
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="add-new-tenant-label">Gender:</label>
+                                    <select id="tenGender" name="tenGender" class="form-control shadow">
+                                        <option value="" disabled selected style="display:none;">...</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="add-new-tenant-label">Birth Date:</label>
+                                    <input type="date" id="tenBdate" name="tenBdate" class="form-control shadow">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="add-new-tenant-label">Contact Number:</label>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Emergency Contact -->
-                            <div class="header label-position">
-                                <div>Emergency Contact</div>
-                            </div>
-                            <div class="label label-position">
-                                <div style="width: 60%;">Name:</div>
-                                <div>Contact Number:</div>
-                            </div>
-                            <div style="display: flex; justify-content:left;">
-                                <div class="NameInput">
-                                    <!-- emContactFname -->
-                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Glydel" class="FNclass shadow">
-                                    <!-- emContactMI -->
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="L" class="MIclass shadow" maxlength="1">
-                                    <!-- emContactLname -->
-                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Dela Cruz" class="LNclass shadow">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Emergency Contact Name:</label>
                                 </div>
-                                <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
-                                <!-- emContactNum -->
-                                <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-fn">First Name</div>
-                                <div class="label-mi">Middle Initial</div>
-                                <div class="label-ln">Last Name</div>
+                                <div class="col-md-4">
+                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="emContactFname">First Name</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="D" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="emContactMI">Middle Initial</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Cruz" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="emContactLname">Last Name</label>
+                                </div>
+                                </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Emergency Contact Number:</label>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Appliances -->
-                            <div class="header label-position">
-                                <div id=>Appliances</div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Appliances</label>
+                                </div>
+                                <div id="applianceContainer" class="col-12">
+                                    <!-- Initially empty, fields will be added dynamically -->
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <input type="button" id="addMoreAppliance" class="btn-var-5 shadow" value="Add More">
+                                </div>
                             </div>
-                            <div id="applianceContainer">
-                                <!-- Initially empty, fields will be added dynamically -->
-                            </div>
-                            <div>
-                                <!-- addbutton -->
-                                <input type="button" id="addMoreAppliance" class="btn-var-5 shadow" value="Add More">
-                            </div>
-                            <div class="displayflex">
-                                <!-- Submit Button -->
-                                <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" value="Add">
+
+                            <div class="row mb-3">
+                                <div class="col-12" style="text-align:center;">
+                                    <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" style="display: block; margin: 10px auto; max-width: 200px;" value="Add">
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -287,7 +305,7 @@ class DashboardViews extends GeneralViews{
                             <label for="new-rent-tenant" class="input-label">Tenant Assigned:</label>
                             <!-- Tenant -->
                             <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow">
-                                <option value="" disabled selected>Select a tenant...</option>
+                                <option value="" disabled selected>Select a tenant</option>
         HTML;
                                 foreach ($tenants as $tenant){
                                     $tenant_id = $tenant['tenID'];
@@ -329,8 +347,8 @@ class DashboardViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Room -->
-                                    <select name="new-rent-room" id="new-rent-room" class="w-100 shadow">
-                                        <option value="" disabled selected>Select a Room...</option>
+                                    <select name="new-rent-room" id="new-rent-room" class="form-control shadow">
+                                        <option value="" disabled selected style="display:none;">Select a Room Code</option>
         HTML;
                                         foreach ($rooms as $room){
                                             $room_id = $room['roomID'];
@@ -360,8 +378,8 @@ class DashboardViews extends GeneralViews{
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
                                     <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
-                                    <select name="new-rent-type" id="new-rent-type" class="w-100 shadow">
-                                            <option value="" disabled selected>Select a Type...</option>
+                                    <select name="new-rent-type" id="new-rent-type" class="form-control shadow">
+                                            <option value="" disabled selected style="display:none;">Select a Type</option>
         HTML;
                                             foreach ($rent_types as $rent_type){
                                                 $occTypeID = $rent_type['occTypeID'];
@@ -403,7 +421,7 @@ class DashboardViews extends GeneralViews{
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
                     <!-- Submit Button -->
-                    <button type="submit" name="create-new-rent" class="btn-var-3 add-button">Add</button>
+                    <button type="submit" name="create-new-rent" class="btn-var-4 shadow">Add</button>
                 </div>
                 </div>
             </form>

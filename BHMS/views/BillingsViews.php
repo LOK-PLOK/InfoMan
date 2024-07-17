@@ -35,7 +35,8 @@ class BillingsViews extends GeneralViews{
                 </div>
 
                 <div style="gap:25px" class="d-flex flex-row" >
-                    <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#createBillingModal"><img src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Create Billing</button>
+                    <button class="btn-var-3" type="button" data-bs-toggle="modal" data-bs-target="#createBillingModal" onmouseover="document.getElementById('bcreate-billing').src='/images/icons/Dashboard/Buttons/add_payment_dark.png'" onmouseout="document.getElementById('bcreate-billing').src='/images/icons/Dashboard/Buttons/add_payment_light.png'">
+                        <img id="bcreate-billing" src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">Create Billing</button>
                 </div>
             </div>
         HTML;
@@ -64,7 +65,7 @@ class BillingsViews extends GeneralViews{
                         <div class="modal-body bg-custom">
                             <form method="POST">
                                 <label class="billings-modal-labels" for="create-billing-tenant">Tenant Information</label>
-                                <select name="create-billing-tenant" id="create-billing-tenant" required>
+                                <select name="create-billing-tenant" id="create-billing-tenant">
                                     <option value="">Select Tenant</option>
             HTML;
             foreach ($tenants as $tenant){
@@ -83,8 +84,8 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select name="payment-occupancyType" onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class="shadow" style="width: 75%" required>
-                                        <option value="" disabled selected>Select Occupancy Type...</option>
+                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%">
+                                        <option value="0" disabled selected>Select Occupancy Type...</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
                 $rate = $occupancy_type['occRate'];
@@ -96,7 +97,7 @@ class BillingsViews extends GeneralViews{
             echo <<<HTML
                                     </select>
                                     <!-- no. of appliances -->
-                                    <input type="number" onchange="amountCalculator($appliance_rates)" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5" required>
+                                    <input type="number" onchange="amountCalculator($appliance_rates)" class="shadow" id="noOfAppliances" name="noOfAppliances" style="width: 23%" value="0" min="0" max="5">
 
                                     <!-- appliance rate -->
                                     <!-- <input type="hidden" id="applianceRate" name="applianceRate" value="$rate_per_appliance" disabled> -->
@@ -116,7 +117,7 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
                                 <div class="month-allocated-cont">
                                     <div>
-                                        <input type="date" id="create-billing-start-date" name="create-billing-start-date" required>
+                                        <input type="date" id="create-billing-start-date" name="create-billing-start-date">
                                         
                                         <input type="date" id="create-billing-billDateIssued" name="create-billing-billDateIssued" style="display:none">
 
@@ -137,7 +138,7 @@ class BillingsViews extends GeneralViews{
                                 </div>
 
                                 <div class="add-cont">
-                                    <button type="submit" name="create-billing-submit" class="btn-var-3 add-button">Add</button>
+                                    <button type="submit" name="create-billing-submit" class="btn-var-5 shadow">Add</button>
                                 </div>
                                 
                             </form>
@@ -198,80 +199,80 @@ class BillingsViews extends GeneralViews{
         $tenants = BillingsController::get_tenants();
 
         echo <<<HTML
-            <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body bg-custom">
-                            <form method="POST">
-                                <!-- BillRefNo -->
-                                <input type="hidden" id="billRefNo" name="billRefNo">
+        <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addNewPaymentLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content bg-custom">
+                    <div class="modal-header bg-custom">
+                        <h5 class="modal-title" id="addNewPaymentLabel">Add New Payment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-custom">
+                        <form method="POST">
+                            <!-- BillRefNo -->
+                            <input type="hidden" id="billRefNo" name="billRefNo">
 
-                                <label class="billings-modal-labels" for="tenantName">Billing Information</label>
-                                <!-- tenantID -->
-                                <input type="hidden" id="paymentTenantID" name="paymentTenantID">
+                            <label class="billings-modal-labels" for="tenantName">Billing Information</label>
+                            <!-- tenantID -->
+                            <input type="hidden" id="paymentTenantID" name="paymentTenantID">
 
-                                <input type="text" name="tenantName" id="paymentTenantName" disabled>
-                                <p class="small-text">Name</p>
-                                <!-- due date -->
-                                <input type="date" class="w-100 shadow" id="paymentBillDueDate" name="paymentBillDueDate" value="" disabled>
-                                <p class="small-text">Due Date</p>
-                                <label class="billings-modal-labels" for="paymentAmount">Payment Details</label><br>
-                                
-                                <!-- payment amount -->
-                                <input class="rounded-inputs" type="number" id="paymentAmount" name="paymentAmount" placeholder="0.00" disabled>
+                            <input type="text" name="tenantName" id="paymentTenantName" disabled>
+                            <p class="small-text">Name</p>
+                            <!-- due date -->
+                            <input type="date" class="w-100 shadow" id="paymentBillDueDate" name="paymentBillDueDate" value="" disabled>
+                            <p class="small-text">Due Date</p>
+                            <label class="billings-modal-labels" for="paymentAmount">Payment Details</label><br>
 
-                                <input type="hidden" id="actualPaymentAmount" name="actualPaymentAmount" placeholder="0.00" >
-                                <p class="small-text">Amount</p>
+                            <!-- payment amount -->
+                            <input class="rounded-inputs" type="number" id="paymentAmount" name="paymentAmount" placeholder="0.00" disabled>
 
-                                <!-- payMethod -->
-                                <span class="billings-modal-labels">Mode of Transaction</span><br>
-                                <select style="padding:1px;" class="rounded-inputs" name="paymentMethod" id="add-payMethod">
-                                    <option value="Cash">Cash on Hand</option>
-                                    <option value="Gcash">GCash</option>
-                                </select>
-                                
-                                <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
+                            <input type="hidden" id="actualPaymentAmount" name="actualPaymentAmount" placeholder="0.00">
+                            <p class="small-text">Amount</p>
+
+                            <!-- payMethod -->
+                            <span class="billings-modal-labels">Mode of Transaction</span><br>
+                            <select style="padding:1px;" class="rounded-inputs" name="paymentMethod" id="add-payMethod">
+                                <option value="Cash">Cash on Hand</option>
+                                <option value="Gcash">GCash</option>
+                            </select>
+
+                            <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
                                 <span class="custom-checkbox">Transaction made by a non-tenant payer</span>
-                                
-                                <div class="payer-details">
+
+                            <div class="payer-details">
                                 <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
                                 <div class="payer-info">
-                                <div>
-                                    <!-- payerFname -->
-                                    <input type="text" id="payer-fname" name="payer-fname">
-                                    <p class="small-text">First Name</p>
-                                </div>
-                                
-                                <div>
-                                    <!-- payerMI -->
-                                    <input type="text" id="payer-MI" name="payer-MI">
-                                    <p class="small-text">M.I</p>
-                                </div>
-                                
-                                <div>
-                                    <!-- payerLname -->
-                                    <input type="text" id="payer-lname" name="payer-lname">
-                                    <p class="small-text">Last Name</p>
-                                </div>
-                                
-                                </div>
+                                    <div>
+                                        <!-- payerFname -->
+                                        <input type="text" id="payer-fname" name="payer-fname">
+                                        <p class="small-text">First Name</p>
+                                    </div>
+
+                                    <div>
+                                        <!-- payerMI -->
+                                        <input type="text" id="payer-MI" name="payer-MI">
+                                        <p class="small-text">M.I</p>
+                                    </div>
+
+                                    <div>
+                                        <!-- payerLname -->
+                                        <input type="text" id="payer-lname" name="payer-lname">
+                                        <p class="small-text">Last Name</p>
+                                    </div>
 
                                 </div>
+                            </div>
 
-                                <div class="add-cont">
-                                    <button type="submit" name="add-payment-submit" class="btn-var-3 add-button">Add</button>
-                                </div>
-                                
-                            </form>
-                        </div>
+                            <div class="add-cont">
+                                <button type="submit" name="add-payment-submit" class="btn-var-5" style="width: 200px">Add</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
         HTML;
+
     }
 
 
@@ -305,9 +306,9 @@ class BillingsViews extends GeneralViews{
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Date Issued</p>
 
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued">
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssuedDummy" disabled>
 
-                                        <!-- <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued" hidden> -->
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued" hidden>
                                     </div>
                                 
                                     <div class="edit-billings-row">
@@ -401,7 +402,7 @@ class BillingsViews extends GeneralViews{
                                     <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
                                         <div class="payer-info">
                                             <div>
-                                                <input class="rounded-inputs" type="text" id="edit-payer-fname" name="edit-payer-fname" required>
+                                                <input class="rounded-inputs" type="text" id="edit-payer-fname" name="edit-payer-fname">
                                                 <p class="small-text">First Name</p>
                                             </div>
                                             
@@ -428,15 +429,6 @@ class BillingsViews extends GeneralViews{
             </div>
         HTML;
     }
-
-    /**
-     * Helper functions for sorting
-     * @method sortByAmount
-     * @method sortByBillDueDate
-     * @method sortByTenantFirstName
-     * @method searchByFirstName
-     * associated method/s: generate_billing_table()
-     */
 
     public static function sortByAmount($a, $b) {
         return $b['billTotal'] <=> $a['billTotal'];
@@ -531,6 +523,9 @@ class BillingsViews extends GeneralViews{
                 $billingData = BillingsController::get_billing_data($billingId);
                 $billingDataJson = htmlspecialchars(json_encode($billingData));
 
+                $occType = BillingsController::get_specific_occupancy_type($tenID);
+                $occTypeJson = htmlspecialchars(json_encode($occType));
+
                 $appliancesCount = BillingsController::get_appliances($tenID);
                 $APCount = htmlspecialchars(json_encode($appliancesCount));
                 $payment_billing_info_json = $APCount;
@@ -539,6 +534,7 @@ class BillingsViews extends GeneralViews{
                     $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
                 }
 
+                // Converts the date to a more readable format
                 $billDateIssuedReadable = date('F j, Y', strtotime($billDateIssued));
                 $billDueDateReadable = date('F j, Y', strtotime($billDueDate));
 

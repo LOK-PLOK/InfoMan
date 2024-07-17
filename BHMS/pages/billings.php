@@ -41,25 +41,25 @@
                         <header class="upper">
                             <!-- Leftside Area header -->
                             <div class="leftside-content">
-                                <span class="text-color">Sort by:</span>
+                                <span style="color: #779CC8; font-weight: bold; margin-right: 10px;">Sort by:</span>
                                 <form method="GET">
                                 <div class="btn-group " style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
-                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                      <span class="pe-5 fs-6">Category...</span>
+                                    <button class="btn-var-7 dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <span class="pe-5 fs-6" style="padding-left: 20px;">Category...</span>
                                     </button>
 
-                                    <ul class="dropdown-menu" style="background-color: #344799;">
+                                    <ul class="dropdown-menu" style="background-color: #EDF6F7; z-index:1050;">
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"  name="" value="Due Date: Newest to Oldest" class="no-design1">
+                                            <input type="submit"  name="" value="Newest to Oldest" class="dropdown-content">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"  name="sort-oldest-to-newest" value="Due Date: Oldest to Newest" class="no-design1">
+                                            <input type="submit"  name="sort-oldest-to-newest" value="Oldest to Newest" class="dropdown-content">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit"   name="sort-order-by-name" value="Name: A-Z" class="no-design2">
+                                            <input type="submit"   name="sort-order-by-name" value="Order by Name" class="dropdown-content">
                                         </li>
                                         <li class="d-flex justify-content-center">
-                                            <input type="submit" name="sort-order-by-amount" value="Amount: Highest to Lowest" class="no-design2">
+                                            <input type="submit" name="sort-order-by-amount" value="Order by Amount" class="dropdown-content">
                                         </li>
                                     </ul>
                                 </div>
@@ -69,8 +69,8 @@
                             <!-- Rightside Area header -->
                             <div class="rigthside-content">
                                 <form method="GET">
-                                    <div class="search-container" style="box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);">
-                                            <input id="search" type="text" value="" name="search" placeholder="Search">
+                                    <div class="search-container shadow">
+                                            <input id="search" class="search" type="text" value="" name="search" placeholder="Search">
                                             <span class="search-icon"><i class="fas fa-search"></i></span>
                                     </div>
                                 </form>
@@ -195,7 +195,7 @@
             }
         }
 
-        // LISTEN TO POST REQUEST FROM CREATE BILLING MODAL
+        // LISTEN TO POST REQUEST FROM CREATE MODAL
         if (isset($_POST['create-billing-submit'])){
                 $new_billing = array(
                     "tenID" => $_POST['create-billing-tenant'],
@@ -231,17 +231,13 @@
 
         // LISTEN TO POST REQUEST FROM EDIT MODAL
         if (isset($_POST['edit-billing-submit'])) {
-            echo '<script>console.log("helkoooo")</script>';
             $updated_billing = array(
                 "billRefNo" => $_POST['editBillingId'],
                 "billTotal" => $_POST['editBillTotal'],
-                "billDateIssued" => $_POST['editBillDateIssued'],
             );
-        
-            echo '<script>console.log(' . json_encode($updated_billing) . ')</script>';
             
             $result = BillingsController::update_billing($updated_billing);
-            if ($result) {
+            if($result){
                 header('Location: billings.php?editBillingStatus=success');
                 exit();
             } else {
@@ -315,10 +311,14 @@
         var backdrops = document.querySelectorAll('.modal-backdrop');
         backdrops.forEach(backdrop => backdrop.remove());
     });
-    });
+});
 
     // calculateDate handler
+    
     calculateDate('create-billing-start-date', 'create-billing-dummy-end-date','create-billing-end-date');
+    // comment this out for the mean time
+    // calculateDate('start-date', 'dummy-end-date','end-date');
+
 
     // tab save even when refreshing handler
     function handleTabSwitching() {
@@ -355,9 +355,9 @@
             switchTab(index);
         });
     });
-    }
+}
 
-    document.addEventListener('DOMContentLoaded', handleTabSwitching);
+document.addEventListener('DOMContentLoaded', handleTabSwitching);
 </script>
 
 

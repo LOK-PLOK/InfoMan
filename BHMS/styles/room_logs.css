@@ -11,15 +11,14 @@ body {
     height: 100vh;
 }
 
-/*====================Content Styles====================*/
-
 @media only screen and (max-width: 750px) {
     .container-fluid { /* Height of the content set to auto when screen is <750px */
         height: auto;
     }
 }
 
-/*---------------Room Card Styles---------------*/
+
+/*⋆ ˚｡⋆୨୧˚ ROOM CARDS ˚୨୧⋆｡˚⋆*/
 .rm-container {
     padding: 20px;
     justify-content: center;
@@ -76,48 +75,45 @@ body {
     line-height: 30px;
 }
 
-/*====================Buttons Styles====================*/
 
+/*⋆ ˚｡⋆୨୧˚ BUTTONS ˚୨୧⋆｡˚⋆*/
 .rm-log-button{
     position: absolute;
     display: flex;
     justify-content: end;
     gap: 13px;
     height: 45px;
-    margin: 20px 0;
     top: 0;
     right: 0;
     padding: 0 20px;
+    margin-top: 20px;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
 }
 
-.rm-log-button button{
-    width: auto;
-    background-color: #344799; 
+.delete-room-btn {
+    padding: 5px 15px;
+    margin-top: 10px;
     color: white;
-    border-radius: 5px;
+    background-color: #d9534f;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3px;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
-    padding: 20px;
+    border-radius: 2px;
+    width: auto;
+    max-width: 200px;
 }
 
-/*====================Room Log Modal Styles====================*/
+.delete-room-btn:hover {
+    color: #d9534f;
+    background-color: white;
+}
 
-/*---------------Room Information Modal Styles---------------*/
+
+/*⋆ ˚｡⋆୨୧˚ MODAL ˚୨୧⋆｡˚⋆*/
 .rm-modal-info {
     color: rgba(2, 67, 154, 0.50); 
     line-height: 14px;
 }
 
-.rm-modal-title {
-    color: #344799;
-    font-weight: 500;
-}
-
-/* Table */
 .rm-occupants table,
 .rm-occupants th,
 .rm-occupants td {
@@ -137,4 +133,3 @@ body {
 .rm-modal-info span {
     color: black;
 }
-

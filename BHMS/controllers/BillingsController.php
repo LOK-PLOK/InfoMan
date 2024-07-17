@@ -3,33 +3,11 @@
 require '../models/BillingsModel.php';
 require 'GeneralController.php';
 
-/**
- * Class for all controllers for Billings page
- * 
- * @method getApplianceRate
- * @method get_appliances
- * @method get_specific_occupancy_type - unused
- * @method get_overdue_billings
- * @method get_paid_billings
- * @method get_unpaid_billings
- * @method get_tenants
- * @method get_payment_billing_info
- * @method create_billings
- * @method delete_billings
- * @method update_billing
- * @method update_billing_payment
- * @method get_occupancy_types
- * @method create_payment
- * @method get_billing_data
- * @method get_specific_tenant - unused
- * @method update_billing_status
- * @method auto_generate_billing
- * 
- * @class BillingsViews
- * @extends GeneralViews
- */
-
 class BillingsController extends GeneralController{
+
+    // public static function get_sortedBy_oldestNewest_paidBillings(){
+    //     return BillingsModel::query_sortedBy_oldestNewest_paidBillings();
+    // }
 
     public static function getApplianceRate() {
         return BillingsModel::fetchApplianceRate();
@@ -62,7 +40,7 @@ class BillingsController extends GeneralController{
     public static function get_payment_billing_info($billRefNo){
         return BillingsModel::query_get_payment_billing_info($billRefNo);
     }
-    
+
     public static function create_billings($new_billing){
         return BillingsModel::query_create_billings($new_billing);
     }
@@ -107,6 +85,27 @@ class BillingsController extends GeneralController{
 
     public static function update_billing_status($new_payment){
         return BillingsModel::query_update_billing_status($new_payment);
+    }
+
+    // Function for Automated Billing (In-Progress)
+    public static function auto_generate_billing() {
+        $all_occupancy = BillingsModel::query_all_occupancy();
+
+        foreach($all_occupancy as $occupancy){
+
+            $occupancyID = $occupancy['occupancyID'];
+            $billNotice = '';
+            $check_occupancy = BillingsModel::query_billing_notice_checker($occupancyID);
+
+            if($check_occupancy != 0){
+                $billNotice = 'Billing Notice Created';
+            } else {
+                $billNotice = 'Billing Notice Not Created';
+            }
+
+            echo '<script>console.log("Occupancy ID No. ", "'.$occupancyID.': ", '.$billNotice.')</script>';
+
+        }
     }
 }
 

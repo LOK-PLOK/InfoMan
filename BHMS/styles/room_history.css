@@ -1,48 +1,4 @@
-/* Dropdown button */
-.dropdown-menu {
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-.dropdown-menu input {
-    color: white;
-    width: 100%;
-    padding: 10px 0;
-    background-color: #344799;
-    border: none;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.dropdown-menu input:focus {
-    outline: none;
-}
-
-.dropdown-menu input:hover {
-    background-color: white;
-    color: #344799;
-}
-
-/* Search Bar */
-.search{
-    width: 210px;
-    background-color: #344799; 
-    color: white;
-    border-radius: 5px;
-    border: none;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
-    text-align: left;
-    padding: 5px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search::placeholder {
-    opacity: 1;
-}
-
-/* Table */
+/*⋆ ˚｡⋆୨୧˚ TABLE ˚୨୧⋆｡˚⋆*/
 td {
     padding: 10px;
     text-align: center;

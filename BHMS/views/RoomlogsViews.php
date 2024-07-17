@@ -141,7 +141,7 @@ class RoomlogsViews extends GeneralViews{
                     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3 class="rm-modal-title" id="room-information">Room Information</h3>
+                                <h3 class="modal-title" id="room-information">Room Information</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -156,7 +156,7 @@ class RoomlogsViews extends GeneralViews{
                                     if($_SESSION['sessionType'] == 'admin'){
                                         echo <<<HTML
                                             <div class="d-flex flex-column justify-content-around">
-                                                <button type="button" class="btn-var-5 my-1 bg-danger" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
+                                                <button type="button" class="delete-room-btn" data-bs-toggle="modal" data-bs-target="#deleteRoomModal"
                                                 onclick="delRoomID('{$roomID}')">Delete Room</button>
                                                 <button type="button" class="btn-var-5 my-1" data-bs-toggle="modal" data-bs-target="#edit-rm"
                                                 onclick="setValuesEditRoom('{$roomID}', '{$room['capacity']}')">Edit Room</button>
@@ -206,8 +206,8 @@ class RoomlogsViews extends GeneralViews{
                     $deactBtn = '';
                 } else {
                     $color = 'background-color: #E4A11B;';
-                    $deactBtn = '<button class="deactOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal" value="'.$room_tenant['occupancyID'].'">
-                                    <img src="/images/icons/Residents/deactivate.png" alt="deactivate" class="action">
+                    $deactBtn = '<button class="deactOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;">
+                                    <img src="/images/icons/Residents/deactivate.png" alt="deactivate" class="action" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal" value="'.$room_tenant['occupancyID'].'">
                                 </button>';
                 }
 
@@ -349,7 +349,7 @@ class RoomlogsViews extends GeneralViews{
                     </div>
                     <div class="modal-footer border-0 justify-content-center">
                         <!-- Submit Button -->
-                        <button type="submit" name="edit-rent-submit" class="btn-var-3 add-button">Save</button>
+                        <button type="submit" name="edit-rent-submit" class="btn-var-5" style="width: 200px;">Save</button>
                     </div>
                     </div>
                 </form>
@@ -369,24 +369,21 @@ class RoomlogsViews extends GeneralViews{
         echo <<<HTML
             <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <span style="font-size: 25px;">Are you sure you want to delete this occupancy?</span>
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-custom">
+                        <div class="modal-body text-center">
+                        <p class="confirmation-question">Are you sure you want to delete this user?</p>
                         <form method="POST">
-                            <div class="displayflex">
+                            <div class="button-container">
                                 <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
-                                <input type="submit" name="delete-occupancy-submit" class="bg-danger btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                                <input type="submit" name="delete-occupancy-submit" class="btn-delete-yes" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No">
                             </div>
                         </form>
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                         </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                        </div>
-                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>
@@ -406,7 +403,7 @@ class RoomlogsViews extends GeneralViews{
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content m-5">
                     <div class="modal-header">
-                        <h3 class="rm-modal-title" id="add-new-rm-modal">Add New Room</h3>
+                        <h5 class="modal-title" id="add-new-rm-modal">Add New Room</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="POST">
@@ -447,7 +444,7 @@ class RoomlogsViews extends GeneralViews{
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content m-5">
                     <div class="modal-header">
-                        <h3 class="rm-modal-title" id="edit-rm-modal">Edit Room</h3>
+                        <h3 class="modal-title" id="edit-rm-modal">Edit Room</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="POST">
@@ -487,24 +484,21 @@ class RoomlogsViews extends GeneralViews{
         echo <<<HTML
             <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-labelledby="deleteRoomModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <span style="font-size: 25px;">Are you sure you want to delete this room?</span>
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-custom">
+                        <div class="modal-body text-center">
+                        <p class="confirmation-question">Are you sure you want to delete this user?</p>  
                         <form method="POST">
-                            <div class="displayflex">
+                            <div class="button-container">
                                 <input type="hidden" name="delete-room-id" id="delete-room-id">
-                                <input type="submit" name="delete-room-submit" class="btn-var-2 ms-4 me-4 bg-danger" value="Yes">
-                                <input type="button" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                                <input type="submit" name="delete-room-submit" class="btn-delete-yes" value="Yes">
+                                <input type="button" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No">
                             </div>
                         </form>
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                         </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                        </div>
-                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>
@@ -654,7 +648,7 @@ class RoomlogsViews extends GeneralViews{
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
                     <!-- Submit Button -->
-                    <button type="submit" name="create-new-rent" class="btn-var-3 add-button">Add</button>
+                    <button type="submit" name="create-new-rent" class="btn-var-4">Add</button>
                 </div>
                 </div>
             </form>
@@ -663,35 +657,26 @@ class RoomlogsViews extends GeneralViews{
         HTML;
     }
     
-    /**
-     * This method is used to display the deactivate occupancy modal.
-     * 
-     * @method deactOccupancyModal
-     * @param none
-     * @return void
-     */
+    // Deactivate Occupancy Modal
     public static function deactOccupancyModal(){
         echo <<<HTML
             <div class="modal fade" id="deactOccupancyModal" tabindex="-1" aria-labelledby="deactOccupancyModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <span style="font-size: 25px;">Are you sure you want to deactivate this occupancy?</span>
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-custom">
+                        <div class="modal-body text-center">
+                        <p class="confirmation-question">Are you sure you want to deactivate this user?</p>
                         <form method="POST">
-                            <div class="displayflex">
+                            <div class="button-container">
                                 <input type="hidden" name="deact-occupancy-id" id="deact-occupancy-id">
-                                <input type="submit" name="deact-occupancy-submit" class="bg-danger btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                                <input type="submit" name="deact-occupancy-submit" class="btn-delete-yes" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No">
                             </div>
                         </form>
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                         </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                        </div>
-                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>

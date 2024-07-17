@@ -18,7 +18,6 @@ ResidentsController::updateTenantRentStatus();
  * @method edit_tenant_modal_view
  * @method delete_tenant_model_view
  * @class ResidentsViews
- * @extends GeneralViews
  */
 class ResidentsViews extends GeneralViews{
 
@@ -40,10 +39,8 @@ class ResidentsViews extends GeneralViews{
                         <span class="page-sub-header">Manage all the residents in the boarding house</span>
                 </div>
                 <div class="left-content-button">
-                        <!-- Button to open Modal -->
-                        <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
-                            <img src="/images/icons/Residents/add_new_light.png" alt=""> Add New
-                        </button>
+                <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#myModal" onmouseover="document.getElementById('dashboard-add-user').src='/images/icons/Dashboard/Buttons/add_user_dark.png'" onmouseout="document.getElementById('dashboard-add-user').src='/images/icons/Dashboard/Buttons/add_user_light.png'">
+                <img id="dashboard-add-user" src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
                 </div>
             </div>
             <div class="right-content">
@@ -79,106 +76,124 @@ class ResidentsViews extends GeneralViews{
                     </div>
                     <div class="modal-body bg-custom">
                         <form method="POST">
-                            <div class="label label-position">
-                                <div style="width: 65.9%;">Name:</div>
-                                <div style="width: 17%;">Gender:</div>
-                                <div>Birth Date:</div>
-                            </div>
-                            <div class="positioning">
-                                <div class="NameInput">
-                                    <!-- tenFname -->
-                                    <input type="text" id="tenFname" name="tenFname" placeholder="Juan" class="FNclass shadow" required>
-                                    <!-- tenMI -->
-                                    <input type="text" id="tenMI" name="tenMI" placeholder="P" class="MIclass shadow" maxlength="1">
-                                    <!-- tenLname -->
-                                    <input type="text" id="tenLname" name="tenLname" placeholder="Dela Cruz" class="LNclass shadow" required>
+                            <!-- Name, Gender, Birth Date -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Name:</label>
                                 </div>
-                                <!-- tenGender -->
-                                <select id="tenGender" name="tenGender" class="shadow" required>
-                                    <option value="" disabled selected>...</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="O">Other</option>
-                                </select>
-                                <!-- tenBdate -->
-                                <input type="date" id="tenBdate" name="tenBdate" class="Bday shadow" required>
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-fn">First Name</div>
-                                <div class="label-mi">Middle Initial</div>
-                                <div class="label-ln">Last Name</div>
+                                <div class="col-md-4">
+                                    <input type="text" id="tenFname" name="tenFname" placeholder="Juan" class="form-control shadow" required>
+                                    <label class="add-new-tenant-sup-label" for="tenFname">First Name</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="D" class="form-control shadow" maxlength="1">
+                                    <label class="add-new-tenant-sup-label" for="tenMI">Middle Initial</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="tenLname" name="tenLname" placeholder="Cruz" class="form-control shadow" required>
+                                    <label class="add-new-tenant-sup-label" for="tenLname">Last Name</label>
+                                </div>
                             </div>
                             <!-- Address -->
-                            <div class="label label-position">
-                                <div>Address:</div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Address:</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="123" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenHouseNum">House No.</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="tenSt" name="tenSt" placeholder="45 Street" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenSt">Street</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenBrgy" name="tenBrgy" placeholder="Barangay" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenBrgy">Barangay</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenCityMun" name="tenCityMun" placeholder="City" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenCityMun">City/Municipality</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="tenProvince" name="tenProvince" placeholder="Cebu" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="tenProvince">Province</label>
+                                </div>
                             </div>
-                            <div>
-                                <!-- tenHouseNum -->
-                                <input type="text" id="tenHouseNum" name="tenHouseNum" placeholder="1024" class="houseno shadow">
-                                <!-- tenSt-->
-                                <input type="text" id="tenSt" name="tenSt" placeholder="R.Palma Street" class="street shadow">
-                                <!-- tenBrgy -->
-                                <input type="text" id="tenBrgy" name="tenBrgy" placeholder="Adlaon" class="barangay shadow">
-                                <!-- tenCityMun -->
-                                <input type="text" id="tenCityMun" name="tenCityMun" placeholder="Cebu City" class="city shadow">
-                                <!-- tenProvince -->
-                                <input type="text" id="tenProvince" name="tenProvince" placeholder="Cebu" class="province shadow">
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-houseno">House No.</div>
-                                <div class="label-street">Street</div>
-                                <div class="label-barangay">Barangay</div>
-                                <div class="label-city">City/Municipality</div>
-                                <div class="label-province">Province</div> 
-                            </div>
-                            <div class="label label-position">
-                                <div>Contact Number:</div>
-                            </div>
-                            <div>
-                                <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
-                                <!-- tenContact -->
-                                <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
+                            <!-- Gender, Birth Date, Contact Number -->
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="add-new-tenant-label">Gender:</label>
+                                    <select id="tenGender" name="tenGender" class="form-control shadow">
+                                        <option value="" disabled selected style="display:none;">...</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="add-new-tenant-label">Birth Date:</label>
+                                    <input type="date" id="tenBdate" name="tenBdate" class="form-control shadow">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="add-new-tenant-label">Contact Number:</label>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Emergency Contact -->
-                            <div class="header label-position">
-                                <div>Emergency Contact</div>
-                            </div>
-                            <div class="label label-position">
-                                <div style="width: 60%;">Name:</div>
-                                <div>Contact Number:</div>
-                            </div>
-                            <div style="display: flex; justify-content:left;">
-                                <div class="NameInput">
-                                    <!-- emContactFname -->
-                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Glydel" class="FNclass shadow">
-                                    <!-- emContactMI -->
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="L" class="MIclass shadow" maxlength="1">
-                                    <!-- emContactLname -->
-                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Dela Cruz" class="LNclass shadow">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Emergency Contact Name:</label>
                                 </div>
-                                <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="countrycode shadow" style="margin-right: 4px;" disabled>
-                                <!-- emContactNum -->
-                                <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
+                                <div class="col-md-4">
+                                    <input type="text" id="emContactFname" name="emContactFname" placeholder="Maria" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="emContactFname">First Name</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="D" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="emContactMI">Middle Initial</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="emContactLname" name="emContactLname" placeholder="Cruz" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="emContactLname">Last Name</label>
+                                </div>
                             </div>
-                            <div class="label label-position label-under">
-                                <div class="label-fn">First Name</div>
-                                <div class="label-mi">Middle Initial</div>
-                                <div class="label-ln">Last Name</div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Emergency Contact Number:</label>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Appliances -->
-                            <div class="header label-position">
-                                <div id=>Appliances</div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Appliances</label>
+                                </div>
+                                <div id="applianceContainer" class="col-12">
+                                    <!-- Initially empty, fields will be added dynamically -->
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <input type="button" id="addMoreAppliance" class="btn-var-5 shadow" value="Add More">
+                                </div>
                             </div>
-                            <div id="applianceContainer">
-                                <!-- Initially empty, fields will be added dynamically -->
-                            </div>
-                            <div>
-                                <!-- addbutton -->
-                                <input type="button" id="addMoreAppliance" class="btn-var-5 shadow" value="Add More">
-                            </div>
-                            <div class="displayflex">
-                                <!-- Submit Button -->
-                                <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" value="Add">
+
+                            <div class="row mb-3">
+                                <div class="col-12" style="text-align:center;">
+                                    <input type="submit" name="create-tenant-submit" class="btn-var-4 shadow" style="display: block; margin: 10px auto; max-width: 200px;" value="Add">
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -198,6 +213,7 @@ class ResidentsViews extends GeneralViews{
      */
     public static function residents_table_display($tenant_list){
 
+        // Start echoing the HTML content
         echo <<<HTML
             <div class="data-container">
 
@@ -208,25 +224,25 @@ class ResidentsViews extends GeneralViews{
                         <span class="text-color">Sort by:</span>
                         <form method="GET">
                             <div class="btn-group" style="z-index: 1000;">
-                                <button class="btn btn-primary btn-sm dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="pe-5 fs-6">Category...</span>
+                                <button class="btn-var-7 dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="pe-5 fs-6" style="padding-left: 20px;">Category...</span>
                                 </button>
-                                <ul class="dropdown-menu" style="background-color: #344799; z-index:1050;">
-                                    <li class="d-flex justify-content-center"><input type="submit"  name="ALL"value="ALL" class="no-design1"></li>
-                                    <li class="d-flex justify-content-center"><input type="submit"  name="Active"value="Active" class="no-design1"></li>
-                                    <li class="d-flex justify-content-center"><input type="submit"   name="Inactive" value="Inactive"class="no-design2"></li>
-                                    <li class="d-flex justify-content-center"><input type="submit"   name="Evicted" value="Evicted"class="no-design2"></li>
-                                    <li class="d-flex justify-content-center"><input type="submit"   name="Name" value="Name"class="no-design2"></li>
+                                <ul class="dropdown-menu" style="background-color: #EDF6F7; z-index:1050;">
+                                    <li class="d-flex justify-content-center"><input type="submit"  name="ALL" value="ALL" class="dropdown-content"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"  name="Active" value="Active" class="dropdown-content"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"   name="Inactive" value="Inactive"class="dropdown-content"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"   name="Evicted" value="Evicted"class="dropdown-content"></li>
+                                    <li class="d-flex justify-content-center"><input type="submit"   name="Name" value="Name"class="dropdown-content"></li>
                                 </ul>
                             </div>
                         </form>
                     </div>
 
                     <!-- Rightside Area header -->
-                    <div class="rigthside-content">
+                    <div>
                         <form>
                             <div class="search-container shadow">
-                                <input type="text" id="search" name="search" placeholder="Search" value>
+                                <input type="text" class="search" id="search" name="search" placeholder="Search" value>
                                 <span class="search-icon"><i class="fas fa-search"></i></span>
                             </div>
                         </form>
@@ -359,14 +375,14 @@ class ResidentsViews extends GeneralViews{
                         <span style="font-size: 25px;" class="header">Tenant Information</span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-custom displayflex" id="tenantInfoModalBody">
+                    <div class="tenant-modal-body bg-custom displayflex" id="tenantInfoModalBody">
                         <!-- Tenant information will be loaded here dynamically -->
                     </div>
                     <div class="modal-footer-custom bg-custom " >
                         <div class="header">Rent History</div>
                         <section class="table-data">
                             <div class="table-responsive overflow-auto" style="max-height: 200px;">
-                                <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799">
+                                <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799; border-top:1px solid #344799;">
                                     <thead>
                                         <tr>
                                             <th>Room Code</th>
@@ -407,7 +423,7 @@ class ResidentsViews extends GeneralViews{
         
                     // Update tenant information section
                     tenantInfoModalBody.innerHTML = `
-                        <div class="split-left">
+                        <div class="tenant-split-left">
                             <div>
                                 <span class="label">Name:</span>
                                 <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI ? tenantData.tenMI + "." : ""} ${tenantData.tenLname}</span>
@@ -433,7 +449,7 @@ class ResidentsViews extends GeneralViews{
                                 <ul id="appliancesList"></ul>
                             </div>
                         </div>
-                        <div class="split-right">
+                        <div class="tenant-split-right">
                             <div>
                                 <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
                             </div>
@@ -612,25 +628,22 @@ class ResidentsViews extends GeneralViews{
         echo <<<HTML
             <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <span style="font-size: 25px;" class="header">Are you sure you want to delete this occupancy?</span>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body bg-custom">
-                        <form method="POST" id = "deleteOccupancy">
-                            <div class="displayflex">
-                                <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
-                                <input type="submit" name="delete-occupancy-submit" class="btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No" style="background: red;">
-                            </div>
-                        </form>
-                        </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                        </div>
-                        <div class="modal-footer"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body text-center">
+                    <p class="confirmation-question">Are you sure you want to delete this occupancy?</p>
+                    <form method="POST" id = "deleteOccupancy">
+                    <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
+                        <div class="button-container">
+                            <button type="submit" name="delete-occupancy-submit" class="btn-delete-yes" value="Yes">
+                            <button type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No" style="background: red;">
+                        </div>
+                    </form>
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
+                    </div>
+                </div>
                 </div>
             </div>
         HTML;
@@ -657,117 +670,137 @@ class ResidentsViews extends GeneralViews{
                         <form id="editTenantForm" method="POST">
                             <!-- Hidden field for tenant ID -->
                             <input type="hidden" id="Edit-tenID" name="Edit-tenID">
-    
-        
-                            <div class="label label-position">
-                                <div style="width: 65.9%;">Name:</div>
-                                <div style="width: 17%;">Gender:</div>
-                                <div>Birth Date:</div>
-                            </div>
-                            <div class="positioning">
-                                <div class="NameInput">
-                                    <!-- Edit tenFname -->
-                                    <input type="text" id="Edit-tenFname" name="Edit-tenFname" placeholder="First Name" class="FNclass shadow" required>
-                                    <!-- Edit tenMI -->
-                                    <input type="text" id="Edit-tenMI" name="Edit-tenMI" placeholder="MI" class="MIclass shadow" maxlength="1">
-                                    <!-- Edit tenLname -->
-                                    <input type="text" id="Edit-tenLname" name="Edit-tenLname" placeholder="Last Name" class="LNclass shadow" required>
+
+                            <!-- Name, Gender, Birth Date -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Name:</label>
                                 </div>
-                                <select id="Edit-tenGender" name="Edit-tenGender" class="shadow" required>
-                                    <option value="" disabled selected>...</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                </select>
-                                <!-- Edit-tenBdate -->
-                                <input type="date" id="Edit-tenBdate" name="Edit-tenBdate" class="Bday shadow" required>
+                                <div class="col-md-4">
+                                    <input type="text" id="Edit-tenFname" name="Edit-tenFname" placeholder="Juan" class="form-control shadow" required>
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenFname">First Name</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="Edit-tenMI" name="Edit-tenMI" placeholder="D" class="form-control shadow" maxlength="1">
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenMI">Middle Initial</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="Edit-tenLname" name="Edit-tenLname" placeholder="Cruz" class="form-control shadow" required>
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenLname">Last Name</label>
+                                </div>
                             </div>
-                            <div class="label label-position label-under">
-                                <div class="label-fn">First Name</div>
-                                <div class="label-mi">Middle Initial</div>
-                                <div class="label-ln">Last Name</div>
-                            </div>
-                            
+
                             <!-- Address -->
-                            <div class="label label-position">
-                                <div>Address:</div>
-                            </div>
-                            <div>
-                                <!-- Edit-tenHouseNum -->
-                                <input type="text" id="Edit-tenHouseNum" name="Edit-tenHouseNum" placeholder="House Number" class="houseno shadow" >
-                                <!-- Edit-tenSt -->
-                                <input type="text" id="Edit-tenSt" name="Edit-tenSt" placeholder="Street" class="street shadow" >
-                                <!-- Edit-tenBrgy -->
-                                <input type="text" id="Edit-tenBrgy" name="Edit-tenBrgy" placeholder="" class="barangay shadow">
-                                <!-- Edit-tenCityMun -->
-                                <input type="text" id="Edit-tenCityMun" name="Edit-tenCityMun" placeholder="City/Municipality" class="city shadow" >
-                                <!-- Edit-tenProvince -->
-                                <input type="text" id="Edit-tenProvince" name="Edit-tenProvince" placeholder="Province" class="province shadow" >
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-houseno">House No.</div>
-                                <div class="label-street">Street</div>
-                                <div class="label-city">City</div>
-                                <div class="label-province">Province</div>
-                            </div>
-                            
-                            <!-- Contact Number -->
-                            <div class="label label-position">
-                                <div>Contact Number:</div>
-                            </div>
-                            <div>
-                            <input type="text" id="countrycode" placeholder="+63" class="countrycode shadow" disabled>
-                                <!-- Edit-tenContact -->
-                                <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." required onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                            </div>
-                            
-                            <div class="header label-position">
-                                <div>Emergency Contact</div>
-                            </div>
-                            <div class="label label-position">
-                                <div style="width: 60%;">Name:</div>
-                                <div>Contact Number:</div>
-                            </div>
-                            <div style="display: flex; justify-content:left;">
-                                <div class="NameInput">
-                                    <!-- Edit-emContactFname -->
-                                    <input type="text" id="Edit-emContactFname" name="Edit-emContactFname" placeholder="First Name" class="FNclass shadow">
-                                    <!-- Edit-emContactMI -->
-                                    <input type="text" id="Edit-emContactMI" name="Edit-emContactMI" placeholder="MI" class="MIclass shadow" maxlength="1">
-                                    <!-- Edit-emContactLname -->
-                                    <input type="text" id="Edit-emContactLname" name="Edit-emContactLname" placeholder="Last Name" class="LNclass shadow">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Address:</label>
                                 </div>
-                                    <!-- Edit-emContactNum -->
-                                    <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="number shadow" pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                            </div>
-                            <div class="label label-position label-under">
-                                <div class="label-fn">First Name</div>
-                                <div class="label-mi">Middle Initial</div>
-                                <div class="label-ln">Last Name</div>
-                            </div>
-                            
-                             <!-- Appliances -->
-                            <div class="header label-position">
-                                <div>Appliances</div>
-                            </div>
-                            <div id="Edit-applianceContainer">
-                                <!-- Initially empty, fields will be added dynamically -->
-                            </div>
-                            <div>
-                                <!-- Edit Add More Appliance -->
-                                <input type="button" id="editMoreAppliance" class="btn-var-5 shadow" value="Add More">
+                                <div class="col-md-2">
+                                    <input type="text" id="Edit-tenHouseNum" name="Edit-tenHouseNum" placeholder="123" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenHouseNum">House No.</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="Edit-tenSt" name="Edit-tenSt" placeholder="45 Street" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenSt">Street</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="Edit-tenBrgy" name="Edit-tenBrgy" placeholder="Barangay" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenBrgy">Barangay</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="Edit-tenCityMun" name="Edit-tenCityMun" placeholder="City" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenCityMun">City/Municipality</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="Edit-tenProvince" name="Edit-tenProvince" placeholder="Cebu" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-tenProvince">Province</label>
+                                </div>
                             </div>
 
+                            <!-- Gender, Birth Date, Contact Number -->
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="add-new-tenant-label">Gender:</label>
+                                    <select id="Edit-tenGender" name="Edit-tenGender" class="form-control shadow" required>
+                                        <option value="" disabled selected style="display:none;">...</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="add-new-tenant-label">Birth Date:</label>
+                                    <input type="date" id="Edit-tenBdate" name="Edit-tenBdate" class="form-control shadow" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="add-new-tenant-label">Contact Number:</label>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <!-- Submit Button -->
-                            <div class="displayflex">
-                                <!-- edit-tenant-submit -->
-                                <input type="submit" name="edit-tenant-submit" class="btn-var-4 shadow" value="Save">
+                            <!-- Emergency Contact -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Emergency Contact Name:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="Edit-emContactFname" name="Edit-emContactFname" placeholder="Maria" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-emContactFname">First Name</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="Edit-emContactMI" name="Edit-emContactMI" placeholder="D" class="form-control shadow" maxlength="1">
+                                    <label class="add-new-tenant-sup-label" for="Edit-emContactMI">Middle Initial</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="Edit-emContactLname" name="Edit-emContactLname" placeholder="Cruz" class="form-control shadow">
+                                    <label class="add-new-tenant-sup-label" for="Edit-emContactLname">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Emergency Contact Number:</label>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appliances -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="add-new-tenant-label">Appliances</label>
+                                </div>
+                                <div id="Edit-applianceContainer" class= "col-12">
+                                    <!-- Initially empty, fields will be added dynamically -->
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <input type="button" id="editMoreAppliance" class="btn-var-5 shadow" value="Add More">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12" style="text-align:center;">
+                                    <input type="submit" name="edit-tenant-submit" class="btn-var-4 shadow" style="display: block; margin: 10px auto; max-width: 200px;" value="Save">
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+
+ 
         HTML;
     }
     
@@ -779,36 +812,28 @@ class ResidentsViews extends GeneralViews{
      * @return void
      */
     public static function delete_tenant_model_view(){
-        echo '<div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        echo <<<HTML
+        <div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content bg-custom">
-                    <div class="modal-header bg-custom border-0">
-                        <div class="displayflex header bg-custom">
-                            <span style="font-size: 25px;" id="deleteTenantMessage">Are you sure you want to delete this tenant?</span>
-                        </div>
-                        <div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-custom">
+                    <div class="modal-body text-center">
+                    <p class="confirmation-question">Are you sure you want to delete this tenant?</p>
                         <form id="deleteTenantForm" action="../pages/residents.php" method="POST">
-                            <div class="displayflex">
-                                <!-- Hidden input field to hold tenant ID -->
-                                <input type="hidden" name="deleteTenantId" id="deleteTenantId" value="">
-                                <!-- Buttons to confirm or cancel deletion -->
-                                <input type="submit" name="delete-tenant-submit" id="Yesdelete" class="btn-var-6" value="Yes">
-                                <button type="button" name="No" id="Nodelete" class="btn-var-6" data-bs-dismiss="modal" aria-label="Close">No</button>
+                            <input type="hidden" name="deleteTenantId" id="deleteTenantId" value="">
+                            <div class="button-container">
+                                <button type="submit" name="delete-tenant-submit" id="Yesdelete" class="btn-delete-yes" value="Yes">Yes</button>
+                                <button type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" aria-label="Close">No</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                        <span>Note: Once you have clicked \'Yes\', this cannot be undone</span>
-                    </div>
-                    <div class="modal-footer">
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                     </div>
                 </div>
             </div>
-        </div>';
+        </div>
+        HTML;
     }
 
     /**
@@ -821,24 +846,21 @@ class ResidentsViews extends GeneralViews{
         echo <<<HTML
             <div class="modal fade" id="evictTenantModal" tabindex="-1" aria-labelledby="evictTenantModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <span style="font-size: 25px;" class="header">Are you sure you want to evict this tenant?</span>
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-custom">
+                        <div class="modal-body text-center">
+                        <p class="confirmation-question">Are you sure you want to evict this tenant?</p>
                         <form method="POST">
-                            <div class="displayflex">
-                                <input type="hidden" name="evictTenID" id="evictTenID">
-                                <input type="submit" name="evict-tenant-submit" class="btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No" style="background: red;">
+                            <input type="hidden" name="evictTenID" id="evictTenID">
+                            <div class="button-container">
+                                <button type="submit" name="evict-tenant-submit" class="btn-delete-yes" value="Yes">Yes</button>
+                                <button type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No">No</button>
                             </div>
                         </form>
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                         </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                        </div>
-                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>

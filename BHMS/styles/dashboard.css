@@ -11,18 +11,6 @@ body {
     height: 100vh;
 }
 
-.label{
-    color: rgba(2, 67, 154, 0.50);
-}
-
-.header{
-    color: #344799;
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-/*==================== CONTENT ====================*/
-
 @media only screen and (min-width: 1130px) {
     .container-fluid {
         height: 100%;
@@ -35,64 +23,8 @@ body {
     }
 }
 
-/* Notification Bell */
-.notification-group {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 20px;
-    padding: 0 5px;
-    cursor: pointer;
-    z-index: 1000;
-}
 
-.notification img {
-    width: 30px;
-    cursor: pointer;
-}
-
-.notification-num {
-    position: absolute;
-    right: 0;
-    background-color: #d53030;
-    border-radius: 50%; 
-    color: white;
-    font-size: 10px;
-    padding: 7px 2px; 
-    width: 16px; 
-    height: 16px; 
-    line-height: 1px; 
-}
-
-.dropdown-menu {
-    background-color: #edf6f7 !important;
-    width: 350px !important;
-    max-height: 600px !important;
-    overflow: scroll;
-}
-
-.dropdown-menu > li {
-    padding: 5px;
-}
-
-.dropdown-menu > li:last-child {
-    border-bottom: none !important;
-}
-
-
-.notification-item-head {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.notification-item-body {
-    color: rgb(76, 76, 76);
-    font-size: 14px;
-}
-
-
-/* Add Buttons */
+/*⋆ ˚｡⋆୨୧˚ BUTTONS ˚୨୧⋆｡˚⋆*/
 .dashboard-button{
     display: flex;
     justify-content: end;
@@ -102,7 +34,7 @@ body {
 }
 
 
-/* Overview */
+/*⋆ ˚｡⋆୨୧˚ DASHBOARD CARDS ˚୨୧⋆｡˚⋆*/
 .dashboard-icons-cont{
     display: flex;
     justify-content: center;
@@ -139,6 +71,11 @@ body {
 .dashboard-icons p{
     font-size: 15px;
     text-align: right;
+}
+
+.dashboard-icons:hover {
+    color: white;
+    background-color: #344799;
 }
 
 @media only screen and (max-width: 400px) {

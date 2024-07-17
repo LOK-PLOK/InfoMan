@@ -32,11 +32,11 @@ require 'GeneralController.php';
 class MaintenanceController extends GeneralController{
 
     /**
-     * Adds a new maintenance to the database
+     * Gets the room data
      * 
      * @method get_room
      * @param none
-     * @return array The array of rooms
+     * @return MaintenanceModel::query_rooms
      */
     public static function get_room(){
         return MaintenanceModel::query_rooms();
@@ -46,195 +46,195 @@ class MaintenanceController extends GeneralController{
      * Adds a new maintenance to the database
      * 
      * @method create_new_maintenance
-     * @param array $create_maintenance The array of maintenance details
-     * @return boolean The result of the query
+     * @param $create_maintenance
+     * @return MaintenanceModel::query_new_maintenance
      */
     public static function create_new_maintenance($create_maintenance){
         return MaintenanceModel::query_new_maintenance($create_maintenance);
     }
 
     /**
-     * Gets all the ongoing maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_On_going_data
      * @param none
-     * @return array The array of ongoing maintenance
+     * @return MaintenanceModel::query_On_going_data
      */
     public static function get_On_going_data(){
         return MaintenanceModel::query_On_going_data();
     }
 
     /**
-     * Gets all the completed maintenance from the database
+     * Gets the completed maintenance data
      * 
      * @method get_completed_data
      * @param none
-     * @return array The array of completed maintenance
+     * @return MaintenanceModel::query_completed_data
      */
     public static function get_completed_data(){
         return MaintenanceModel::query_completed_data();
     }
 
     /**
-     * Gets all the cancelled maintenance from the database
+     * Gets the cancelled maintenance data
      * 
      * @method get_cancelled_data
      * @param none
-     * @return array The array of cancelled maintenance
+     * @return MaintenanceModel::query_cancelled_data
      */
     public static function get_cancelled_data(){
         return MaintenanceModel::query_cancelled_data();
     }
 
     /**
-     * Deletes a maintenance from the database
+     * Deletes a maintenance by its ID
      * 
      * @method deleteMaintenanceById
-     * @param int $maintenanceID The maintenance ID
-     * @return boolean The result of the query
+     * @param $maintenanceID
+     * @return MaintenanceModel::deleteMaintenanceById
      */
     public static function deleteMaintenanceById($maintenanceID){
         return MaintenanceModel::deleteMaintenanceById($maintenanceID);
     }
 
     /**
-     * Edits a maintenance in the database
+     * Edits a maintenance
      * 
      * @method edit_maintenance
-     * @param array $edit_maintenance The array of maintenance details
-     * @return boolean The result of the query
+     * @param $edit_maintenance
+     * @return MaintenanceModel::edit_maintenance
      */
     public static function edit_maintenance($edit_maintenance){
         return MaintenanceModel::edit_maintenance($edit_maintenance);
     }
 
     /**
-     * Gets the room code of all the ongoing maintenance from the database
+     * Gets the ongoing maintenance data
      * 
-     * @method get_On_going_data_RoomCode
+     * @method get_On_going_data
      * @param none
-     * @return array The array of room codes
+     * @return MaintenanceModel::query_On_going_data
      */
     public static function get_On_going_data_RoomCode(){
         return MaintenanceModel::query_On_going_data_RoomCode();
     }
 
     /**
-     * Gets the cost of all the ongoing maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_On_going_data_Cost
      * @param none
-     * @return array The array of costs
+     * @return MaintenanceModel::query_On_going_data_Cost
      */
     public static function get_On_going_data_Cost(){
         return MaintenanceModel::query_On_going_data_Cost();
     }
 
     /**
-     * Gets the date of all the ongoing maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_On_going_data_Date
      * @param none
-     * @return array The array of dates
+     * @return MaintenanceModel::query_On_going_data_Date
      */
     public static function get_On_going_data_Date(){
         return MaintenanceModel::query_On_going_data_Date();
     }
 
     /**
-     * Gets the room code of all the completed maintenance from the database
+     * Gets the ongoing maintenance data
      * 
-     * @method get_completed_data_RoomCode
+     * @method get_On_going_data_Date
      * @param none
-     * @return array The array of room codes
+     * @return MaintenanceModel::query_completed_data_RoomCode
      */
     public static function get_completed_data_RoomCode(){
         return MaintenanceModel::query_completed_data_RoomCode();
     }
 
     /**
-     * Gets the cost of all the completed maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_completed_data_Cost
      * @param none
-     * @return array The array of costs
+     * @return MaintenanceModel::query_completed_data_Cost
      */
     public static function get_completed_data_Cost(){
         return MaintenanceModel::query_completed_data_Cost();
     }
     
     /**
-     * Gets the date of all the completed maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_completed_data_Date
      * @param none
-     * @return array The array of dates
+     * @return MaintenanceModel::query_completed_data_Date
      */
     public static function get_completed_data_Date(){
         return MaintenanceModel::query_completed_data_Date();
     }
-
+    
     /**
-     * Gets the room code of all the cancelled maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_cancelled_data_RoomCode
      * @param none
-     * @return array The array of room codes
+     * @return MaintenanceModel::query_cancelled_data_RoomCode
      */
     public static function get_cancelled_data_RoomCode(){
         return MaintenanceModel::query_cancelled_data_RoomCode();
     }
-    
+
     /**
-     * Gets the cost of all the cancelled maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_cancelled_data_Cost
      * @param none
-     * @return array The array of costs
+     * @return MaintenanceModel::query_cancelled_data_Cost
      */
     public static function get_cancelled_data_Cost(){
         return MaintenanceModel::query_cancelled_data_Cost();
     }
 
     /**
-     * Gets the date of all the cancelled maintenance from the database
+     * Gets the ongoing maintenance data
      * 
      * @method get_cancelled_data_Date
      * @param none
-     * @return array The array of dates
+     * @return MaintenanceModel::query_cancelled_data_Date
      */
     public static function get_cancelled_data_Date(){
         return MaintenanceModel::query_cancelled_data_Date();
     }
 
     /**
-     * Gets the ongoing maintenance from the database based on the search query
+     * Gets the ongoing maintenance data
      * 
      * @method get_On_going_data_search
-     * @param string $search The search query
-     * @return array The array of ongoing maintenance
+     * @param $search
+     * @return MaintenanceModel::query_On_going_data_search
      */
     public static function get_On_going_data_search($search){
         return MaintenanceModel::query_On_going_data_search($search);
     }
 
     /**
-     * Gets the completed maintenance from the database based on the search query
+     * Gets the ongoing maintenance data
      * 
      * @method get_completed_data_search
-     * @param string $search The search query
-     * @return array The array of completed maintenance
+     * @param $search
+     * @return MaintenanceModel::query_completed_data_search
      */
     public static function get_completed_data_search($search){
         return MaintenanceModel::query_completed_data_search($search); 
     }
 
     /**
-     * Gets the cancelled maintenance from the database based on the search query
+     * Gets the ongoing maintenance data
      * 
      * @method get_cancelled_data_search
-     * @param string $search The search query
-     * @return array The array of cancelled maintenance
+     * @param $search
+     * @return MaintenanceModel::query_cancelled_data_search
      */
     public static function get_cancelled_data_search($search){
         return MaintenanceModel::query_cancelled_data_search($search);

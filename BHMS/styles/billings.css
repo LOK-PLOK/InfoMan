@@ -1,6 +1,4 @@
-/*====================General Content====================*/
-
-/* ======== Billings header CSS ======== */
+/*⋆ ˚｡⋆୨୧˚ HEADER ˚୨୧⋆｡˚⋆*/
 .blue-button{
     width: 130px;
     background-color: #344799; 
@@ -32,7 +30,8 @@
     flex-direction: column;
 }
 
-/* ======== Table CSS ======== */
+
+/*⋆ ˚｡⋆୨୧˚ TABLE ˚୨୧⋆｡˚⋆*/
 .table-section{
     background-color: #EDF6F7;
     margin-top: 20px;
@@ -42,45 +41,8 @@
 }
 
 
-.table-cont-1{
-    display: flex;
-    justify-content: space-between;
-    height: 35px;
-}
-
-.table-cont-1-1{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    align-items: center; 
-}
-
-.table-cont-1-1 button{
-    height: 100%;
-}
-
-.search{
-    width: 210px;
-    background-color: #344799; 
-    color: white;
-    border-radius: 5px;
-    border: none;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
-    text-align: left;
-    padding: 0 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search img{
-    height: 20px;
-}
-
-
-/* Table Styles */
+/*⋆ ˚｡⋆୨୧˚ TABLE ˚୨୧⋆｡˚⋆*/
 table {
-    /* margin: 30px 0 0 0; */
     border-collapse: collapse;
     width: 100%;
 }
@@ -107,25 +69,7 @@ th{
 }
 
 
-/* Table Footer */
-.table-section-footer{
-    margin-top: 30px;
-    color: #344799;
-    display: flex;
-    justify-content: space-between;
-}
-
-.page-link{
-    color:#344799;
-}
-
-.pagination .page-item:nth-child(2)  .page-link{
-    background-color:#344799;
-    color: white;
-}
-
-
-/* ======== Slider Tab CSS ======== */
+/*⋆ ˚｡⋆୨୧˚ SLIDER TAB ˚୨୧⋆｡˚⋆*/
 .tab-box{
     width: 100%;
     display: flex;
@@ -152,7 +96,6 @@ th{
 .content-box{
     padding: 20px;
 }
-
 
 .content-box .content{
     display: none;

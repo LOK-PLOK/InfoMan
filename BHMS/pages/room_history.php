@@ -32,7 +32,7 @@ if (isset($_GET['roomCode'])) {
     $roomCode = $_SESSION['roomCode'];
 } else {
     // Default 'roomCode' if not in GET or session
-    $roomCode = 'B10101';   
+    $roomCode = 'B10101';
 }
 
 if(isset($_GET['editOccStatus'])){
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="search-container shadow">
                     <div>
                         <input class="search" type="text" value="" name="search" placeholder="Search">
-                        <!-- <div class="search-icon"><i class="fas fa-search"></i></div> -->
+                        <div class="search-icon"><i class="fas fa-search"></i></div>
                     </div>
                 </div>
             </form>
@@ -151,11 +151,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 foreach($tenants as $tenant) {
 
                     // Convert dates to a more readable format
-                    $startDate = date('F j, Y', strtotime($tenant['occDateStart']));
-                    $endDate = date('F j, Y', strtotime($tenant['occDateEnd']));
+                    $startDate = date('F d, Y', strtotime($tenant['occDateStart']));
+                    $endDate = date('F d, Y', strtotime($tenant['occDateEnd']));
 
                     $action_buttons = '
-                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$tenant['occupancyID'].'"
+                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
                                     onclick="setValuesTenantInfo(
                                                         '.$tenant['occupancyID'].', 
                                                         \''.$tenant['tenantFullName'].'\', 
