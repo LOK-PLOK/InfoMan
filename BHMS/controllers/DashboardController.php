@@ -28,7 +28,7 @@ class DashboardController extends GeneralController{
      */
     public static function total_current_residents(){
         return DashboardModel::residents_counter();
-    }
+    } 
 
     /**
      * Gets the total number of occupied beds and available beds
@@ -75,6 +75,9 @@ class DashboardController extends GeneralController{
      * @return boolean The result of the query
      */
     public static function create_new_rent($create_rent, $new_billing) {
+        echo '<script>console.log('.json_encode($create_rent).')</script>';
+        echo '<script>console.log('.json_encode($new_billing).')</script>';
+
         $tenant_count = count(self::current_room_tenants($create_rent['roomID']));
         $roomInfo = DashboardModel::query_room_info($create_rent['roomID']);
 
@@ -106,6 +109,7 @@ class DashboardController extends GeneralController{
         } else {
             return "Error - Tenant Rent Error";
         }
+        return true;
     }
 
     /**

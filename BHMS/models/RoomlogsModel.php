@@ -7,7 +7,7 @@ class RoomlogsModel extends dbcreds {
     public static function query_rooms(){
 
         $conn = self::get_connection();
-        $query = "SELECT * FROM room";
+        $query = "SELECT * FROM room WHERE isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -32,9 +32,9 @@ class RoomlogsModel extends dbcreds {
             SELECT * FROM occupancy 
             WHERE roomID = ? 
             AND (
-                (CURRENT_DATE() BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30 AND isDeactivated = 0) 
+                (CURRENT_DATE() BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30 AND isDeactivated = 0 AND isDeleted = 0) 
                 OR 
-                (CURRENT_DATE > occDateEnd AND isDeactivated = 0)
+                (CURRENT_DATE > occDateEnd AND isDeactivated = 0 AND isDeleted = 0)
             )
             ORDER BY occDateEnd DESC;
         ");
@@ -64,7 +64,7 @@ class RoomlogsModel extends dbcreds {
 
     public static function query_room_tenant_info($room_tenant_id) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM tenant WHERE tenID = ?");
+        $query = $conn->prepare("SELECT * FROM tenant WHERE tenID = ? AND isDeleted = 0;");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -88,7 +88,7 @@ class RoomlogsModel extends dbcreds {
     public static function query_current_room_tenants($room_code) {
         $conn = self::get_connection();
 
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
+        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND isDeleted = 0;");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -177,7 +177,7 @@ class RoomlogsModel extends dbcreds {
 
     public static function check_recent_rent($tenant_id) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM `occupancy` WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd;");
+        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM `occupancy` WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND isDeleted = 0;");
     
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -201,7 +201,7 @@ class RoomlogsModel extends dbcreds {
 
     public static function delete_occupancy($occupancyID) {
         $conn = self::get_connection();
-        $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
+        $query = $conn->prepare("UPDATE occupancy SET isDeleted = 1 WHERE occupancyID = ?");
 
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -221,7 +221,7 @@ class RoomlogsModel extends dbcreds {
 
     public static function get_occupancy($occupancyID) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE occupancyID = ?");
+        $query = $conn->prepare("SELECT * FROM occupancy WHERE occupancyID = ? AND isDeleted = 0");
 
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -268,7 +268,7 @@ class RoomlogsModel extends dbcreds {
     public static function query_tenants(){
         
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant";
+        $query = "SELECT * FROM tenant WHERE isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -363,7 +363,7 @@ class RoomlogsModel extends dbcreds {
     public static function deleteRoom($roomCode) {
         try {
             $conn = self::get_connection();
-            $query = $conn->prepare("DELETE FROM room WHERE roomID = ?");
+            $query = $conn->prepare("UPDATE room SET isDeleted = 1 WHERE roomID = ?");
 
             if ($query === false) {
                 throw new Exception("Prepare failed: " . $conn->error);
@@ -388,7 +388,7 @@ class RoomlogsModel extends dbcreds {
 
     public static function query_room_info($roomID){
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
+        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ? AND isDeleted = 0");
         $query->bind_param('s', $roomID);
         $query->execute();
         $result = $query->get_result()->fetch_assoc();
@@ -406,7 +406,8 @@ class RoomlogsModel extends dbcreds {
                                     AND (
                                         (occDateStart <= ? AND occDateEnd >= ?) OR
                                         (occDateEnd >= ? AND occDateStart <= ?)
-                                    );");
+                                    )
+                                    AND isDeleted = 0;");
         $query->bind_param(
             'issss', 
             $tenID, 
@@ -467,7 +468,7 @@ class RoomlogsModel extends dbcreds {
     public static function check_shared_room($check_rent) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) FROM occupancy WHERE roomID = ?
-                                AND tenID = ? AND occDateStart = ? AND occDateEnd = ?");
+                                AND tenID = ? AND occDateStart = ? AND occDateEnd = ? AND isDeleted = 0");
 
         $query->bind_param('siss', $check_rent['roomID'], $check_rent['shareTenID'], $check_rent['occDateStart'], $check_rent['occDateEnd']);
         
@@ -513,7 +514,7 @@ class RoomlogsModel extends dbcreds {
         try {
             $conn = self::get_connection();
             // Prepare the SQL query using the provided roomID as a parameter
-            $query = $conn->prepare("SELECT COUNT(*) AS overdue_count FROM occupancy WHERE roomID = ? AND CURRENT_DATE > occDateEnd AND isDeactivated = 0");
+            $query = $conn->prepare("SELECT COUNT(*) AS overdue_count FROM occupancy WHERE roomID = ? AND CURRENT_DATE > occDateEnd AND isDeactivated = 0 AND isDeleted = 0");
 
             if ($query === false) {
                 throw new Exception("Prepare failed: " . $conn->error);

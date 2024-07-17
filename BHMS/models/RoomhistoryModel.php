@@ -31,10 +31,13 @@ class RoomhistoryModel extends dbcreds {
                         IF(tenant.tenMI IS NOT NULL AND tenant.tenMI != '', CONCAT(' ', tenant.tenMI, '.'), ''), 
                         ' ', tenant.tenLname) AS tenantFullName,
                 occupancy_type.occTypeName
-            FROM occupancy 
+            FROM occupancy
             INNER JOIN tenant ON occupancy.tenID = tenant.tenID 
             INNER JOIN occupancy_type ON occupancy.occTypeID = occupancy_type.occTypeID
             WHERE roomID = ?
+            AND occupancy.isDeleted = 0 
+            AND tenant.isDeleted = 0
+            ORDER BY occupancy.occDateEND DESC;
         ";
     
         // Check if $searchTerm is not null and not an empty string
@@ -101,7 +104,7 @@ class RoomhistoryModel extends dbcreds {
      */
     public static function delete_occupancy($occupancyID) {
         $conn = self::get_connection();
-        $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
+        $query = $conn->prepare("UPDATE occupancy SET isDeleted = 1 WHERE occupancyID = ?;");
 
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);

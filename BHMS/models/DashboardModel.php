@@ -31,7 +31,7 @@ class DashboardModel extends dbcreds {
     public static function residents_counter() {
 
         $conn = self::get_connection();
-        $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1";
+        $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1 AND isDeleted = 0;";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
@@ -62,8 +62,8 @@ class DashboardModel extends dbcreds {
         $conn = self::get_connection();
         // Prepare the SQL statement with a parameter placeholder
         $query = "SELECT 
-                    SUM(CASE WHEN isAvailable = 0 THEN capacity ELSE rentCount END) AS occupied_beds, 
-                    SUM(CASE WHEN isAvailable = 0 THEN 0 ELSE capacity - rentCount END) AS available_beds 
+                    SUM(CASE WHEN isAvailable = 0 AND isDeleted = 0 THEN capacity ELSE rentCount END) AS occupied_beds, 
+                    SUM(CASE WHEN isAvailable = 0 AND isDeleted = 0 THEN 0 ELSE capacity - rentCount END) AS available_beds 
                 FROM room;";
         $stmt = $conn->query($query);
     
@@ -94,7 +94,7 @@ class DashboardModel extends dbcreds {
         
         $conn = self::get_connection();
         // Prepare the SQL statement with a parameter placeholder
-        $query = "SELECT COUNT(*) AS available_rooms FROM room WHERE rentCount = 0;";
+        $query = "SELECT COUNT(*) AS available_rooms FROM room WHERE rentCount = 0 AND isDeleted = 0;";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
@@ -257,7 +257,7 @@ class DashboardModel extends dbcreds {
     public static function query_tenants(){
         
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant";
+        $query = "SELECT * FROM tenant WHERE isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -285,7 +285,7 @@ class DashboardModel extends dbcreds {
     public static function query_rooms() {
         
         $conn = self::get_connection();
-        $query = "SELECT * FROM room";
+        $query = "SELECT * FROM room WHERE isDeleted = 0";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
@@ -342,7 +342,7 @@ class DashboardModel extends dbcreds {
      */
     public static function query_room_info($roomID){
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ?");
+        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ? AND isDeleted = 0");
         $query->bind_param('s', $roomID);
         $query->execute();
         $result = $query->get_result()->fetch_assoc();
@@ -364,12 +364,13 @@ class DashboardModel extends dbcreds {
 
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) AS no_of_conflicts 
-                                    FROM occupancy 
+                                    FROM occupancy
                                     WHERE tenID = ? 
                                     AND (
                                         (occDateStart <= ? AND occDateEnd >= ?) OR
                                         (occDateEnd >= ? AND occDateStart <= ?)
-                                    );");
+                                    ) 
+                                    AND isDeleted = 0");
         $query->bind_param(
             'issss', 
             $tenID, 

@@ -3,11 +3,11 @@
 require_once 'dbcreds.php';
 
 class GeneralModel extends dbcreds {
-
+ 
     public static function query_rooms(){
 
         $conn = self::get_connection();
-        $query = "SELECT * FROM room";
+        $query = "SELECT * FROM room r WHERE r.isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -28,7 +28,7 @@ class GeneralModel extends dbcreds {
 
     public static function query_room_tenants($room_code) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? ORDER BY occDateStart DESC");
+        $query = $conn->prepare("SELECT * FROM occupancy o WHERE roomID = ? AND o.isDeleted = 0 ORDER BY occDateStart DESC");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -56,7 +56,7 @@ class GeneralModel extends dbcreds {
     public static function query_current_room_tenants($room_code) {
         $conn = self::get_connection();
 
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30;");
+        $query = $conn->prepare("SELECT * FROM occupancy o WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30 AND o.isDeleted = 0;");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -119,7 +119,7 @@ class GeneralModel extends dbcreds {
 
     public static function check_recent_rent($tenant_id) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM occupancy WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30;");
+        $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM occupancy o WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30 AND o.isDeleted = 0;");
     
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -143,7 +143,7 @@ class GeneralModel extends dbcreds {
 
     public static function get_all_tenants() {
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant";
+        $query = "SELECT * FROM tenant t WHERE t.isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -182,7 +182,7 @@ class GeneralModel extends dbcreds {
 
     public static function query_user_info($userID){
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT * FROM user WHERE userID = ?");
+        $query = $conn->prepare("SELECT * FROM user WHERE userID = ? AND isDeleted = 0");
 
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -205,7 +205,7 @@ class GeneralModel extends dbcreds {
 
     public static function check_recent_eviction($tenant_id) {
         $conn = self::get_connection();
-        $query = $conn->prepare("SELECT COUNT(*) AS eviction_count FROM occupancy WHERE tenID = ? AND DATEDIFF(occDateEnd, occDateStart) < 30;");
+        $query = $conn->prepare("SELECT COUNT(*) AS eviction_count FROM occupancy o WHERE tenID = ? AND DATEDIFF(occDateEnd, occDateStart) < 30 AND o.isDeleted = 0;");
     
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
