@@ -22,10 +22,10 @@ class LoginView {
                         <img src="/images/MBH_logo.png" alt="">
                         <span>Welcome back! Login to access...</span>
                     </div>
-                    <input name="username" type="text" placeholder="Username">
-                    <input name="password" type="password" placeholder="Password">
+                    <input name="username" type="text" class="login-field" placeholder="Username">
+                    <input name="password" type="password" class="login-field" placeholder="Password">
                     <span class="center-login">
-                        <input name="login" type="submit" value="Login">
+                        <input name="login" type="submit" class="login-submit" value="Login">
                     </span>
                 </form>
             </div>

@@ -89,17 +89,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if form was submitted for deleting a user
     if (isset($_POST['deleteUserInfoSubmit'])) {
         
-        // Retrieve the user ID to delete
-        $userIdToDelete = $_POST['deleteUserID'];
+        // Retrieve the tenant ID to delete
+        $tenantIdToDelete = $_POST['deleteUserID'];
 
-        $result = SettingsController::delete_user_by_id($userIdToDelete);
+        $result = SettingsController::delete_user_by_id($tenantIdToDelete);
 
         if ($result) {
-            if($_SESSION['userID'] == $userIdToDelete){
-                header("Location: /pages/settings.php?logout=1");
-            } else {
-                header("Location: /pages/settings.php?deleteUser=success");
-            }
+            header("Location: /pages/settings.php?deleteUser=success");
             exit();
         } else {
             header("Location: /pages/settings.php?deleteUser=error");
@@ -186,19 +182,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!--sections-->
     <div class="section">
         <?php if ($_SESSION['sessionType'] === 'admin') { ?>
-            <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#ratesAndPricingModal" onmouseover="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_light.png'" onmouseout="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_dark.png'">
+            <button class="settings-cont shadow" data-bs-toggle="modal" data-bs-target="#ratesAndPricingModal" onmouseover="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_light.png'" onmouseout="document.getElementById('rates-and-pricing').src='/images/icons/Settings/rates_and_pricing_dark.png'">
                 <img id="rates-and-pricing" src="/images/icons/Settings/rates_and_pricing_dark.png" alt="rates and pricing icon">
                 <span>Rates and Pricing</span>
                 <i class="fa-solid fa-angle-right"></i>
             </button>
         <?php } ?>
-        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#userInfoModal" onmouseover="document.getElementById('user-info').src='/images/icons/Settings/user_info_light.png'" onmouseout="document.getElementById('user-info').src='/images/icons/Settings/user_info_dark.png'">
+        <button class="settings-cont shadow" data-bs-toggle="modal" data-bs-target="#userInfoModal" onmouseover="document.getElementById('user-info').src='/images/icons/Settings/user_info_light.png'" onmouseout="document.getElementById('user-info').src='/images/icons/Settings/user_info_dark.png'">
             <img id="user-info" src="/images/icons/Settings/user_info_dark.png" alt="user information icon">
             <span>User Information</span>
             <i class="fa-solid fa-angle-right"></i>
         </button>
         <?php if ($_SESSION['sessionType'] === 'admin') { ?>
-        <button class="rate-price-cont shadow" data-bs-toggle="modal" data-bs-target="#createUserModal" onmouseover="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_light.png'" onmouseout="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_dark.png'">
+        <button class="settings-cont shadow" data-bs-toggle="modal" data-bs-target="#createUserModal" onmouseover="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_light.png'" onmouseout="document.getElementById('create-user-icon').src='/images/icons/Settings/add_user_dark.png'">
             <img id="create-user-icon" src="/images/icons/Settings/add_user_dark.png" alt="add user icon">
             <span>Create User</span>
             <i class="fa-solid fa-angle-right"></i>
@@ -207,17 +203,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="login-sett-cont">
-        <div class="settings-sub-header">
-            <a href="?logout=1">
-            <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
-            </a>
-        </div>
+        <a href="?logout=1">
+                <button class="sign-out-btn btn-var-2 shadow">Sign-out</button>
+        </a>
     </div>
 
 <?php
     //rates and pricing modal
     SettingsViews::rates_and_pricing_model_view();
 
+    // $user_list = [];
+    // if ($_SESSION['sessionType'] === 'admin') {
+    //     $user_list = SettingsController::users_table_data();
+    // } else {
+    //     $user_list = SettingsController::verify_credentials($_SESSION['userID']);
+    // }
     $user_list = SettingsController::users_table_data();
     SettingsViews::user_information_model_view($user_list);
 

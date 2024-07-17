@@ -6,34 +6,13 @@
  * @lastupdate: June 15, 2024
  */
 
- body {
+body {
     background-color: #344799 !important;
     height: 100vh;
 }
 
-/*====================General Content====================*/
 
-.container-fluid {
-    height: 100vh;
-}
-
-.label{
-    color: rgba(2, 67, 154, 0.50);
-}
-
-.header{
-    color: #344799;
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-.bg-custom {
-    background-color: #EDF6F7; /* Set the custom background color */
-}
-
-/*====================Heading Section====================*/
-
-/*---------------Left Container---------------*/
+/*⋆ ˚｡⋆୨୧˚ LEFT CONTAINER ˚୨୧⋆｡˚⋆*/
 .current-residents {
     margin-bottom: 5px;
 }
@@ -47,30 +26,8 @@
     width: auto;
 }
 
-.left-content-button button{
-    width: 145px;
-    background-color: #344799; 
-    color: white;
-    border-radius: 3px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
-    font-size: 16px;
-    font-weight: bold;
-}
-.left-content-button button:hover{
-    background-color: #4a5daf; 
-}
 
-/* .left-content-button img{
-    height: 35px;
-} */
-
-
-/*---------------Right Container---------------*/
+/*⋆ ˚｡⋆୨୧˚ RIGHT CONTAINER ˚୨୧⋆｡˚⋆*/
 .right-content {
     display: flex;
     flex-direction: column;
@@ -98,9 +55,7 @@
 }
 
 
-/*---------------Table Header---------------*/
-
-/* Leftside Area header */
+/*⋆ ˚｡⋆୨୧˚ TABLE ˚୨୧⋆｡˚⋆*/
 .upper{
     display: flex;
     justify-content: space-between;
@@ -116,34 +71,7 @@
 .leftside-content button{
     background: #344799;
 }
-.no-design1{
-    border: none;
-    background-color: #344799;
-    color: white;
-    padding-left: 57.5px; 
-    padding-right: 57.5px; 
-    margin-bottom: 3px;
-}
-.no-design2{
-    border: none;
-    background-color: #344799;
-    color: white;
-    padding-left: 52.5px; 
-    padding-right: 52.5px; 
-    margin-bottom: 3px;
-}
-.no-design3{
-    border: none;
-    background-color: #344799;
-    color: white;
-    padding-left: 48px; 
-    padding-right: 48px; 
-    margin-bottom: 3px;
-}
-.no-design1:hover, .no-design2:hover, .no-design3:hover{
-    background-color: white;
-    color: #344799;;
-}
+
 
 .text-color{
     color: rgba(2, 67, 154, 0.50);
@@ -155,74 +83,21 @@
     width: 50%;
 }
 
-/* Search Bar */
-.search-container { 
-    position: relative;
-    width: 100%;
-    max-width: 200px;
-}
-
-.search-container input[type="text"]::placeholder {
-    color: white; /* Placeholder text color */
-    opacity: 1; /* Ensure full opacity so the color change is visible */
-}
-
-#search { 
-    width: 100%;
-    padding: 5px 30px 5px 10px; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    background: #344799;
-    color: white;
-}
-
-.search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none; 
-    color: white;
-}
-
-#search:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-
-
-
-/*====================Table Section====================*/
-
-/* Table Container */
 .data-container{
     background: #EDF6F7;
     padding: 20px 20px;
     border-radius: 5px;
 }
 
-/*---------------Table Actual---------------*/
-
-
-/* Table css */
 .styled-table {
     width: 100%; 
-    border-collapse: collapse; 
 }
 
-.styled-table thead tr th {
+.styled-table thead th{
     background-color: #344799;
+    z-index: 1;
     position: sticky;
-    top: 0; /* This is necessary for sticky positioning to work */
-    z-index: 1; /* Ensures the header is above other content when scrolling */
-}
-
-.styling thead tr th{
-    background-color: #344799;
-    color: white;
+    top: 0;
 }
 
 .styled-table tbody tr td {
@@ -230,15 +105,11 @@
 }
 
 .overflow-auto::-webkit-scrollbar {
-    width: 0 !important; /* Remove scrollbar width */
+    width: 0 !important;
 }
 .overflow-auto {
-    scrollbar-width: none; /* Firefox specific */
+    scrollbar-width: none;
 }
-
-/* .styled-table {
-    overflow: hidden;
-} */
 
 .alignleft {
     display: flex;
@@ -248,7 +119,17 @@
     width: auto; 
 }
 
-/* Resident Info Css */
+
+/*⋆ ˚｡⋆୨୧˚ RESIDENT INFO ˚୨୧⋆｡˚⋆*/
+.tenant-modal-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.tenant-split-left, .tenant-split-right {
+    width: 48%;
+}
 
 .residenttile {
     border-bottom: 2px solid black;
@@ -264,7 +145,8 @@
     font-weight: 600;
 }
 
-/* Status Css */
+
+/*⋆ ˚｡⋆୨୧˚ STATUS ˚୨୧⋆｡˚⋆*/
 .resize{
     display:flex;
     align-items: center ;
@@ -276,7 +158,8 @@
     margin-right: 5px;
 }
 
-/* Action Css */
+
+/*⋆ ˚｡⋆୨୧˚ ACTION ˚୨୧⋆｡˚⋆*/
 .action{
     padding: 0%;
     height: 37.5px;  
@@ -286,73 +169,6 @@
     background-color: white;
 }
 
-
-
-/*---------------Pagination---------------*/
-footer {
-    display: flex;
-    justify-content: space-between; 
-}
-
-.Leftside-portion, .Rightside-portion {
-    flex: 1; 
-    text-align: center; 
-}
-
-.Leftside-portion span, .Rightside-portion span {
-    font-weight: bold;
-}
-
-/* Leftside Area */
-.Leftside-portion {
-    text-align: left; 
-}
-
-/* Rightside Area */
-.Rightside-portion {
-    text-align: right; 
-    display: flex;
-    justify-content: end;
-}
-
 ul{
     list-style-type: none;
-}
-
-.Previous-Next{
-    display: flex;
-    justify-content: center;
-    border-radius: 2px;
-}
-
-.Previous{
-    color: #344799;
-    background-color: #fff;
-    padding: 5px 10px 5px 10px;
-    border: none;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
-}
-
-.current{
-    padding: 5px 10px 5px 10px;
-    border: none;
-    background-color: #344799;
-    color: white;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
-}
-.not-current{
-    padding: 5px 10px 5px 10px;
-    border: none;
-    background-color: white;
-    color: #344799;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
-}
-
-.Next{
-    padding: 5px 10px  5px 10px;
-    border: 1px solid #344799;
-    border: none;
-    color: #344799;
-    background-color: white;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04), 0px 0px 8px 1px rgba(0, 0, 0, 0.25);
 }

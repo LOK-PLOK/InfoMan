@@ -28,8 +28,10 @@ DashboardViews::burger_sidebar();
     
     <!-- Modal Buttons -->
     <div class="dashboard-button">
-        <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#myModal"><img src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
-        <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#add-new-rent-modal"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
+        <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#myModal" onmouseover="document.getElementById('dashboard-add-user').src='/images/icons/Dashboard/Buttons/add_user_dark.png'" onmouseout="document.getElementById('dashboard-add-user').src='/images/icons/Dashboard/Buttons/add_user_light.png'">
+			<img id="dashboard-add-user" src="/images/icons/Dashboard/Buttons/add_user_light.png" alt="">Add Tenant</button>
+        <button class="btn-var-3 shadow" type="button" data-bs-toggle="modal" data-bs-target="#add-new-rent-modal" onmouseover="document.getElementById('dashboard-add-new-rent').src='/images/icons/Dashboard/Buttons/add_new_rent_dark.png'" onmouseout="document.getElementById('dashboard-add-new-rent').src='/images/icons/Dashboard/Buttons/add_new_rent_light.png'">
+			<img id="dashboard-add-new-rent" src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
     </div>
 
     <!-- Overview -->
@@ -205,14 +207,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
 
-		$new_billing = array(
-			"tenID" => $_POST['new-rent-tenant'],
-			"billTotal" => $_POST['new-rent-rate'],
-			"endDate" => $_POST['new-rent-end']
-		);
-		
-		$result = DashboardController::create_new_rent($create_rent, $new_billing);
-		header('Location: room_logs.php?addRentStatus='.$result);
+		$result = DashboardController::create_new_rent($create_rent);
+        header('Location: dashboard.php?addRentStatus='.$result);
         exit();
 	}
 }

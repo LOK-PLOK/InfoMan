@@ -35,7 +35,6 @@ class SettingsViews extends GeneralViews {
         HTML;
     }
 
-    
     /**
      * This method is used to display the user information section.
      * 
@@ -148,7 +147,7 @@ class SettingsViews extends GeneralViews {
                                 </div>
                                 <p class="monthly-cost-bottom">Monthly Cost</p>
                             </div>
-                            <button type="submit" class="btn-save-changes shadow" id="edit-rate-pricing" name="edit-rate-pricing" >Save Changes</button>
+                            <button type="submit" class="btn-var-4 btn-create-save shadow" id="edit-rate-pricing" name="edit-rate-pricing">Save</button>
                         </form>
                     </div>
                 </div>
@@ -172,9 +171,7 @@ class SettingsViews extends GeneralViews {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="userInfoModalLabel">User Information</h5>
-                        <div class="header-buttons">
-                            <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <table class="table shadow">
@@ -347,7 +344,7 @@ class SettingsViews extends GeneralViews {
                     <span id="confirmPassWarning" style="color: red;"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="create-user-submit" name="create-user-submit" class="btn-create-save shadow" data-bs-dismiss="modal" >Create</button>
+                    <button type="submit" id="create-user-submit" name="create-user-submit" class="btn-create-save btn-var-4 shadow" data-bs-dismiss="modal" >Create</button>
                 </div>
                 </div>
             </form>
@@ -411,7 +408,7 @@ class SettingsViews extends GeneralViews {
                     </div>
 
                     <div class="modal-footer border-0">
-                        <button type="submit" class="btn-create-save shadow" data-bs-dismiss="modal" id="edit-confirm" name ="edit-confirm">Save</button>
+                        <button type="submit" class="btn-create-save btn-var-4 shadow" data-bs-dismiss="modal" id="edit-confirm" name ="edit-confirm">Save</button>
                     </div>
                 </form>
                 </div>
@@ -516,7 +513,7 @@ class SettingsViews extends GeneralViews {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn-create-save shadow" data-bs-dismiss="modal" id="change-pass-confirm" name ="change-pass-confirm">Save</button>
+                    <button type="submit" class="btn-create-save btn-var-4 shadow" data-bs-dismiss="modal" id="change-pass-confirm" name ="change-pass-confirm">Save</button>
                 </div>
                 </form>
                 </div>

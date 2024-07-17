@@ -25,7 +25,7 @@ class MaintenanceViews extends GeneralViews{
      * @method maintenance_header
      * @return void
      */
-    public static function maintenance_header(){ 
+    public static function maintenance_header(){
         echo <<<HTML
         <div class="container-fluid">
             <div class="billings-header">
@@ -33,8 +33,8 @@ class MaintenanceViews extends GeneralViews{
                 <span class="page-header">Maintenance</span><br>
                 <span class="page-sub-header>">View and manage maintenance information</span>
             </div>
-            <button type="button" class="btn-var-1 bg-btn" data-bs-toggle="modal" data-bs-target="#add-modal-info">
-                <img src="/images/icons/Residents/add_new_light.png" alt=""> Add Maintenance
+            <button type="button" class="btn-var-3" data-bs-toggle="modal" data-bs-target="#add-modal-info" onmouseover="document.getElementById('add-maintenance').src='/images/icons/Maintenance/add_maintenance_dark.png'" onmouseout="document.getElementById('add-maintenance').src='/images/icons/Maintenance/add_maintenance_light.png'">
+                <img id="add-maintenance" src="/images/icons/Maintenance/add_maintenance_light.png" alt=""> Add Maintenance
             </button>
         </div>
         HTML;
@@ -68,7 +68,7 @@ class MaintenanceViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-8">
                                      <select name="maintenance-room-code" id="maintenance-room-code" class="form-control shadow" required>
-                                        <option value="" disabled selected>Select a Room...</option>
+                                        <option value="" disabled selected style="display:none;">Select a Room</option>
                         ';
                                     foreach ($rooms as $room){
                                         $room_id = $room['roomID'];
@@ -95,7 +95,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="reason" class="form-label">Reason:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" id="maintDesc" name="maintDesc" placeholder="Enter a reason..." class="form-control shadow" required>
+                                    <input type="text" id="maintDesc" name="maintDesc" placeholder="Enter a reason" class="form-control shadow" required>
                                 </div>
                             </div>
                             <!-- Row 4: Status -->
@@ -105,7 +105,7 @@ class MaintenanceViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-8">
                                     <select id="maintStatus" name="maintStatus" class="form-select shadow" required>
-                                        <option value="" disabled selected>Choose the status...</option>
+                                        <option value="" disabled selected style="display: none;">Choose a status</option>
                                         <option value="On-going">On-going</option>
                                         <option value="Completed">Completed</option>
                                         <option value="Cancelled">Cancelled</option>
@@ -118,12 +118,12 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="maintenancecost" class="form-label">Maintenance Cost:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="number" id="maintCost" name="maintCost" placeholder="Enter the cost..." class="form-control shadow" required>
+                                    <input type="text" id="maintCost" name="maintCost" placeholder="Enter the cost" class="form-control shadow" required>
                                 </div>
                             </div>
                             <!-- Submit Button -->
                             <div class="displayflex">
-                                <input type="submit" id="create-new-maintenance" name="create-new-maintenance" class="btn-var-2" value="Add">
+                                <input type="submit" id="create-new-maintenance" name="create-new-maintenance" class="btn-var-5" style="width: 200px;" value="Add">
                             </div>
                         </form>
                     </div>
@@ -195,35 +195,33 @@ class MaintenanceViews extends GeneralViews{
             <div class="table-section styled-table">
             <div class="table-cont-1">
                 <div class="table-cont-1-1">
-                <span>Sort By</span>
+                <span style="color: #779CC8; font-weight: bold;">Sort by:</span>
                 <form action="" method="GET">
 
-                    <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="pe-5 fs-6">Category...</span>
+                    <button class="btn-var-7 dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="pe-5 fs-6" style="padding-left: 20px;">Category...</span>
                     </button>
-                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
-                                <li class="d-flex justify-content-center"><input type="submit"  name="On-going-RoomCode"value="RoomCode" class="no-design1"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"  name="On-going-Cost"value="Cost (Highest to Lowest)" class="no-design2"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"   name="On-going-Date" value="Date (Newest to Oldest)"class="no-design3"></li>
-                            </ul>
+                        <ul class="dropdown-menu" style="background-color: #EDF6F7; z-index:1050;">
+                            <li class="d-flex justify-content-center"><input type="submit"  name="On-going-RoomCode" value="RoomCode" class="dropdown-content"></li>
+                            <li class="d-flex justify-content-center"><input type="submit"  name="On-going-Cost" value="Cost" class="dropdown-content"></li>
+                            <li class="d-flex justify-content-center"><input type="submit"   name="On-going-Date" value="Date"class="dropdown-content"></li>
+                        </ul>
                 </form>
                 
                 </div>
 
-                <!-- HTML -->
-                 <form >
-                    <div class="input-icon-container">
-                        <input type="text" class="searchclass" name="On-going-search" placeholder="Search">
-                        <i class="fa fa-search search-icon"></i>
+                 <form>
+                    <div class="search-container shadow">
+                        <input type="text" class="search" name="On-going-search" placeholder="Search">
+                        <span class="search-icon"><i class="fas fa-search"></i></span>
                     </div>
                  </form>
-                
                 
             </div>
 
             <section class="overflow-auto" style="max-height: 400px;">
             <table>
-                <thead class="sticky-top" style="z-index: 50;">
+                <thead class="sticky-top">
                 <tr>
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -312,33 +310,33 @@ class MaintenanceViews extends GeneralViews{
             <div class="table-section styled-table">
             <div class="table-cont-1">
                 <div class="table-cont-1-1">
-                <span>Sort By</span>
+                <span style="color: #779CC8; font-weight: bold;">Sort by:</span>
                 <form action="" method="GET">
 
-                    <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="pe-5 fs-6">Category...</span>
+                    <button class="btn-var-7 dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="pe-5 fs-6" style="padding-left: 20px;">Category...</span>
                     </button>
-                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
-                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-RoomCode"value="RoomCode" class="no-design1"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-Cost"value="Cost (Highest to Lowest)" class="no-design2"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"   name="Completed-Date" value="Date (Newest to Oldest)"class="no-design3"></li>
+                            <ul class="dropdown-menu" style="background-color: #EDF6F7; z-index:1050;">
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-RoomCode"value="RoomCode" class="dropdown-content"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Completed-Cost"value="Cost" class="dropdown-content"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="Completed-Date" value="Date"class="dropdown-content"></li>
                             </ul>
                 </form>
                 </div>
                 <!-- HTML -->
                 <form>
-                    <div class="input-icon-container">
-                        <input type="text" class="searchclass" name="Completed-search" placeholder="Search">
-                        <i class="fa fa-search search-icon"></i>
+                    <div class="search-container shadow">
+                        <input type="text" class="search" name="Completed-search" placeholder="Search">
+                        <span class="search-icon"><i class="fas fa-search"></i></span>
                     </div>
-                 </form>
+                </form>
 
             </div>
             <section class="overflow-auto" style="max-height: 400px;">
 
             
             <table>
-                <thead class="sticky-top" style="z-index: 50;">
+                <thead class="sticky-top">
                 <tr class ="completed">
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -429,23 +427,23 @@ class MaintenanceViews extends GeneralViews{
             <div class="table-section styled-table">
             <div class="table-cont-1">
                 <div class="table-cont-1-1">
-                <span>Sort By</span>
+                <span style="color: #779CC8; font-weight: bold;">Sort by:</span>
                 <form action="" method="GET">
 
-                    <button class="btn btn-primary btn-sm dropdown-toggle shadow blue" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="pe-5 fs-6">Category...</span>
+                    <button class="btn-var-7 dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="pe-5 fs-6" style="padding-left: 20px;">Category...</span>
                     </button>
-                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
-                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-RoomCode"value="RoomCode" class="no-design1"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-Cost"value="Cost (Highest to Lowest)" class="no-design2"></li>
-                                <li class="d-flex justify-content-center"><input type="submit"   name="Cancelled-Date" value="Date (Newest to Oldest"class="no-design3"></li>
+                            <ul class="dropdown-menu" style="background-color: #EDF6F7; z-index:1050;">
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-RoomCode" value="RoomCode" class="dropdown-content"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"  name="Cancelled-Cost" value="Cost" class="dropdown-content"></li>
+                                <li class="d-flex justify-content-center"><input type="submit"   name="Cancelled-Date" value="Date"class="dropdown-content"></li>
                             </ul>
                 </form>
                 </div>
                 <form>
-                    <div class="input-icon-container">
-                        <input type="text" class="searchclass" name="Cancelled-search" placeholder="Search">
-                        <i class="fa fa-search search-icon"></i>
+                    <div class="search-container shadow">
+                        <input type="text" class="search" name="Cancelled-search" placeholder="Search">
+                        <span class="search-icon"><i class="fas fa-search"></i></span>
                     </div>
                  </form>
 
@@ -453,7 +451,7 @@ class MaintenanceViews extends GeneralViews{
             <section class="overflow-auto" style="max-height: 400px;">
             
             <table>
-                <thead class="sticky-top" style="z-index: 50;">
+                <thead class="sticky-top">
                 <tr class="canceled">
                     <th>Room Code</th>
                     <th>Cost</th>
@@ -519,7 +517,7 @@ class MaintenanceViews extends GeneralViews{
      * @return void
      */
     public static function edit_maintenance_modal(){
-        $rooms = MaintenanceController::get_room(); 
+        $rooms = MaintenanceController::get_room(); // Fetch rooms data from database
     
         echo '
             <!-- Revision Edit MODAL -->
@@ -542,7 +540,7 @@ class MaintenanceViews extends GeneralViews{
                                     </div>
                                     <div class="col-md-8">
                                         <select id="Edit-roomID" name="Edit-roomID" class="form-control shadow" required>
-                                            <option value="" disabled selected>Select a Room...</option>';
+                                            <option value="" disabled selected style="display:none;">Select a Room</option>';
                                             foreach ($rooms as $room){
                                                 $room_id = $room['roomID'];
                                                 echo '<option value="' . $room_id . '">' . $room_id . '</option>';
@@ -566,7 +564,7 @@ class MaintenanceViews extends GeneralViews{
                                         <label for="edit-reason" class="form-label">Reason:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" id="Edit-maintDesc" name="Edit-maintDesc" placeholder="Enter a reason..." class="form-control shadow" required>
+                                        <input type="text" id="Edit-maintDesc" name="Edit-maintDesc" placeholder="Enter a reason" class="form-control shadow" required>
                                     </div>
                                 </div>
                                 <!-- Row 4: Status -->
@@ -576,7 +574,7 @@ class MaintenanceViews extends GeneralViews{
                                     </div>
                                     <div class="col-md-8">
                                         <select id="Edit-maintStatus" name="Edit-maintStatus" class="form-select shadow" required>
-                                            <option value="" disabled selected>Choose the status...</option>
+                                            <option value="" disabled selected style="display: none;">Choose a status</option>
                                             <option value="On-going">On-going</option>
                                             <option value="Completed">Completed</option>
                                             <option value="Cancelled">Cancelled</option>
@@ -589,12 +587,12 @@ class MaintenanceViews extends GeneralViews{
                                         <label for="edit-maintenance-cost" class="form-label">Maintenance Cost:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" id="Edit-maintCost" name="Edit-maintCost" placeholder="Enter the cost..." class="form-control shadow" required>
+                                        <input type="text" id="Edit-maintCost" name="Edit-maintCost" placeholder="Enter the cost" class="form-control shadow" required>
                                     </div>
                                 </div>
                                 <!-- Submit Button -->
                                 <div class="displayflex">
-                                    <input type="submit" name="edit-maintenance-submit" class="btn-var-2" value="Save">
+                                    <input type="submit" name="edit-maintenance-submit" class="btn-var-5" style="width:200px;" value="Save">
                                 </div>
                             </form>
                         </div>
@@ -612,38 +610,32 @@ class MaintenanceViews extends GeneralViews{
      * @return void
      */
     public static function delete_maintenance_modal(){
-        echo '
+        echo <<<HTML
         
             <!-- Delete Modal Revision -->
             <div class="modal fade" id="DeletemyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <div class="displayflex header bg-custom">
-                                <span style="font-size: 25px;">Are you sure you want to delete this maintenance information?</span>
-                            </div>
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-custom">
+                        <div class="modal-body text-center">
+                        <p class="confirmation-question">Are you sure you want to delete this user?</p>
                             <form id="deleteMaintenanceForm" method="POST">
                                 <!-- Hidden input to store the maintenance ID -->
                                 <input type="hidden" id="deleteMaintID" name="deleteMaintID" value="">
                                 
-                                <div class="displayflex">
-                                    <input type="submit" name="delete-maintenance-submit" id="Yesdelete" class="btn-var-2 ms-4 me-4" value="Yes">
-                                    <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" value="No" data-bs-dismiss="modal" aria-label="Close">
+                                <div class="button-container">
+                                    <button type="submit" name="delete-maintenance-submit" id="Yesdelete" class="btn-delete-yes" value="Yes">Yes</button>
+                                    <button type="button" name="No" id="Nodelete" class="btn-delete-no" value="No" data-bs-dismiss="modal" aria-label="Close">No</button>
                                 </div>
                             </form>
-
+                                <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                         </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked "Yes", this action cannot be undone.</span>
-                        </div>
-                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>
-        ';
+        HTML;
     }
 
     

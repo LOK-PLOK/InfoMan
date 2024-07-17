@@ -3,14 +3,10 @@ body {
     height: 100vh;
 }
 
-/*====================General Content====================*/
 
-/*====================Settings Content====================*/
-
-/*---------------User Profile / Rates and Pricing---------------*/
-/* Container Styles*/
+/*⋆ ˚｡⋆୨୧˚ USER PROFILE (ft. settings' container/s) ˚୨୧⋆｡˚⋆*/
 .user-profile,
-.rate-price-cont {
+.settings-cont {
     padding: 20px 40px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -18,19 +14,18 @@ body {
     background: #02439A;
 }
 
-/* User's name*/
 .user-name{
     color: white;
     font-size: 24px;
 }
 
-/* User's position*/
 .user-type {
     font-size: 14px;
     color: white;
 }
 
-/* Sections for rates and pricing, user information, and create user*/
+
+/*⋆ ˚｡⋆୨୧˚ SECTIONS AND SETTINGS' CONTAINERS ˚୨୧⋆｡˚⋆*/
 .section {
     display: flex;
     justify-content: space-between;
@@ -39,8 +34,7 @@ body {
     gap: 20px;
 }
 
-/* Individual sections */
-.rate-price-cont {
+.settings-cont {
     flex: 1;
     max-width: calc(50% - 10px); 
     display: flex;
@@ -52,43 +46,52 @@ body {
     border-width: 0;
 }
 
-/* Container for images inside the containers per section*/
-.rate-price-cont img {
+.settings-cont img {
     margin-right: 10px;
     height: 25px;
 }
 
-.rate-price-cont:hover {
+.settings-cont:hover {
     color: white;
     background-color: #344799; 
 }
 
-.rate-price-cont:hover i {
+.settings-cont:hover i {
     color: white;
 }
 
-.rate-price-cont span {
+.settings-cont span {
     font-size: 18px;
     margin-right: auto;
 }
 
-.rate-price-cont i {
+.settings-cont i {
     font-size: 30px;
     cursor: pointer;
     color: #344799;
 }
 
-/*---------------Button---------------*/
-.btn-var-1 {
-    padding: 10px;
-    background-color: #344799; 
-    color: white;
-    border-radius: 5px;
-    border: none;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
+
+/*⋆ ˚｡⋆୨୧˚ SETTINGS MODAL GENERAL ˚୨୧⋆｡˚⋆*/
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px);
 }
 
-/*====================Rates And Pricing Modal====================*/
+.modal-content {
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+
+.action:hover {
+    cursor: pointer;
+}
+
+
+/*⋆ ˚｡⋆୨୧˚ RATES AND PRICING MODAL ˚୨୧⋆｡˚⋆*/
 .modal-subtitle {
     color: #344799;
     font-size: 20px;
@@ -98,13 +101,13 @@ body {
 .input-with-edit {
     display: flex;
     align-items: center;
-    gap: 20px; /* Adds space between input field and edit text */
+    gap: 20px;
 }
 
 .form-control,.modal-input {
     color: black; 
     border-radius: 10px;
-    flex: 1; /* Makes the input field take available space */
+    flex: 1;
     height: 40px;
 }
 
@@ -113,11 +116,11 @@ body {
 }
 
 .form-control::placeholder {
-    font-weight: bold; /* Set placeholder text to bold */
+    font-weight: bold;
 }
 
 .edit {
-    color: #000; /* Color for the "edit" text */
+    color: #000;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -125,7 +128,7 @@ body {
 .monthly-cost {
     color: rgba(2, 67, 154, 0.50);
     font-size: 12px;
-    text-align: center; /* Center align the helper text */
+    text-align: center;
     width: 100%;
 }
 
@@ -142,249 +145,150 @@ body {
     font-weight: normal;
 }
 
-/* Modal body styling */
 .modal-body {
-    position: relative; /* To allow absolute positioning of the button */
-    padding-bottom: 150px; /* Add some bottom padding for the button */
+    position: relative;
+    padding-bottom: 150px;
 }
 
 .monthly-cost-bottom {
     color: rgba(2, 67, 154, 0.50);
     font-size: 12px;
-    text-align: center; /* Center align the helper text */
+    text-align: center;
     width: 100%;
     margin-bottom: 70px;
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-/* Button styling */
-.btn-save-changes {
-    padding: 10px;
-    width: 150px;
-    background-color: #344799 !important; /* Ensure background color applies */
-    color: white;
-    border-radius: 5px;
-    border: none;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
-    position: absolute; /* Allows positioning at the bottom center */
-    bottom: 30px; /* Increase this value to move the button further down */
-    left: 50%; /* Centers horizontally */
-    transform: translateX(-50%); /* Adjusts for button width */
-    text-align: center; /* Centers text within the button */
-    cursor: pointer; /* Changes the cursor on hover */
-    display: inline-block;
-    white-space: nowrap; /* Prevents text wrapping */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
-}
-
-/* Optional: Hover effect for the button */
-.btn-save-changes:hover {
-    background-color: white !important;
-    color: #344799;
-}
-
-.header-buttons {
-    display: flex;
-    align-items: center;
-}
-
-#createUserButton {
-    margin-right: 20px; /* Space 20px left of the close button */
-    background-color: #344799; /* Green button */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#createUserButton:hover {
-    background-color: #fff;
-    color: #344799;
-}
-
-
-/* Adjust modal dialog for additional space */
-.modal-dialog {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 60px); /* Ensure it centers vertically */
-}
-
-.modal-content {
-    max-height: calc(100vh - 60px); /* Ensure content fits within view */
-    overflow-y: auto; /* Allow scrolling if content overflows */
-}
-
-/* Table styling */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.table th, .table td {
-    padding: 10px;
-    text-align: center; /* Center content */
-    border: 1px solid #ddd;
-}
-
+/*⋆ ˚｡⋆୨୧˚ USER INFO MODAL ˚୨୧⋆｡˚⋆*/
 .table-header th {
-    background-color: #344799 !important; /* Header background color */
-    color: white !important; /* Header text color */
-    text-align: center; /* Center header text */
+    background-color: #344799 !important;
+    color: white !important;
+    text-align: center;
 }
 
-.table tbody {
-    font-weight: bold; /* Bold for names */
-    text-align: left; /* Left align for names */
-}
-
-/* Status Css */
 .resize{
     display:flex;
     align-items: center ;
     display: flex;
     justify-content: center;
 }
+
 .resize img{
     height: 20px;
     margin-right: 5px;
 }
 
-/* Ensure labels and inputs are in one row (Add User) */
+
+/*⋆ ˚｡⋆୨୧˚ CREATE USER MODAL ˚୨୧⋆｡˚⋆*/
 .modal-body .mb-3 {
     display: flex;
     align-items: center;
-    margin-bottom: 10px; /* Add margin between rows */
-  }
-
-  /* Adjust label styling */
-  .modal-body .form-label {
-    width: 70px; /* Adjust width of labels */
-    text-align: left; /* Align labels to the left */
-    margin-right: 10px; /* Add spacing between label and input */
-  }
-
-  /* Ensure inputs fill remaining space */
-  .modal-body .form-control,
-  .modal-body .form-select {
-    flex: 1; /* Input fields fill remaining space */
-    height: 40px; /* Adjust input height */
-  }
-
-  /* Add gap between input fields */
-  .modal-body .mb-3 input[type="text"] {
-    margin-right: 5px; /* Gap between input fields */
-  }
-
-  .modal-body #userPosition,
-  .modal-body #lname {
-    margin-right: 0; /* Remove left margin */
-  }
-
-  /* Center the Save button in the modal footer */
-  .modal-footer {
-    justify-content: center;
-  }
-
-  .btn-create-save {
-    padding: 10px;
-    width: 150px;
-    background-color: #344799 !important; /* Ensure background color applies */
-    color: white;
-    border-radius: 5px;
-    border: none;
-    font-size: clamp(0.65rem, 2.5vw, 1rem);
-    position: absolute; /* Allows positioning at the bottom center */
-    bottom: 5px;
-    left: 50%; /* Centers horizontally */
-    transform: translateX(-50%); /* Adjusts for button width */
-    text-align: center; /* Centers text within the button */
-    cursor: pointer; /* Changes the cursor on hover */
-    display: inline-block;
-    white-space: nowrap; /* Prevents text wrapping */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
+    margin-bottom: 10px;
 }
 
-.btn-create-save:hover {
-    background-color: white !important;
-    color: #344799;
+.modal-body .form-label {
+    width: 70px;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.modal-body .form-control,
+.modal-body .form-select {
+    flex: 1;
+    height: 40px;
+}
+
+
+.modal-body .mb-3 input[type="text"] {
+    margin-right: 5px;
+}
+
+.modal-body #userPosition,
+.modal-body #lname {
+    margin-right: 0;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+.btn-create-save {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    margin-bottom: 30px;
 }
 
 .btn-create-save:disabled {
-    background-color: #D6DEDF !important; /* Default Bootstrap secondary color */
+    background-color: #D6DEDF !important;
     color: #344799 !important;
-    cursor: not-allowed; /* Change cursor to not-allowed */
+    cursor: not-allowed;
 }
 
-.action:hover {
-    cursor: pointer; /* Change cursor to pointer on hover */
-}
 
-/* Center the modal title */
-.modal-title {
-    text-align: center;
-    margin-bottom: 20px; /* Optional: Adjust spacing */
-  }
-  
-  .confirmation-question {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #344799;
-    font-weight: bold;
-  }
-  
-  /* Center the buttons in the footer */
-  .button-container {
+/*⋆ ˚｡⋆୨୧˚ SIGN OUT ˚୨୧⋆｡˚⋆*/
+.login-sett-cont {
+    position: relative;
     display: flex;
-    justify-content: center;
-    gap: 10px; /* Adjust spacing between buttons */
-    margin-bottom: 20px; /* Add space below buttons */
-  }
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 45%;
+    padding: 10px;
+}
 
-  .btn-delete-yes {
-    background-color: #344799 !important; /* Default Bootstrap danger color */
-    color: white !important;
-    width: 150px; /* Increase width */
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold; /* Make the text bold */
-  }
-  
-  .btn-delete-yes:hover {
-    background-color: #fff !important;
-    color: #344799 !important;
-  }
-  
-  .btn-delete-no {
-    background-color: #D6DEDF !important; /* Default Bootstrap secondary color */
-    color: #344799 !important;
-    width: 150px; /* Increase width */
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold; /* Make the text bold */
-  }
-  
-  .btn-delete-no:hover {
-    background-color: white !important;
-    color: gray !important;
-  }
-  
-  /* Style for the note */
-  .note {
-    font-size: 12px;
-    color: #779CC8;
-    text-align: center;
-  }
+.sign-out-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    margin-top: auto;
+}
+
+@media (max-width: 1200px) {
+    .login-sett-cont {
+        padding: 8px;
+        min-height: 45%;
+    }
+
+    .sign-out-btn {
+        bottom: 8px;
+        right: 8px;
+    }
+}
+
+@media (max-width: 992px) {
+    .login-sett-cont {
+        padding: 6px;
+        min-height: 45%;
+    }
+
+    .sign-out-btn {
+        bottom: 6px;
+        right: 6px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-sett-cont {
+        padding: 4px;
+        min-height: 45%;
+    }
+
+    .sign-out-btn {
+        bottom: 4px;
+        right: 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-sett-cont {
+        padding: 2px;
+        min-height: 45%;
+    }
+
+    .sign-out-btn {
+        bottom: 2px;
+        right: 2px;
+    }
+}

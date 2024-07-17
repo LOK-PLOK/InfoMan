@@ -27,15 +27,17 @@ RoomlogsViews::burger_sidebar();
 
     <!-- Room Log Actions -->
     <div class="rm-log-button">
-        <button class="show-avail-rm-btn">Show Available Rooms</button>
+        <button class="btn-var-3 shadow">Show Available Rooms</button>
         <?php 
             if($_SESSION['sessionType'] === 'admin'){
                 ?> 
-                <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#add-new-rm"><img src="/images/icons/Room Logs/add_new_room_light.png" alt="">Add New Room</button>
+                <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#add-new-rm" onmouseover="document.getElementById('rl-add-new-room').src='/images/icons/Room Logs/add_new_room_dark.png'" onmouseout="document.getElementById('rl-add-new-room').src='/images/icons/Room Logs/add_new_room_light.png'">
+                    <img id="rl-add-new-room" src="/images/icons/Room Logs/add_new_room_light.png" alt="">Add New Room</button>
                 <?php
             }
         ?>
-        <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#addNewRent"><img src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
+        <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#addNewRent" onmouseover="document.getElementById('rl-add-new-rent').src='/images/icons/Dashboard/Buttons/add_new_rent_dark.png'" onmouseout="document.getElementById('rl-add-new-rent').src='/images/icons/Dashboard/Buttons/add_new_rent_light.png'">
+            <img id="rl-add-new-rent" src="/images/icons/Dashboard/Buttons/add_new_rent_light.png" alt="">Add New Rent</button>
     </div>
 
     <!-- Room Information -->
@@ -156,15 +158,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
 
-        $new_billing = array(
-			"tenID" => $_POST['new-rent-tenant'],
-			"billTotal" => $_POST['new-rent-rate'],
-			"endDate" => $_POST['new-rent-end']
-		);
-
-		$result = RoomlogsController::create_new_rent($create_rent, $new_billing);
-        header('Location: room_logs.php?addRentStatus='.$result);
-        exit();
+		$result = RoomlogsController::create_new_rent($create_rent);
+        if ($result === true) {
+            // Redirect to avoid form resubmission
+            header('Location: room_logs.php?addRentStatus=success');
+            exit();
+        } else {
+            // Redirect with an error message
+            header('Location: room_logs.php?addRentStatus='.$result);
+            exit();
+        }
 	}
 
     // Editing Room

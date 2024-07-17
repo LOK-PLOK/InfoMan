@@ -3,25 +3,8 @@
 require_once 'GeneralViews.php';
 require_once '../controllers/RoomhistoryController.php';
 
-
-/**
- * This class contains all the views that are used in the room history page.
- * 
- * @method room_history_header
- * @method editOccupancyModal
- * @method deleteOccupancyModal
- * @class RoomhistoryViews
- * @extends GeneralViews
- */
 class RoomhistoryViews extends GeneralViews {
 
-    /**
-     * Displays the header of the room history page
-     * 
-     * @method room_history_header
-     * @param none
-     * @return none
-     */
     public static function room_history_header() {
         echo <<<HTML
             <div class="d-flex justify-content-between">
@@ -32,15 +15,15 @@ class RoomhistoryViews extends GeneralViews {
                 <div class="d-flex align-items-center justify-content-center w-25" >
                     <form method="GET">
                         <div class="btn-group shadow" style="z-index: 1000;">
-                            <button class="btn btn-secondary btn-lg dropdown-toggle w-50" style="background-color: #344799" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="pe-5 fs-6">Room List</span>
+                            <button class="btn-var-7 dropdown-toggle shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="pe-5 fs-6" style="padding-left: 20px;">Room List</span>
                             </button>
-                            <ul class="dropdown-menu" style="background-color: #344799; z-index: 1050;">
+                            <ul class="dropdown-menu" style="background-color: #EDF6F7; z-index:1050;">
         HTML;
                         foreach(RoomhistoryController::all_rooms() as $room) {
                             echo <<<HTML
                                 <li class="d-flex justify-content-center">
-                                    <input type="submit" name="roomCode" value="{$room['roomID']}">
+                                    <input type="submit" name="roomCode" value="{$room['roomID']}" class="dropdown-content">
                                 </li>
                             HTML;
                         }
@@ -53,14 +36,7 @@ class RoomhistoryViews extends GeneralViews {
         HTML;
     }
 
-    
-    /**
-     * Displays the modal for editing an occupancy
-     * 
-     * @method editOccupancyModal 
-     * @param none
-     * @return none
-     */
+    // Edit Occupancy Modal
     public static function editOccupancyModal() {
     
         $rooms = RoomhistoryController::all_rooms();
@@ -136,7 +112,7 @@ class RoomhistoryViews extends GeneralViews {
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
                     <!-- Submit Button -->
-                    <button type="submit" name="edit-rent-submit" class="btn-var-3 add-button">Save</button>
+                    <button type="submit" name="edit-rent-submit" class="btn-var-4">Save</button>
                 </div>
                 </div>
             </form>
@@ -145,35 +121,25 @@ class RoomhistoryViews extends GeneralViews {
         HTML;
     }
 
-    /**
-     * Displays the modal for deleting an occupancy
-     * 
-     * @method deleteOccupancyModal
-     * @param none
-     * @return none
-     */
     public static function deleteOccupancyModal(){
         echo <<<HTML
             <div class="modal fade" id="deleteOccupancyModal" tabindex="-1" aria-labelledby="deleteOccupancyModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-custom">
-                        <div class="modal-header bg-custom">
-                            <span style="font-size: 25px;">Are you sure you want to delete this occupancy?</span>
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-custom">
+                        <div class="modal-body text-center">
+                        <p class="confirmation-question">Are you sure you want to delete this occupancy?</p>
                         <form method="POST">
-                            <div class="displayflex">
+                            <div class="button-container">
                                 <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
-                                <input type="submit" name="delete-occupancy-submit" id="delete-occupancy-submit" class="bg-danger btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                                <input type="submit" name="delete-occupancy-submit" id="delete-occupancy-submit" class="btn-delete-yes" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No">
                             </div>
                         </form>
+                        <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                         </div>
-                        <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                            <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                        </div>
-                        <div class="modal-footer"></div>
                     </div>
                 </div>
             </div>

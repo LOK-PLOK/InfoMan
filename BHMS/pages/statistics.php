@@ -114,11 +114,15 @@
             <div class="p-3 my-3 w-100 shadow position-relative rounded">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="page-header" style="font-size: 1.8rem">Occupancy Rate</span>
-                    <select id="occupancyFilterBtn" class="form-select form-select-sm w-25 shadow" style="height: 40px; color: white; background-color: #344799">
-                        <option value="monthly">Monthly</option>
-                        <option value="quarterly">Quarterly</option>
-                        <option value="yearly">Yearly</option>
-                    </select>
+                    <div class="custom-select-wrapper">
+                        <select id="occupancyFilterBtn" class="custom-select shadow">
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                        <div class="calendar-icon"></div>
+                        <div class="dropdown-icon"></div>
+                    </div>
                 </div>
                 <div class="chart-container">
                     <canvas id="occupancyChart"></canvas>
@@ -128,11 +132,15 @@
             <div class="p-3 my-3 w-100 shadow position-relative rounded">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="page-header" style="font-size: 1.8rem">Revenue and Expenses</span>
-                    <select id="revenueFilterBtn" class="form-select form-select-sm w-25 shadow" style="height: 40px; color: white; background-color: #344799">
-                        <option value="monthly">Monthly</option>
-                        <option value="quarterly">Quarterly</option>
-                        <option value="yearly">Yearly</option>
-                    </select>
+                    <div class="custom-select-wrapper">
+                        <select id="revenueFilterBtn" class="custom-select shadow">
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                        <div class="calendar-icon"></div>
+                        <div class="dropdown-icon"></div>
+                    </div>
                 </div>
                 <div class="chart-container">
                     <canvas id="revenueChart"></canvas>
