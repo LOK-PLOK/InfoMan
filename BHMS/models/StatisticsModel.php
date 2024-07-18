@@ -49,7 +49,7 @@ class StatisticsModel extends dbcreds {
     public static function residents_counter() {
 
         $conn = self::get_connection();
-        $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1";
+        $query = "SELECT COUNT(*) AS count FROM tenant t WHERE isRenting = 1 AND t.isDeleted = 0";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
