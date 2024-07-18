@@ -4,14 +4,14 @@ require 'dbcreds.php';
 
 class BillingsModel extends dbcreds {
 
+
+    /**
+     * Fetch the default value of the appRate column in the appliance table
+     */
     public static function fetchApplianceRate(){
         try {
             // Create a connection to the database
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-            
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
 
             // Prepare the SQL query to get the default value of the appRate column
             $stmt = $conn->prepare("
@@ -51,8 +51,13 @@ class BillingsModel extends dbcreds {
         }
     }
 
+
+    /**
+     * 
+     */
     public static function query_get_appliances($tenID){
         $conn = self::get_connection();
+
         $query = "SELECT COUNT(*) AS count
             FROM appliance
             WHERE tenID = ?;";
@@ -79,6 +84,10 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     *
+     */
     public static function query_specific_occupancy_type($tenID){
         $conn = self::get_connection();
         $query = "SELECT occTypeName, occRate
@@ -108,6 +117,10 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     *
+     */
     public static function query_overdue_billings(){
         $conn = self::get_connection();
     
@@ -134,8 +147,13 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     *
+     */
     public static function query_update_billing_status($new_payment){
         $conn = self::get_connection();
+
         $billRefNo = $new_payment['billRefNo'];
         
         $query = "UPDATE billing SET isPaid = '1' WHERE billing.billRefNo = ?;";
@@ -157,8 +175,13 @@ class BillingsModel extends dbcreds {
         return true;
     }
 
+
+    /*
+    * 
+    */
     public static function query_get_specific_tenant($tenID){
         $conn = self::get_connection();
+
         $query = "SELECT * FROM tenant WHERE tenID = ?";
         $stmt = $conn->prepare($query);
         
@@ -183,11 +206,12 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function query_create_payment($new_payment) {
         $conn = self::get_connection();
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
     
         $query = "INSERT INTO payment (billRefNo, payAmnt, payDate, payMethod, payerFname, payerLname, payerMI) 
                   VALUES (?, ?, CURRENT_DATE(), ?, ?, ?, ?)";
@@ -214,6 +238,10 @@ class BillingsModel extends dbcreds {
         return true;
     }
 
+
+    /**
+     * 
+     */
     public static function query_billing_data($billRefNo){
         $conn = self::get_connection();
     
@@ -242,8 +270,13 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function query_get_occupancy_types(){
         $conn = self::get_connection();
+
         $query = "SELECT * FROM occupancy_type";
         $stmt = $conn->prepare($query);
         
@@ -270,9 +303,14 @@ class BillingsModel extends dbcreds {
         return $results;
 
     }
-
+    
+    
+    /**
+     * 
+     */
     public static function query_update_billing_payment($updated_billing_payment) {
         $conn = self::get_connection();
+
         $billRefNo = $updated_billing_payment['billRefNo'];
         $billTotal = $updated_billing_payment['billTotal'];
 
@@ -330,6 +368,10 @@ class BillingsModel extends dbcreds {
         return true;
     }
 
+
+    /**
+     * 
+     */
     public static function query_get_payment_billing_info($billRefNo){
         $conn = self::get_connection();
     
@@ -360,6 +402,10 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function query_create_billings($new_billing){
         $conn = self::get_connection();
         
@@ -382,7 +428,11 @@ class BillingsModel extends dbcreds {
     
         return true;
     }
+
     
+    /**
+     * 
+     */
     public static function query_update_billing($updated_billing) {
         $conn = self::get_connection();
     
@@ -413,12 +463,12 @@ class BillingsModel extends dbcreds {
         return true;
     }
 
+
+    /**
+     * 
+     */
     public static function query_delete_billings($billing_id) {
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         $billInfoData = self::query_billing_data($billing_id);
 
@@ -436,12 +486,12 @@ class BillingsModel extends dbcreds {
     }
     
 
+
+    /**
+     * 
+     */
     public static function query_tenants(){
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         $query = "SELECT * FROM tenant";
         $stmt = $conn->query($query);
@@ -461,12 +511,13 @@ class BillingsModel extends dbcreds {
         return $results;
     }
 
+
+
+    /**
+     * 
+     */
     public static function query_paid_billings() {
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         // have another
     
@@ -491,14 +542,14 @@ class BillingsModel extends dbcreds {
         $conn->close();
     
         return $results;
-    }
+    }   
 
+
+    /**
+     * 
+     */
     public static function query_unpaid_billings() {
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
     
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
@@ -523,6 +574,9 @@ class BillingsModel extends dbcreds {
         return $results;
     } 
 
+    /**
+     * 
+     */
     public static function query_all_occupancy() {
         $conn = self::get_connection();
     
@@ -543,37 +597,6 @@ class BillingsModel extends dbcreds {
         $conn->close();
     
         return $results;
-    }
-
-    // Automated Billing Model
-    public static function query_billing_notice_checker($occupancyID){
-        $conn = self::get_connection();
-        $query = "SELECT COUNT(*) AS count
-                    FROM occupancy
-                    WHERE occupancyID = ? AND occDateEnd BETWEEN CURDATE() 
-                    AND DATE_ADD(CURDATE(), INTERVAL 7 DAY);";
-        $stmt = $conn->prepare($query);
-        
-        if ($stmt === false) {
-            die("Error preparing statement: " . $conn->error);
-        }
-    
-        $stmt->bind_param("i", $occupancyID); 
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-        
-        if ($result === false) {
-            die("Error executing query: " . $stmt->error);
-        }
-        
-        $row = $result->fetch_assoc();
-        $count = $row['count'];
-        
-        $stmt->close();
-        $conn->close();
-        
-        return $count > 0 ? true : false;
     }
 }
 

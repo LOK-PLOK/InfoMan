@@ -29,7 +29,7 @@ RoomlogsViews::burger_sidebar();
     <div class="rm-log-button">
         <button class="btn-var-3 shadow">Show Available Rooms</button>
         <?php 
-            if($_SESSION['sessionType'] === 'admin'){
+            if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev'){
                 ?> 
                 <button type="button" class="btn-var-3 shadow" data-bs-toggle="modal" data-bs-target="#add-new-rm" onmouseover="document.getElementById('rl-add-new-room').src='/images/icons/Room Logs/add_new_room_dark.png'" onmouseout="document.getElementById('rl-add-new-room').src='/images/icons/Room Logs/add_new_room_light.png'">
                     <img id="rl-add-new-room" src="/images/icons/Room Logs/add_new_room_light.png" alt="">Add New Room</button>

@@ -3,7 +3,11 @@
 require_once 'dbcreds.php';
 
 class GeneralModel extends dbcreds {
- 
+    
+
+    /**
+     * 
+     */
     public static function query_rooms(){
 
         $conn = self::get_connection();
@@ -26,6 +30,10 @@ class GeneralModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function query_room_tenants($room_code) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT * FROM occupancy o WHERE roomID = ? AND o.isDeleted = 0 ORDER BY occDateStart DESC");
@@ -53,6 +61,10 @@ class GeneralModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function query_current_room_tenants($room_code) {
         $conn = self::get_connection();
 
@@ -81,6 +93,10 @@ class GeneralModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function update_room_count($room_code, $tenant_count) {
         $conn = self::get_connection();
         $query = $conn->prepare("UPDATE room SET rentCount = ? WHERE roomID = ?");
@@ -99,6 +115,10 @@ class GeneralModel extends dbcreds {
         $conn->close();
     }
 
+
+    /**
+     * 
+     */
     public static function update_rent_status($tenant_id, $isRent) {
         $conn = self::get_connection();
         $query = $conn->prepare("UPDATE tenant SET isRenting = ? WHERE tenID = ?");
@@ -117,6 +137,10 @@ class GeneralModel extends dbcreds {
         $conn->close();
     }
 
+
+    /**
+     * 
+     */
     public static function check_recent_rent($tenant_id) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) AS rent_count FROM occupancy o WHERE tenID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND DATEDIFF(occDateEnd, occDateStart) >= 30 AND o.isDeleted = 0;");
@@ -141,6 +165,10 @@ class GeneralModel extends dbcreds {
         return $rent_count > 0; // Return true if there are recent rents, false otherwise
     }
 
+
+    /**
+     * 
+     */
     public static function get_all_tenants() {
         $conn = self::get_connection();
         $query = "SELECT * FROM tenant t WHERE t.isDeleted = 0";
@@ -162,6 +190,10 @@ class GeneralModel extends dbcreds {
         return $results;
     }
 
+
+    /**
+     * 
+     */
     public static function update_room_availability($roomID, $status){
         $conn = self::get_connection();
         $query = $conn->prepare("UPDATE room SET isAvailable = ? WHERE roomID = ?");
@@ -180,6 +212,10 @@ class GeneralModel extends dbcreds {
         $conn->close();
     }
 
+
+    /**
+     * 
+     */
     public static function query_user_info($userID){
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT * FROM user WHERE userID = ? AND isDeleted = 0");
@@ -203,6 +239,10 @@ class GeneralModel extends dbcreds {
         return $userInfo;
     }
 
+
+    /**
+     * 
+     */
     public static function check_recent_eviction($tenant_id) {
         $conn = self::get_connection();
         $query = $conn->prepare("SELECT COUNT(*) AS eviction_count FROM occupancy o WHERE tenID = ? AND DATEDIFF(occDateEnd, occDateStart) < 30 AND o.isDeleted = 0;");

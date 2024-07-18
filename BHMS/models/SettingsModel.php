@@ -6,11 +6,7 @@ class SettingsModel extends dbcreds{
 
     //user info display
     public static function verify_user(){
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         $query = $conn->prepare("SELECT * FROM user WHERE userID = ?");
 
@@ -32,10 +28,7 @@ class SettingsModel extends dbcreds{
 
     //fetching rates (rates and pricing modal)
     public static function fetchRates() {
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         $query = "SELECT * FROM occupancy_type";
         $result = $conn->query($query);
@@ -153,11 +146,7 @@ class SettingsModel extends dbcreds{
     public static function delete_user($userIdToDelete) {
         try {
             
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
 
             $stmt = $conn->prepare("DELETE FROM user WHERE userID = ?");
 
@@ -185,11 +174,7 @@ class SettingsModel extends dbcreds{
     public static function users_data(){
         try {
             //connection 
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-            
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
     
             // SQL query to select all tenants
             $query = "SELECT * FROM user";
@@ -230,11 +215,7 @@ class SettingsModel extends dbcreds{
     public static function fetchApplianceRate() {
         try {
             // Create a connection to the database
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-            
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
 
             // Prepare the SQL query to get the default value of the appRate column
             $stmt = $conn->prepare("
@@ -278,10 +259,7 @@ class SettingsModel extends dbcreds{
     public static function updateApplianceRate($new_rate){
         try {
             // Create a connection to the database
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname); 
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
 
             // Prepare the SQL query to alter the appliance rate column
             $alter_query = "ALTER TABLE appliance CHANGE appRate appRate DECIMAL(7,2) NOT NULL DEFAULT ?";
@@ -319,10 +297,7 @@ class SettingsModel extends dbcreds{
     public static function updateOccupancyRates($new_rates) {
         try {
             // Create a connection to the database
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
 
             // Prepare the SQL query to update the occupancy rates
             $stmt = $conn->prepare("UPDATE occupancy_type SET occRate = ? WHERE occTypeID = ?");

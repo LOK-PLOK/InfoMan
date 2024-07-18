@@ -187,8 +187,13 @@ class SettingsViews extends GeneralViews {
         HTML; 
     
         // Loop for user info in the list
-        if($_SESSION['sessionType'] === 'admin') {
+        if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') {
             foreach ($user_list as $user) {
+
+                if($user['userType'] == 'dev' && $_SESSION['sessionType'] != 'dev') {
+                    continue;
+                }
+
                 $userDataJson = htmlspecialchars(json_encode($user));
                 $statusImage = $user['isActive'] ? 'active.jpg' : 'inactive.jpg';
                 $statusText = $user['isActive'] ? 'active' : 'inactive';

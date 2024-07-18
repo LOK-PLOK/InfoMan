@@ -38,12 +38,7 @@ class ResidentsModel extends dbcreds{
      */
     public static function residents_counter() {
         // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        // Check for connection errors
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
     
         $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1";
         $stmt = $conn->query($query);
@@ -71,11 +66,7 @@ class ResidentsModel extends dbcreds{
      */
     public static function add_new_tenant($new_tenant, $appliances) {
 
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
     
         $query = $conn->prepare("INSERT INTO tenant (
             tenFname, 
@@ -151,12 +142,7 @@ class ResidentsModel extends dbcreds{
      */
     public static function get_last_inserted_tenant_id() {
         // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
     
         try {
             $sql = "SELECT MAX(tenID) AS last_id FROM tenant";
@@ -188,11 +174,7 @@ class ResidentsModel extends dbcreds{
      * @return true
      */
     public static function appliance_tenID($appliances, $last_id) {
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
     
         try {
             $sql = "INSERT INTO appliance (tenID, appInfo) VALUES (?, ?)";
@@ -233,12 +215,7 @@ class ResidentsModel extends dbcreds{
     public static function residents_data(){
         try {
             // Use self to access static variables within the static method
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-            
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
     
             $query = "SELECT * FROM tenant ORDER BY isRenting=1 DESC";
             $result = $conn->query($query);
@@ -277,11 +254,7 @@ class ResidentsModel extends dbcreds{
         $tenantID = $editTenantData['Edit-tenID'];
 
         // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         // Prepare the UPDATE query for tenant
         $query = $conn->prepare("UPDATE tenant SET 
@@ -369,11 +342,7 @@ class ResidentsModel extends dbcreds{
     public static function deleteTenantById($tenantIdToDelete) {
         try {
             // Create a connection to the database
-            $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-    
-            if ($conn->connect_error) {
-                throw new Exception("Connection failed: " . $conn->connect_error);
-            }
+            $conn = self::get_connection();
     
             // Prepare the DELETE statement with a parameterized query to prevent SQL injection
             $stmt = $conn->prepare("DELETE FROM tenant WHERE tenID = ?");

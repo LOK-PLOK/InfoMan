@@ -4,15 +4,14 @@ require 'dbcreds.php';
 
 class LoginModel extends dbcreds {
 
+
+    /**
+     * 
+     */
     public static function verify_credentials($user_input) {
 
         // Use self to access static variables within the static method
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
-
-        // Check for connection errors
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        $conn = self::get_connection();
 
         // Prepare the SQL statement
         $query = $conn->prepare("SELECT * FROM user WHERE username = ?");

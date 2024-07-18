@@ -38,7 +38,7 @@ if (!isset($_SESSION['userID'])) {
             </div>
         </a>
 
-    <?php if ($_SESSION['sessionType'] === 'admin') { ?>
+    <?php if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') { ?>
         <a href="statistics.php">
             <div class="class-align-tabs <?php echo setActiveClass('statistics', $current_page); ?>">
                 <img src="/images/icons/Dashboard/Navigation Bar/statistics_<?php echo setActiveIcon('statistics', $current_page); ?>.png">
