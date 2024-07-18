@@ -151,7 +151,8 @@ class ResidentsController extends GeneralController{
      * @return ResidentsModel::deleteTenantById
      */
     public static function deleteTenantById($tenantIdToDelete){
-        return ResidentsModel::deleteTenantById($tenantIdToDelete);
+        $checkResult1 = ResidentsModel::deleteTenantById($tenantIdToDelete);
+        return $checkResult1;
     }
 
     /**
@@ -206,10 +207,35 @@ class ResidentsController extends GeneralController{
      * 
      * @method editOccupancy
      * @param $editInfo
-     * @return ResidentsModel::editOccupancy
+     * @return string success and error messages
      */
     public static function editOccupancy($editInfo){
-        return ResidentsModel::editOccupancy($editInfo);
+        if($editInfo['occDateStart'] == NULL ||
+            $editInfo['occDateEnd'] == NULL ||
+            $editInfo['roomID'] == NULL ||
+            $editInfo['occupancyID'] == NULL){
+            return "Error - Empty Fields";
+        }
+
+        $checkRoom = ResidentsModel::query_room_info($editInfo['roomID']);
+
+        $occType = (int)$editInfo['occTypeID'];
+        $rentCount = (int)$checkRoom['rentCount'];
+        $capacity = (int)$checkRoom['capacity'];
+        $isAvailable = (int)$checkRoom['isAvailable'];
+
+        echo '<script>console.log("'.$occType.'")</script>';
+
+        if($occType != 1){
+            return "Error - Already Renting a Room";
+        } else if($rentCount < $capacity && $isAvailable == 0){
+            return "Error - Shared Only";
+        } else if ($rentCount >= $capacity && $isAvailable == 0) {
+            return "Error - Room Full";
+        } else {
+            ResidentsModel::updateOccupancy($editInfo);
+            return "Success - Edit";
+        }
     }
 
     /**

@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 ob_start();
 
@@ -27,7 +30,7 @@ RoomlogsViews::burger_sidebar();
 
     <!-- Room Log Actions -->
     <div class="rm-log-button">
-        <button class="btn-var-3 shadow">Show Available Rooms</button>
+        <button class="btn-var-3 shadow show-avail-rm-btn">Show Available Rooms</button>
         <?php 
             if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev'){
                 ?> 
@@ -98,13 +101,23 @@ if(isset($_GET['addRentStatus'])){
 		echo '<script>showSuccessAlert("Rent Added Successfully!");</script>';
 	} else if($_GET['addRentStatus'] === 'Error - Tenant Rent Error'){
 		echo '<script>showFailAlert("Tenant is already occupied on the selected date!");</script>';
-	}
+	} else if ($_GET['addRentStatus'] === 'Error - Empty Fields') {
+        echo '<script>showFailAlert("Empty Fields!");</script>';
+    }
 }
 
 if(isset($_GET['editOccStatus'])){
-    if($_GET['editOccStatus'] === 'success'){
-        echo '<script>showSuccessAlert("Occupancy Edited Successfully!");</script>';
-    } else if($_GET['editOccStatus'] === 'error'){
+    if($_GET['editOccStatus'] === 'Success - Edit'){
+        echo '<script>showSuccessAlert("Room Edited Successfully!");</script>';
+    } else if($_GET['editOccStatus'] === 'Error - Shared Only'){
+        echo '<script>showFailAlert("Room can only be shared!");</script>';
+    } else if ($_GET['editOccStatus'] === 'Error - Room Full') {
+        echo '<script>showFailAlert("Room is in Full Capacity!");</script>';
+    } else if($_GET['editOccStatus'] === 'Error - Empty Fields'){
+        echo '<script>showFailAlert("Empty Fields!");</script>';
+    } else if($_GET['editOccStatus'] === 'Error - Already Renting a Room'){
+        echo '<script>showFailAlert("Tenant is already renting a Room!");</script>';
+    } else {
         echo '<script>showFailAlert("An unexpected error has happened!");</script>';
     }
 }
@@ -149,25 +162,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Add New Rent Handler
 	if (isset($_POST['create-new-rent'])) {
 		$create_rent = array(
-			"tenID" => htmlspecialchars($_POST['new-rent-tenant']),
-			"shareTenID" => htmlspecialchars($_POST['share-new-rent-tenant']) ?? '',
-			"roomID" => htmlspecialchars($_POST['new-rent-room']),
-			"occTypeID" => htmlspecialchars($_POST['new-rent-occTypeID']),
-			"occDateStart" => htmlspecialchars($_POST['new-rent-start']),
-			"occDateEnd" => htmlspecialchars($_POST['new-rent-end']),
-			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
+			"tenID" => $_POST['new-rent-tenant'],
+			"shareTenID" => $_POST['share-new-rent-tenant'] ?? '',
+			"roomID" => $_POST['new-rent-room'],
+			"occTypeID" => $_POST['new-rent-occTypeID'],
+			"occDateStart" => $_POST['new-rent-start'],
+			"occDateEnd" => $_POST['new-rent-end'],
+			"occupancyRate" => $_POST['new-rent-rate']
 		);
 
-		$result = RoomlogsController::create_new_rent($create_rent);
-        if ($result === true) {
-            // Redirect to avoid form resubmission
-            header('Location: room_logs.php?addRentStatus=success');
-            exit();
-        } else {
-            // Redirect with an error message
-            header('Location: room_logs.php?addRentStatus='.$result);
-            exit();
-        }
+        $new_billing = array(
+			"tenID" => $_POST['new-rent-tenant'],
+			"billTotal" => $_POST['new-rent-rate'],
+			"endDate" => $_POST['new-rent-end']
+		);
+
+		$result = RoomlogsController::create_new_rent($create_rent, $new_billing);
+        header('Location: room_logs.php?addRentStatus='.$result);
+        exit();
 	}
 
     // Editing Room
@@ -211,20 +223,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $editInfo = array(
             'occupancyID' => $_POST['edit-occupancy-id'],
             'roomID' => $_POST['edit-rent-room'],
+            'occTypeID' => $_POST['edit-rent-type'],
             'occDateStart' => $_POST['edit-rent-start'],
             'occDateEnd' => $_POST['edit-rent-end'],
         );
 
         $result = RoomlogsController::editOccupancy($editInfo);
-        if($result){
-            // Redirect to the same page or to a confirmation page after successful edit
-            header('Location: room_logs.php?editOccStatus=success');
-            exit();
-        } else {
-            // Handle the error case, potentially redirecting with an error flag or displaying an error message
-            header('Location: room_logs.php?editOccStatus=error');
-            exit();
-        }
+        header('Location: room_logs.php?editOccStatus='.$result);
+        exit();
     }
     
     // Deleting Occupancy

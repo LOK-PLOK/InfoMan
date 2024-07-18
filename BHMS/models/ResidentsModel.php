@@ -16,7 +16,7 @@ require 'dbcreds.php';
  * @method get_appliances
  * @method get_occupancy
  * @method get_rooms
- * @method editOccupancy
+ * @method updateOccupancy
  * @method delete_occupancy
  * @method residents_data_Active
  * @method residents_data_Inactive
@@ -24,6 +24,7 @@ require 'dbcreds.php';
  * @method residents_data_Name
  * @method residents_data_Search
  * @method evictTenant
+ * @method query_room_info
  * @class ResidentsModel
  * @extends dbcreds
  */
@@ -40,7 +41,7 @@ class ResidentsModel extends dbcreds{
         // Use self to access static variables within the static method
         $conn = self::get_connection();
     
-        $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1";
+        $query = "SELECT COUNT(*) AS count FROM tenant WHERE isRenting = 1 AND isDeleted = 0";
         $stmt = $conn->query($query);
     
         if ($stmt === false) {
@@ -211,6 +212,7 @@ class ResidentsModel extends dbcreds{
      * @method residents_data
      * @param none
      * @return $tenants
+     * @deprecated This method is deprecated. Use residents_table_data instead.
      */
     public static function residents_data(){
         try {
@@ -345,7 +347,7 @@ class ResidentsModel extends dbcreds{
             $conn = self::get_connection();
     
             // Prepare the DELETE statement with a parameterized query to prevent SQL injection
-            $stmt = $conn->prepare("DELETE FROM tenant WHERE tenID = ?");
+            $stmt = $conn->prepare("UPDATE tenant SET isDeleted = 1 WHERE tenID = ?");
             $stmt->bind_param("s", $tenantIdToDelete);
     
             if ($stmt->execute()) {
@@ -419,8 +421,15 @@ class ResidentsModel extends dbcreds{
             // Use self to access static variables within the static method
             $conn = self::get_connection();
     
-            // Prepare the SQL query to get all appliances for a specific tenant
-            $stmt = $conn->prepare("SELECT occTypeName ,roomID,occDateStart,occDateEnd,occupancy.tenID,occupancyID, tenFname, tenMI, tenLname,occupancyRate FROM tenant,occupancy,occupancy_type WHERE tenant.tenID = occupancy.tenID AND tenant.tenID = ? AND occupancy.occTypeID = occupancy_type.occTypeID ORDER BY occupancy.occDateStart DESC");
+            $stmt = $conn->prepare("
+                SELECT occTypeName, occupancy.occTypeID, roomID,occDateStart,occDateEnd,occupancy.tenID,occupancyID, tenFname, tenMI, tenLname,occupancyRate 
+                FROM tenant, occupancy, occupancy_type 
+                WHERE tenant.tenID = occupancy.tenID 
+                AND tenant.tenID = ? 
+                AND occupancy.occTypeID = occupancy_type.occTypeID 
+                AND occupancy.isDeleted = 0
+                ORDER BY occupancy.occDateStart DESC
+            ");
             $stmt->bind_param("i", $tenantID);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -440,7 +449,7 @@ class ResidentsModel extends dbcreds{
             return $occupancy;
         } catch (Exception $e) {
             // Log the error to a file or handle it as needed
-            error_log("Error getting appliances: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+            error_log("Error getting occupancy: " . $e->getMessage(), 3, '/var/log/php_errors.log');
     
             // Return an empty array to indicate failure
             return [];
@@ -457,7 +466,7 @@ class ResidentsModel extends dbcreds{
     public static function get_rooms(){
         
         $conn = self::get_connection();
-        $query = "SELECT * FROM room";
+        $query = "SELECT * FROM room WHERE isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -478,11 +487,11 @@ class ResidentsModel extends dbcreds{
     /**
      * Edit occupancy information
      * 
-     * @method editOccupancy
+     * @method updateOccupancy
      * @param $editInfo
      * @return true
      */
-   public static function editOccupancy($editInfo){
+   public static function updateOccupancy($editInfo){
     $conn = self::get_connection();
         $query = $conn->prepare("UPDATE occupancy SET roomID = ?, occDateStart = ?, occDateEnd = ? WHERE occupancyID = ?");
 
@@ -517,7 +526,7 @@ class ResidentsModel extends dbcreds{
       */
    public static function delete_occupancy($delOccInfo){
         $conn = self::get_connection();
-        $query = $conn->prepare("DELETE FROM occupancy WHERE occupancyID = ?");
+        $query = $conn->prepare("UPDATE occupancy SET isDeleted = 1 WHERE occupancyID = ?");
 
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);
@@ -544,7 +553,7 @@ class ResidentsModel extends dbcreds{
      */
    public static function residents_data_Active(){
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant WHERE isRenting = 1 ORDER BY isRenting DESC ";
+        $query = "SELECT * FROM tenant WHERE isRenting = 1 AND isDeleted = 0 ORDER BY isRenting DESC ";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -571,7 +580,7 @@ class ResidentsModel extends dbcreds{
      */
     public static function residents_data_Inactive(){
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant WHERE isRenting = 0 ORDER BY isRenting DESC";
+        $query = "SELECT * FROM tenant WHERE isRenting = 0 AND isDeleted = 0 ORDER BY isRenting DESC";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -598,7 +607,7 @@ class ResidentsModel extends dbcreds{
      */
     public static function residents_data_Evicted(){
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant WHERE isRenting = 2 ORDER BY isRenting DESC";
+        $query = "SELECT * FROM tenant WHERE isRenting = 2 AND isDeleted = 0 ORDER BY isRenting DESC";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -625,7 +634,7 @@ class ResidentsModel extends dbcreds{
      */
     public static function residents_data_Name(){
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant ORDER BY tenFname ASC";
+        $query = "SELECT * FROM tenant WHERE isDeleted = 0 ORDER BY tenFname ASC";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -652,7 +661,7 @@ class ResidentsModel extends dbcreds{
      */
    public static function residents_data_Search($search){
         $conn = self::get_connection();
-        $query = "SELECT * FROM tenant WHERE LOWER(CONCAT(tenFname,tenLname,tenMI)) LIKE LOWER('%$search%') ORDER BY tenLname ASC";
+        $query = "SELECT * FROM tenant WHERE LOWER(CONCAT(tenFname,tenLname,tenMI)) LIKE LOWER('%$search%') AND isDeleted = 0 ORDER BY tenLname ASC";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -697,6 +706,21 @@ class ResidentsModel extends dbcreds{
             $conn->close();
             return true;
         }
+    }
+
+
+    /**
+     * 
+     */
+    public static function query_room_info($roomID){
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT * FROM room WHERE roomID = ? AND isDeleted = 0");
+        $query->bind_param('s', $roomID);
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        return $result;
     }
 
 }

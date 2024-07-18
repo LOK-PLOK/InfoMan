@@ -97,7 +97,6 @@
     // Assuming $yearlyData is fetched and structured as described
     $yearlyData = StatisticsController::fetchDataYearly();
 
-
 ?>
 
 <div class="container-fluid">

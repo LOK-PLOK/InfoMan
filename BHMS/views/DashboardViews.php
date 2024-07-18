@@ -159,7 +159,7 @@ class DashboardViews extends GeneralViews{
                                     <label class="add-new-tenant-sup-label" for="tenFname">First Name</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" id="tenMI" name="tenMI" placeholder="D" class="form-control shadow" maxlength="1">
+                                    <input type="text" id="tenMI" name="tenMI" placeholder="D" maxlength="1" class="form-control shadow">
                                     <label class="add-new-tenant-sup-label" for="tenMI">Middle Initial</label>
                                 </div>
                                 <div class="col-md-6">
@@ -201,6 +201,7 @@ class DashboardViews extends GeneralViews{
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
+                                        <option value="O">Others</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -214,7 +215,8 @@ class DashboardViews extends GeneralViews{
                                             <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
                                         </div>
                                         <div class="col-8">
-                                            <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required>
+                                            <input type="number" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
+                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +231,7 @@ class DashboardViews extends GeneralViews{
                                     <label class="add-new-tenant-sup-label" for="emContactFname">First Name</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="D" class="form-control shadow">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="D" maxlength="1" class="form-control shadow">
                                     <label class="add-new-tenant-sup-label" for="emContactMI">Middle Initial</label>
                                 </div>
                                 <div class="col-md-6">
@@ -245,7 +247,8 @@ class DashboardViews extends GeneralViews{
                                             <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow">
+                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
+                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                         </div>
                                     </div>
                                 </div>

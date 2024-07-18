@@ -1,15 +1,15 @@
-function setValuesTenantInfo(occupancyID, name, roomID, rentType, occDateStart, occDateEnd, rentRate) {
+function setValuesTenantInfo(occupancyID, name, roomID, rentTypeID, rentType, occDateStart, occDateEnd, rentRate) {
 
     rentRate = parseFloat(rentRate).toFixed(2);
 
     document.getElementById('edit-occupancy-id').value = occupancyID;    
     document.getElementById('edit-rent-tenant-name').value = name;
     document.getElementById('edit-rent-room').value = roomID;
+    document.getElementById('edit-rent-type').value = rentTypeID;
     document.getElementById('edit-rent-type-name').value = rentType;
     document.getElementById('edit-rent-start').value = occDateStart;
     document.getElementById('edit-rent-end').value = occDateEnd;
     document.getElementById('edit-rent-rate').value = rentRate;
-
 }
 
 function setValuesEditRoom(roomID, roomCapacity) {
