@@ -1,4 +1,8 @@
  <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 // Start output buffering at the beginning of your script
 ob_start();
 session_start();
@@ -53,12 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Handle the create new maintenance form submission
     if (isset($_POST['create-new-maintenance'])) {
         $create_maintenance = array(
-            "roomID" => htmlspecialchars($_POST['maintenance-room-code']),
-            "maintDate" => htmlspecialchars($_POST['maintDate']),
-            "maintStatus" => htmlspecialchars($_POST['maintStatus']),
-            "maintDesc" => htmlspecialchars($_POST['maintDesc']),
-            "maintCost" => htmlspecialchars($_POST['maintCost'])
-            
+            "roomID" => $_POST['maintenance-room-code'],
+            "maintDate" => $_POST['maintDate'],
+            "maintStatus" => $_POST['maintStatus'],
+            "maintDesc" => $_POST['maintDesc'],
+            "maintCost" => $_POST['maintCost']
         );
 
         $result = MaintenanceController::create_new_maintenance($create_maintenance);
@@ -113,10 +116,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
-echo '<script src="../js/maintenance_edit&delete_modal.js"></script>';
-echo'<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+?>
+<script src="../js/maintenance_edit&delete_modal.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-';
+<?php
+
 html_end();
 ob_end_flush(); // End output buffering and flush the buffer
 

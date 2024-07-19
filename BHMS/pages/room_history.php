@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mt-2" style="max-height: 500px; overflow-y: auto;">
-        <table class="rh-table rounded-corners">
+        <table>
             <thead class="sticky-top" style="z-index: 50;">
                 <tr style="background-color: #344799;">
                     <th class="p-2">Tenant Name</th>
@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $endDate = date('F d, Y', strtotime($tenant['occDateEnd']));
 
                     $action_buttons = '
-                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
+                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$tenant['occupancyID'].'"
                                     onclick="setValuesTenantInfo(
                                                         '.$tenant['occupancyID'].', 
                                                         \''.$tenant['tenantFullName'].'\', 

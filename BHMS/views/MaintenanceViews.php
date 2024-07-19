@@ -67,7 +67,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="roomcode" class="form-label">Room Code:</label>
                                 </div>
                                 <div class="col-md-8">
-                                     <select name="maintenance-room-code" id="maintenance-room-code" class="form-control shadow" required>
+                                     <select name="maintenance-room-code" id="maintenance-room-code" class="shadow" required>
                                         <option value="" disabled selected style="display:none;">Select a Room</option>
                         ';
                                     foreach ($rooms as $room){
@@ -104,7 +104,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="status" class="form-label">Status:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select id="maintStatus" name="maintStatus" class="form-select shadow" required>
+                                    <select id="maintStatus" name="maintStatus" class="shadow" required>
                                         <option value="" disabled selected style="display: none;">Choose a status</option>
                                         <option value="On-going">On-going</option>
                                         <option value="Completed">Completed</option>
@@ -181,7 +181,6 @@ class MaintenanceViews extends GeneralViews{
             if(isset($_GET['On-going-search']) && !empty($_GET['On-going-search'])){
                 $search = $_GET['On-going-search'];
                 $On_going = MaintenanceController::get_On_going_data_search($search);
-
             }else{
                 $On_going = MaintenanceController::get_On_going_data();
             }
@@ -242,14 +241,11 @@ class MaintenanceViews extends GeneralViews{
             }else{
                 // Loop through the fetched data and create a table row for each record.
                 foreach ($On_going as $maintenance) {
-                    echo '
-                    <tr>
-                        <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                        <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                        <td>See more...</td>
-                        <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                        <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                        <td class="action-buttons">
+
+                    $editMaintenanceButton = '';
+
+                    if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') {
+                        $editMaintenanceButton = '
                             <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
                                 onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
                                                         \'' . htmlspecialchars($maintenance['roomID']) . '\', 
@@ -260,6 +256,18 @@ class MaintenanceViews extends GeneralViews{
                                 data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                 <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
                             </button>
+                        ';
+                    }
+
+                    echo '
+                    <tr>
+                        <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                        <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                        <td>See more...</td>
+                        <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                        <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                        <td class="action-buttons">
+                            '.$editMaintenanceButton.'
                             <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                             </button>
@@ -267,7 +275,6 @@ class MaintenanceViews extends GeneralViews{
                     </tr>';
                 }
             }
-            
         
             // Close the HTML tags.
             echo '
@@ -348,6 +355,9 @@ class MaintenanceViews extends GeneralViews{
                 </thead>
                 <tbody>
         HTML;
+
+        
+
             
             if(empty($completed)){
                 echo '
@@ -358,14 +368,11 @@ class MaintenanceViews extends GeneralViews{
 
                     // Loop through the fetched data and create a table row for each record.
                 foreach ($completed as $maintenance) {
-                    echo '
-                    <tr>
-                        <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                        <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                        <td>See more...</td>
-                        <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                        <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                        <td class="action-buttons">
+
+                    $editMaintenanceButton = '';
+
+                    if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') {
+                        $editMaintenanceButton = '
                             <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
                                 onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
                                                         \'' . htmlspecialchars($maintenance['roomID']) . '\', 
@@ -376,6 +383,18 @@ class MaintenanceViews extends GeneralViews{
                                 data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                                 <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
                             </button>
+                        ';
+                    }
+
+                    echo '
+                    <tr>
+                        <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                        <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                        <td>See more...</td>
+                        <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                        <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                        <td class="action-buttons">
+                            '.$editMaintenanceButton.'
                             <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                             </button>
@@ -383,8 +402,6 @@ class MaintenanceViews extends GeneralViews{
                     </tr>';
                 }
             }
-                
-            
         
             // Close the HTML tags.
             echo '
@@ -472,14 +489,11 @@ class MaintenanceViews extends GeneralViews{
         }else{
             // Loop through the fetched data and create a table row for each record.
             foreach ($cancelled as $maintenance) {
-                echo '
-                <tr>
-                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
-                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
-                    <td>See more...</td>
-                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
-                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
-                    <td class="action-buttons">
+
+                $editMaintenanceButton = '';
+
+                if($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') {
+                    $editMaintenanceButton = '
                         <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
                             onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
                                                     \'' . htmlspecialchars($maintenance['roomID']) . '\', 
@@ -490,6 +504,18 @@ class MaintenanceViews extends GeneralViews{
                             data-bs-toggle="modal" data-bs-target="#edit-modal-info">
                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
                         </button>
+                    ';
+                }
+
+                echo '
+                <tr>
+                    <td>' . htmlspecialchars($maintenance['roomID']) . '</td>
+                    <td>' . htmlspecialchars(number_format($maintenance['maintCost'], 2)) . '</td>
+                    <td>See more...</td>
+                    <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
+                    <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
+                    <td class="action-buttons">
+                        '.$editMaintenanceButton.'
                         <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                         </button>
@@ -539,7 +565,7 @@ class MaintenanceViews extends GeneralViews{
                                         <label for="Edit-roomcode" class="form-label">Room Code:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select id="Edit-roomID" name="Edit-roomID" class="form-control shadow" required>
+                                        <select id="Edit-roomID" name="Edit-roomID" class=" shadow" required>
                                             <option value="" disabled selected style="display:none;">Select a Room</option>';
                                             foreach ($rooms as $room){
                                                 $room_id = $room['roomID'];
@@ -573,7 +599,7 @@ class MaintenanceViews extends GeneralViews{
                                         <label for="edit-status" class="form-label">Status:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select id="Edit-maintStatus" name="Edit-maintStatus" class="form-select shadow" required>
+                                        <select id="Edit-maintStatus" name="Edit-maintStatus" class="shadow" required>
                                             <option value="" disabled selected style="display: none;">Choose a status</option>
                                             <option value="On-going">On-going</option>
                                             <option value="Completed">Completed</option>
@@ -620,7 +646,7 @@ class MaintenanceViews extends GeneralViews{
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                        <p class="confirmation-question">Are you sure you want to delete this user?</p>
+                        <p class="confirmation-question">Are you sure you want to delete this maintenance?</p>
                             <form id="deleteMaintenanceForm" method="POST">
                                 <!-- Hidden input to store the maintenance ID -->
                                 <input type="hidden" id="deleteMaintID" name="deleteMaintID" value="">

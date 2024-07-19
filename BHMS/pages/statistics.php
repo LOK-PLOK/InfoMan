@@ -110,7 +110,7 @@
     <div class="row mx-4 pt-3">
         <div class="col-sm-8 p-0">
             <!-- Occupancy Rate -->
-            <div class="p-3 my-3 w-100 shadow position-relative rounded" style="border-radius: 15px !important;">
+            <div class="p-3 my-3 w-100 shadow position-relative rounded">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="page-header" style="font-size: 1.8rem">Occupancy Rate</span>
                     <div class="custom-select-wrapper">
@@ -128,7 +128,7 @@
                 </div>
             </div>
             <!-- Revenue Rate -->
-            <div class="p-3 my-3 w-100 shadow position-relative rounded" style="border-radius: 15px !important;">
+            <div class="p-3 my-3 w-100 shadow position-relative rounded">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="page-header" style="font-size: 1.8rem">Revenue and Expenses</span>
                     <div class="custom-select-wrapper">
