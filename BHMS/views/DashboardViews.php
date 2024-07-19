@@ -206,7 +206,7 @@ class DashboardViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Birth Date:</label>
-                                    <input type="date" id="tenBdate" name="tenBdate" class="form-control shadow">
+                                    <input type="date" id="tenBdate" name="tenBdate" class="form-control shadow" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="add-new-tenant-label">Contact Number:</label>

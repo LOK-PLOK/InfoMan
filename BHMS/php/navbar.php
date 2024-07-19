@@ -37,6 +37,26 @@ if (!isset($_SESSION['userID'])) {
                 <h3 class="paddingleft">Dashboard</h3>
             </div>
         </a>
+        <?php if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') { ?>
+        <a href="statistics.php">
+            <div class="class-align-tabs <?php echo setActiveClass('statistics', $current_page); ?>">
+                <img src="/images/icons/Dashboard/Navigation Bar/statistics_<?php echo setActiveIcon('statistics', $current_page); ?>.png">
+                <h3 class="paddingleft">Statistics</h3>
+            </div>
+        </a>
+        <a href="residents.php">
+            <div class="class-align-tabs <?php echo setActiveClass('residents', $current_page); ?>">
+                <img src="/images/icons/Dashboard/Navigation Bar/residents_<?php echo setActiveIcon('residents', $current_page); ?>.png">
+                <h3 class="paddingleft">Residents</h3>
+            </div>
+        </a>
+        <a href="room_history.php">
+            <div class="class-align-tabs <?php echo setActiveClass('room_history', $current_page); ?>">
+                <img src="/images/icons/Dashboard/Navigation Bar/room_history_<?php echo setActiveIcon('room_history', $current_page); ?>.png">
+                <h3 class="paddingleft">Room History</h3>
+            </div>
+        </a>
+        <?php } ?>
         <a href="room_logs.php">
             <div class="class-align-tabs <?php echo setActiveClass('room_logs', $current_page); ?>">
                 <img src="/images/icons/Dashboard/Navigation Bar/room_logs_<?php echo setActiveIcon('room_logs', $current_page); ?>.png">

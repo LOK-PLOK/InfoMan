@@ -45,7 +45,7 @@ function checkFields() {
 }
 checkFields();
 
-function editUser(UserID,userFname,userMname,userLname,isActive,userType,username,password){
+function editUser(UserID,userFname,userMname,userLname,isActive,userType,username){
     document.getElementById('Edit-userID').value = UserID;
     document.getElementById('Edit-userFname').value = userFname;
     document.getElementById('Edit-userMname').value = userMname;

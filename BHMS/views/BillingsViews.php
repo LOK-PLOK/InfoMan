@@ -73,7 +73,7 @@ class BillingsViews extends GeneralViews{
                 $fName = $tenant['tenFname'];
                 $MI = $tenant['tenMI'];
                 $lName = $tenant['tenLname'];
-                $fullName = $fName.' '.$MI.'. '.$lName;
+                $fullName = $fName . ' ' . ($MI ? $MI . '. ' : '') . $lName;
                 echo<<<HTML
                     <option value="$id">$fullName</option>
                 HTML;

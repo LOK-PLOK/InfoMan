@@ -15,6 +15,10 @@ class dbcreds {
      */
     protected static $servername;
     /**
+     * @var string $port The port number.
+     */
+    protected static $port;
+    /**
      * @var string $username The username.
      */
     protected static $username;
@@ -36,11 +40,12 @@ class dbcreds {
      */
     protected static function get_connection() {
         self::$servername = $_ENV['DB_SERVER'];
+        self::$port = $_ENV['DB_PORT'];
         self::$username = $_ENV['DB_USERNAME'];
         self::$password = $_ENV['DB_PASSWORD'];
         self::$dbname = $_ENV['DB_NAME'];
         
-        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname);
+        $conn = new mysqli(self::$servername, self::$username, self::$password, self::$dbname, self::$port);
         if ($conn->connect_error) {
             throw new Exception("Connection failed: " . $conn->connect_error);
         }
