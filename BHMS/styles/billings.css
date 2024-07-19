@@ -115,3 +115,20 @@ th{
     border-radius: 10px;
     transition: all .3s ease-in-out;
 }
+
+.custom-checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    box-shadow: none;
+    width: 20px;
+}
+
+.custom-checkbox {
+    margin: 0;
+    font-size: 14px;
+    width: 100%;
+}

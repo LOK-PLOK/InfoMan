@@ -172,3 +172,7 @@ body {
 ul{
     list-style-type: none;
 }
+
+.label {
+    color: #779CC8;
+}

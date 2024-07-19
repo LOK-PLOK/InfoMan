@@ -124,7 +124,7 @@ class ResidentsViews extends GeneralViews{
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Gender:</label>
-                                    <select id="tenGender" name="tenGender" class="form-control shadow" required>
+                                    <select id="tenGender" name="tenGender" class=" shadow" style="height: 40px;">
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -137,15 +137,8 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-6">
                                     <label class="add-new-tenant-label">Contact Number:</label>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
-                                        </div>
-                                        <div class="col-8">
-                                            <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
-                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                                        </div>
-                                    </div>
+                                        <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
+                                        pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                 </div>
                             </div>
                             <!-- Emergency Contact -->
@@ -167,17 +160,10 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="add-new-tenant-label">Emergency Contact Number:</label>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
-                                        </div>
-                                        <div class="col-md-4">
                                             <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
                                             pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <!-- Appliances -->
@@ -382,17 +368,17 @@ class ResidentsViews extends GeneralViews{
                         <!-- Tenant information will be loaded here dynamically -->
                     </div>
                     <div class="modal-footer-custom bg-custom " >
-                        <div style="color: #344799; font-weight: bold; font-size: 20px;">Rent History</div>
+                        <div class="header" style="color: #779CC8; font-size: 20px;">Rent History</div>
                         <section class="table-data">
                             <div class="table-responsive overflow-auto" style="max-height: 200px;">
                                 <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799; border-top:1px solid #344799;">
                                     <thead>
                                         <tr>
-                                            <th style="background-color: #344799; color: white;">Room Code</th>
-                                            <th style="background-color: #344799; color: white;">Start Date</th>
-                                            <th style="background-color: #344799; color: white;">End Date</th>
-                                            <th style="background-color: #344799; color: white;">Rent Type</th>
-                                            <th style="background-color: #344799; color: white;">Actions</th>
+                                            <th style="background-color: #334799; color: white;">Room Code</th>
+                                            <th style="background-color: #334799; color: white;">Start Date</th>
+                                            <th style="background-color: #334799; color: white;">End Date</th>
+                                            <th style="background-color: #334799; color: white;">Rent Type</th>
+                                            <th style="background-color: #334799; color: white;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="rentHistoryTableBody">
@@ -428,40 +414,40 @@ class ResidentsViews extends GeneralViews{
                     tenantInfoModalBody.innerHTML = `
                         <div class="tenant-split-left">
                             <div>
-                                <span style="color: #779CC8;">Name:</span>
+                                <span class="label">Name:</span>
                                 <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI ? tenantData.tenMI + "." : ""} ${tenantData.tenLname}</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Contact Number:</span>
+                                <span class="label">Contact Number:</span>
                                 <span>${tenantData.tenContact}</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Address:</span>
+                                <span class="label">Address:</span>
                                 <span>${tenantData.tenHouseNum ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt ? tenantData.tenSt + " " : ""} ${tenantData.tenCityMun ? tenantData.tenCityMun : ""}</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Gender:</span>
+                                <span class="label">Gender:</span>
                                 <span>${tenantData.tenGender}</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Birth Date:</span>
+                                <span class="label">Birth Date:</span>
                                 <span>${formatDate(tenantData.tenBdate)}</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Appliances:</span>
+                                <span class="label">Appliances:</span>
                                 <ul id="appliancesList"></ul>
                             </div>
                         </div>
                         <div class="tenant-split-right">
                             <div>
-                                <span style="font-size: 20px; color: #779CC8;">Emergency Contact Information</span>
+                                <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Name:</span>
+                                <span class="label">Name:</span>
                                 <span style="font-size: 18px;">${tenantData.emContactFname ? tenantData.emContactFname + " " : ""} ${tenantData.emContactMI ? tenantData.emContactMI + "." : ""} ${tenantData.emContactLname ? tenantData.emContactLname : ""}</span>
                             </div>
                             <div>
-                                <span style="color: #779CC8;">Contact Number:</span>
+                                <span class="label">Contact Number:</span>
                                 <span>${tenantData.emContactNum ? tenantData.emContactNum : ""}</span>
                             </div>
                         </div>
@@ -726,7 +712,7 @@ class ResidentsViews extends GeneralViews{
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Gender:</label>
-                                    <select id="Edit-tenGender" name="Edit-tenGender" class="form-control shadow" required>
+                                    <select id="Edit-tenGender" name="Edit-tenGender" class=" shadow" style="height: 40px;" required>
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -739,15 +725,8 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-6">
                                     <label class="add-new-tenant-label">Contact Number:</label>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
-                                        </div>
-                                        <div class="col-8">
-                                            <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
-                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                                        </div>
-                                    </div>
+                                        <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
+                                        pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                 </div>
                             </div>
 
@@ -770,17 +749,10 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="add-new-tenant-label">Emergency Contact Number:</label>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
-                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                                        </div>
-                                    </div>
+                                        <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
+                                        pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                 </div>
                             </div>
 

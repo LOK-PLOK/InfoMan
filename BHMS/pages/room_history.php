@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mt-2" style="max-height: 500px; overflow-y: auto;">
-        <table class="rh-table rounded-corners">
+        <table>
             <thead class="sticky-top" style="z-index: 50;">
                 <tr style="background-color: #344799;">
                     <th class="p-2">Tenant Name</th>

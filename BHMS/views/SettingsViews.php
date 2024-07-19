@@ -317,8 +317,8 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3">
                         <label for="userStatus" class="form-label">Status:</label>
                         <!-- isActive -->
-                        <select class="form-select shadow" id="isActive" name="isActive" onkeyup="checkFields();" required>
-                            <option value="choose a status" selected>Choose a status</option>
+                        <select class=" shadow" id="isActive" name="isActive" onkeyup="checkFields();" required>
+                        <option value="" disabled selected style="display:none;">Choose a status</option>
                             <option value="1"><strong>Active</option>
                             <option value="0">Inactive</option>
                         </select>
@@ -326,7 +326,8 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3">
                         <label for="userPosition" class="form-label">Position:</label>
                         <!-- userType -->
-                        <select class="form-select shadow" id="userType" name="userType" onkeyup="checkFields();" required>
+                        <select class=" shadow" id="userType" name="userType" onkeyup="checkFields();" required>
+                            <option value="" disabled selected style="display:none;">Choose a position</option>
                             <option value="staff">Staff</option>
                             <option value="admin">Admin</option>
                         </select>
@@ -399,7 +400,7 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3" $hide>
                         <!-- Edit-userStatus -->
                         <label for="userStatus" class="form-label">Status:</label>
-                        <select class="form-select shadow" id="Edit-isActive" name="Edit-isActive" required>
+                        <select class=" shadow" id="Edit-isActive" name="Edit-isActive" required>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
@@ -407,7 +408,7 @@ class SettingsViews extends GeneralViews {
                     <div class="mb-3" $hide>
                         <!-- Edit-userType -->
                         <label for="userPosition" class="form-label">Position:</label>
-                        <select class="form-select shadow" id="Edit-userType" name="Edit-userType" required>
+                        <select class=" shadow" id="Edit-userType" name="Edit-userType" required>
                             <option value="staff">Staff</option>
                             <option value="admin">Admin</option>
                         </select>
@@ -434,7 +435,7 @@ class SettingsViews extends GeneralViews {
     /**
      * This method is used to display the delete user information model view.
      * 
-     * @method delete_user_info
+     * @method user_info
      * @param none
      * @return void
      */

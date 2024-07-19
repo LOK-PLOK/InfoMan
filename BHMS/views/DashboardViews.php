@@ -197,7 +197,7 @@ class DashboardViews extends GeneralViews{
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Gender:</label>
-                                    <select id="tenGender" name="tenGender" class="form-control shadow" required>
+                                    <select id="tenGender" name="tenGender" style="height: 40px;">
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -210,15 +210,8 @@ class DashboardViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-6">
                                     <label class="add-new-tenant-label">Contact Number:</label>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
-                                        </div>
-                                        <div class="col-8">
-                                            <input type="number" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
-                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                                        </div>
-                                    </div>
+                                        <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
+                                        pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                 </div>
                             </div>
                             <!-- Emergency Contact -->
@@ -240,17 +233,10 @@ class DashboardViews extends GeneralViews{
                                 </div>
                                 </div>
                             <div class="row mb-3">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="add-new-tenant-label">Emergency Contact Number:</label>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
-                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
-                                        </div>
-                                    </div>
+                                        <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
+                                        pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                 </div>
                             </div>
                             <!-- Appliances -->
@@ -350,7 +336,7 @@ class DashboardViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Room -->
-                                    <select name="new-rent-room" id="new-rent-room" class="form-control shadow" required>
+                                    <select name="new-rent-room" id="new-rent-room" style="height: 40px;" required>
                                         <option value="" disabled selected style="display:none;">Select a Room Code</option>
         HTML;
                                         foreach ($rooms as $room){
@@ -381,7 +367,7 @@ class DashboardViews extends GeneralViews{
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
                                     <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
-                                    <select name="new-rent-type" id="new-rent-type" class="form-control shadow" required>
+                                    <select name="new-rent-type" id="new-rent-type" style="height: 40px;" required>
                                             <option value="" disabled selected style="display:none;">Select a Type</option>
         HTML;
                                             foreach ($rent_types as $rent_type){

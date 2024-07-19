@@ -84,8 +84,8 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%" required>
-                                        <option value="" disabled selected>Select Occupancy Type...</option>
+                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="height: 40px; width: 75%" required>
+                                        <option value="" disabled selected style="display: none;">Select Occupancy Type</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
                 $rate = $occupancy_type['occRate'];
@@ -138,7 +138,7 @@ class BillingsViews extends GeneralViews{
                                 </div>
 
                                 <div class="add-cont">
-                                    <button type="submit" name="create-billing-submit" class="btn-var-5 shadow">Add</button>
+                                    <button type="submit" name="create-billing-submit" class="btn-var-5 shadow" style="width: 200px;">Add</button>
                                 </div>
                                 
                             </form>
@@ -161,26 +161,21 @@ class BillingsViews extends GeneralViews{
         echo <<<HTML
             <div class="modal fade" id="deleteBillingsModal" tabindex="-1" aria-labelledby="deleteBillingsLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content bg-custom">
+                <div class="modal-content">
                 <form method="POST">
-                    <div class="modal-header bg-custom">
-                        <div class="displayflex header bg-custom">
-                            <span style="font-size: 25px;">Are you sure you want to delete this billing?</span></span>
-                        </div>
+                    <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-custom">
-                            <div class="displayflex">
+                    <div class="modal-body text-center">
+                    <p class="confirmation-question">Are you sure you want to delete this billing?</p>
+                            <div class="button-container">
                                 <input type="hidden" name="billing_id" id="billing_id">
-                                <input type="submit" name="delete-billing-submit" class="btn-var-2 ms-4 me-4" value="Yes">
-                                <input type="button" name="No" id="Nodelete" class="btn-var-2 ms-4 me-4" data-bs-dismiss="modal" value="No">
+                                <input type="submit" name="delete-billing-submit" class="btn-delete-yes" value="Yes">
+                                <input type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No">
                             </div>
                     </div>
-                    <div class="displayflex bg-custom label" style="border-radius: 10px;">
-                        <span>Note: Once you have clicked 'Yes', this cannot be undone</span>
-                    </div>
-                    <div class="modal-footer"></div>
                 </form>
+                <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
                 </div>
             </div>
         </div>
@@ -235,8 +230,10 @@ class BillingsViews extends GeneralViews{
                                 <option value="Gcash">GCash</option>
                             </select>
 
-                            <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
-                                <span class="custom-checkbox">Transaction made by a non-tenant payer</span>
+                            <div class="custom-checkbox-container">
+                                <input type="checkbox" id="non-tenant-check" name="non-tenant-check">
+                                <label for="non-tenant-check" class="custom-checkbox">Transaction made by a non-tenant payer</label>
+                            </div>
 
                             <div class="payer-details">
                                 <label class="billings-modal-labels" for="paymentAmount">Payer Information</label>
@@ -272,6 +269,7 @@ class BillingsViews extends GeneralViews{
             </div>
         </div>
         HTML;
+
 
     }
 
@@ -322,7 +320,7 @@ class BillingsViews extends GeneralViews{
                                 <input style="padding: 7px;" class="rounded-inputs" type="number" id="edit-create-billing-billTotal" name="editBillTotal">
                                 
                                     <div style="margin:15px 0px 5px 0px" class="d-flex justify-content-center">
-                                        <button type="submit" name="edit-billing-submit" class="btn-var-2 mx-3">Save</button>
+                                        <button type="submit" name="edit-billing-submit" class="btn-var-5" style="width: 200px;">Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -417,7 +415,7 @@ class BillingsViews extends GeneralViews{
                                     </div>
     
                                     <div style="margin:20px 0px 10px 0px" class="d-flex justify-content-center">
-                                        <button type="submit" name="edit-paid-billing-submit" class="btn-var-2">Save</button>
+                                        <button type="submit" name="edit-paid-billing-submit" class="btn-var-5" style="width: 200px;">Save</button>
                                     </div>
                                 </div> 
                             </div>

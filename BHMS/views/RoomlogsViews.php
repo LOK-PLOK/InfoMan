@@ -168,7 +168,7 @@ class RoomlogsViews extends GeneralViews{
                                 <div class="rm-occupants">
                                     <p class="rm-modal-info">Occupants: </p>
                                     <div class="mb-2">
-                                        <i class="fa-solid fa-square" style="color: #00ba00"></i>
+                                        <i class="fa-solid fa-square" style="color: #93C572"></i>
                                         <span>Current</span><br>
                                         <i class="fa-solid fa-square" style="color: #E4A11B"></i>
                                         <span>Overdue</span>
@@ -202,7 +202,7 @@ class RoomlogsViews extends GeneralViews{
                 $current_date = date('F j, Y'); // Get the current date
                 
                 if(strtotime($end_date) >= strtotime($current_date)) {
-                    $color = 'background-color: #00ba00;';
+                    $color = 'background-color: #93C572;';
                     $deactBtn = '';
                 } else {
                     $color = 'background-color: #E4A11B;';
@@ -552,7 +552,7 @@ class RoomlogsViews extends GeneralViews{
                                 <label for="share-new-rent-tenant" class="input-label">Choose a tenant to share with:</label>
                                 <!-- Shared Tenant -->
                                 <select name="share-new-rent-tenant" id="share-new-rent-tenant" class="w-100 shadow">
-                                    <option value="" disabled selected>Select a tenant...</option>
+                                    <option value="" disabled selected>Select a tenant</option>
             HTML;
                                     foreach ($tenants as $tenant){
                                         $tenant_id = $tenant['tenID'];

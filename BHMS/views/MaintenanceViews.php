@@ -67,7 +67,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="roomcode" class="form-label">Room Code:</label>
                                 </div>
                                 <div class="col-md-8">
-                                     <select name="maintenance-room-code" id="maintenance-room-code" class="form-control shadow" required>
+                                     <select name="maintenance-room-code" id="maintenance-room-code" class="shadow" required>
                                         <option value="" disabled selected style="display:none;">Select a Room</option>
                         ';
                                     foreach ($rooms as $room){
@@ -104,7 +104,7 @@ class MaintenanceViews extends GeneralViews{
                                     <label for="status" class="form-label">Status:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select id="maintStatus" name="maintStatus" class="form-select shadow" required>
+                                    <select id="maintStatus" name="maintStatus" class="shadow" required>
                                         <option value="" disabled selected style="display: none;">Choose a status</option>
                                         <option value="On-going">On-going</option>
                                         <option value="Completed">Completed</option>
@@ -565,7 +565,7 @@ class MaintenanceViews extends GeneralViews{
                                         <label for="Edit-roomcode" class="form-label">Room Code:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select id="Edit-roomID" name="Edit-roomID" class="form-control shadow" required>
+                                        <select id="Edit-roomID" name="Edit-roomID" class=" shadow" required>
                                             <option value="" disabled selected style="display:none;">Select a Room</option>';
                                             foreach ($rooms as $room){
                                                 $room_id = $room['roomID'];
@@ -599,7 +599,7 @@ class MaintenanceViews extends GeneralViews{
                                         <label for="edit-status" class="form-label">Status:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select id="Edit-maintStatus" name="Edit-maintStatus" class="form-select shadow" required>
+                                        <select id="Edit-maintStatus" name="Edit-maintStatus" class="shadow" required>
                                             <option value="" disabled selected style="display: none;">Choose a status</option>
                                             <option value="On-going">On-going</option>
                                             <option value="Completed">Completed</option>
