@@ -223,7 +223,7 @@ class SettingsViews extends GeneralViews {
                             <img src="/images/icons/Settings/password.png" alt="Change Password" class="action">
                         </button>
                         <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#editUserInfoModal" style="border: none;" 
-                        onclick="editUser('$userID', '$userFname', '$userMname', '$userLname','$isActive','$userType','$username','$password')">
+                        onclick="editUser('$userID', '$userFname', '$userMname', '$userLname','$isActive','$userType','$username')">
                             <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
                         </button>
                         <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#deleteUserInfoModal" onclick="deleteUser($userID)" style="border: none">

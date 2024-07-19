@@ -197,7 +197,7 @@ class DashboardViews extends GeneralViews{
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Gender:</label>
-                                    <select id="tenGender" name="tenGender" class="form-control shadow">
+                                    <select id="tenGender" name="tenGender" class="form-control shadow" required>
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -206,7 +206,7 @@ class DashboardViews extends GeneralViews{
                                 </div>
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Birth Date:</label>
-                                    <input type="date" id="tenBdate" name="tenBdate" class="form-control shadow">
+                                    <input type="date" id="tenBdate" name="tenBdate" class="form-control shadow" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="add-new-tenant-label">Contact Number:</label>

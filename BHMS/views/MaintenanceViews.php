@@ -646,7 +646,7 @@ class MaintenanceViews extends GeneralViews{
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                        <p class="confirmation-question">Are you sure you want to delete this user?</p>
+                        <p class="confirmation-question">Are you sure you want to delete this maintenance?</p>
                             <form id="deleteMaintenanceForm" method="POST">
                                 <!-- Hidden input to store the maintenance ID -->
                                 <input type="hidden" id="deleteMaintID" name="deleteMaintID" value="">

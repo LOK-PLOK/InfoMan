@@ -73,7 +73,7 @@ class BillingsViews extends GeneralViews{
                 $fName = $tenant['tenFname'];
                 $MI = $tenant['tenMI'];
                 $lName = $tenant['tenLname'];
-                $fullName = $fName.' '.$MI.'. '.$lName;
+                $fullName = $fName . ' ' . ($MI ? $MI . '. ' : '') . $lName;
                 echo<<<HTML
                     <option value="$id">$fullName</option>
                 HTML;
@@ -461,7 +461,7 @@ class BillingsViews extends GeneralViews{
         switch ($billingType) {
             case 'paid':
                 $billings = BillingsController::get_paid_billings();
-                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;"><th>Date Issued</th><th>Due Date</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
+                $tableHeader = '<tr style="position: sticky; top: 0; z-index: 1;"><th>Date Issued</th><th>Date Paid</th><th>Tenant Name</th><th>Rent Amount</th><th>Action</th></tr>';
                 $editModalType = '#editPaidBillingsModal';
                 $prepBool = 0;
                 break;
@@ -527,19 +527,25 @@ class BillingsViews extends GeneralViews{
                 $appliancesCount = BillingsController::get_appliances($tenID);
                 $APCount = htmlspecialchars(json_encode($appliancesCount));
                 $payment_billing_info_json = $APCount;
-                if($isPaid){
-                    $payment_billing_info = BillingsController::get_payment_billing_info($billingId);
-                    $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
-                }
 
                 // Converts the date to a more readable format
                 $billDateIssuedReadable = date('F j, Y', strtotime($billDateIssued));
                 $billDueDateReadable = date('F j, Y', strtotime($billDueDate));
 
+                if($isPaid){
+                    $payment_billing_info = BillingsController::get_payment_billing_info($billingId);
+                    echo '<script>console.log('.json_encode($payment_billing_info).')</script>';
+                    $payment_billing_info_json = htmlspecialchars(json_encode($payment_billing_info));
+                    $paidDateReadable = date('F j, Y', strtotime($payment_billing_info[0]['payDate']));
+                    $dateInfo = $paidDateReadable;
+                } else {
+                    $dateInfo = $billDueDateReadable;
+                }
+
                 echo <<<HTML
                     <tr>
                         <td>$billDateIssuedReadable</td>
-                        <td>$billDueDateReadable</td>
+                        <td>$dateInfo</td>
                         <td>$tenantFullName</td>
                         <td>$billTotal</td>
                         <td class="action-buttons">
