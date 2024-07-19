@@ -10,8 +10,10 @@
 body {
     display: flex;
     height: 100vh;
-    background: url("/images/login_background.png");
-    background-repeat: no-repeat;
+    background: url("/images/login_background.png") no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
 }
 
 .login-header {
