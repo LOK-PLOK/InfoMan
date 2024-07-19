@@ -2,8 +2,23 @@
 
 require 'dbcreds.php';
 
+
+/**
+ * This class contains all the models that are used in the statistics page.
+ * 
+ * @method fetchDataMonthly *
+ * @method fetchDataQuarterly *
+ * @method fetchDataYearly *
+ * @method residents_counter *
+ * @class StatisticsModel
+ * @extends dbcreds
+ */
 class StatisticsModel extends dbcreds {
 
+
+    /**
+     * 
+     */
     public static function fetchDataMonthly() {
         $conn = self::get_connection();
         $sql = "SELECT * FROM monthly_data";
@@ -18,6 +33,10 @@ class StatisticsModel extends dbcreds {
         return $data;
     }
 
+
+    /**
+     * 
+     */
     public static function fetchDataQuarterly() {
         $conn = self::get_connection();
         $sql = "SELECT * FROM quarterly_data";
@@ -32,6 +51,10 @@ class StatisticsModel extends dbcreds {
         return $data;
     }
 
+
+    /**
+     * 
+     */
     public static function fetchDataYearly() {
         $conn = self::get_connection();
         $sql = "SELECT * FROM yearly_data";
@@ -46,6 +69,10 @@ class StatisticsModel extends dbcreds {
         return $data;
     }
 
+
+    /**
+     * 
+     */
     public static function residents_counter() {
 
         $conn = self::get_connection();

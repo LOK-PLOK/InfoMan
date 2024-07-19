@@ -15,10 +15,7 @@ class BillingsModel extends dbcreds {
 
             // Prepare the SQL query to get the default value of the appRate column
             $stmt = $conn->prepare("
-                SELECT COLUMN_DEFAULT 
-                FROM INFORMATION_SCHEMA.COLUMNS 
-                WHERE TABLE_NAME = 'appliance' 
-                AND COLUMN_NAME = 'appRate'
+                SELECT * FROM appliance_rate_defaults
             ");
 
             // Execute the statement
@@ -493,7 +490,7 @@ class BillingsModel extends dbcreds {
     public static function query_tenants(){
         $conn = self::get_connection();
 
-        $query = "SELECT * FROM tenant";
+        $query = "SELECT * FROM tenant WHERE isDeleted = 0";
         $stmt = $conn->query($query);
 
         if ($stmt === false) {
@@ -580,7 +577,7 @@ class BillingsModel extends dbcreds {
     public static function query_all_occupancy() {
         $conn = self::get_connection();
     
-        $query = "SELECT * FROM occupancy";
+        $query = "SELECT * FROM occupancy WHERE isDeleted = 0";
         
         $stmt = $conn->query($query);
     

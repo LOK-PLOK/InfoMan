@@ -542,6 +542,84 @@ class RoomlogsModel extends dbcreds {
     }
 
 
+    public static function query_create_billings($new_billing){
+        $conn = self::get_connection();
+        
+        // Sanitize the inputs
+        $tenID = $new_billing['tenID'];
+        $billTotal = $new_billing['billTotal'];
+        $billDateIssued = date('Y-m-d');
+
+        $endDate = $new_billing['endDate'];
+        $billDueDate = date('Y-m-d', strtotime($endDate . ' +7 days'));
+
+        $query = "INSERT INTO `billing` (`billRefNo`, `tenID`, `billTotal`, `billDateIssued`, `billDueDate`, `isPaid`) 
+                  VALUES (NULL, ?, ?, ?, ?, 0);";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('idss', $tenID, $billTotal, $billDateIssued, $billDueDate);
+        
+        if ($stmt->execute() === FALSE) {
+            die("Error executing query: " . $stmt->error);
+        }
+
+        $stmt->close();
+        $conn->close();
+    
+        return true;
+    }
+
+
+    public static function query_count_appliances($tenID) {
+        $conn = self::get_connection();
+        $query = $conn->prepare("SELECT COUNT(*) AS count FROM appliance WHERE tenID = ?");
+        $query->bind_param('i', $tenID);
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        $query->close();
+        $conn->close();
+        return $result['count'];    
+    }
+
+    public static function fetchApplianceRate(){
+        try {
+            // Create a connection to the database
+            $conn = self::get_connection();
+
+            // Prepare the SQL query to get the default value of the appRate column
+            $stmt = $conn->prepare("
+                SELECT * FROM appliance_rate_defaults
+            ");
+
+            // Execute the statement
+            $stmt->execute();
+
+            // Get the result
+            $result = $stmt->get_result();
+
+            // Fetch the row as an associative array
+            $row = $result->fetch_assoc();
+            $default_value = $row['COLUMN_DEFAULT'];
+
+            // Free the result
+            $result->free();
+
+            // Close the statement
+            $stmt->close();
+
+            // Close the connection
+            $conn->close();
+
+            // Return the default value
+            return $default_value;
+        } catch (Exception $e) {
+            // Log the error to a file or handle it as needed
+            error_log("Error getting appliance rate default value: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+
+            // Return null to indicate failure
+            return null;
+        }
+    }
 }
 
 ?>

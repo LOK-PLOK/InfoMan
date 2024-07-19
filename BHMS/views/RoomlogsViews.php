@@ -56,7 +56,7 @@ class RoomlogsViews extends GeneralViews{
             $availability = '';
             $avail_info = '';
             
-            if (intval($room['rentCount']) == intval($room['capacity'])) {
+            if (intval($room['rentCount']) >= intval($room['capacity'])) {
                 $avail_color = '#ff0000';
                 $availability = 'Not Available';
                 $avail_info = 'FULLY OCCUPIED';
@@ -76,7 +76,7 @@ class RoomlogsViews extends GeneralViews{
                 $avail_info = 'NOT OCCUPIED';
             }
     
-            $roomID = htmlspecialchars($room['roomID']);
+            $roomID = $room['roomID'];
 
             if(RoomlogsController::is_room_has_overdue($room['roomID'])) {
                 $overdue_gif = '<img src="/images/icons/Room Logs/warning.gif" alt="Warning" style="position: absolute; top: 10px; right: 10px; width: 50px; height: 50px;">';
@@ -119,7 +119,7 @@ class RoomlogsViews extends GeneralViews{
             $availability = '';
             $avail_info = '';
     
-            if (intval($room['rentCount']) == intval($room['capacity'])) {
+            if (intval($room['rentCount']) >= intval($room['capacity'])) {
                 $availability = 'Not Available';
                 $avail_info = 'FULLY OCCUPIED';
             } else if (intval($room['rentCount']) < intval($room['capacity']) && intval($room['rentCount']) > 0 && $room['isAvailable'] == 0) {
@@ -189,9 +189,9 @@ class RoomlogsViews extends GeneralViews{
             foreach ($room_tenants as $room_tenant) {
                 $rm_tenant_info = RoomlogsController::room_tenant_info($room_tenant['tenID']);
 
-                $rm_tenFname = htmlspecialchars($rm_tenant_info['tenFname']);
-                $rm_tenLname = htmlspecialchars($rm_tenant_info['tenLname']);
-                $rm_tenMI = htmlspecialchars($rm_tenant_info['tenMI']);
+                $rm_tenFname = $rm_tenant_info['tenFname'];
+                $rm_tenLname = $rm_tenant_info['tenLname'];
+                $rm_tenMI = $rm_tenant_info['tenMI'];
 
                 $name = $rm_tenFname . ' ' . (($rm_tenMI != NULL) ? $rm_tenMI . '. ' : '') . $rm_tenLname;
                 $start_date = date('F j, Y', strtotime($room_tenant['occDateStart']));
@@ -218,6 +218,7 @@ class RoomlogsViews extends GeneralViews{
                                                     '.$room_tenant['occupancyID'].', 
                                                     \''.$name.'\', 
                                                     \''.$room_tenant['roomID'].'\', 
+                                                    \''.$room_tenant['occTypeID'].'\',
                                                     \''.$occType['occTypeName'].'\', 
                                                     \''.$room_tenant['occDateStart'].'\', 
                                                     \''.$room_tenant['occDateEnd'].'\', 
@@ -320,6 +321,7 @@ class RoomlogsViews extends GeneralViews{
                                     </div>
                                     <div class="col-sm-5">
                                         <!-- Occupancy Type -->
+                                        <input type="hidden" name="edit-rent-type" id="edit-rent-type">
                                         <input type="text" id="edit-rent-type-name" class="w-100 shadow" disabled>
                                         <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
                                     </div>
@@ -374,7 +376,7 @@ class RoomlogsViews extends GeneralViews{
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                        <p class="confirmation-question">Are you sure you want to delete this user?</p>
+                        <p class="confirmation-question">Are you sure you want to delete this occupancy?</p>
                         <form method="POST">
                             <div class="button-container">
                                 <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
@@ -415,9 +417,9 @@ class RoomlogsViews extends GeneralViews{
                                 </div>
                                 <div class="d-flex flex-column justify-content-evenly w-50">
                                     <!-- roomID -->
-                                    <input type="text" name="add-new-rm-code" id="add-new-rm-code" placeholder="Enter room code..." class="my-3 shadow w-100" value="B"><br>
+                                    <input type="text" name="add-new-rm-code" id="add-new-rm-code" placeholder="Enter room code..." minlength="1" maxlength="6" class="my-3 shadow w-100" value="B"><br>
                                     <!-- capacity -->
-                                    <input type="number" name="add-new-rm-cap" id="add-new-rm-cap" placeholder="Enter room capacity..." class="my-3 shadow w-100">
+                                    <input type="number" name="add-new-rm-cap" id="add-new-rm-cap" placeholder="Enter room capacity..." min="1" class="my-3 shadow w-100">
                                 </div>
                             </div>
                         </div>
@@ -456,10 +458,10 @@ class RoomlogsViews extends GeneralViews{
                                 </div>
                                 <div class="d-flex flex-column justify-content-evenly w-50">
                                     <!-- roomID -->
-                                    <input type="text" name="edit-rm-code" id="edit-rm-code" placeholder="Enter room code..." class="my-3 shadow w-100"><br>
+                                    <input type="text" name="edit-rm-code" id="edit-rm-code" placeholder="Enter room code..." minlength="1" maxlength="6" class="my-3 shadow w-100"><br>
                                     <input type="hidden" name="edit-rm-code-hidden" id="edit-rm-code-hidden">
                                     <!-- capacity -->
-                                    <input type="number" name="edit-rm-cap" id="edit-rm-cap" placeholder="Enter room capacity..." class="my-3 shadow w-100">
+                                    <input type="number" name="edit-rm-cap" id="edit-rm-cap" placeholder="Enter room capacity..." min="1" class="my-3 shadow w-100">
                                 </div>
                             </div>
                         </div>
@@ -489,7 +491,7 @@ class RoomlogsViews extends GeneralViews{
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                        <p class="confirmation-question">Are you sure you want to delete this user?</p>  
+                        <p class="confirmation-question">Are you sure you want to delete this room?</p>  
                         <form method="POST">
                             <div class="button-container">
                                 <input type="hidden" name="delete-room-id" id="delete-room-id">

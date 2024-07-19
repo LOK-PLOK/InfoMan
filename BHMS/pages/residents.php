@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Start output buffering at the beginning of your script
 ob_start();
 session_start();
@@ -75,9 +78,17 @@ if(isset($_GET['deleteTenantStatus'])){
 }
 
 if(isset($_GET['editOccStatus'])){
-    if($_GET['editOccStatus'] === 'success'){
-        echo '<script>showSuccessAlert("Occupancy Edited Successfully!");</script>';
-    } else if($_GET['editOccStatus'] === 'error'){
+    if($_GET['editOccStatus'] === 'Success - Edit'){
+        echo '<script>showSuccessAlert("Room Edited Successfully!");</script>';
+    } else if($_GET['editOccStatus'] === 'Error - Shared Only'){
+        echo '<script>showFailAlert("Room can only be shared!");</script>';
+    } else if ($_GET['editOccStatus'] === 'Error - Room Full') {
+        echo '<script>showFailAlert("Room is in Full Capacity!");</script>';
+    } else if($_GET['editOccStatus'] === 'Error - Empty Fields'){
+        echo '<script>showFailAlert("Empty Fields!");</script>';
+    } else if($_GET['editOccStatus'] === 'Error - Already Renting a Room'){
+        echo '<script>showFailAlert("Tenant is already renting a Room!");</script>';
+    } else {
         echo '<script>showFailAlert("An unexpected error has happened!");</script>';
     }
 }
@@ -204,26 +215,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $editInfo = array(
             'occupancyID' => $_POST['edit-occupancy-id'],
             'roomID' => $_POST['edit-rent-room'],
+            'occTypeID' => $_POST['edit-rent-type'],
             'occDateStart' => $_POST['edit-rent-start'],
             'occDateEnd' => $_POST['edit-rent-end'],
         );
 
         $result = ResidentsController::editOccupancy($editInfo);
-        if($result){
-            // Redirect to the same page or to a confirmation page after successful edit
-            header('Location: residents.php?editOccStatus=success');
-            exit();
-        } else {
-            // Handle the error case, potentially redirecting with an error flag or displaying an error message
-            header('Location: residents.php?editOccStatus=error');
-            exit();
-        }
+        header('Location: residents.php?editOccStatus='.$result);
+        exit();
     }
 
     if(isset($_POST['delete-occupancy-submit'])) {
 
-        $delOccInfo = $_GET['occID'];
-
+        $delOccInfo = $_POST['delete-occupancy-id'];
         $result = ResidentsController::delete_occupancy($delOccInfo);
         if ($result) {
             // Redirect to the same page or to a confirmation page after successful deletion

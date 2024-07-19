@@ -1,14 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 ob_start();
 
 require '../php/templates.php';
 require '../views/DashboardViews.php';
 require '../php/navbar.php'; // Sidebar
-
-if (!isset($_SESSION['userID'])) {
-	header('Location: /index.php');
-}
 
 $more_links = '
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.min.css" 
@@ -61,65 +60,17 @@ DashboardViews::add_tenant_model_view();
 DashboardViews::create_new_rent_modal();
 
 ?>
-<script src="../js/dashboard_modal.js"></script>
+<script src="../js/dashboard.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-	
 	$(document).ready(function() {
-        $("#tenantName").selectize();
-        $("#new-rent-tenant").selectize();
+		$("#tenantName").selectize();
+		$("#new-rent-tenant").selectize();
 		$("#share-new-rent-tenant").selectize();
-    });
-
-	document.getElementById('new-rent-type').addEventListener('change', function () {
-		const selectedValue = this.value;
-    
-		if (selectedValue) {
-			const [occTypeID, occRate] = selectedValue.split('|');
-
-			const inputOccTypeID = document.getElementById('new-rent-occ-typeID');
-			inputOccTypeID.value = occTypeID;
-			
-			// Example: Update elements based on occTypeID and occRate
-			const viewOccupancyRate = document.getElementById('new-rent-rate');
-			const actualOccupancyRate = document.getElementById('actual-new-rent-rate');
-			
-			viewOccupancyRate.value = occRate;
-			actualOccupancyRate.value = occRate;
-
-			console.log(actualOccupancyRate.value, inputOccTypeID.value);
-
-			if (inputOccTypeID.value == 6) {
-				// Show the share tenant input
-				document.getElementById('shared-tenant').style.display = 'block';
-			} else {
-				// Hide the share tenant input
-				document.getElementById('shared-tenant').style.display = 'none';
-			}
-
-			
-		}
 	});
-
-
-	// End Date Setter for Add New Rent
-	document.getElementById('new-rent-start').addEventListener('change', function() {
-		const startDate = new Date(this.value);
-
-		if(!isNaN(startDate.getTime())) {
-			const endDate = new Date(startDate);
-			endDate.setDate(endDate.getDate() + 30);
-
-			const endDateString = endDate.toISOString().split('T')[0];
-			document.getElementById('new-rent-end').value = endDateString;
-		} else {
-			alert("Invalid start date");
-		}
-	});
-
-
 </script>
+
 
 <?php 
 
@@ -207,7 +158,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			"occupancyRate" => htmlspecialchars($_POST['new-rent-rate'])
 		);
 
-		$result = DashboardController::create_new_rent($create_rent);
+		$new_billing = array(
+			"tenID" => $_POST['new-rent-tenant'],
+			"billTotal" => $_POST['new-rent-rate'],
+			"endDate" => $_POST['new-rent-end']
+		);
+
+		$result = DashboardController::create_new_rent($create_rent, $new_billing);
         header('Location: dashboard.php?addRentStatus='.$result);
         exit();
 	}

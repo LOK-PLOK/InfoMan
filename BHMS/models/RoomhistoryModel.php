@@ -19,28 +19,30 @@ class RoomhistoryModel extends dbcreds {
             WHERE roomID = ?
             AND occupancy.isDeleted = 0 
             AND tenant.isDeleted = 0
-            ORDER BY occupancy.occDateEND DESC;
         ";
-    
+
         // Check if $searchTerm is not null and not an empty string
         if ($searchTerm !== null && $searchTerm !== '') {
             $queryStr .= " AND LOWER(CONCAT(tenant.tenFname, ' ', IFNULL(tenant.tenMI, ''), ' ', tenant.tenLname)) LIKE ?";
             $searchTerm = '%' . strtolower($searchTerm) . '%';
         }
-    
+
+        // Append ORDER BY clause after the search condition
+        $queryStr .= " ORDER BY occupancy.occDateEND DESC;";
+
         $query = $conn->prepare($queryStr);
-    
+
         // Bind parameters based on whether $searchTerm is provided
         if ($searchTerm !== null && $searchTerm !== '') {
             $query->bind_param('ss', $roomCode, $searchTerm);
         } else {
             $query->bind_param('s', $roomCode);
         }
-    
+
         $query->execute();
         $result = $query->get_result();
         $conn->close();
-    
+
         return $result;
     }
 

@@ -128,6 +128,7 @@ class ResidentsViews extends GeneralViews{
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
+                                        <option value="O">Others</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -141,7 +142,8 @@ class ResidentsViews extends GeneralViews{
                                             <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
                                         </div>
                                         <div class="col-8">
-                                            <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required>
+                                            <input type="text" id="tenContact" name="tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
+                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +158,7 @@ class ResidentsViews extends GeneralViews{
                                     <label class="add-new-tenant-sup-label" for="emContactFname">First Name</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="D" class="form-control shadow">
+                                    <input type="text" id="emContactMI" name="emContactMI" placeholder="D" class="form-control shadow" maxlength="1">
                                     <label class="add-new-tenant-sup-label" for="emContactMI">Middle Initial</label>
                                 </div>
                                 <div class="col-md-6">
@@ -172,7 +174,8 @@ class ResidentsViews extends GeneralViews{
                                             <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow">
+                                            <input type="text" id="emContactNum" name="emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
+                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                         </div>
                                     </div>
                                 </div>
@@ -501,6 +504,7 @@ class ResidentsViews extends GeneralViews{
                                             \'${occupancy.tenMI}\',
                                             \'${occupancy.tenLname}\',
                                             \'${occupancy.roomID}\',
+                                            \'${occupancy.occTypeID}\',
                                             \'${occupancy.occTypeName}\',
                                             \'${occupancy.occDateStart}\',
                                             \'${occupancy.occDateEnd}\',
@@ -534,7 +538,7 @@ class ResidentsViews extends GeneralViews{
      * @method editOccupancyModal
      * @return void
      */
-    public static function  editOccupancyModal(){
+    public static function editOccupancyModal(){
         $rooms = ResidentsController::get_rooms();
     
         echo <<<HTML
@@ -579,6 +583,7 @@ class ResidentsViews extends GeneralViews{
                                 </div>
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
+                                    <input type="hidden" name="edit-rent-type" id="edit-rent-type">
                                     <input type="text" id="edit-rent-type-name" class="w-100 shadow" disabled>
                                     <div class="d-flex justify-content-center input-sub-label">Occupancy Type</div>
                                 </div>
@@ -637,8 +642,8 @@ class ResidentsViews extends GeneralViews{
                     <form method="POST" id = "deleteOccupancy">
                     <input type="hidden" name="delete-occupancy-id" id="delete-occupancy-id">
                         <div class="button-container">
-                            <button type="submit" name="delete-occupancy-submit" class="btn-delete-yes" value="Yes">
-                            <button type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No" style="background: red;">
+                            <button type="submit" name="delete-occupancy-submit" class="btn-delete-yes" value="Yes">Yes</button>
+                            <button type="button" name="No" id="Nodelete" class="btn-delete-no" data-bs-dismiss="modal" value="No" style="background: red;">No</button>
                         </div>
                     </form>
                         <p class="note">Note: Once you have clicked 'Yes', this cannot be undone.</p>
@@ -725,6 +730,7 @@ class ResidentsViews extends GeneralViews{
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
+                                        <option value="O">Others</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -738,7 +744,8 @@ class ResidentsViews extends GeneralViews{
                                             <input type="text" id="countrycode" placeholder="+63" class="form-control shadow" disabled>
                                         </div>
                                         <div class="col-8">
-                                            <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required>
+                                            <input type="text" id="Edit-tenContact" name="Edit-tenContact" placeholder="09XXXXXXXXX" class="form-control shadow" required
+                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                         </div>
                                     </div>
                                 </div>
@@ -770,7 +777,8 @@ class ResidentsViews extends GeneralViews{
                                             <input type="text" id="ECcountrycode" name="ECcountrycode" placeholder="+63" class="form-control shadow" disabled>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow">
+                                            <input type="text" id="Edit-emContactNum" name="Edit-emContactNum" placeholder="09XXXXXXXXX" class="form-control shadow"
+                                            pattern="\d{11}" title="Please enter an 11-digit phone number." onkeyup="this.value = this.value.replace(/\D/g, '').substring(0, 11)">
                                         </div>
                                     </div>
                                 </div>

@@ -192,7 +192,6 @@ class SettingsModel extends dbcreds{
                 $users[] = $row;
             }
     
-            
             $result->free();
     
             // Close the connection
@@ -219,10 +218,7 @@ class SettingsModel extends dbcreds{
 
             // Prepare the SQL query to get the default value of the appRate column
             $stmt = $conn->prepare("
-                SELECT COLUMN_DEFAULT 
-                FROM INFORMATION_SCHEMA.COLUMNS 
-                WHERE TABLE_NAME = 'appliance' 
-                AND COLUMN_NAME = 'appRate'
+               SELECT * FROM appliance_rate_defaults;
             ");
 
             // Execute the statement
