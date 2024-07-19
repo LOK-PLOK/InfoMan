@@ -67,7 +67,6 @@ class MaintenanceModel extends dbcreds {
      */
     public static function query_new_maintenance($create_maintenance){
         try {
-
             $conn = self::get_connection();
             $query = $conn->prepare("INSERT INTO maintenance (
                 roomID, 
@@ -88,7 +87,7 @@ class MaintenanceModel extends dbcreds {
                 $create_maintenance['maintDate'], 
                 $create_maintenance['maintStatus'],
                 $create_maintenance['maintDesc'], 
-                $create_maintenance['maintCost'], 
+                $create_maintenance['maintCost']
             );
     
             if (!$query->execute()) {
@@ -100,7 +99,6 @@ class MaintenanceModel extends dbcreds {
     
             return true;
         } catch (Exception $e) {
-            error_log("Error: " . $e->getMessage(), 3, '/var/log/php_errors.log');
             return false;
         }
     }

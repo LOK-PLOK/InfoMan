@@ -124,7 +124,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.billDueDate < CURRENT_DATE AND b.isPaid = 0
+                  WHERE b.billDueDate < CURRENT_DATE AND b.isPaid = 0 AND b.isDeleted = 0
                   ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);
@@ -555,7 +555,7 @@ class BillingsModel extends dbcreds {
         $query = "SELECT b.*, t.tenFname AS tenant_first_name, t.tenLname AS tenant_last_name, tenMI
                   FROM billing b
                   INNER JOIN tenant t ON b.tenID = t.tenID
-                  WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE
+                  WHERE b.isPaid = 0 AND b.billDueDate >= CURRENT_DATE AND b.isDeleted = 0
                   ORDER BY b.billDueDate DESC";
         
         $stmt = $conn->query($query);

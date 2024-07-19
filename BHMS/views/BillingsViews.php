@@ -65,7 +65,7 @@ class BillingsViews extends GeneralViews{
                         <div class="modal-body bg-custom">
                             <form method="POST">
                                 <label class="billings-modal-labels" for="create-billing-tenant">Tenant Information</label>
-                                <select name="create-billing-tenant" id="create-billing-tenant">
+                                <select name="create-billing-tenant" id="create-billing-tenant" required>
                                     <option value="">Select Tenant</option>
             HTML;
             foreach ($tenants as $tenant){
@@ -84,8 +84,8 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Bill Total</label>
                                 <div class="d-flex w-100 flex-row justify-content-between">
                                     <!-- occupancy type -->
-                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%">
-                                        <option value="0" disabled selected>Select Occupancy Type...</option>
+                                    <select onchange="amountCalculator($appliance_rates)" id="payment-occupancyType" class=" shadow" style="width: 75%" required>
+                                        <option value="" disabled selected>Select Occupancy Type...</option>
             HTML;
             foreach ($occupancy_types as $occupancy_type){
                 $rate = $occupancy_type['occRate'];
@@ -117,7 +117,7 @@ class BillingsViews extends GeneralViews{
                                 <label class="billings-modal-labels" for="paymentAmount">Month Allocated</label>
                                 <div class="month-allocated-cont">
                                     <div>
-                                        <input type="date" id="create-billing-start-date" name="create-billing-start-date">
+                                        <input type="date" id="create-billing-start-date" name="create-billing-start-date" required>
                                         
                                         <input type="date" id="create-billing-billDateIssued" name="create-billing-billDateIssued" style="display:none">
 
