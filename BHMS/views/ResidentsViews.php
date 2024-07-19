@@ -375,24 +375,24 @@ class ResidentsViews extends GeneralViews{
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content bg-custom">
                     <div class="modal-header bg-custom">
-                        <span style="font-size: 25px;" class="header">Tenant Information</span>
+                        <h5 class="modal-title">Tenant Information</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="tenant-modal-body bg-custom displayflex" id="tenantInfoModalBody">
                         <!-- Tenant information will be loaded here dynamically -->
                     </div>
                     <div class="modal-footer-custom bg-custom " >
-                        <div class="header">Rent History</div>
+                        <div style="color: #344799; font-weight: bold; font-size: 20px;">Rent History</div>
                         <section class="table-data">
                             <div class="table-responsive overflow-auto" style="max-height: 200px;">
                                 <table class="table table-bordered styling rounded-top rounded-bottom" style="border-bottom:1px solid #344799; border-top:1px solid #344799;">
                                     <thead>
                                         <tr>
-                                            <th>Room Code</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Rent Type</th>
-                                            <th>Actions</th>
+                                            <th style="background-color: #344799; color: white;">Room Code</th>
+                                            <th style="background-color: #344799; color: white;">Start Date</th>
+                                            <th style="background-color: #344799; color: white;">End Date</th>
+                                            <th style="background-color: #344799; color: white;">Rent Type</th>
+                                            <th style="background-color: #344799; color: white;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="rentHistoryTableBody">
@@ -428,40 +428,40 @@ class ResidentsViews extends GeneralViews{
                     tenantInfoModalBody.innerHTML = `
                         <div class="tenant-split-left">
                             <div>
-                                <span class="label">Name:</span>
+                                <span style="color: #779CC8;">Name:</span>
                                 <span style="font-size: 18px;">${tenantData.tenFname} ${tenantData.tenMI ? tenantData.tenMI + "." : ""} ${tenantData.tenLname}</span>
                             </div>
                             <div>
-                                <span class="label">Contact Number:</span>
+                                <span style="color: #779CC8;">Contact Number:</span>
                                 <span>${tenantData.tenContact}</span>
                             </div>
                             <div>
-                                <span class="label">Address:</span>
+                                <span style="color: #779CC8;">Address:</span>
                                 <span>${tenantData.tenHouseNum ? tenantData.tenHouseNum + " " : ""}${tenantData.tenSt ? tenantData.tenSt + " " : ""} ${tenantData.tenCityMun ? tenantData.tenCityMun : ""}</span>
                             </div>
                             <div>
-                                <span class="label">Gender:</span>
+                                <span style="color: #779CC8;">Gender:</span>
                                 <span>${tenantData.tenGender}</span>
                             </div>
                             <div>
-                                <span class="label">Birth Date:</span>
+                                <span style="color: #779CC8;">Birth Date:</span>
                                 <span>${formatDate(tenantData.tenBdate)}</span>
                             </div>
                             <div>
-                                <span class="label">Appliances:</span>
+                                <span style="color: #779CC8;">Appliances:</span>
                                 <ul id="appliancesList"></ul>
                             </div>
                         </div>
                         <div class="tenant-split-right">
                             <div>
-                                <span class="label" style="font-size: 20px;">Emergency Contact Information</span>
+                                <span style="font-size: 20px; color: #779CC8;">Emergency Contact Information</span>
                             </div>
                             <div>
-                                <span class="label">Name:</span>
+                                <span style="color: #779CC8;">Name:</span>
                                 <span style="font-size: 18px;">${tenantData.emContactFname ? tenantData.emContactFname + " " : ""} ${tenantData.emContactMI ? tenantData.emContactMI + "." : ""} ${tenantData.emContactLname ? tenantData.emContactLname : ""}</span>
                             </div>
                             <div>
-                                <span class="label">Contact Number:</span>
+                                <span style="color: #779CC8;">Contact Number:</span>
                                 <span>${tenantData.emContactNum ? tenantData.emContactNum : ""}</span>
                             </div>
                         </div>
