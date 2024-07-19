@@ -88,7 +88,8 @@ class RoomlogsModel extends dbcreds {
     public static function query_current_room_tenants($room_code) {
         $conn = self::get_connection();
 
-        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND isDeleted = 0;");
+        $query = $conn->prepare("SELECT * FROM occupancy WHERE roomID = ? AND 
+                                CURRENT_DATE BETWEEN occDateStart AND occDateEnd AND isDeleted = 0;");
         
         if ($query === false) {
             throw new Exception("Prepare failed: " . $conn->error);

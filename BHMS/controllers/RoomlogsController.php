@@ -122,7 +122,7 @@ class RoomlogsController extends GeneralController{
                 return "Success - Rent";
             }
         } else {
-            return "Error - Tenant Rent Error";
+            return "Error - Tenant Rent Error"; 
         }
     }
 

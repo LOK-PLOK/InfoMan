@@ -197,7 +197,7 @@ class DashboardViews extends GeneralViews{
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label class="add-new-tenant-label">Gender:</label>
-                                    <select id="tenGender" name="tenGender" style="height: 40px;">
+                                    <select id="tenGender" name="tenGender" style="height: 40px;" required>
                                         <option value="" disabled selected style="display:none;">...</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>

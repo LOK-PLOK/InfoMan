@@ -219,7 +219,7 @@ class ResidentsModel extends dbcreds{
             // Use self to access static variables within the static method
             $conn = self::get_connection();
     
-            $query = "SELECT * FROM tenant ORDER BY isRenting=1 DESC";
+            $query = "SELECT * FROM tenant WHERE isDeleted = 0  ORDER BY isRenting=1 DESC";
             $result = $conn->query($query);
 
             if ($result === false) {
@@ -346,25 +346,26 @@ class ResidentsModel extends dbcreds{
             // Create a connection to the database
             $conn = self::get_connection();
     
-            // Prepare the DELETE statement with a parameterized query to prevent SQL injection
-            $stmt = $conn->prepare("UPDATE tenant SET isDeleted = 1 WHERE tenID = ?");
-            $stmt->bind_param("s", $tenantIdToDelete);
+            // First Query: Update tenant
+            $stmt1 = $conn->prepare("UPDATE tenant SET isDeleted = 1 WHERE tenID = ?;");
+            $stmt1->bind_param("i", $tenantIdToDelete);
+            $success1 = $stmt1->execute();
+            $stmt1->close();
     
-            if ($stmt->execute()) {
-                // Return true if deletion was successful
-                return true;
-            } else {
-                // Return false or handle the failure as needed
-                return false;
-            }
+            // Second Query: Update occupancy
+            $stmt2 = $conn->prepare("UPDATE occupancy SET isDeleted = 1 WHERE tenID = ?;");
+            $stmt2->bind_param("i", $tenantIdToDelete);
+            $success2 = $stmt2->execute();
+            $stmt2->close();
     
-            $stmt->close();
+            // Close the connection
             $conn->close();
     
-        } catch (Exception $e) {
-            // Log the error to a file or handle it as needed
-            error_log("Error deleting tenant: " . $e->getMessage(), 3, '/var/log/php_errors.log');
+            // Return true if both deletions were successful
+            return $success1 && $success2;
     
+        } catch (Exception $e) {
+            // Optionally log the exception $e->getMessage();
             // Return false to indicate failure
             return false;
         }

@@ -255,7 +255,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $deactOccInfo = $_POST['deact-occupancy-id'];
 
-        $result = RoomlogsController::deact_occupancy($deactOccInfo);
+        $result = RoomlogsController::deact_occupancy($deactOccInfo); 
         if ($result) {
             // Redirect to the same page or to a confirmation page after successful deletion
             header('Location: room_logs.php?deactOccStatus=success');

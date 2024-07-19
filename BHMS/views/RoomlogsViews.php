@@ -191,7 +191,7 @@ class RoomlogsViews extends GeneralViews{
 
                 $rm_tenFname = $rm_tenant_info['tenFname'];
                 $rm_tenLname = $rm_tenant_info['tenLname'];
-                $rm_tenMI = $rm_tenant_info['tenMI'];
+                $rm_tenMI = $rm_tenant_info['tenMI'] ?? NULL;
 
                 $name = $rm_tenFname . ' ' . (($rm_tenMI != NULL) ? $rm_tenMI . '. ' : '') . $rm_tenLname;
                 $start_date = date('F j, Y', strtotime($room_tenant['occDateStart']));
@@ -206,8 +206,8 @@ class RoomlogsViews extends GeneralViews{
                     $deactBtn = '';
                 } else {
                     $color = 'background-color: #E4A11B;';
-                    $deactBtn = '<button class="deactOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;">
-                                    <img src="/images/icons/Residents/deactivate.png" alt="deactivate" class="action" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal" value="'.$room_tenant['occupancyID'].'">
+                    $deactBtn = '<button class="deactOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" value="'.$room_tenant['occupancyID'].'">
+                                    <img src="/images/icons/Residents/deactivate.png" alt="deactivate" class="action" data-bs-toggle="modal" data-bs-target="#deactOccupancyModal">
                                 </button>';
                 }
 
@@ -669,7 +669,7 @@ class RoomlogsViews extends GeneralViews{
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                        <p class="confirmation-question">Are you sure you want to deactivate this user?</p>
+                        <p class="confirmation-question">Are you sure you want to deactivate this occupancy?</p>
                         <form method="POST">
                             <div class="button-container">
                                 <input type="hidden" name="deact-occupancy-id" id="deact-occupancy-id">
