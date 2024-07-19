@@ -242,8 +242,10 @@ class BillingsModel extends dbcreds {
     public static function query_billing_data($billRefNo){
         $conn = self::get_connection();
     
-        $query = "SELECT CONCAT(tenant.tenFname, ' ', tenant.tenMI, '. ', tenant.tenLname) AS 
-        full_name, billing.* FROM billing LEFT JOIN tenant ON billing.tenID = tenant.tenID WHERE billing.billRefNo = ?;";
+        $query = "SELECT CONCAT(tenant.tenFname, ' ', COALESCE(tenant.tenMI, ''), IF(tenant.tenMI IS NOT NULL, '. ', ''), tenant.tenLname) AS full_name, billing.* 
+              FROM billing 
+              LEFT JOIN tenant ON billing.tenID = tenant.tenID 
+              WHERE billing.billRefNo = ?;";
         $stmt = $conn->prepare($query);
         
         if ($stmt === false) {
@@ -435,10 +437,12 @@ class BillingsModel extends dbcreds {
     
         $billRefNo = $updated_billing['billRefNo'];
         $billTotal = $updated_billing['billTotal'];
+        $billDateIssued = $updated_billing['billDateIssued'];
     
         // Use prepared statements to prevent SQL injection and ensure correct syntax
         $query = "UPDATE billing 
-                  SET billTotal = ? 
+                  SET billTotal = ?, 
+                  billDateIssued = ?
                   WHERE billRefNo = ?";
     
         $stmt = $conn->prepare($query);
@@ -447,7 +451,7 @@ class BillingsModel extends dbcreds {
         }
     
         // Bind parameters
-        $stmt->bind_param("di", $billTotal, $billRefNo);
+        $stmt->bind_param("dsi", $billTotal, $billDateIssued, $billRefNo);
     
         // Execute statement
         if ($stmt->execute() === false) {

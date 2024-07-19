@@ -306,9 +306,7 @@ class BillingsViews extends GeneralViews{
                                     <div class="edit-billings-row">
                                         <p class="light-blue-text">Date Issued</p>
 
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssuedDummy" disabled>
-
-                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued" hidden>
+                                        <input class="rounded-inputs uniform-aligned-inputs" type="date" id="editBillDateIssued" name="editBillDateIssued">
                                     </div>
                                 
                                     <div class="edit-billings-row">
@@ -516,7 +514,7 @@ class BillingsViews extends GeneralViews{
                 $billingId = $billing['billRefNo'];
                 $billDateIssued = $billing['billDateIssued'];
                 $billDueDate = $billing['billDueDate'];
-                $tenantFullName = $billing['tenant_first_name'] . ' ' . ($billing['tenMI'] ? $billing['tenMI'] . '.' : '') . ' ' . $billing['tenant_last_name'];
+                $tenantFullName = $billing['tenant_first_name'] . (($billing['tenMI'] != '') ? ' ' . $billing['tenMI'] . '.' : '') . ' ' . $billing['tenant_last_name'];
                 $billTotal = $billing['billTotal'];
                 $isPaid = $billing['isPaid'];
 
@@ -551,19 +549,24 @@ class BillingsViews extends GeneralViews{
                 if($prepBool==1){
                     echo<<<HTML
                         <!-- Add payment -->
-                        <button onclick="prepopulatePayment($billingDataJson)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                            <button onclick="prepopulatePayment($billingDataJson)" id="add-payment-button" type="button" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
                                 <div style="margin-right: 10px;padding:5px;border-radius:100px;background-color: #344799" >
                                     <img style="height:27.5px" src="/images/icons/Dashboard/Buttons/add_payment_light.png" alt="">
                                 </div>
                             </button>
                     HTML;
                 }
-                echo<<<HTML
-                            <!-- edit billing -->
+                
+
+                if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev'){
+                    echo <<<HTML
                             <button id="openEditBillingsModalBtn" style="margin-right: 10px;" onclick="prepopulateValues($payment_billing_info_json, $billingDataJson, $prepBool)">
                                 <img src="/images/icons/Residents/edit.png" alt="Edit" class="action" data-bs-toggle="modal" data-bs-target="$editModalType">
                             </button>
+                    HTML;
+                }
 
+                echo<<<HTML
                             <!-- delete billing -->
                             <button class="delete-button" data-billing-id="$billingId" style="margin-right: 10px;">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#deleteBillingsModal">

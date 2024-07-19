@@ -181,7 +181,6 @@ class MaintenanceViews extends GeneralViews{
             if(isset($_GET['On-going-search']) && !empty($_GET['On-going-search'])){
                 $search = $_GET['On-going-search'];
                 $On_going = MaintenanceController::get_On_going_data_search($search);
-
             }else{
                 $On_going = MaintenanceController::get_On_going_data();
             }
@@ -234,6 +233,24 @@ class MaintenanceViews extends GeneralViews{
                 <tbody>
         HTML;
 
+
+             $editMaintenanceButton = '
+                    <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                        onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                        data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                    </button>
+                ';
+
+            if($_SESSION['sessiontType'] != 'admin' || $_SESSION['sessiontType'] != 'dev') {
+                $editMaintenanceButton = '';
+            }
+
             if (empty($On_going)) {
                 echo '
                 <tr>
@@ -250,16 +267,7 @@ class MaintenanceViews extends GeneralViews{
                         <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
                         <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
                         <td class="action-buttons">
-                            <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                                onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                        \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                                data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                            </button>
+                            '.$editMaintenanceButton.'
                             <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                             </button>
@@ -267,7 +275,6 @@ class MaintenanceViews extends GeneralViews{
                     </tr>';
                 }
             }
-            
         
             // Close the HTML tags.
             echo '
@@ -348,6 +355,24 @@ class MaintenanceViews extends GeneralViews{
                 </thead>
                 <tbody>
         HTML;
+
+            $editMaintenanceButton = '
+                    <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                        onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                                \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                                \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                        data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                        <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+                    </button>
+                ';
+
+            if($_SESSION['sessiontType'] != 'admin' || $_SESSION['sessiontType'] != 'dev') {
+                $editMaintenanceButton = '';
+            }
+
             
             if(empty($completed)){
                 echo '
@@ -366,16 +391,7 @@ class MaintenanceViews extends GeneralViews{
                         <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
                         <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
                         <td class="action-buttons">
-                            <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                                onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                        \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                        \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                                data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                            </button>
+                            '.$editMaintenanceButton.'
                             <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                                 <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                             </button>
@@ -383,8 +399,6 @@ class MaintenanceViews extends GeneralViews{
                     </tr>';
                 }
             }
-                
-            
         
             // Close the HTML tags.
             echo '
@@ -463,6 +477,23 @@ class MaintenanceViews extends GeneralViews{
                 </thead>
                 <tbody>
         HTML;
+
+        $editMaintenanceButton = '
+            <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
+                onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
+                                        \'' . htmlspecialchars($maintenance['roomID']) . '\', 
+                                        \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
+                                        \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
+                                        \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
+                                        \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
+                data-bs-toggle="modal" data-bs-target="#edit-modal-info">
+                <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
+            </button>
+        ';
+
+        if($_SESSION['sessiontType'] != 'admin' || $_SESSION['sessiontType'] != 'dev') {
+            $editMaintenanceButton = '';
+        }
         
         if(empty($cancelled)){
             echo '
@@ -480,16 +511,7 @@ class MaintenanceViews extends GeneralViews{
                     <td>' . htmlspecialchars($maintenance['maintDesc']) . '</td>
                     <td>' . htmlspecialchars(date("F j, Y", strtotime($maintenance['maintDate']))) . '</td>
                     <td class="action-buttons">
-                        <button id="openEditModalBtn" style="margin-right: 10px; border: none;"
-                            onclick="displayeditModal(\'' . htmlspecialchars($maintenance['maintID']) . '\',
-                                                    \'' . htmlspecialchars($maintenance['roomID']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintDate']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintStatus']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintDesc']) . '\', 
-                                                    \'' . htmlspecialchars($maintenance['maintCost']) . '\')"
-                            data-bs-toggle="modal" data-bs-target="#edit-modal-info">
-                            <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
-                        </button>
+                        '.$editMaintenanceButton.'
                         <button id="openDeleteModalBtn" style="margin-right: 10px; border: none;" onclick="displaydeleteModal(\'' . htmlspecialchars($maintenance['maintID']) . '\')">
                             <img src="/images/icons/Residents/delete.png" alt="Delete" class="action" data-bs-toggle="modal" data-bs-target="#DeletemyModal">
                         </button>
