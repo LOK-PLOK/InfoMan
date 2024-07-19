@@ -95,13 +95,13 @@ class SettingsViews extends GeneralViews {
                         <form id="ratesForm" method="POST">
                             <h5 class="modal-subtitle">Appliance Rates:</h5>
                             <div class="input-with-edit">
-                                <input type="text" id="appRate" class="form-control modal-input shadow"  name="ApplianceRate" value="{$applianceRate}" placeholder="{$applianceRate}" readonly>
+                                <input type="number" id="appRate" class="form-control modal-input shadow"  name="ApplianceRate" value="{$applianceRate}" placeholder="{$applianceRate}" readonly>
                                 <span class="edit" onclick="enableEdit(this)">edit</span>
                             </div>
                             <p class="monthly-cost">Monthly Cost</p>
                             <h5 class="modal-subtitle">Bed Rates:</h5>
                             <div class="input-with-edit">
-                                <input id="bedRate" type="text" class="form-control modal-input shadow" name="bedRate" value="{$bedRate}" placeholder="{$bedRate}" readonly>
+                                <input id="bedRate" type="number" class="form-control modal-input shadow" name="bedRate" value="{$bedRate}" placeholder="{$bedRate}" readonly>
                                 <span class="edit" onclick="enableEdit(this)">edit</span>
                                 <input type="hidden" name="bedRateID" value="{$bedRateID}">
                             </div>
@@ -111,7 +111,7 @@ class SettingsViews extends GeneralViews {
                                 <p class="room-rate-label">Room 1 (6-Bed Capacity)</p>
                                 <p class="room-rate-info">Applies if occupants are less than or equal to three</p>
                                 <div class="input-with-edit">
-                                    <input type="text" id="roomOne" class="form-control modal-input shadow" name="roomOne" value="{$roomRate1}" placeholder="{$roomRate1}" readonly>
+                                    <input type="number" id="roomOne" class="form-control modal-input shadow" name="roomOne" value="{$roomRate1}" placeholder="{$roomRate1}" readonly>
                                     <span class="edit" onclick="enableEdit(this)">edit</span>
                                     <input type="hidden" name="roomRate1ID" value="{$roomRate1ID}">
                                 </div>
@@ -121,7 +121,7 @@ class SettingsViews extends GeneralViews {
                                 <p class="room-rate-label">Room 2 (6-Bed Capacity)</p>
                                 <p class="room-rate-info">Applies if occupants are more than three</p>
                                 <div class="input-with-edit">
-                                    <input type="text" id="roomTwo" class="form-control modal-input shadow" name="roomTwo" value="{$roomRate2}" placeholder="{$roomRate2}" readonly>
+                                    <input type="number" id="roomTwo" class="form-control modal-input shadow" name="roomTwo" value="{$roomRate2}" placeholder="{$roomRate2}" readonly>
                                     <span class="edit" onclick="enableEdit(this)">edit</span>
                                     <input type="hidden" name="roomRate2ID" value="{$roomRate2ID}">
                                 </div>
@@ -131,7 +131,7 @@ class SettingsViews extends GeneralViews {
                                 <p class="room-rate-label">Room 3 (4-Bed Capacity)</p>
                                 <p class="room-rate-info">Applies if occupants are less than or equal to two</p>
                                 <div class="input-with-edit">
-                                    <input type="text" id="roomThree" class="form-control modal-input shadow" name="roomThree" value="{$roomRate3}" placeholder="{$roomRate3}" readonly>
+                                    <input type="number" id="roomThree" class="form-control modal-input shadow" name="roomThree" value="{$roomRate3}" placeholder="{$roomRate3}" readonly>
                                     <span class="edit" onclick="enableEdit(this)">edit</span>
                                     <input type="hidden" name="roomRate3ID" value="{$roomRate3ID}">
                                 </div>
@@ -141,7 +141,7 @@ class SettingsViews extends GeneralViews {
                                 <p class="room-rate-label">Room 4 (4-Bed Capacity)</p>
                                 <p class="room-rate-info">Applies if occupants are more than two</p>
                                 <div class="input-with-edit">
-                                    <input type="text" id="roomFour" class="form-control modal-input shadow" name="roomFour" value="{$roomRate4}" placeholder="{$roomRate4}" readonly>
+                                    <input type="number" id="roomFour" class="form-control modal-input shadow" name="roomFour" value="{$roomRate4}" placeholder="{$roomRate4}" readonly>
                                     <span class="edit" onclick="enableEdit(this)">edit</span>
                                     <input type="hidden" name="roomRate4ID" value="{$roomRate4ID}">
                                 </div>
