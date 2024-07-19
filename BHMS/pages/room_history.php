@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $endDate = date('F d, Y', strtotime($tenant['occDateEnd']));
 
                     $action_buttons = '
-                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$room_tenant['occupancyID'].'"
+                                <button class="editOccupancyBtn" style="margin-right: 10px; border: none; background: transparent;" data-bs-toggle="modal" data-bs-target="#editOccupancyModal" value="'.$tenant['occupancyID'].'"
                                     onclick="setValuesTenantInfo(
                                                         '.$tenant['occupancyID'].', 
                                                         \''.$tenant['tenantFullName'].'\', 

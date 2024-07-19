@@ -64,6 +64,7 @@ class DashboardController extends GeneralController{
         foreach($new_tenant as $key => $value) {
             $new_tenant[$key] = $value === "" ? NULL : $value;
         }
+        
         return DashboardModel::add_new_tenant($new_tenant,$appliances);
     }
 

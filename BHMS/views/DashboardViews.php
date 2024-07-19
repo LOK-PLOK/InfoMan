@@ -307,7 +307,7 @@ class DashboardViews extends GeneralViews{
                         <div>
                             <label for="new-rent-tenant" class="input-label">Tenant Assigned:</label>
                             <!-- Tenant -->
-                            <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow">
+                            <select name="new-rent-tenant" id="new-rent-tenant" class="w-100 shadow" required>
                                 <option value="" disabled selected>Select a tenant</option>
         HTML;
                                 foreach ($tenants as $tenant){
@@ -350,7 +350,7 @@ class DashboardViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Room -->
-                                    <select name="new-rent-room" id="new-rent-room" class="form-control shadow">
+                                    <select name="new-rent-room" id="new-rent-room" class="form-control shadow" required>
                                         <option value="" disabled selected style="display:none;">Select a Room Code</option>
         HTML;
                                         foreach ($rooms as $room){
@@ -381,7 +381,7 @@ class DashboardViews extends GeneralViews{
                                 <div class="col-sm-5">
                                     <!-- Occupancy Type -->
                                     <input type="hidden" name="new-rent-occTypeID" id="new-rent-occ-typeID" class="w-100 shadow">
-                                    <select name="new-rent-type" id="new-rent-type" class="form-control shadow">
+                                    <select name="new-rent-type" id="new-rent-type" class="form-control shadow" required>
                                             <option value="" disabled selected style="display:none;">Select a Type</option>
         HTML;
                                             foreach ($rent_types as $rent_type){
@@ -407,7 +407,7 @@ class DashboardViews extends GeneralViews{
                             <div class="d-flex justify-content-between">
                                 <div class="col-sm-5">
                                     <!-- Start Date -->
-                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow">
+                                    <input type="date" name="new-rent-start" id="new-rent-start" class="w-100 shadow" required>
                                     <!-- End Date -->
                                     <input type="date" name="new-rent-end" id="new-rent-end" class="w-100 shadow" style="display: none">
                                     <div class="d-flex justify-content-center input-sub-label">Starting Date</div>

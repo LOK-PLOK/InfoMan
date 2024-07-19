@@ -234,6 +234,7 @@
             $updated_billing = array(
                 "billRefNo" => $_POST['editBillingId'],
                 "billTotal" => $_POST['editBillTotal'],
+                "billDateIssued" => $_POST['editBillDateIssued'],
             );
             
             $result = BillingsController::update_billing($updated_billing);
