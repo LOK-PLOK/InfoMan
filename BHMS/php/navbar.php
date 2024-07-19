@@ -37,25 +37,7 @@ if (!isset($_SESSION['userID'])) {
                 <h3 class="paddingleft">Dashboard</h3>
             </div>
         </a>
-        <a href="room_logs.php">
-            <div class="class-align-tabs <?php echo setActiveClass('room_logs', $current_page); ?>">
-                <img src="/images/icons/Dashboard/Navigation Bar/room_logs_<?php echo setActiveIcon('room_logs', $current_page); ?>.png">
-                <h3 class="paddingleft">Room Logs</h3>
-            </div>
-        </a>
-        <a href="billings.php">
-            <div class="class-align-tabs <?php echo setActiveClass('billings', $current_page); ?>">
-                <img src="/images/icons/Dashboard/Navigation Bar/billing_<?php echo setActiveIcon('billings', $current_page); ?>.png">
-                <h3 class="paddingleft">Billings</h3>
-            </div>
-        </a>
-        <a href="maintenance.php">
-            <div class="class-align-tabs <?php echo setActiveClass('maintenance', $current_page); ?>">
-                <img src="/images/icons/Dashboard/Navigation Bar/maintenance_<?php echo setActiveIcon('maintenance', $current_page); ?>.png">
-                <h3 class="paddingleft">Maintenance</h3>
-            </div>
-        </a>
-    <?php if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') { ?>
+        <?php if ($_SESSION['sessionType'] === 'admin' || $_SESSION['sessionType'] === 'dev') { ?>
         <a href="residents.php">
             <div class="class-align-tabs <?php echo setActiveClass('residents', $current_page); ?>">
                 <img src="/images/icons/Dashboard/Navigation Bar/residents_<?php echo setActiveIcon('residents', $current_page); ?>.png">
@@ -74,7 +56,25 @@ if (!isset($_SESSION['userID'])) {
                 <h3 class="paddingleft">Room History</h3>
             </div>
         </a>
-    <?php } ?>
+        <?php } ?>
+        <a href="room_logs.php">
+            <div class="class-align-tabs <?php echo setActiveClass('room_logs', $current_page); ?>">
+                <img src="/images/icons/Dashboard/Navigation Bar/room_logs_<?php echo setActiveIcon('room_logs', $current_page); ?>.png">
+                <h3 class="paddingleft">Room Logs</h3>
+            </div>
+        </a>
+        <a href="billings.php">
+            <div class="class-align-tabs <?php echo setActiveClass('billings', $current_page); ?>">
+                <img src="/images/icons/Dashboard/Navigation Bar/billing_<?php echo setActiveIcon('billings', $current_page); ?>.png">
+                <h3 class="paddingleft">Billings</h3>
+            </div>
+        </a>
+        <a href="maintenance.php">
+            <div class="class-align-tabs <?php echo setActiveClass('maintenance', $current_page); ?>">
+                <img src="/images/icons/Dashboard/Navigation Bar/maintenance_<?php echo setActiveIcon('maintenance', $current_page); ?>.png">
+                <h3 class="paddingleft">Maintenance</h3>
+            </div>
+        </a>
         <a href="settings.php">
             <div class="class-align-tabs <?php echo setActiveClass('settings', $current_page); ?>">
                 <img src="/images/icons/Dashboard/Navigation Bar/setting_<?php echo setActiveIcon('settings', $current_page); ?>.png">

@@ -264,7 +264,7 @@ class SettingsViews extends GeneralViews {
                         <img src="/images/icons/Settings/password.png" alt="Change Password" class="action">
                     </button>
                     <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#editUserInfoModal" style="border: none;" 
-                    onclick="editUser('$userID', '$userFname', '$userMname', '$userLname','$isActive','$userType','$username','$password')">
+                    onclick="editUser('$userID', '$userFname', '$userMname', '$userLname','$isActive','$userType','$username')">
                         <img src="/images/icons/Residents/edit.png" alt="Edit" class="action">
                     </button>
                     <button class="bg-transparent" data-bs-toggle="modal" data-bs-target="#deleteUserInfoModal" onclick="deleteUser($userID)" style="border: none">
@@ -367,6 +367,13 @@ class SettingsViews extends GeneralViews {
      * @return void
      */
     public static function edit_user_info(){
+
+        if($_SESSION['sessionType'] === 'staff') {
+            $hide = 'style="display: none;"';
+        } else {
+            $hide = '';
+        }
+
         echo <<< HTML
         <div class="modal fade" id="editUserInfoModal" tabindex="-1" aria-labelledby="editUserInfoModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -389,7 +396,7 @@ class SettingsViews extends GeneralViews {
                         <input type="text" id="Edit-userLname" name="Edit-userLname" placeholder="Santos" class="LNclass shadow" required>
                     </div>
                     <p class="monthly-cost">First Name, Middle Initial, Last Name</p>
-                    <div class="mb-3">
+                    <div class="mb-3" $hide>
                         <!-- Edit-userStatus -->
                         <label for="userStatus" class="form-label">Status:</label>
                         <select class="form-select shadow" id="Edit-isActive" name="Edit-isActive" required>
@@ -397,7 +404,7 @@ class SettingsViews extends GeneralViews {
                             <option value="0">Inactive</option>
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" $hide>
                         <!-- Edit-userType -->
                         <label for="userPosition" class="form-label">Position:</label>
                         <select class="form-select shadow" id="Edit-userType" name="Edit-userType" required>
